@@ -92,7 +92,7 @@
     };
   };
 
-  programs.dconf.true = enable;
+  programs.dconf.enable = true;
 
   environment.systemPackages = with pkgs; [ 
     wget
