@@ -145,7 +145,7 @@
     qt6Packages.qtstyleplugin-kvantum
     nnn
     xfce.thunar
-    jetbrains.idea_ultimate
+    jetbrains.idea-ultimate
   ];
 
   fonts.packages = with pkgs; [
