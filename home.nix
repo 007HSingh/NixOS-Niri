@@ -64,6 +64,6 @@
         rotatingCoverart
 	pointer
       ];
-      theme = spicePkgs.themes.dymanicDribblish;
+      theme = spicePkgs.themes.dribbblishDynamic;
     };
 }

@@ -105,7 +105,6 @@
     wlsunset
     eza
     bat
-    discord
     obsidian
     spotify
     vlc
