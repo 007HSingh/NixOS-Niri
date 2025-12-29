@@ -42,6 +42,8 @@
 
   services.libinput.enable = true;
 
+  xdg.portal.wlr.enable = true;
+
   services.pipewire = {
     enable = true;
     pulse.enable = true;
@@ -158,6 +160,11 @@
   services.power-profiles-daemon.enable = true;
 
   services.upower.enable = true;
+
+  services.xserver = {
+    enable = true;
+    videoDrivers = [ "nvidia" ];
+  };
 
   nixpkgs.config.allowUnfree = true;
 
