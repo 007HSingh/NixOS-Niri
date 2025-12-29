@@ -61,7 +61,7 @@
     withNodeJs = true;
   };
 
-  programs.yazi.enable = true;
+  programs.thunar.enable = true;
 
   programs.niri.enable = true;
 
