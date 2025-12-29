@@ -64,6 +64,10 @@
         rotatingCoverart
 	pointer
       ];
-      theme = spicePkgs.themes.dribbblishDynamic;
+      theme = spicePkgs.themes.starryNight;
     };
+
+    home.file = {
+      ".config/kitty".source = ./config/kitty;
+    };  
 }
