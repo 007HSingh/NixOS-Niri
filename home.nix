@@ -60,6 +60,7 @@
 
   programs.zsh = {
     enable = true;
+    dotDir = "${config.xdg.configHome}/zsh"; 
     initContent = ''
       eval "$(zoxide init zsh)"
 
