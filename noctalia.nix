@@ -21,9 +21,19 @@
 
     home.file.".config/noctalia/plugins.json" = {
       text = builtins.toJSON {
-        "catwalk" = {
-	  enabled = true;
-	};
+        sources = [
+          {
+            enabled = true;
+            name = "Official Noctalia Plugins";
+            url = "https://github.com/noctalia-dev/noctalia-plugins";
+          }
+        ];
+        states = {
+          catwalk = {
+            enabled = true;
+          };
+        };
+        version = 1; 
       };
     };
 

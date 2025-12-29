@@ -16,6 +16,13 @@
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
+  boot.kernel.sysctl = {
+    "vm.swappiness" = 10;  
+    "vm.vfs_cache_pressure" = 50;  
+    "vm.dirty_ratio" = 10;  
+    "vm.dirty_background_ratio" = 5;  
+  };
+
   networking.hostName = "nixos"; 
   networking.networkmanager.enable = true;
 
@@ -127,6 +134,10 @@
     libsForQt5.qt5ct
     libsForQt5.qtstyleplugin-kvantum
     qt6Packages.qtstyleplugin-kvantum
+    glib
+    xfce.tumbler
+    ffmpegthumbnailer
+    webp-pixbuf-loader
   ];
 
   fonts.packages = with pkgs; [
@@ -150,6 +161,10 @@
   services.power-profiles-daemon.enable = true;
 
   services.upower.enable = true;
+
+  services.tumbler.enable = true;
+  
+  services.gvfs.enable = true;
 
   nixpkgs.config.allowUnfree = true;
 
