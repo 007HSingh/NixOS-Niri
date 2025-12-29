@@ -19,24 +19,6 @@
       };
     };
 
-    home.file.".config/noctalia/plugins.json" = {
-      text = builtins.toJSON {
-        sources = [
-          {
-            enabled = true;
-            name = "Official Noctalia Plugins";
-            url = "https://github.com/noctalia-dev/noctalia-plugins";
-          }
-        ];
-        states = {
-          catwalk = {
-            enabled = true;
-          };
-        };
-        version = 1; 
-      };
-    };
-
     programs.noctalia-shell = {
       enable = true;
       settings = {
@@ -80,9 +62,6 @@
 		id = "Clock";
 		useMonospacedFont = true;
 		usePrimaryColor = true;
-	      }
-	      {
-	        id = "Catwalk";
 	      }
 	    ];
 	  };
