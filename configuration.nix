@@ -101,6 +101,15 @@
 
   programs.dconf.enable = true;
 
+  programs.thunar = {
+    enable = true;
+    plugins = with pkgs.xfce; [
+      thunar-volman
+      thunar-archive-plugin
+      thunar-vcs-plugin
+    ];
+  };
+
   environment.systemPackages = with pkgs; [ 
     wget
     git 
@@ -135,6 +144,7 @@
     libsForQt5.qtstyleplugin-kvantum
     qt6Packages.qtstyleplugin-kvantum
     nnn
+    xfce.thunar
   ];
 
   fonts.packages = with pkgs; [
