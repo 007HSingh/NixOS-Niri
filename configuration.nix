@@ -145,7 +145,8 @@
     qt6Packages.qtstyleplugin-kvantum
     nnn
     xfce.thunar
-    jetbrains.idea-ultimate
+    xfce.tumbler
+    jetbrains.idea
   ];
 
   fonts.packages = with pkgs; [
@@ -169,6 +170,8 @@
   services.power-profiles-daemon.enable = true;
 
   services.upower.enable = true;
+
+  services.tumbler.enable = true;
 
   services.xserver = {
     enable = true;
