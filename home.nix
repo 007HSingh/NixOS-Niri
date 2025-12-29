@@ -10,7 +10,36 @@
     name = "Bibata-Modern-Classic";
     package = pkgs.bibata-cursors;
     size = 24;
-  };  
+  };
+
+  gtk = {
+    enable = true;
+    iconTheme = {
+      name = "Papirus-Dark";
+      package = pkgs.papirus-icon-theme;
+    };
+
+    gtk3.extraConfig = {
+      gtk-application-prefer-dark-theme = 1;
+    };
+
+    gtk4.extraConfig = {
+      gtk-application-prefer-dark-theme = 1;
+    };
+  };
+
+  qt = {
+    enable = true;
+    platformTheme.name = "kvantum";
+  };
+
+  xdg = {
+    enable = true;
+    userDirs = {
+      enable = true;
+      createDirectories = true;
+    };  
+  };
 
   programs.git = {
     enable = true;
@@ -69,5 +98,10 @@
 
     home.file = {
       ".config/kitty".source = ./config/kitty;
-    };  
+    };
+
+  home.sessionVariables = {
+    QT_QPA_PLATFORMTHEME = "kvantum";
+    QT_STYLE_OVERRIDE = "kvantum";
+  };
 }

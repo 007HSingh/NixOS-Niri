@@ -19,6 +19,14 @@
       };
     };
 
+    home.file.".config/noctalia/plugins.json" = {
+      text = builtins.toJSON {
+        "Catwalk" = {
+	  enabled = true;
+	};
+      };
+    };
+
     programs.noctalia-shell = {
       enable = true;
       settings = {
@@ -26,6 +34,7 @@
 	  density = "comfortable";
 	  position = "left";
 	  showCapsule = false;
+	  floating = true;
 	  widgets = {
 	    left = [
 	      {
@@ -50,9 +59,6 @@
 	      }
 	    ];
 	    right = [
-	      {
-	        id = "MediaMini";
-	      }
 	      {
 	        alwaysShowPercentage = false;
 		id = "Battery";

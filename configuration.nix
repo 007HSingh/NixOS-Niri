@@ -90,7 +90,9 @@
       generations = "sudo nix-env --list-generations --profile /nix/var/nix/profiles/system";
       clean = "sudo nix-collect-garbage -d";
     };
-  };  
+  };
+
+  programs.dconf.true = enable;
 
   environment.systemPackages = with pkgs; [ 
     wget
@@ -121,6 +123,10 @@
     bibata-cursors
     vesktop
     pywalfox-native
+    papirus-icon-theme
+    libsForQt5.qt5ct
+    libsForQt5.qtstyleplugin-kvantum
+    qt6Packages.qtstyleplugin-kvantum
   ];
 
   fonts.packages = with pkgs; [
