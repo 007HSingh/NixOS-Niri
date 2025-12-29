@@ -118,6 +118,7 @@
     starship
     bibata-cursors
     vesktop
+    pywalfox-native
   ];
 
   fonts.packages = with pkgs; [
