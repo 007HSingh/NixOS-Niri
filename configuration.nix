@@ -134,10 +134,7 @@
     libsForQt5.qt5ct
     libsForQt5.qtstyleplugin-kvantum
     qt6Packages.qtstyleplugin-kvantum
-    glib
-    xfce.tumbler
-    ffmpegthumbnailer
-    webp-pixbuf-loader
+    xfce.thunar
   ];
 
   fonts.packages = with pkgs; [
@@ -161,10 +158,6 @@
   services.power-profiles-daemon.enable = true;
 
   services.upower.enable = true;
-
-  services.tumbler.enable = true;
-  
-  services.gvfs.enable = true;
 
   nixpkgs.config.allowUnfree = true;
 
