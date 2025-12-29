@@ -21,7 +21,7 @@
 
     home.file.".config/noctalia/plugins.json" = {
       text = builtins.toJSON {
-        "Catwalk" = {
+        "catwalk" = {
 	  enabled = true;
 	};
       };
