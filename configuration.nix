@@ -70,8 +70,6 @@
     withNodeJs = true;
   };
 
-  programs.thunar.enable = true;
-
   programs.niri.enable = true;
 
   programs.starship.enable = true;
@@ -136,7 +134,7 @@
     libsForQt5.qt5ct
     libsForQt5.qtstyleplugin-kvantum
     qt6Packages.qtstyleplugin-kvantum
-    xfce.thunar
+    nnn
   ];
 
   fonts.packages = with pkgs; [

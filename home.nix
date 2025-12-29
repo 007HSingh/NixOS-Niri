@@ -97,6 +97,11 @@
       theme = spicePkgs.themes.starryNight;
     };
 
+    programs.nnn = {
+      enable = true;
+      package = pkgs.nnn.override { withNerdIcons = true; }
+    };
+
     home.file = {
       ".config/kitty".source = ./config/kitty;
     };
