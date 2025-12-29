@@ -118,6 +118,7 @@
     zoxide
     starship
     bibata-cursors
+    vesktop
   ];
 
   fonts.packages = with pkgs; [
