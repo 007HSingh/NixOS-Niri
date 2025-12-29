@@ -87,6 +87,8 @@
       ls = "eza -la --icons";
       cat = "bat";
       update = "sudo nixos-rebuild switch --flake /home/harsh/nixos-config#nixos";
+      generations = "sudo nix-env --list-generations --profile /nix/var/nix/profiles/system";
+      clean = "sudo nix-collect-garbage -d";
     };
   };  
 
