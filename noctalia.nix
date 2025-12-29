@@ -23,7 +23,7 @@
       enable = true;
       settings = {
         bar = {
-	  density = "compact";
+	  density = "comfortable";
 	  position = "left";
 	  showCapsule = false;
 	  widgets = {
@@ -45,8 +45,14 @@
 		id = "Workspace";
 		labelMode = "none";
 	      }
+	      {
+	        id = "AudioVisualizer";
+	      }
 	    ];
 	    right = [
+	      {
+	        id = "MediaMini";
+	      }
 	      {
 	        alwaysShowPercentage = false;
 		id = "Battery";
@@ -59,13 +65,28 @@
 		useMonospacedFont = true;
 		usePrimaryColor = true;
 	      }
+	      {
+	        id = "Catwalk"
+	      }
 	    ];
 	  };
 	};
-	colorSchemes.predefinedScheme = "Monochrome";
+	wallpaper = {
+	  overviewEnabled = true;
+	};
+	colorSchemes.predefinedScheme = "Catppuccin";
 	location = {
 	  monthBeforeDay = true;
 	  name = "Kolkata, India";
+	};
+	templates = {
+	  gtk = true;
+	  qt = true;
+	  fuzzel = true;
+	  discord = true;
+	  pywalfox = true;
+	  cava = true;
+	  niri = true;
 	};
       };
     };
