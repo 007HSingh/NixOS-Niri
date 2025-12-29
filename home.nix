@@ -54,15 +54,11 @@
         adblock
 	hidePodcasts
 	shuffle
-	popupLyrics
 	playlistIcons
-	fullAppDisplay
       ];
       enabledCustomApps = with spicePkgs.apps; [
         newReleases
 	ncsVisualizer
-	reddit
-	lyricsPlus
       ];
       enabledSnippets = with spicePkgs.snippets; [
         rotatingCoverart
