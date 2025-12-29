@@ -66,7 +66,7 @@
 		usePrimaryColor = true;
 	      }
 	      {
-	        id = "Catwalk"
+	        id = "Catwalk";
 	      }
 	    ];
 	  };
