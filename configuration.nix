@@ -40,13 +40,7 @@
 
   i18n.defaultLocale = "en_US.UTF-8";
 
-  services.greetd = {
-    enable = true;
-    settings.default_session = {
-      command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd niri";
-      user = "greeter";
-    };
-  };
+  services.displayManager.ly.enable = true;
 
   services.xserver.xkb.layout = "us";
 
