@@ -19,6 +19,14 @@
       };
     };
 
+    home.file.".config/noctalia/plugins.json" = {
+      text = builtins.toJSON {
+        "catwalk" = {
+	  enabled = true;
+	};
+      };
+    };
+
     programs.noctalia-shell = {
       enable = true;
       settings = {
@@ -78,8 +86,8 @@
 	  name = "Kolkata, India";
 	};
 	templates = {
-	  gtk = true;
-	  qt = true;
+	  gtk = false;
+	  qt = false;
 	  fuzzel = true;
 	  discord = true;
 	  pywalfox = true;

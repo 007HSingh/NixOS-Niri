@@ -14,6 +14,16 @@
 
   gtk = {
     enable = true;
+
+    theme = {
+      name = "Catppuccin-Mocha-Standard-Blue-Dark";
+      package = pkgs.catppuccin-gtk.override {
+        accents = [ "blue" ];
+        size = "standard";
+        variant = "mocha";
+      };
+    };
+
     iconTheme = {
       name = "Papirus-Dark";
       package = pkgs.papirus-icon-theme;
@@ -31,6 +41,13 @@
   qt = {
     enable = true;
     platformTheme.name = "kvantum";
+    style = {
+      name = "kvantum";
+      package = pkgs.catppuccin-kvantum.override {
+        accent = "Blue";
+        variant = "Mocha";
+      };
+    };
   };
 
   xdg = {

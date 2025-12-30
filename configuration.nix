@@ -160,6 +160,8 @@
     bibata-cursors
     vesktop
     pywalfox-native
+    catppuccin-gtk
+    catppuccin-kvantum
     papirus-icon-theme
     libsForQt5.qt5ct
     libsForQt5.qtstyleplugin-kvantum
