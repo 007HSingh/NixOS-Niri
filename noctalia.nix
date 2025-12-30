@@ -14,7 +14,7 @@
       text = builtins.toJSON {
         defaultWallpaper = "/home/harsh/Picures/Wallpapers/wallpaper(2).png";
 	wallpapers = {
-	  "eDP-1" = "/home/harsh/Downloads/wallpaper(2).png";
+	  "eDP-1" = "/home/harsh/Pictures/Wallpapers/wallpaper(2).png";
 	};
       };
     };
