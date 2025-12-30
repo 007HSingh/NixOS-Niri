@@ -121,6 +121,11 @@
 
     home.file = {
       ".config/kitty".source = ./config/kitty;
+      "Pictures/Wallpapers".source = ./config/wallpapers;
+      ".config/nvim" = {
+        source = ./config/neovim;
+        recursive = true;
+      }
     };
 
   home.sessionVariables = {
