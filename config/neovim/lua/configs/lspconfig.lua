@@ -12,13 +12,6 @@ local servers = {
   "jdtls"
 }
 
-for _, lsp in ipairs(servers) do
-  lspconfig[lsp].setup {
-    on_attach = function(client, bufnr)
-      -- Your on_attach function here
-    end,
-    capabilities = vim.lsp.protocol.make_client_capabilities(),
-  }
-end
+vim.lsp.enable(servers)
 
 -- read :h vim.lsp.config for changing options of lsp servers 
