@@ -7,6 +7,7 @@
     ];
 
   boot = {
+    plymouth.enable = true;
     kernelParams = [
       "quiet"
       "loglevel=3"
@@ -40,7 +41,23 @@
 
   i18n.defaultLocale = "en_US.UTF-8";
 
-  services.displayManager.sddm.enable = true;
+  services.displayManager.sddm = {
+    enable = true;
+    wayland.enable = true;
+  };
+
+  catppuccin = {
+    enable = true;
+    cache.enable = true;
+    grub.enable = true;
+    grub.flavor = "mocha";
+    sddm.enable = true;
+    sddm.flavor = "mocha";
+    sddm.background = "home/harsh/Pictures/Wallpapers/wallpaper(2).png";
+    sddm.clockEnabled = true;
+    plymouth.enable = true;
+    plymouth.flavor = "mocha";
+  };
 
   services.xserver.xkb.layout = "us";
 
