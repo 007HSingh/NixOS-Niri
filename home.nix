@@ -110,6 +110,7 @@
         source = ./config/neovim;
         recursive = true;
       };
+      ".config/niri".source = ./config/niri;
     };
 
   home.sessionVariables = {
