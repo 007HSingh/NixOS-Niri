@@ -28,10 +28,17 @@
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   boot.kernel.sysctl = {
-    "vm.swappiness" = 10;  
+    "vm.swappiness" = 100;  
     "vm.vfs_cache_pressure" = 50;  
     "vm.dirty_ratio" = 10;  
     "vm.dirty_background_ratio" = 5;  
+  };
+
+  zramSwap = {
+    enable = true;
+    memoryPercent = 50;
+    algorithm = "lz4";
+    priority = 100;
   };
 
   networking.hostName = "nixos"; 
