@@ -12,7 +12,7 @@
 
     home.file.".cache/noctalia/wallpapers.json" = {
       text = builtins.toJSON {
-        defaultWallpaper = "/home/harsh/Downloads/wallpaper(2).png";
+        defaultWallpaper = "/home/harsh/Picures/Wallpapers/wallpaper(2).png";
 	wallpapers = {
 	  "eDP-1" = "/home/harsh/Downloads/wallpaper(2).png";
 	};
