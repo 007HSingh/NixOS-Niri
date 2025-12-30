@@ -115,11 +115,11 @@
           x = "extract";
           m = "mount";
         };
-        bookmarks = {
+      };
+      bookmarks = {
           b = "~/Desktop/Books";
           d = "~/Documents";
           D = "~/Downloads";
-        };
       };
     };
 
