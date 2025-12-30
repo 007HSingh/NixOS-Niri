@@ -196,6 +196,7 @@
     mediainfo
     p7zip
     evince
+    nwg-look
   ];
 
   fonts.packages = with pkgs; [
