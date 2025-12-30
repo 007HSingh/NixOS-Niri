@@ -19,14 +19,6 @@
       };
     };
 
-    home.file.".config/noctalia/plugins.json" = {
-      text = builtins.toJSON {
-        "Catwalk" = {
-	  enabled = true;
-	};
-      };
-    };
-
     programs.noctalia-shell = {
       enable = true;
       settings = {
@@ -70,10 +62,7 @@
 		id = "Clock";
 		useMonospacedFont = true;
 		usePrimaryColor = true;
-	      }
-	      {
-	        id="plugin:Catwalk";
-              }		
+	      }	
 	    ];
 	  };
 	};
@@ -86,8 +75,8 @@
 	  name = "Kolkata, India";
 	};
 	templates = {
-	  gtk = false;
-	  qt = false;
+	  gtk = true;
+	  qt = true;
 	  fuzzel = true;
 	  discord = true;
 	  pywalfox = true;
