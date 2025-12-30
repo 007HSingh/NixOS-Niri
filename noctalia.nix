@@ -63,6 +63,9 @@
 		useMonospacedFont = true;
 		usePrimaryColor = true;
 	      }
+	      {
+	        id="plugin:catwalk";
+              }		
 	    ];
 	  };
 	};

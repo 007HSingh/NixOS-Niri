@@ -6,11 +6,21 @@
       ./hardware-configuration.nix
     ];
 
-  boot.loader.grub = {
-    enable = true;
-    efiSupport = true;
-    device = "nodev";
-    useOSProber = true;
+  boot = {
+    kernelParams = [
+      "quiet"
+      "loglevel=3"
+      "rd.systemd.show_status=0"
+      "udev.log_level=3"
+    ];
+    loader = {
+      grub = {
+        enable = true;
+        efiSupport = true;
+        device = "nodev";
+        useOSProber = true;
+      };
+    };  
   };
   boot.loader.efi.canTouchEfiVariables = true;
 
@@ -42,7 +52,14 @@
 
   services.libinput.enable = true;
 
-  xdg.portal.wlr.enable = true;
+  xdg.portal = {
+    enable = true;
+    wlr.enable = true;
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-gtk
+    ];
+    config.common.default = "";
+  };  
 
   services.pipewire = {
     enable = true;
@@ -73,6 +90,8 @@
   programs.niri.enable = true;
 
   programs.starship.enable = true;
+
+  programs.gpu-screen-recorder.enable = true;
 
   programs.zsh = {
     enable = true;
@@ -109,6 +128,8 @@
       thunar-vcs-plugin
     ];
   };
+
+  security.rtkit.enable = true;
 
   environment.systemPackages = with pkgs; [ 
     wget
@@ -147,6 +168,8 @@
     xfce.thunar
     xfce.tumbler
     jetbrains.idea
+    kdePackages.okular
+    xdg-utils
   ];
 
   fonts.packages = with pkgs; [
@@ -198,6 +221,22 @@
       };
     };
   };  
+
+  security.polkit.enable = true;
+
+  systemd.user.services.polkit-gnome-authentication-agent-1 = {
+    description = "polkit-gnome-authentication-agent-1";
+    wantedBy = [ "graphical-session.target" ];
+    wants = [ "graphical-session.target" ];
+    after = [ "graphical-session.target" ];
+    serviceConfig = {
+      Type = "simple";
+      ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
+      Restart = "on-failure";
+      RestartSec = 1;
+      TimeoutStopSec = 10;
+    };
+  };
 
   system.stateVersion = "25.11"; 
 
