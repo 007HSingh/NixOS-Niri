@@ -188,7 +188,7 @@
     black
     rustfmt
     shfmt
-    javaPackages.compiler.temurin-bin.jre-21
+    javaPackages.compiler.temurin-bin.jdk-21
   ];
 
   fonts.packages = with pkgs; [
