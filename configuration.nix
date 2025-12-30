@@ -195,6 +195,7 @@
     ffmpegthumbnailer
     mediainfo
     p7zip
+    evince
   ];
 
   fonts.packages = with pkgs; [
