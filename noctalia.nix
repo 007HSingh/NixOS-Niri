@@ -21,7 +21,7 @@
 
     home.file.".config/noctalia/plugins.json" = {
       text = builtins.toJSON {
-        "catwalk" = {
+        "Catwalk" = {
 	  enabled = true;
 	};
       };
@@ -72,7 +72,7 @@
 		usePrimaryColor = true;
 	      }
 	      {
-	        id="plugin:catwalk";
+	        id="plugin:Catwalk";
               }		
 	    ];
 	  };
