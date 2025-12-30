@@ -239,6 +239,8 @@
 
   services.upower.enable = true;
 
+  services.gvfs.enable = true;
+
   services.tumbler.enable = true;
 
   services.xserver = {
