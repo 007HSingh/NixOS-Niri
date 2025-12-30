@@ -120,6 +120,8 @@
 
   programs.dconf.enable = true;
 
+  programs.evince.enable = true;
+
   programs.thunar = {
     enable = true;
     plugins = with pkgs.xfce; [
@@ -169,8 +171,7 @@
     nnn
     xfce.thunar
     xfce.tumbler
-    jetbrains.idea
-    kdePackages.okular
+    jetbrains.idea  
     xdg-utils
     gcc
     unzip
@@ -189,6 +190,11 @@
     rustfmt
     shfmt
     javaPackages.compiler.temurin-bin.jdk-21
+    file
+    chafa
+    ffmpegthumbnailer
+    mediainfo
+    p7zip
   ];
 
   fonts.packages = with pkgs; [
