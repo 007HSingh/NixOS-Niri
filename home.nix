@@ -125,7 +125,7 @@
       ".config/nvim" = {
         source = ./config/neovim;
         recursive = true;
-      }
+      };
     };
 
   home.sessionVariables = {
