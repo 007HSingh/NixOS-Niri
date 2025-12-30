@@ -40,10 +40,7 @@
 
   i18n.defaultLocale = "en_US.UTF-8";
 
-  services.displayManager.gdm = {
-    enable = true;
-    wayland = true;
-  };
+  services.displayManager.sddm.enable = true;
 
   services.xserver.xkb.layout = "us";
 
