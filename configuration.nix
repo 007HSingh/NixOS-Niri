@@ -172,6 +172,8 @@
     jetbrains.idea
     kdePackages.okular
     xdg-utils
+    gcc
+    unzip
   ];
 
   fonts.packages = with pkgs; [
