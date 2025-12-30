@@ -45,7 +45,7 @@
       name = "kvantum";
       package = pkgs.catppuccin-kvantum.override {
         accent = "teal";
-        variant = "Mocha";
+        variant = "mocha";
       };
     };
   };
