@@ -174,6 +174,20 @@
     xdg-utils
     gcc
     unzip
+    nil
+    lua-language-server
+    rust-analyzer
+    pyright
+    bash-language-server
+    jdt-language-server
+    clang-tools
+    marksman
+    nixfmt
+    stylua
+    prettier
+    black
+    rustfmt
+    shfmt
   ];
 
   fonts.packages = with pkgs; [
