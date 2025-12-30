@@ -18,7 +18,7 @@
     theme = {
       name = "Catppuccin-Mocha-Standard-Blue-Dark";
       package = pkgs.catppuccin-gtk.override {
-        accents = [ "blue" ];
+        accents = [ "teal" ];
         size = "standard";
         variant = "mocha";
       };
@@ -44,7 +44,7 @@
     style = {
       name = "kvantum";
       package = pkgs.catppuccin-kvantum.override {
-        accent = "Blue";
+        accent = "Teal";
         variant = "Mocha";
       };
     };
