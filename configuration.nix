@@ -213,7 +213,7 @@
     bibata-cursors
     vesktop
     pywalfox-native
-    everforest-gtk-theme
+    catppuccin-gtk
     papirus-icon-theme
     nnn
     xfce.thunar

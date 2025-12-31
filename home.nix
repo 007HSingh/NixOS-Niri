@@ -143,10 +143,6 @@
   };
 
   home.file = {
-    ".config/kitty" = {
-      source = ./config/kitty;
-      recursive = true;
-    };
     "Pictures/Wallpapers".source = ./config/wallpapers;
     ".config/nvim" = {
       source = ./config/neovim;
