@@ -247,6 +247,7 @@
     fastfetch
     gh
     delta
+    keepassxc
   ];
 
   fonts.packages = with pkgs; [
