@@ -214,11 +214,7 @@
     vesktop
     pywalfox-native
     everforest-gtk-theme
-    catppuccin-kvantum
     papirus-icon-theme
-    libsForQt5.qt5ct
-    libsForQt5.qtstyleplugin-kvantum
-    qt6Packages.qtstyleplugin-kvantum
     nnn
     xfce.thunar
     xfce.tumbler
