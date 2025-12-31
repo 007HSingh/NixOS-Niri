@@ -115,33 +115,6 @@
       theme = spicePkgs.themes.starryNight;
     };
 
-  programs.nnn = {
-    enable = true;
-    package = pkgs.nnn.override { withNerdIcons = true; };
-    plugins = {
-      src =
-        (pkgs.fetchFromGitHub {
-          owner = "jarun";
-          repo = "nnn";
-          rev = "v4.0";
-          hash = "sha256-Hpc8YaJeAzJoEi7aJ6DntH2VLkoR6ToP6tPYn3llR7k=";
-        })
-        + "plugins";
-      mappings = {
-        p = "preview-tui";
-        f = "q";
-        o = "openwith";
-        x = "extract";
-        m = "mount";
-      };
-    };
-    bookmarks = {
-      b = "~/Desktop/Books";
-      d = "~/Documents";
-      D = "~/Downloads";
-    };
-  };
-
   home.file = {
     "Pictures/Wallpapers".source = ./config/wallpapers;
     ".config/nvim" = {

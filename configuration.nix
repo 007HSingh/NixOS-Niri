@@ -213,7 +213,6 @@
     pywalfox-native
     catppuccin-gtk
     papirus-icon-theme
-    nnn
     xfce.thunar
     xfce.tumbler
     jetbrains.idea
