@@ -148,6 +148,11 @@
       source = ./config/neovim;
       recursive = true;
     };
+    ".config/kitty" = {
+      source = ./config/kitty;
+      recursive = true;
+    };
+    ".config/niri".source = ./config/niri;
   };
 
   home.sessionVariables = {
