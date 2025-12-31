@@ -34,11 +34,6 @@
     };
   };
 
-  qt = {
-    enable = true;
-    platformTheme.name = "kvantum";
-  };
-
   xdg = {
     enable = true;
     userDirs = {
@@ -148,6 +143,10 @@
   };
 
   home.file = {
+    ".config/kitty" = {
+      source = ./config/kitty;
+      recursive = true;
+    };
     "Pictures/Wallpapers".source = ./config/wallpapers;
     ".config/nvim" = {
       source = ./config/neovim;
@@ -157,8 +156,6 @@
   };
 
   home.sessionVariables = {
-    QT_QPA_PLATFORMTHEME = "kvantum";
-    QT_STYLE_OVERRIDE = "kvantum";
     EDITOR = "nvim";
     VISUAL = "nvim";
     BROWSER = "firefox";
