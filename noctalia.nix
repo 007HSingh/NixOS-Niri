@@ -69,7 +69,7 @@
         wallpaper = {
           overviewEnabled = true;
         };
-        colorSchemes.predefinedScheme = "Catppuccin";
+        colorSchemes.predefinedScheme = "Everforest";
         location = {
           monthBeforeDay = true;
           name = "Kolkata, India";
