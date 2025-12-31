@@ -1,4 +1,9 @@
-{ config, pkgs, inputs, ... }: 
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 
 {
   home.username = "harsh";
@@ -39,7 +44,7 @@
     userDirs = {
       enable = true;
       createDirectories = true;
-    };  
+    };
   };
 
   programs.git = {
@@ -56,26 +61,43 @@
         ci = "commit";
         lg = "log --oneline --graph --decorate";
       };
-    };  
+    };
   };
 
   programs.zsh = {
     enable = true;
-    dotDir = "${config.xdg.configHome}/zsh"; 
+    dotDir = "${config.xdg.configHome}/zsh";
     initContent = ''
-      eval "$(zoxide init zsh)"
+            eval "$(zoxide init zsh)"
 
-      source ${pkgs.fzf}/share/fzf/key-bindings.zsh
-      source ${pkgs.fzf}/share/fzf/completion.zsh
+      autoload -Uz compinit
+          compinit
+          zstyle ':completion:*' menu select
+          zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+
+            source ${pkgs.fzf}/share/fzf/key-bindings.zsh
+            source ${pkgs.fzf}/share/fzf/completion.zsh
     '';
     history = {
       size = 10000;
       path = "${config.home.homeDirectory}/.zsh_history";
     };
+    shellAliases = {
+      gs = "git status";
+      ga = "git add";
+      gc = "git commit";
+      gp = "git push";
+      gl = "git pull";
+      gd = "git diff";
+
+      ".." = "cd ..";
+      "..." = "cd ../..";
+      "...." = "cd ../../..";
+    };
   };
 
   programs.spicetify =
-    let 
+    let
       spicePkgs = inputs.spicetify.legacyPackages.${pkgs.stdenv.hostPlatform.system};
     in
     {
@@ -83,58 +105,64 @@
 
       enabledExtensions = with spicePkgs.extensions; [
         adblock
-	hidePodcasts
-	shuffle
-	playlistIcons
+        hidePodcasts
+        shuffle
+        playlistIcons
       ];
       enabledCustomApps = with spicePkgs.apps; [
         newReleases
-	ncsVisualizer
+        ncsVisualizer
       ];
       enabledSnippets = with spicePkgs.snippets; [
         rotatingCoverart
-	pointer
+        pointer
       ];
       theme = spicePkgs.themes.starryNight;
     };
 
-    programs.nnn = {
-      enable = true;
-      package = pkgs.nnn.override { withNerdIcons = true; };
-      plugins = {
-        src = (pkgs.fetchFromGitHub {
+  programs.nnn = {
+    enable = true;
+    package = pkgs.nnn.override { withNerdIcons = true; };
+    plugins = {
+      src =
+        (pkgs.fetchFromGitHub {
           owner = "jarun";
           repo = "nnn";
           rev = "v4.0";
           hash = "sha256-Hpc8YaJeAzJoEi7aJ6DntH2VLkoR6ToP6tPYn3llR7k=";
-        }) + "plugins";
-        mappings = {
-          p = "preview-tui";
-          f = "q";
-          o = "openwith";
-          x = "extract";
-          m = "mount";
-        };
-      };
-      bookmarks = {
-          b = "~/Desktop/Books";
-          d = "~/Documents";
-          D = "~/Downloads";
+        })
+        + "plugins";
+      mappings = {
+        p = "preview-tui";
+        f = "q";
+        o = "openwith";
+        x = "extract";
+        m = "mount";
       };
     };
+    bookmarks = {
+      b = "~/Desktop/Books";
+      d = "~/Documents";
+      D = "~/Downloads";
+    };
+  };
 
-    home.file = {
-      ".config/kitty".source = ./config/kitty;
-      "Pictures/Wallpapers".source = ./config/wallpapers;
-      ".config/nvim" = {
-        source = ./config/neovim;
-        recursive = true;
-      };
-      ".config/niri".source = ./config/niri;
+  home.file = {
+    ".config/kitty".source = ./config/kitty;
+    "Pictures/Wallpapers".source = ./config/wallpapers;
+    ".config/nvim" = {
+      source = ./config/neovim;
+      recursive = true;
     };
+    ".config/niri".source = ./config/niri;
+  };
 
   home.sessionVariables = {
     QT_QPA_PLATFORMTHEME = "kvantum";
     QT_STYLE_OVERRIDE = "kvantum";
+    EDITOR = "nvim";
+    VISUAL = "nvim";
+    BROWSER = "firefox";
+    TERMINAL = "kitty";
   };
 }

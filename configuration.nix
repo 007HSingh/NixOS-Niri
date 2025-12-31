@@ -1,10 +1,14 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
-  imports =
-    [ 
-      ./hardware-configuration.nix
-    ];
+  imports = [
+    ./hardware-configuration.nix
+  ];
 
   boot = {
     plymouth.enable = true;
@@ -21,17 +25,17 @@
         device = "nodev";
         useOSProber = true;
       };
-    };  
+    };
   };
   boot.loader.efi.canTouchEfiVariables = true;
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   boot.kernel.sysctl = {
-    "vm.swappiness" = 100;  
-    "vm.vfs_cache_pressure" = 50;  
-    "vm.dirty_ratio" = 10;  
-    "vm.dirty_background_ratio" = 5;  
+    "vm.swappiness" = 60;
+    "vm.vfs_cache_pressure" = 50;
+    "vm.dirty_ratio" = 10;
+    "vm.dirty_background_ratio" = 5;
   };
 
   zramSwap = {
@@ -41,8 +45,15 @@
     priority = 100;
   };
 
-  networking.hostName = "nixos"; 
+  networking.hostName = "nixos";
+
   networking.networkmanager.enable = true;
+
+  networking.firewall = {
+    enable = true;
+    allowedTCPPorts = [ ];
+    allowedUDPPorts = [ ];
+  };
 
   time.timeZone = "Asia/Kolkata";
 
@@ -61,12 +72,15 @@
     sddm.enable = true;
     sddm.flavor = "mocha";
     sddm.background = "home/harsh/Pictures/Wallpapers/wallpaper(2).png";
+    sddm.loginBackground = true;
     sddm.clockEnabled = true;
     plymouth.enable = true;
     plymouth.flavor = "mocha";
   };
 
   services.xserver.xkb.layout = "us";
+
+  services.fstrim.enable = true;
 
   services.libinput.enable = true;
 
@@ -76,8 +90,8 @@
     extraPortals = with pkgs; [
       xdg-desktop-portal-gtk
     ];
-    config.common.default = "";
-  };  
+    config.common.default = "*";
+  };
 
   services.pipewire = {
     enable = true;
@@ -90,7 +104,10 @@
     isNormalUser = true;
     shell = pkgs.zsh;
     description = "Harsh Singh";
-    extraGroups = [ "networkmanager" "wheel" ]; 
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
     packages = with pkgs; [
       tree
     ];
@@ -123,8 +140,8 @@
       enable = true;
       plugins = [
         "git"
-	"starship"
-	"colored-man-pages"
+        "starship"
+        "colored-man-pages"
       ];
     };
     shellAliases = {
@@ -149,11 +166,27 @@
     ];
   };
 
-  security.rtkit.enable = true;
+  security = {
+    rtkit.enable = true;
 
-  environment.systemPackages = with pkgs; [ 
-    wget
-    git 
+    sudo.wheelNeedsPassword = true;
+    apparmor.enable = true;
+
+    doas = {
+      enable = true;
+      extraRules = [
+        {
+          users = [ "harsh" ];
+          keepEnv = true;
+          persist = true;
+        }
+      ];
+    };
+  };
+
+  environment.systemPackages = with pkgs; [
+    wget2
+    git
     kitty
     niri
     xwayland-satellite
@@ -189,7 +222,7 @@
     nnn
     xfce.thunar
     xfce.tumbler
-    jetbrains.idea  
+    jetbrains.idea
     xdg-utils
     gcc
     unzip
@@ -215,6 +248,12 @@
     p7zip
     evince
     nwg-look
+    jq
+    yq
+    hyperfine
+    fastfetch
+    gh
+    delta
   ];
 
   fonts.packages = with pkgs; [
@@ -223,7 +262,10 @@
 
   nix = {
     settings = {
-      experimental-features = [ "nix-command" "flakes" ];
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
       auto-optimise-store = true;
     };
     gc = {
@@ -267,7 +309,11 @@
         nvidiaBusId = "PCI:1:0:0";
       };
     };
-  };  
+  };
+
+  environment.sessionVariables = {
+    NIXOS_OZONE_WL = "1";
+  };
 
   security.polkit.enable = true;
 
@@ -285,7 +331,6 @@
     };
   };
 
-  system.stateVersion = "25.11"; 
+  system.stateVersion = "25.11";
 
 }
-
