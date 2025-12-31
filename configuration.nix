@@ -213,7 +213,7 @@
     bibata-cursors
     vesktop
     pywalfox-native
-    catppuccin-gtk
+    everforest-gtk-theme
     catppuccin-kvantum
     papirus-icon-theme
     libsForQt5.qt5ct
