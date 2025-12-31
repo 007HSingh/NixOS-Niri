@@ -71,8 +71,6 @@
     grub.flavor = "mocha";
     sddm.enable = true;
     sddm.flavor = "mocha";
-    sddm.background = "home/harsh/Pictures/Wallpapers/wallpaper(2).png";
-    sddm.loginBackground = true;
     sddm.clockEnabled = true;
     plymouth.enable = true;
     plymouth.flavor = "mocha";
