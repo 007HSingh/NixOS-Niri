@@ -99,6 +99,7 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     jack.enable = true;
+    wireplumber.enable = true;
   };
 
   users.users.harsh = {
@@ -108,6 +109,8 @@
     extraGroups = [
       "networkmanager"
       "wheel"
+      "audio"
+      "video"
     ];
     packages = with pkgs; [
       tree
