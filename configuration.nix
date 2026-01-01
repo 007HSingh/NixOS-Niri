@@ -207,7 +207,6 @@
     lazygit
     starship
     stable.discord
-    stable.vesktop
     pywalfox-native
     xfce.thunar
     xfce.tumbler
