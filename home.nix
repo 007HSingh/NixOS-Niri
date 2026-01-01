@@ -5,6 +5,18 @@
   ...
 }:
 
+let
+  dotfiles = "${config.home.homeDirectory}/nixos-config/config";
+  create_symlink = path: config.lib.file.mkOutOfStoreSymlink path;
+  configs = {
+    kitty = "kitty";
+    nvim = "neovim";
+    niri = "niri";
+    fuzzel = "fuzzel";
+    vesktop = "vesktop";
+  };
+in
+
 {
   home.username = "harsh";
   home.homeDirectory = "/home/harsh";
@@ -115,18 +127,60 @@
       theme = spicePkgs.themes.starryNight;
     };
 
+  xdg.configFile = builtins.mapAttrs (name: subpath: {
+    source = create_symlink "${dotfiles}/${subpath}";
+    recursive = true;
+  }) configs;
+
   home.file = {
     "Pictures/Wallpapers".source = ./config/wallpapers;
-    ".config/nvim" = {
-      source = ./config/neovim;
-      recursive = true;
-    };
-    ".config/kitty" = {
-      source = ./config/kitty;
-      recursive = true;
-    };
-    ".config/niri".source = ./config/niri;
+    #  ".config/nvim" = {
+    #    source = ./config/neovim;
+    #    recursive = true;
+    #  };
+    #  ".config/kitty" = {
+    #    source = ./config/kitty;
+    #    recursive = true;
+    #  };
+    #  ".config/niri".source = ./config/niri;
   };
+
+  home.package = with pkgs; [
+    cava
+    eza
+    bat
+    obsidian
+    ripgrep
+    fd
+    fzf
+    lazygit
+    zoxide
+    bibata-cursors
+    catppuccin-gtk
+    papirus-icon-theme
+    gcc
+    unzip
+    nil
+    lua-language-server
+    rust-analyzer
+    pyright
+    bash-language-server
+    jdt-language-server
+    clang-tools
+    marksman
+    nixfmt
+    stylua
+    prettier
+    black
+    rustfmt
+    shfmt
+    javaPackages.compiler.temurin-bin.jdk-21
+    p7zip
+    jq
+    yq
+    hyperfine
+    keepassxc
+  ];
 
   home.sessionVariables = {
     EDITOR = "nvim";

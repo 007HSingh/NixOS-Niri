@@ -193,61 +193,28 @@
     wayclip
     brightnessctl
     cliphist
-    cava
     wlsunset
-    eza
-    bat
-    obsidian
     spotify
-    vlc
     btop
-    ripgrep
-    fd
-    fzf
+    vlc
     fastfetch
     lazygit
-    zoxide
     starship
-    bibata-cursors
     vesktop
     pywalfox-native
-    catppuccin-gtk
-    papirus-icon-theme
     xfce.thunar
     xfce.tumbler
     jetbrains.idea
     xdg-utils
-    gcc
-    unzip
-    nil
-    lua-language-server
-    rust-analyzer
-    pyright
-    bash-language-server
-    jdt-language-server
-    clang-tools
-    marksman
-    nixfmt
-    stylua
-    prettier
-    black
-    rustfmt
-    shfmt
-    javaPackages.compiler.temurin-bin.jdk-21
     file
     chafa
     ffmpegthumbnailer
     mediainfo
-    p7zip
     evince
     nwg-look
-    jq
-    yq
-    hyperfine
     fastfetch
     gh
     delta
-    keepassxc
   ];
 
   fonts.packages = with pkgs; [
