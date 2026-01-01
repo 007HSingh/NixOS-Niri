@@ -125,7 +125,7 @@ in
         rotatingCoverart
         pointer
       ];
-      theme = spicePkgs.themes.starryNight;
+      theme = spicePkgs.themes.catppuccin;
     };
 
   xdg.configFile = builtins.mapAttrs (name: subpath: {
@@ -139,6 +139,8 @@ in
 
   home.packages = with pkgs; [
     cava
+    poppler
+    resvg
     eza
     bat
     obsidian
