@@ -1,7 +1,8 @@
 {
   config,
   pkgs,
-  inputs,
+  stable,
+  unstable,
   ...
 }:
 
@@ -133,15 +134,6 @@ in
 
   home.file = {
     "Pictures/Wallpapers".source = ./config/wallpapers;
-    #  ".config/nvim" = {
-    #    source = ./config/neovim;
-    #    recursive = true;
-    #  };
-    #  ".config/kitty" = {
-    #    source = ./config/kitty;
-    #    recursive = true;
-    #  };
-    #  ".config/niri".source = ./config/niri;
   };
 
   home.packages = with pkgs; [
@@ -178,7 +170,7 @@ in
     jq
     yq
     hyperfine
-    keepassxc
+    stable.keepassxc
   ];
 
   home.sessionVariables = {
