@@ -109,8 +109,7 @@
     extraGroups = [
       "networkmanager"
       "wheel"
-      "audio"
-      "video"
+      "docker"
     ];
     packages = with pkgs; [
       tree
@@ -146,6 +145,8 @@
         "git"
         "starship"
         "colored-man-pages"
+        "docker"
+        "kubectl"
       ];
     };
     shellAliases = {
@@ -223,6 +224,7 @@
     fastfetch
     gh
     delta
+    docker-compose
   ];
 
   fonts.packages = with pkgs; [
@@ -297,6 +299,19 @@
       Restart = "on-failure";
       RestartSec = 1;
       TimeoutStopSec = 10;
+    };
+  };
+
+  virtualisation.docker = {
+    enable = true;
+    daemon.settings = {
+      experimental = true;
+      default-address-pools = [
+        {
+          base = "172.30.0.0/16";
+          size = 24;
+        }
+      ];
     };
   };
 
