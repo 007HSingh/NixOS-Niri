@@ -76,15 +76,16 @@ in
     enable = true;
     dotDir = "${config.xdg.configHome}/zsh";
     initContent = ''
-            eval "$(zoxide init zsh)"
+      eval "$(zoxide init zsh)"
+      eval "$(direnv hook zsh)"
 
       autoload -Uz compinit
-          compinit
-          zstyle ':completion:*' menu select
-          zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+      compinit
+      zstyle ':completion:*' menu select
+      zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 
-            source ${pkgs.fzf}/share/fzf/key-bindings.zsh
-            source ${pkgs.fzf}/share/fzf/completion.zsh
+      source ${pkgs.fzf}/share/fzf/key-bindings.zsh
+      source ${pkgs.fzf}/share/fzf/completion.zsh
     '';
     history = {
       size = 10000;
