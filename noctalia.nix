@@ -1,7 +1,7 @@
 { pkgs, inputs, ... }:
 
 {
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages = [
     inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 
@@ -10,11 +10,42 @@
       inputs.noctalia.homeModules.default
     ];
 
+    home.file.".config/noctalia/plugins" = {
+      recursive = true;
+      source = pkgs.fetchFromGitHub {
+        owner = "noctalia-dev";
+        repo = "noctalia-plugins";
+        rev = "c3e10d4c3f0b61085c67922fc12ffa6a4738cd33";
+        hash = "sha256-OKWspRl7BmNtFQRnItDWy0cEFZ698DjeN5IXi28o2Rs=";
+        sparseCheckout = [
+          "catwalk"
+        ];
+      };
+    };
+
     home.file.".cache/noctalia/wallpapers.json" = {
       text = builtins.toJSON {
-        defaultWallpaper = "/home/harsh/Pictures/Wallpapers/wallpaper(2).png";
+        defaultWallpaper = "/home/harsh/Pictures/Wallpapers/wallpaper(9).png";
         wallpapers = {
-          "eDP-1" = "/home/harsh/Pictures/Wallpapers/wallpaper(2).png";
+          "eDP-1" = "/home/harsh/Pictures/Wallpapers/wallpaper(9).png";
+        };
+      };
+    };
+
+    home.file.".config/noctalia/plugins.json" = {
+      text = builtins.toJSON {
+        sources = [
+          {
+            enabled = true;
+            name = "Official Noctalia Plugins";
+            url = "https://github.com/noctalia-dev/noctalia-plugins";
+
+          }
+        ];
+        states = {
+          catwalk = {
+            enabled = true;
+          };
         };
       };
     };
@@ -69,7 +100,7 @@
         wallpaper = {
           overviewEnabled = true;
         };
-        colorSchemes.predefinedScheme = "Everforest";
+        colorSchemes.predefinedScheme = "Catppuccin";
         location = {
           monthBeforeDay = true;
           name = "Kolkata, India";
@@ -77,6 +108,7 @@
         templates = {
           gtk = true;
           qt = true;
+          kitty = true;
           fuzzel = true;
           pywalfox = true;
           cava = true;
