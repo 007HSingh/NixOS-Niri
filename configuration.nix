@@ -54,7 +54,12 @@
   networking.firewall = {
     enable = true;
     allowedTCPPorts = [ ];
-    allowedUDPPorts = [ ];
+    allowedUDPPorts = [
+      {
+        from = 50000;
+        to = 65535;
+      }
+    ];
   };
 
   time.timeZone = "Asia/Kolkata";
