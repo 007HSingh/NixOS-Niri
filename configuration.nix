@@ -51,6 +51,12 @@
 
   networking.networkmanager.enable = true;
 
+  networking.firewall = {
+    enable = true;
+    allowedTCPPorts = [ ];
+    allowedUDPPorts = [ ];
+  };
+
   time.timeZone = "Asia/Kolkata";
 
   i18n.defaultLocale = "en_US.UTF-8";
