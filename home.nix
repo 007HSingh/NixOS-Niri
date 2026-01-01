@@ -126,6 +126,7 @@ in
         pointer
       ];
       theme = spicePkgs.themes.catppuccin;
+      colorScheme = "mocha";
     };
 
   xdg.configFile = builtins.mapAttrs (name: subpath: {
