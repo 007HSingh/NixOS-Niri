@@ -13,7 +13,6 @@ let
     nvim = "neovim";
     niri = "niri";
     fuzzel = "fuzzel";
-    vesktop = "vesktop";
   };
 in
 
