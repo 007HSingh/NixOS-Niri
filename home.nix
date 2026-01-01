@@ -145,7 +145,7 @@ in
     #  ".config/niri".source = ./config/niri;
   };
 
-  home.package = with pkgs; [
+  home.packages = with pkgs; [
     cava
     eza
     bat
