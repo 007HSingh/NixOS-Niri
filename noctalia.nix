@@ -25,9 +25,9 @@
 
     home.file.".cache/noctalia/wallpapers.json" = {
       text = builtins.toJSON {
-        defaultWallpaper = "/home/harsh/Pictures/Wallpapers/wallpaper(9).jpg";
+        defaultWallpaper = "/home/harsh/Pictures/Wallpapers/wallpaper(7).png";
         wallpapers = {
-          "eDP-1" = "/home/harsh/Pictures/Wallpapers/wallpaper(9).jpg";
+          "eDP-1" = "/home/harsh/Pictures/Wallpapers/wallpaper(7).png";
         };
       };
     };
@@ -93,6 +93,9 @@
                 id = "Clock";
                 useMonospacedFont = true;
                 usePrimaryColor = true;
+              }
+              {
+                id = "plugin:catwalk";
               }
             ];
           };
