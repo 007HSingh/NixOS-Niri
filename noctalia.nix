@@ -78,7 +78,6 @@
           gtk = true;
           qt = true;
           fuzzel = true;
-          discord = true;
           pywalfox = true;
           cava = true;
           niri = true;

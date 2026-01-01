@@ -51,14 +51,6 @@
 
   networking.networkmanager.enable = true;
 
-  # networking.firewall = {
-  #  enable = true;
-  #  allowedTCPPorts = [ ];
-  #  allowedUDPPorts = [
-
-  #  ];
-  # };
-
   time.timeZone = "Asia/Kolkata";
 
   i18n.defaultLocale = "en_US.UTF-8";
@@ -208,7 +200,7 @@
     fastfetch
     lazygit
     starship
-    vesktop
+    stable.discord
     pywalfox-native
     xfce.thunar
     xfce.tumbler
