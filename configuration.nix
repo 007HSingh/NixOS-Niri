@@ -158,6 +158,8 @@
     };
   };
 
+  programs.direnv.enable = true;
+
   programs.dconf.enable = true;
 
   programs.evince.enable = true;
