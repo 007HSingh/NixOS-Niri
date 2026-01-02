@@ -253,6 +253,8 @@
     gh
     delta
     docker-compose
+    android-studio
+    android-tools
   ];
 
   fonts.packages = with pkgs; [
