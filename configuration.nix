@@ -230,6 +230,7 @@
     gh
     delta
     docker-compose
+    openvpn
   ];
 
   fonts.packages = with pkgs; [
@@ -249,6 +250,11 @@
       dates = "weekly";
       options = "--delete-older-than 30d";
     };
+  };
+
+  services.openvpn.servers.protonvpn = {
+    config = /etc/openvpn/protonvpn.ovpn;
+    enable = true;
   };
 
   services.blueman.enable = true;
