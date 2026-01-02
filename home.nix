@@ -102,6 +102,9 @@ in
       ".." = "cd ..";
       "..." = "cd ../..";
       "...." = "cd ../../..";
+
+      "vpn-enable" = "sudo systemctl enable openvpn-client@protonvpn";
+      "vpn-start" = "sudo systemctl start openvpn-client@protonvpn";
     };
   };
 
@@ -117,6 +120,7 @@ in
         hidePodcasts
         shuffle
         playlistIcons
+        beautifulLyrics
       ];
       enabledCustomApps = with spicePkgs.apps; [
         newReleases
@@ -170,7 +174,7 @@ in
     black
     rustfmt
     shfmt
-    javaPackages.compiler.temurin-bin.jdk-21
+    jdk21_headless
     p7zip
     jq
     yq
