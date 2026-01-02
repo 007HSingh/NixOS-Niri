@@ -259,7 +259,7 @@
 
   services.openvpn.servers = {
     protonvpn = {
-      config = ''config /home/harsh/Downloads//protonvpn.ovpn '';
+      config = "config ${./protonvpn.ovpn}";
       updateResolvConf = true;
     };
   };
