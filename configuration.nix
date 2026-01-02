@@ -49,7 +49,12 @@
 
   networking.hostName = "nixos";
 
-  networking.networkmanager.enable = true;
+  networking.networkmanager = {
+    enable = true;
+    plugins = [
+      stable.networkmanager-openvpn
+    ];
+  };
 
   networking.firewall = {
     enable = true;
@@ -230,7 +235,7 @@
     gh
     delta
     docker-compose
-    openvpn
+    stable.openvpn
   ];
 
   fonts.packages = with pkgs; [
@@ -252,9 +257,11 @@
     };
   };
 
-  services.openvpn.servers.protonvpn = {
-    config = /etc/openvpn/protonvpn.ovpn;
-    enable = true;
+  services.openvpn.servers = {
+    protonvpn = {
+      config = ''config /etc/openvpn/protonvpn.ovpn '';
+      updateResolvConf = true;
+    };
   };
 
   services.blueman.enable = true;
