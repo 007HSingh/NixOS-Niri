@@ -103,7 +103,7 @@ in
       "..." = "cd ../..";
       "...." = "cd ../../..";
 
-      "vpn-start" = "sudo systemctl start openvpn-protonvpn.service";
+      vpn-start = "sudo systemctl start openvpn-protonvpn.service";
     };
   };
 
