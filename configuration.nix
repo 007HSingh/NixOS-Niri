@@ -56,23 +56,23 @@
     ];
   };
 
-  networking.wg-quick.interfaces = {
-    wg0 = {
-      address = [ "10.2.0.2/32" ];
-      dns = [ "10.2.0.1" ];
-      privateKeyFile = "/root/wg/private.key";
-      peers = [
-        {
-          publicKey = "dgVvjsBPhkKantancTMGlcd10ikyQjCtSTG2muBjvHA=";
-          allowedIPs = [
-            "0.0.0.0/0"
-            "::/0"
-          ];
-          endpoint = "146.70.246.114:51820";
-        }
-      ];
-    };
-  };
+  # networking.wg-quick.interfaces = {
+  #   wg0 = {
+  #     address = [ "10.2.0.2/32" ];
+  #     dns = [ "10.2.0.1" ];
+  #     privateKeyFile = "/root/wg/private.key";
+  #     peers = [
+  #       {
+  #         publicKey = "dgVvjsBPhkKantancTMGlcd10ikyQjCtSTG2muBjvHA=";
+  #         allowedIPs = [
+  #           "0.0.0.0/0"
+  #           "::/0"
+  #         ];
+  #         endpoint = "146.70.246.114:51820";
+  #       }
+  #     ];
+  #   };
+  # };
 
   networking.firewall = {
     enable = true;
