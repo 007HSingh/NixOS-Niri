@@ -176,6 +176,7 @@ in
     yq
     hyperfine
     stable.keepassxc
+    jdk25_headless
   ];
 
   home.sessionVariables = {
