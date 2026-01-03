@@ -171,13 +171,11 @@ in
     black
     rustfmt
     shfmt
-    jdk21_headless
     p7zip
     jq
     yq
     hyperfine
     stable.keepassxc
-    jdk25_headless
   ];
 
   home.sessionVariables = {

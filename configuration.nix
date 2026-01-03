@@ -255,6 +255,8 @@
     docker-compose
     android-studio
     android-tools
+    jdk25_headless
+    jdk21_headless
   ];
 
   fonts.packages = with pkgs; [
