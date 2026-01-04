@@ -133,6 +133,7 @@
       "networkmanager"
       "wheel"
       "docker"
+      "kvm"
     ];
     packages = with pkgs; [
       tree
