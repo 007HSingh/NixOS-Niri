@@ -177,6 +177,7 @@ in
     hyperfine
     stable.keepassxc
     jdk25_headless
+    appflowy
   ];
 
   home.sessionVariables = {
