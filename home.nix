@@ -17,7 +17,7 @@ let
     fuzzel = "fuzzel";
     fastfetch = "fastfetch";
     btop = "btop";
-    emacs = "emacs";
+    # emacs = "emacs";
   };
 in
 
@@ -137,21 +137,6 @@ in
   programs.emacs = {
     enable = true;
     package = pkgs.emacs-pgtk;
-    extraPackages =
-      epkgs: with epkgs; [
-        use-package
-        evil
-        evil-collection
-        paredit
-        rainbow-delimiters
-        slime
-        slime-company
-        company
-        doom-themes
-        doom-modeline
-        which-key
-        magit
-      ];
   };
 
   xdg.configFile = builtins.mapAttrs (name: subpath: {
@@ -210,7 +195,6 @@ in
     jdk25_headless
     appflowy
     inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
-    sbcl
   ];
 
   home.sessionVariables = {
