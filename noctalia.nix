@@ -15,8 +15,8 @@
       source = pkgs.fetchFromGitHub {
         owner = "noctalia-dev";
         repo = "noctalia-plugins";
-        rev = "e3bb9e42a827acabe07fee42858e93edc0deff0b";
-        hash = "sha256-S1P7y0FvYMO9IAKblGM/CN5ELHMESaFlhMOzaVUXSlg=";
+        rev = "4881988b10e1785530e6fb7f07ada6ad3ec035a1";
+        hash = "sha256-KhnBRNBu56Z3zgESNcrbu7XPSEtqROCkylFM0nGKQxo=";
         sparseCheckout = [
           "catwalk"
         ];
