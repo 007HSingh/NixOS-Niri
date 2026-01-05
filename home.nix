@@ -17,6 +17,7 @@ let
     fuzzel = "fuzzel";
     fastfetch = "fastfetch";
     btop = "btop";
+    emacs = "emacs";
   };
 in
 
@@ -133,6 +134,26 @@ in
       colorScheme = "mocha";
     };
 
+  programs.emacs = {
+    enable = true;
+    package = pkgs.emacs-pgtk;
+    extraPackages =
+      epkgs: with epkgs; [
+        use-package
+        evil
+        evil-collection
+        paredit
+        rainbow-delimiters
+        slime
+        slime-company
+        company
+        doom-themes
+        doom-modeline
+        which-key
+        magit
+      ];
+  };
+
   xdg.configFile = builtins.mapAttrs (name: subpath: {
     source = create_symlink "${dotfiles}/${subpath}";
     recursive = true;
@@ -189,6 +210,7 @@ in
     jdk25_headless
     appflowy
     inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
+    sbcl
   ];
 
   home.sessionVariables = {
