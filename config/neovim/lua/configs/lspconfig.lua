@@ -1,7 +1,5 @@
 require("nvchad.configs.lspconfig").defaults()
 
-local lspconfig = require "lspconfig"
-
 local servers = {
   "nil_ls",
   "lua_ls",
@@ -10,13 +8,14 @@ local servers = {
   "bashls",
   "clangd",
   "jdtls",
+  "ts_ls",
+  "jsonls",
+  "yamlls",
 }
 
 vim.lsp.enable(servers)
 
--- read :h vim.lsp.config for changing options of lsp servers
-
-lspconfig.lua_ls.setup {
+vim.lsp.config.lua_ls = {
   settings = {
     Lua = {
       diagnostics = {
@@ -38,7 +37,7 @@ lspconfig.lua_ls.setup {
   },
 }
 
-lspconfig.pyright.setup {
+vim.lsp.config.pyright = {
   settings = {
     python = {
       analysis = {
@@ -51,7 +50,7 @@ lspconfig.pyright.setup {
   },
 }
 
-lspconfig.rust_analyzer.setup {
+vim.lsp.config.rust_analyzer = {
   settings = {
     ["rust-analyzer"] = {
       cargo = {
@@ -67,7 +66,7 @@ lspconfig.rust_analyzer.setup {
   },
 }
 
-lspconfig.clangd.setup {
+vim.lsp.config.clangd = {
   cmd = {
     "clangd",
     "--background-index",
@@ -78,7 +77,7 @@ lspconfig.clangd.setup {
   },
 }
 
-lspconfig.ts_ls.setup {
+vim.lsp.config.ts_ls = {
   settings = {
     typescript = {
       inlayHints = {
@@ -105,24 +104,36 @@ lspconfig.ts_ls.setup {
   },
 }
 
-lspconfig.jsonls.setup {
-  settings = {
-    json = {
-      schemas = vim.lsp.config("schemastore").json.schemas(),
-      validate = { enable = true },
+local ok, schemastore = pcall(require, "schemastore")
+if ok then
+  vim.lsp.config.jsonls = {
+    settings = {
+      json = {
+        schemas = schemastore.json.schemas(),
+        validate = { enable = true },
+      },
     },
-  },
-}
-
-lspconfig.yamlls.setup {
-  settings = {
-    yaml = {
-      schemas = vim.lsp.config("schemastore").yaml.schemas(),
+  }
+else
+  vim.lsp.config.jsonls = {
+    settings = {
+      json = {
+        validate = { enable = true },
+      },
     },
-  },
-}
+  }
+end
 
--- Add borders to LSP floating windows
+if ok then
+  vim.lsp.config.yamlls = {
+    settings = {
+      yaml = {
+        schemas = schemastore.yaml.schemas(),
+      },
+    },
+  }
+end
+
 local border = "rounded"
 
 vim.diagnostic.config {
@@ -131,13 +142,12 @@ vim.diagnostic.config {
   },
 }
 
-local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
+local signs = { Error = " ", Warn = " ", Hint = "󰌵 ", Info = " " }
 for type, icon in pairs(signs) do
   local hl = "DiagnosticSign" .. type
   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
 end
 
--- Improve diagnostics display
 vim.diagnostic.config {
   virtual_text = {
     prefix = "●",
