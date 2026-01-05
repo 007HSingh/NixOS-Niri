@@ -19,6 +19,7 @@
       "loglevel=3"
       "rd.systemd.show_status=0"
       "udev.log_level=3"
+      "acpi_backlight=native"
     ];
     loader = {
       grub = {
