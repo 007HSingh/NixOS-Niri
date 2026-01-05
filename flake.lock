@@ -120,7 +120,8 @@
         "nixpkgs-unstable": "nixpkgs-unstable",
         "noctalia": "noctalia",
         "quickshell": "quickshell",
-        "spicetify": "spicetify"
+        "spicetify": "spicetify",
+        "zen-browser": "zen-browser"
       }
     },
     "spicetify": {
@@ -156,6 +157,26 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "zen-browser": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs-unstable"
+        ]
+      },
+      "locked": {
+        "lastModified": 1767307876,
+        "narHash": "sha256-d5EKvUnfr6tdhymIThz0WGG0JHT2cCZzbZK4t2CwYuc=",
+        "owner": "youwen5",
+        "repo": "zen-browser-flake",
+        "rev": "c5bffaf433e6137fe80cd1930584836f11119b26",
+        "type": "github"
+      },
+      "original": {
+        "owner": "youwen5",
+        "repo": "zen-browser-flake",
         "type": "github"
       }
     }
