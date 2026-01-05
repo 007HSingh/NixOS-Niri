@@ -303,11 +303,6 @@
   nixpkgs.config.allowUnfree = true;
 
   hardware = {
-    opengl = {
-      enable = true;
-      driSupport = true;
-      driSupport32Bit = true;
-    };
     graphics.enable = true;
     bluetooth.enable = true;
     nvidia = {
