@@ -70,6 +70,12 @@
               {
                 id = "Bluetooth";
               }
+              {
+                id = "Brightness";
+              }
+              {
+                id = "PowerProfiles";
+              }
             ];
             center = [
               {
@@ -88,6 +94,12 @@
                 warningThreshold = 30;
               }
               {
+                id = "Volume";
+              }
+              {
+                id = "plugin:catwalk";
+              }
+              {
                 formatHorizontal = "HH:mm";
                 formatVertical = "HH mm";
                 id = "Clock";
@@ -95,7 +107,7 @@
                 usePrimaryColor = true;
               }
               {
-                id = "plugin:catwalk";
+                id = "SystemMonitor";
               }
             ];
           };
