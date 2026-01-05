@@ -16,6 +16,7 @@ let
     niri = "niri";
     fuzzel = "fuzzel";
     fastfetch = "fastfetch";
+    btop = "btop";
   };
 in
 
