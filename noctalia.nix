@@ -39,7 +39,6 @@
             enabled = true;
             name = "Official Noctalia Plugins";
             url = "https://github.com/noctalia-dev/noctalia-plugins";
-
           }
         ];
         states = {
@@ -74,7 +73,7 @@
                 id = "Brightness";
               }
               {
-                id = "PowerProfiles";
+                id = "PowerProfile";
               }
             ];
             center = [
