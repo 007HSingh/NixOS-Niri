@@ -153,6 +153,12 @@
 
   programs.starship.enable = true;
 
+  programs.steam.enable = true;
+
+  programs.steam.gamescopeSession.enable = true;
+
+  programs.gamemode.enable = true;
+
   programs.gpu-screen-recorder.enable = true;
 
   programs.zsh = {
@@ -256,6 +262,8 @@
     docker-compose
     android-studio
     android-tools
+    mangohud
+    protonup
   ];
 
   fonts.packages = with pkgs; [
@@ -295,6 +303,11 @@
   nixpkgs.config.allowUnfree = true;
 
   hardware = {
+    opengl = {
+      enable = true;
+      driSupport = true;
+      driSupport32Bit = true;
+    };
     graphics.enable = true;
     bluetooth.enable = true;
     nvidia = {
@@ -304,7 +317,6 @@
       open = true;
       package = config.boot.kernelPackages.nvidiaPackages.stable;
       nvidiaSettings = true;
-
       prime = {
         sync.enable = true;
         intelBusId = "PCI:0:2:0";
