@@ -16,7 +16,7 @@
         owner = "noctalia-dev";
         repo = "noctalia-plugins";
         rev = "e3bb9e42a827acabe07fee42858e93edc0deff0b";
-        hash = "sha256-OKWspRl7BmNtFQRnItDWy0cEFZ698DjeN5IXi28o2Rs=";
+        hash = "sha256-S1P7y0FvYMO9IAKblGM/CN5ELHMESaFlhMOzaVUXSlg=";
         sparseCheckout = [
           "catwalk"
         ];
