@@ -134,11 +134,6 @@ in
       colorScheme = "mocha";
     };
 
-  programs.emacs = {
-    enable = true;
-    package = pkgs.emacs-pgtk;
-  };
-
   xdg.configFile = builtins.mapAttrs (name: subpath: {
     source = create_symlink "${dotfiles}/${subpath}";
     recursive = true;
