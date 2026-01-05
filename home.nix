@@ -188,6 +188,7 @@ in
     stable.keepassxc
     jdk25_headless
     appflowy
+    inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 
   home.sessionVariables = {

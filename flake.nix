@@ -62,7 +62,6 @@
         modules = [
           ./configuration.nix
           ./noctalia.nix
-          ./zen.nix
           catppuccin.nixosModules.catppuccin
           home-manager.nixosModules.home-manager
           {
