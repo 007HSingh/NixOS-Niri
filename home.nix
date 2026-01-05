@@ -15,6 +15,7 @@ let
     nvim = "neovim";
     niri = "niri";
     fuzzel = "fuzzel";
+    fastfetch = "fastfetch";
   };
 in
 

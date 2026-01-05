@@ -1,0 +1,116 @@
+{
+  "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+  "logo": {
+    "type": "kitty-direct",
+    "source": "nixos",
+    "padding": {
+      "top": 1,
+      "left": 2
+    }
+  },
+  "display": {
+    "separator": " ➜ ",
+    "color": {
+      "keys": "mauve",
+      "title": "blue"
+    }
+  },
+  "modules": [
+    {
+      "type": "title",
+      "format": "{#blue}{user-name-colored}{#mauve}@{#peach}{host-name-colored}",
+      "keyColor": "blue"
+    },
+    {
+      "type": "separator",
+      "string": "─────────────────────────────────"
+    },
+    {
+      "type": "os",
+      "key": "  OS",
+      "keyColor": "blue"
+    },
+    {
+      "type": "kernel",
+      "key": "  Kernel",
+      "keyColor": "peach"
+    },
+    {
+      "type": "packages",
+      "key": "  Packages",
+      "keyColor": "yellow"
+    },
+    {
+      "type": "shell",
+      "key": "  Shell",
+      "keyColor": "green"
+    },
+    {
+      "type": "wm",
+      "key": "  WM",
+      "keyColor": "teal"
+    },
+    {
+      "type": "terminal",
+      "key": "  Terminal",
+      "keyColor": "sky"
+    },
+    {
+      "type": "terminalfont",
+      "key": "  Font",
+      "keyColor": "lavender"
+    },
+    {
+      "type": "separator",
+      "string": "─────────────────────────────────"
+    },
+    {
+      "type": "host",
+      "key": "  Host",
+      "keyColor": "mauve"
+    },
+    {
+      "type": "cpu",
+      "key": "  CPU",
+      "keyColor": "red"
+    },
+    {
+      "type": "gpu",
+      "key": "  GPU",
+      "keyColor": "pink"
+    },
+    {
+      "type": "memory",
+      "key": "  Memory",
+      "keyColor": "maroon"
+    },
+    {
+      "type": "disk",
+      "key": "  Disk (/)",
+      "keyColor": "flamingo"
+    },
+    {
+      "type": "separator",
+      "string": "─────────────────────────────────"
+    },
+    {
+      "type": "uptime",
+      "key": "  Uptime",
+      "keyColor": "green"
+    },
+    {
+      "type": "locale",
+      "key": "  Locale",
+      "keyColor": "yellow"
+    },
+    {
+      "type": "separator",
+      "string": "─────────────────────────────────"
+    },
+    {
+      "type": "colors",
+      "paddingLeft": 2,
+      "symbol": "circle"
+    }
+  ]
+}
