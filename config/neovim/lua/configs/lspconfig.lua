@@ -108,7 +108,7 @@ lspconfig.ts_ls.setup {
 lspconfig.jsonls.setup {
   settings = {
     json = {
-      schemas = require("schemastore").json.schemas(),
+      schemas = vim.lsp.config("schemastore").json.schemas(),
       validate = { enable = true },
     },
   },
@@ -117,11 +117,7 @@ lspconfig.jsonls.setup {
 lspconfig.yamlls.setup {
   settings = {
     yaml = {
-      schemaStore = {
-        enable = true,
-        url = "https://www.schemastore.org/api/json/catalog.json",
-      },
-      schemas = require("schemastore").yaml.schemas(),
+      schemas = vim.lsp.config("schemastore").yaml.schemas(),
     },
   },
 }
