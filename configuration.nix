@@ -263,7 +263,7 @@
     android-studio
     android-tools
     mangohud
-    protonup
+    protonup-ng
   ];
 
   fonts.packages = with pkgs; [
