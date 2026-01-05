@@ -11,14 +11,14 @@
   "display": {
     "separator": " ➜ ",
     "color": {
-      "keys": "mauve",
+      "keys": "magenta",
       "title": "blue"
     }
   },
   "modules": [
     {
       "type": "title",
-      "format": "{#blue}{user-name-colored}{#mauve}@{#peach}{host-name-colored}",
+      "format": "{user-name-colored}@{host-name-colored}",
       "keyColor": "blue"
     },
     {
@@ -33,7 +33,7 @@
     {
       "type": "kernel",
       "key": "  Kernel",
-      "keyColor": "peach"
+      "keyColor": "yellow"
     },
     {
       "type": "packages",
@@ -48,17 +48,17 @@
     {
       "type": "wm",
       "key": "  WM",
-      "keyColor": "teal"
+      "keyColor": "cyan"
     },
     {
       "type": "terminal",
       "key": "  Terminal",
-      "keyColor": "sky"
+      "keyColor": "cyan"
     },
     {
       "type": "terminalfont",
       "key": "  Font",
-      "keyColor": "lavender"
+      "keyColor": "magenta"
     },
     {
       "type": "separator",
@@ -67,7 +67,7 @@
     {
       "type": "host",
       "key": "  Host",
-      "keyColor": "mauve"
+      "keyColor": "magenta"
     },
     {
       "type": "cpu",
@@ -77,17 +77,17 @@
     {
       "type": "gpu",
       "key": "  GPU",
-      "keyColor": "pink"
+      "keyColor": "magenta"
     },
     {
       "type": "memory",
       "key": "  Memory",
-      "keyColor": "maroon"
+      "keyColor": "red"
     },
     {
       "type": "disk",
       "key": "  Disk (/)",
-      "keyColor": "flamingo"
+      "keyColor": "magenta"
     },
     {
       "type": "separator",
