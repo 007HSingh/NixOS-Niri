@@ -161,6 +161,14 @@ in
     unzip
     nil
     lua-language-server
+    typescript-language-server
+    vscode-langservers-extracted
+    yaml-language-server
+    dockerfile-language-server
+    docker-compose-language-service
+    tree-sitter
+    gnumake
+    tokei
     rust-analyzer
     pyright
     bash-language-server
