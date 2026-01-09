@@ -57,24 +57,6 @@
     ];
   };
 
-  # networking.wg-quick.interfaces = {
-  #  wg0 = {
-  #    address = [ "10.2.0.2/32" ];
-  #    dns = [ "10.2.0.1" ];
-  #    privateKeyFile = "/root/wg/private.key";
-  #    peers = [
-  #      {
-  #        publicKey = "dgVvjsBPhkKantancTMGlcd10ikyQjCtSTG2muBjvHA=";
-  #        allowedIPs = [
-  #          "0.0.0.0/0"
-  #          "::/0"
-  #        ];
-  #        endpoint = "146.70.246.114:51820";
-  #      }
-  #    ];
-  #  };
-  #};
-
   networking.firewall = {
     enable = true;
     allowedTCPPorts = [ ];
@@ -200,7 +182,7 @@
 
   programs.thunar = {
     enable = true;
-    plugins = with pkgs.xfce; [
+    plugins = with pkgs; [
       thunar-volman
       thunar-archive-plugin
       thunar-vcs-plugin
@@ -247,8 +229,6 @@
     starship
     stable.discord
     pywalfox-native
-    xfce.thunar
-    xfce.tumbler
     jetbrains.idea
     xdg-utils
     file
