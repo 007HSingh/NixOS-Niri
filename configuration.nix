@@ -245,6 +245,7 @@
     android-tools
     mangohud
     protonup-ng
+    claude-code
   ];
 
   fonts.packages = with pkgs; [
