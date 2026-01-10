@@ -191,6 +191,7 @@ in
     appflowy
     inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
     tor-browser
+    nodejs_24
   ];
 
   home.sessionVariables = {
