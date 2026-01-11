@@ -1008,8 +1008,6 @@
       persistence-nvim
       dressing-nvim
       SchemaStore-nvim
-      nvim-treesitter-context
-      nvim-treesitter-textobjects
     ];
 
     # Extra Lua configuration
