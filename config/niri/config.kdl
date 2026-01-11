@@ -308,6 +308,21 @@ animations {
 
     // Slow down all animations by this factor. Values below 1 speed them up instead.
     // slowdown 3.0
+    
+    window-open {
+      duration-ms 200
+      curve "ease-out-cubic"
+    }
+
+    window-close {
+      duration-ms 150
+      curve "ease-out-quad"
+    }
+
+    workspace-switch {
+      duration-ms 250
+      curve "ease-out-expo"
+    }
 }
 
 // Window rules let you adjust behavior for individual windows.
@@ -335,7 +350,7 @@ window-rule {
 
 // Example: block out two password managers from screen capture.
 // (This example rule is commented out with a "/-" in front.)
-/-window-rule {
+window-rule {
     match app-id=r#"^org\.keepassxc\.KeePassXC$"#
     match app-id=r#"^org\.gnome\.World\.Secrets$"#
 
@@ -350,6 +365,11 @@ window-rule {
 window-rule {
     geometry-corner-radius 20
     clip-to-geometry true
+}
+
+window-rule {
+    match app-id=r#"^steam_app_"#
+    open-maximized true
 }
 
 binds {
