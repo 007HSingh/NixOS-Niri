@@ -885,7 +885,7 @@
       # Notifications
       notify = {
         enable = true;
-        timeout = 3000;
+        settings.timeout = 3000;
       };
 
       # Smooth scrolling
@@ -1016,7 +1016,7 @@
       markdown-preview-nvim
       persistence-nvim
       dressing-nvim
-      schemastore-nvim
+      SchemaStore-nvim
     ];
 
     # Extra Lua configuration
