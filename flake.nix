@@ -6,6 +6,10 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
+    nixvim = {
+      url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
     catppuccin = {
       url = "github:catppuccin/nix";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -34,6 +38,7 @@
       nixpkgs-unstable,
       catppuccin,
       home-manager,
+      nixvim,
       spicetify,
       zen-browser,
       ...
@@ -72,6 +77,7 @@
                 imports = [
                   ./home.nix
                   catppuccin.homeModules.catppuccin
+                  nixvim.homeManagerModules.nixvim
                   inputs.spicetify.homeManagerModules.default
                 ];
               };

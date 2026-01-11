@@ -12,16 +12,18 @@ let
   create_symlink = path: config.lib.file.mkOutOfStoreSymlink path;
   configs = {
     kitty = "kitty";
-    nvim = "neovim";
     niri = "niri";
     fuzzel = "fuzzel";
     fastfetch = "fastfetch";
     btop = "btop";
-    # emacs = "emacs";
   };
 in
 
 {
+  imports = [
+    ./nixvim.nix
+  ];
+
   home.username = "harsh";
   home.homeDirectory = "/home/harsh";
   home.stateVersion = "25.11";
