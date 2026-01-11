@@ -1115,11 +1115,6 @@
             -- Setup nvim-bqf
             require('bqf').setup({})
 
-            -- Setup treesitter-context
-            require('treesitter-context').setup({
-              max_lines = 3,
-            })
-
             -- LSP diagnostic configuration
             local signs = { Error = "󰅚 ", Warn = "󰀪 ", Hint = "󰌶 ", Info = " " }
             for type, icon in pairs(signs) do
