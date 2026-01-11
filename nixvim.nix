@@ -1,5 +1,7 @@
 {
+  config,
   pkgs,
+  inputs,
   ...
 }:
 
@@ -849,20 +851,24 @@
       # File explorer
       neo-tree = {
         enable = true;
-        filesystem = {
-          followCurrentFile.enabled = true;
-          hijackNetrwBehavior = "open_current";
-          filteredItems = {
-            visible = true;
-            hideDotfiles = false;
-            hideGitignored = false;
+        settings = {
+          filesystem = {
+            follow_current_file = {
+              enabled = true;
+            };
+            hijack_netrw_behavior = "open_current";
+            filtered_items = {
+              visible = true;
+              hide_dotfiles = false;
+              hide_gitignored = false;
+            };
           };
-        };
-        window = {
-          width = 30;
-          mappings = {
-            "l" = "open";
-            "h" = "close_node";
+          window = {
+            width = 30;
+            mappings = {
+              "l" = "open";
+              "h" = "close_node";
+            };
           };
         };
       };
@@ -891,15 +897,17 @@
       # Color highlighter
       nvim-colorizer = {
         enable = true;
-        userDefaultOptions = {
-          RGB = true;
-          RRGGBB = true;
-          names = false;
-          RRGGBBAA = true;
-          rgb_fn = true;
-          hsl_fn = true;
-          css = true;
-          css_fn = true;
+        settings = {
+          user_default_options = {
+            RGB = true;
+            RRGGBB = true;
+            names = false;
+            RRGGBBAA = true;
+            rgb_fn = true;
+            hsl_fn = true;
+            css = true;
+            css_fn = true;
+          };
         };
       };
 
