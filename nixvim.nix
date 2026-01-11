@@ -694,15 +694,6 @@
         ];
       };
 
-      treesitter-context = {
-        enable = true;
-        settings = {
-          max_lines = 3;
-        };
-      };
-
-      treesitter-textobjects.enable = true;
-
       # Telescope
       telescope = {
         enable = true;
@@ -1017,168 +1008,175 @@
       persistence-nvim
       dressing-nvim
       SchemaStore-nvim
+      nvim-treesitter-context
+      nvim-treesitter-textobjects
     ];
 
     # Extra Lua configuration
     extraConfigLua = ''
       -- Additional gitsigns keymaps
-      local gitsigns = require('gitsigns')
-      vim.keymap.set('n', '<leader>gb', gitsigns.toggle_current_line_blame, { desc = 'Toggle git blame line' })
-      vim.keymap.set('n', '<leader>gB', function() gitsigns.blame_line({ full = true }) end, { desc = 'Show git blame' })
-      vim.keymap.set('n', ']h', gitsigns.next_hunk, { desc = 'Next git hunk' })
-      vim.keymap.set('n', '[h', gitsigns.prev_hunk, { desc = 'Previous git hunk' })
-      vim.keymap.set('n', '<leader>gp', gitsigns.preview_hunk, { desc = 'Preview git hunk' })
-      vim.keymap.set('n', '<leader>gr', gitsigns.reset_hunk, { desc = 'Reset git hunk' })
-      vim.keymap.set('n', '<leader>gR', gitsigns.reset_buffer, { desc = 'Reset git buffer' })
-      vim.keymap.set('n', '<leader>ga', gitsigns.stage_hunk, { desc = 'Stage git hunk' })
-      vim.keymap.set('n', '<leader>gu', gitsigns.undo_stage_hunk, { desc = 'Undo stage git hunk' })
+            local gitsigns = require('gitsigns')
+            vim.keymap.set('n', '<leader>gb', gitsigns.toggle_current_line_blame, { desc = 'Toggle git blame line' })
+            vim.keymap.set('n', '<leader>gB', function() gitsigns.blame_line({ full = true }) end, { desc = 'Show git blame' })
+            vim.keymap.set('n', ']h', gitsigns.next_hunk, { desc = 'Next git hunk' })
+            vim.keymap.set('n', '[h', gitsigns.prev_hunk, { desc = 'Previous git hunk' })
+            vim.keymap.set('n', '<leader>gp', gitsigns.preview_hunk, { desc = 'Preview git hunk' })
+            vim.keymap.set('n', '<leader>gr', gitsigns.reset_hunk, { desc = 'Reset git hunk' })
+            vim.keymap.set('n', '<leader>gR', gitsigns.reset_buffer, { desc = 'Reset git buffer' })
+            vim.keymap.set('n', '<leader>ga', gitsigns.stage_hunk, { desc = 'Stage git hunk' })
+            vim.keymap.set('n', '<leader>gu', gitsigns.undo_stage_hunk, { desc = 'Undo stage git hunk' })
 
-      -- Neo-tree keymaps
-      vim.keymap.set('n', '<leader>e', '<cmd>Neotree toggle<cr>', { desc = 'Toggle file explorer' })
-      vim.keymap.set('n', '<leader>o', '<cmd>Neotree focus<cr>', { desc = 'Focus file explorer' })
+            -- Neo-tree keymaps
+            vim.keymap.set('n', '<leader>e', '<cmd>Neotree toggle<cr>', { desc = 'Toggle file explorer' })
+            vim.keymap.set('n', '<leader>o', '<cmd>Neotree focus<cr>', { desc = 'Focus file explorer' })
 
-      -- Trouble keymaps
-      vim.keymap.set('n', '<leader>xx', '<cmd>Trouble diagnostics toggle<cr>', { desc = 'Diagnostics (Trouble)' })
-      vim.keymap.set('n', '<leader>xX', '<cmd>Trouble diagnostics toggle filter.buf=0<cr>', { desc = 'Buffer Diagnostics (Trouble)' })
-      vim.keymap.set('n', '<leader>xl', '<cmd>Trouble loclist toggle<cr>', { desc = 'Location List (Trouble)' })
-      vim.keymap.set('n', '<leader>xq', '<cmd>Trouble qflist toggle<cr>', { desc = 'Quickfix List (Trouble)' })
+            -- Trouble keymaps
+            vim.keymap.set('n', '<leader>xx', '<cmd>Trouble diagnostics toggle<cr>', { desc = 'Diagnostics (Trouble)' })
+            vim.keymap.set('n', '<leader>xX', '<cmd>Trouble diagnostics toggle filter.buf=0<cr>', { desc = 'Buffer Diagnostics (Trouble)' })
+            vim.keymap.set('n', '<leader>xl', '<cmd>Trouble loclist toggle<cr>', { desc = 'Location List (Trouble)' })
+            vim.keymap.set('n', '<leader>xq', '<cmd>Trouble qflist toggle<cr>', { desc = 'Quickfix List (Trouble)' })
 
-      -- Todo-comments keymap
-      vim.keymap.set('n', '<leader>ft', '<cmd>TodoTelescope<cr>', { desc = 'Find TODOs' })
+            -- Todo-comments keymap
+            vim.keymap.set('n', '<leader>ft', '<cmd>TodoTelescope<cr>', { desc = 'Find TODOs' })
 
-      -- Persistence keymaps
-      local persistence = require('persistence')
-      vim.keymap.set('n', '<leader>qs', function() persistence.load() end, { desc = 'Restore Session' })
-      vim.keymap.set('n', '<leader>ql', function() persistence.load({ last = true }) end, { desc = 'Restore Last Session' })
-      vim.keymap.set('n', '<leader>qd', function() persistence.stop() end, { desc = "Don't Save Current Session" })
+            -- Persistence keymaps
+            local persistence = require('persistence')
+            vim.keymap.set('n', '<leader>qs', function() persistence.load() end, { desc = 'Restore Session' })
+            vim.keymap.set('n', '<leader>ql', function() persistence.load({ last = true }) end, { desc = 'Restore Last Session' })
+            vim.keymap.set('n', '<leader>qd', function() persistence.stop() end, { desc = "Don't Save Current Session" })
 
-      -- Diffview keymaps
-      vim.keymap.set('n', '<leader>gd', '<cmd>DiffviewOpen<cr>', { desc = 'Git Diff View' })
-      vim.keymap.set('n', '<leader>gh', '<cmd>DiffviewFileHistory<cr>', { desc = 'Git File History' })
+            -- Diffview keymaps
+            vim.keymap.set('n', '<leader>gd', '<cmd>DiffviewOpen<cr>', { desc = 'Git Diff View' })
+            vim.keymap.set('n', '<leader>gh', '<cmd>DiffviewFileHistory<cr>', { desc = 'Git File History' })
 
-      -- Spectre keymap
-      vim.keymap.set('n', '<leader>sr', function() require('spectre').open() end, { desc = 'Replace in files (Spectre)' })
+            -- Spectre keymap
+            vim.keymap.set('n', '<leader>sr', function() require('spectre').open() end, { desc = 'Replace in files (Spectre)' })
 
-      -- Markdown preview keymap
-      vim.keymap.set('n', '<leader>mp', '<cmd>MarkdownPreviewToggle<cr>', { desc = 'Markdown Preview' })
+            -- Markdown preview keymap
+            vim.keymap.set('n', '<leader>mp', '<cmd>MarkdownPreviewToggle<cr>', { desc = 'Markdown Preview' })
 
-      -- Vim-visual-multi settings
-      vim.g.VM_maps = {
-        ['Find Under'] = '<C-d>',
-        ['Find Subword Under'] = '<C-d>',
-      }
+            -- Vim-visual-multi settings
+            vim.g.VM_maps = {
+              ['Find Under'] = '<C-d>',
+              ['Find Subword Under'] = '<C-d>',
+            }
 
-      -- Set up notify as default
-      vim.notify = require('notify')
+            -- Set up notify as default
+            vim.notify = require('notify')
 
-      -- Quickfix and location list navigation
-      vim.keymap.set('n', '[q', '<cmd>cprev<cr>', { desc = 'Previous quickfix' })
-      vim.keymap.set('n', ']q', '<cmd>cnext<cr>', { desc = 'Next quickfix' })
-      vim.keymap.set('n', '<leader>qo', '<cmd>copen<cr>', { desc = 'Open quickfix' })
-      vim.keymap.set('n', '<leader>qc', '<cmd>cclose<cr>', { desc = 'Close quickfix' })
-      vim.keymap.set('n', '[l', '<cmd>lprev<cr>', { desc = 'Previous loclist' })
-      vim.keymap.set('n', ']l', '<cmd>lnext<cr>', { desc = 'Next loclist' })
-      vim.keymap.set('n', '<leader>lo', '<cmd>lopen<cr>', { desc = 'Open loclist' })
-      vim.keymap.set('n', '<leader>lc', '<cmd>lclose<cr>', { desc = 'Close loclist' })
+            -- Quickfix and location list navigation
+            vim.keymap.set('n', '[q', '<cmd>cprev<cr>', { desc = 'Previous quickfix' })
+            vim.keymap.set('n', ']q', '<cmd>cnext<cr>', { desc = 'Next quickfix' })
+            vim.keymap.set('n', '<leader>qo', '<cmd>copen<cr>', { desc = 'Open quickfix' })
+            vim.keymap.set('n', '<leader>qc', '<cmd>cclose<cr>', { desc = 'Close quickfix' })
+            vim.keymap.set('n', '[l', '<cmd>lprev<cr>', { desc = 'Previous loclist' })
+            vim.keymap.set('n', ']l', '<cmd>lnext<cr>', { desc = 'Next loclist' })
+            vim.keymap.set('n', '<leader>lo', '<cmd>lopen<cr>', { desc = 'Open loclist' })
+            vim.keymap.set('n', '<leader>lc', '<cmd>lclose<cr>', { desc = 'Close loclist' })
 
-      -- Tab navigation
-      vim.keymap.set('n', '<leader><tab>l', '<cmd>tablast<cr>', { desc = 'Last Tab' })
-      vim.keymap.set('n', '<leader><tab>f', '<cmd>tabfirst<cr>', { desc = 'First Tab' })
-      vim.keymap.set('n', '<leader><tab>n', '<cmd>tabnew<cr>', { desc = 'New Tab' })
-      vim.keymap.set('n', '<leader><tab>]', '<cmd>tabnext<cr>', { desc = 'Next Tab' })
-      vim.keymap.set('n', '<leader><tab>[', '<cmd>tabprevious<cr>', { desc = 'Previous Tab' })
-      vim.keymap.set('n', '<leader><tab>d', '<cmd>tabclose<cr>', { desc = 'Close Tab' })
+            -- Tab navigation
+            vim.keymap.set('n', '<leader><tab>l', '<cmd>tablast<cr>', { desc = 'Last Tab' })
+            vim.keymap.set('n', '<leader><tab>f', '<cmd>tabfirst<cr>', { desc = 'First Tab' })
+            vim.keymap.set('n', '<leader><tab>n', '<cmd>tabnew<cr>', { desc = 'New Tab' })
+            vim.keymap.set('n', '<leader><tab>]', '<cmd>tabnext<cr>', { desc = 'Next Tab' })
+            vim.keymap.set('n', '<leader><tab>[', '<cmd>tabprevious<cr>', { desc = 'Previous Tab' })
+            vim.keymap.set('n', '<leader><tab>d', '<cmd>tabclose<cr>', { desc = 'Close Tab' })
 
-      -- Format with conform
-      vim.keymap.set('n', '<leader>fm', function() 
-        require('conform').format({ lsp_fallback = true }) 
-      end, { desc = 'Format file' })
+            -- Format with conform
+            vim.keymap.set('n', '<leader>fm', function() 
+              require('conform').format({ lsp_fallback = true }) 
+            end, { desc = 'Format file' })
 
-      -- Setup persistence
-      require('persistence').setup({
-        dir = vim.fn.expand(vim.fn.stdpath('state') .. '/sessions/'),
-        options = { 'buffers', 'curdir', 'tabpages', 'winsize' },
-      })
+            -- Setup persistence
+            require('persistence').setup({
+              dir = vim.fn.expand(vim.fn.stdpath('state') .. '/sessions/'),
+              options = { 'buffers', 'curdir', 'tabpages', 'winsize' },
+            })
 
-      -- Setup dressing for better UI
-      require('dressing').setup({
-        input = {
-          enabled = true,
-          default_prompt = '➤ ',
-          win_options = {
-            winblend = 0,
-          },
-        },
-        select = {
-          enabled = true,
-          backend = { 'telescope', 'builtin' },
-        },
-      })
+            -- Setup dressing for better UI
+            require('dressing').setup({
+              input = {
+                enabled = true,
+                default_prompt = '➤ ',
+                win_options = {
+                  winblend = 0,
+                },
+              },
+              select = {
+                enabled = true,
+                backend = { 'telescope', 'builtin' },
+              },
+            })
 
-      -- Setup diffview
-      require('diffview').setup({})
+            -- Setup diffview
+            require('diffview').setup({})
 
-      -- Setup spectre
-      require('spectre').setup({})
+            -- Setup spectre
+            require('spectre').setup({})
 
-      -- Setup nvim-bqf
-      require('bqf').setup({})
+            -- Setup nvim-bqf
+            require('bqf').setup({})
 
-      -- LSP diagnostic configuration
-      local signs = { Error = "󰅚 ", Warn = "󰀪 ", Hint = "󰌶 ", Info = " " }
-      for type, icon in pairs(signs) do
-        local hl = "DiagnosticSign" .. type
-        vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-      end
+            -- Setup treesitter-context
+            require('treesitter-context').setup({
+              max_lines = 3,
+            })
 
-      vim.diagnostic.config({
-        virtual_text = {
-          prefix = "●",
-          spacing = 4,
-        },
-        signs = true,
-        underline = true,
-        update_in_insert = false,
-        severity_sort = true,
-        float = {
-          border = "rounded",
-          source = "always",
-          header = "",
-          prefix = "",
-        },
-      })
+            -- LSP diagnostic configuration
+            local signs = { Error = "󰅚 ", Warn = "󰀪 ", Hint = "󰌶 ", Info = " " }
+            for type, icon in pairs(signs) do
+              local hl = "DiagnosticSign" .. type
+              vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+            end
 
-      -- LSP handlers with borders
-      local handlers = {
-        ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" }),
-        ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" }),
-      }
+            vim.diagnostic.config({
+              virtual_text = {
+                prefix = "●",
+                spacing = 4,
+              },
+              signs = true,
+              underline = true,
+              update_in_insert = false,
+              severity_sort = true,
+              float = {
+                border = "rounded",
+                source = "always",
+                header = "",
+                prefix = "",
+              },
+            })
 
-      for method, handler in pairs(handlers) do
-        vim.lsp.handlers[method] = handler
-      end
+            -- LSP handlers with borders
+            local handlers = {
+              ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" }),
+              ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" }),
+            }
 
-      -- Additional LSP workspace keymaps
-      vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, { desc = 'Add workspace folder' })
-      vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, { desc = 'Remove workspace folder' })
-      vim.keymap.set('n', '<leader>wl', function()
-        print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-      end, { desc = 'List workspace folders' })
+            for method, handler in pairs(handlers) do
+              vim.lsp.handlers[method] = handler
+            end
 
-      -- Telescope additional find all files keymap
-      vim.keymap.set('n', '<leader>fa', function()
-        require('telescope.builtin').find_files({
-          follow = true,
-          no_ignore = true,
-          hidden = true,
-        })
-      end, { desc = 'Find all files' })
+            -- Additional LSP workspace keymaps
+            vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, { desc = 'Add workspace folder' })
+            vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, { desc = 'Remove workspace folder' })
+            vim.keymap.set('n', '<leader>wl', function()
+              print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+            end, { desc = 'List workspace folders' })
 
-      -- Quick source current file
-      vim.keymap.set('n', '<leader><leader>', function()
-        vim.cmd('source %')
-        vim.notify('Config sourced!', vim.log.levels.INFO)
-      end, { desc = 'Source current file' })
+            -- Telescope additional find all files keymap
+            vim.keymap.set('n', '<leader>fa', function()
+              require('telescope.builtin').find_files({
+                follow = true,
+                no_ignore = true,
+                hidden = true,
+              })
+            end, { desc = 'Find all files' })
+
+            -- Quick source current file
+            vim.keymap.set('n', '<leader><leader>', function()
+              vim.cmd('source %')
+              vim.notify('Config sourced!', vim.log.levels.INFO)
+            end, { desc = 'Source current file' })
     '';
   };
 }
