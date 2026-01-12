@@ -134,7 +134,7 @@ in
 
   programs.nixvim = {
     enable = true;
-    imports = [ inputs.Neve.nixvimModule ];
+    imports = [ inputs.neve.nixvimModule ];
   };
 
   xdg.configFile = builtins.mapAttrs (name: subpath: {
