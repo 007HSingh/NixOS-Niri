@@ -20,10 +20,6 @@ let
 in
 
 {
-  imports = [
-    ./nixvim.nix
-  ];
-
   home.username = "harsh";
   home.homeDirectory = "/home/harsh";
   home.stateVersion = "25.11";
@@ -135,6 +131,11 @@ in
       theme = spicePkgs.themes.catppuccin;
       colorScheme = "mocha";
     };
+
+  programs.nixvim = {
+    enable = true;
+    imports = [ inputs.Neve.nixvimModule ];
+  };
 
   xdg.configFile = builtins.mapAttrs (name: subpath: {
     source = create_symlink "${dotfiles}/${subpath}";
