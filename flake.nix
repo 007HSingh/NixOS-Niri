@@ -7,7 +7,7 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     nixvim = {
-      url = "github:dc-tec/nixvim";
+      url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     catppuccin = {
@@ -68,6 +68,7 @@
           ./configuration.nix
           ./noctalia.nix
           catppuccin.nixosModules.catppuccin
+          nixvim.nixosModules.nixvim
           home-manager.nixosModules.home-manager
           {
             home-manager = {
