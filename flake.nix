@@ -77,7 +77,6 @@
                 imports = [
                   ./home.nix
                   catppuccin.homeModules.catppuccin
-                  nixvim.homeModules.nixvim
                   inputs.spicetify.homeManagerModules.default
                 ];
               };
