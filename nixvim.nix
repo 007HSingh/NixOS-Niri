@@ -10,7 +10,7 @@
   imports = [
     ./config/neovim/options.nix
     ./config/neovim/keymaps.nix
-    ./plugins
+    ./config/neovim/plugins
   ];
 
   programs.nixvim = {
