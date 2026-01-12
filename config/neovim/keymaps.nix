@@ -280,6 +280,69 @@
           desc = "Close split";
         };
       }
+      {
+        mode = "n";
+        key = "<leader>gg";
+        action = ":Neogit<CR>";
+        options = {
+          silent = true;
+          desc = "Open Neogit";
+        };
+      }
+      {
+        mode = "n";
+        key = "<leader>gc";
+        action = ":Neogit commit<CR>";
+        options = {
+          silent = true;
+          desc = "Git commit";
+        };
+      }
+      {
+        mode = "n";
+        key = "<leader>gp";
+        action = ":Neogit push<CR>";
+        options = {
+          silent = true;
+          desc = "Git push";
+        };
+      }
+      {
+        mode = "n";
+        key = "<leader>gl";
+        action = ":Neogit pull<CR>";
+        options = {
+          silent = true;
+          desc = "Git pull";
+        };
+      }
+      {
+        mode = "n";
+        key = "<leader>gd";
+        action = ":DiffviewOpen<CR>";
+        options = {
+          silent = true;
+          desc = "Open diff view";
+        };
+      }
+      {
+        mode = "n";
+        key = "<leader>gx";
+        action = ":DiffviewClose<CR>";
+        options = {
+          silent = true;
+          desc = "Close diff view";
+        };
+      }
+      {
+        mode = "n";
+        key = "<leader>gh";
+        action = ":DiffviewFileHistory<CR>";
+        options = {
+          silent = true;
+          desc = "File history";
+        };
+      }
     ];
   };
 }
