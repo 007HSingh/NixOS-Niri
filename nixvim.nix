@@ -1106,17 +1106,6 @@
         closeIfLastWindow = true;
         window = {
           width = 35;
-          mappings = {
-            "<space>" = "none";
-            "l" = "open";
-            "h" = "close_node";
-            "P" = {
-              command = "toggle_preview";
-              config = {
-                use_float = true;
-              };
-            };
-          };
         };
         filesystem = {
           followCurrentFile = {
