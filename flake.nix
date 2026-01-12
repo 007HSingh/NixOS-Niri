@@ -7,7 +7,7 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     nixvim = {
-      url = "github:nix-community/nixvim";
+      url = "github:dc-tec/nixvim";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     catppuccin = {
@@ -30,10 +30,6 @@
       url = "github:youwen5/zen-browser-flake";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
-    neve = {
-      url = "github:redyf/Neve";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
   };
   outputs =
     inputs@{
@@ -45,7 +41,6 @@
       nixvim,
       spicetify,
       zen-browser,
-      neve,
       ...
     }:
     let
