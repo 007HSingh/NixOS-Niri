@@ -948,7 +948,7 @@
       # Treesitter text objects
       treesitter-textobjects = {
         enable = true;
-        select = {
+        settings.select = {
           enable = true;
           lookahead = true;
           keymaps = {
@@ -960,13 +960,13 @@
             "ic" = "@class.inner";
           };
         };
-        move = {
+        settings.move = {
           enable = true;
-          gotoNextStart = {
+          goto_next_start = {
             "]f" = "@function.outer";
             "]c" = "@class.outer";
           };
-          gotoPreviousStart = {
+          goto_previous_start = {
             "[f" = "@function.outer";
             "[c" = "@class.outer";
           };
@@ -1103,31 +1103,31 @@
       # File explorer
       neo-tree = {
         enable = true;
-        closeIfLastWindow = true;
-        window = {
+        settings.close_if_last_window = true;
+        settings.window = {
           width = 35;
         };
         filesystem = {
-          followCurrentFile = {
+          follow_current_file = {
             enabled = true;
-            leaveDirsOpen = false;
+            leave_dirs_open = false;
           };
-          hijackNetrwBehavior = "open_current";
-          useLibuvFileWatcher = true;
-          filteredItems = {
+          hijack_netrw_behavior = "open_current";
+          use_libuv_file_watcher = true;
+          filtered_items = {
             visible = true;
-            hideDotfiles = false;
-            hideGitignored = false;
-            hideByName = [
+            hide_dotfiles = false;
+            hide_gitignored = false;
+            hide_by_name = [
               ".git"
               "node_modules"
             ];
           };
         };
         buffers = {
-          followCurrentFile = {
+          follow_current_file = {
             enabled = true;
-            leaveDirsOpen = false;
+            leave_dirs_open = false;
           };
         };
         gitStatus = {
@@ -1343,11 +1343,13 @@
       # Notifications
       notify = {
         enable = true;
-        backgroundColour = "#000000";
-        fps = 60;
-        render = "compact";
-        timeout = 3000;
-        topDown = true;
+        settings = {
+          background_colour = "#000000";
+          fps = 60;
+          render = "compact";
+          timeout = 3000;
+          top_down = true;
+        };
       };
 
       # UI enhancements
@@ -1533,10 +1535,12 @@
       # Fidget (LSP progress)
       fidget = {
         enable = true;
-        notification = {
-          window = {
-            winblend = 0;
-            border = "rounded";
+        settings = {
+          notification = {
+            window = {
+              winblend = 0;
+              border = "rounded";
+            };
           };
         };
       };
@@ -1544,13 +1548,15 @@
       # Illuminate (highlight word under cursor)
       illuminate = {
         enable = true;
-        underCursor = true;
-        filetypesDenylist = [
-          "neo-tree"
-          "Trouble"
-          "alpha"
-          "dashboard"
-        ];
+        settings = {
+          under_cursor = true;
+          filetypes_denylist = [
+            "neo-tree"
+            "Trouble"
+            "alpha"
+            "dashboard"
+          ];
+        };
       };
 
       # Flash (enhanced navigation)
@@ -1576,163 +1582,163 @@
 
     # Extra Lua configuration
     extraConfigLua = ''
-       -- Additional gitsigns keymaps
-       local gitsigns = require('gitsigns')
-       vim.keymap.set('n', '<leader>gB', gitsigns.toggle_current_line_blame, { desc = 'Toggle blame line' })
-       vim.keymap.set('n', '<leader>gbl', function() gitsigns.blame_line({ full = true }) end, { desc = 'Show blame' })
-       vim.keymap.set('n', ']h', gitsigns.next_hunk, { desc = 'Next hunk' })
-       vim.keymap.set('n', '[h', gitsigns.prev_hunk, { desc = 'Prev hunk' })
-       vim.keymap.set('n', '<leader>gp', gitsigns.preview_hunk, { desc = 'Preview hunk' })
-       vim.keymap.set('n', '<leader>gr', gitsigns.reset_hunk, { desc = 'Reset hunk' })
-       vim.keymap.set('n', '<leader>gR', gitsigns.reset_buffer, { desc = 'Reset buffer' })
-       vim.keymap.set('n', '<leader>ga', gitsigns.stage_hunk, { desc = 'Stage hunk' })
-       vim.keymap.set('n', '<leader>gu', gitsigns.undo_stage_hunk, { desc = 'Undo stage hunk' })
+      -- Additional gitsigns keymaps
+      local gitsigns = require('gitsigns')
+      vim.keymap.set('n', '<leader>gB', gitsigns.toggle_current_line_blame, { desc = 'Toggle blame line' })
+      vim.keymap.set('n', '<leader>gbl', function() gitsigns.blame_line({ full = true }) end, { desc = 'Show blame' })
+      vim.keymap.set('n', ']h', gitsigns.next_hunk, { desc = 'Next hunk' })
+      vim.keymap.set('n', '[h', gitsigns.prev_hunk, { desc = 'Prev hunk' })
+      vim.keymap.set('n', '<leader>gp', gitsigns.preview_hunk, { desc = 'Preview hunk' })
+      vim.keymap.set('n', '<leader>gr', gitsigns.reset_hunk, { desc = 'Reset hunk' })
+      vim.keymap.set('n', '<leader>gR', gitsigns.reset_buffer, { desc = 'Reset buffer' })
+      vim.keymap.set('n', '<leader>ga', gitsigns.stage_hunk, { desc = 'Stage hunk' })
+      vim.keymap.set('n', '<leader>gu', gitsigns.undo_stage_hunk, { desc = 'Undo stage hunk' })
 
-       -- Neo-tree keymaps
-       vim.keymap.set('n', '<leader>e', '<cmd>Neotree toggle<cr>', { desc = 'Toggle explorer' })
-       vim.keymap.set('n', '<leader>o', '<cmd>Neotree focus<cr>', { desc = 'Focus explorer' })
+      -- Neo-tree keymaps
+      vim.keymap.set('n', '<leader>e', '<cmd>Neotree toggle<cr>', { desc = 'Toggle explorer' })
+      vim.keymap.set('n', '<leader>o', '<cmd>Neotree focus<cr>', { desc = 'Focus explorer' })
 
-       -- Trouble keymaps
-       vim.keymap.set('n', '<leader>xx', '<cmd>Trouble diagnostics toggle<cr>', { desc = 'Diagnostics (Trouble)' })
-       vim.keymap.set('n', '<leader>xX', '<cmd>Trouble diagnostics toggle filter.buf=0<cr>', { desc = 'Buffer diagnostics' })
-       vim.keymap.set('n', '<leader>xl', '<cmd>Trouble loclist toggle<cr>', { desc = 'Location list' })
-       vim.keymap.set('n', '<leader>xq', '<cmd>Trouble qflist toggle<cr>', { desc = 'Quickfix list' })
+      -- Trouble keymaps
+      vim.keymap.set('n', '<leader>xx', '<cmd>Trouble diagnostics toggle<cr>', { desc = 'Diagnostics (Trouble)' })
+      vim.keymap.set('n', '<leader>xX', '<cmd>Trouble diagnostics toggle filter.buf=0<cr>', { desc = 'Buffer diagnostics' })
+      vim.keymap.set('n', '<leader>xl', '<cmd>Trouble loclist toggle<cr>', { desc = 'Location list' })
+      vim.keymap.set('n', '<leader>xq', '<cmd>Trouble qflist toggle<cr>', { desc = 'Quickfix list' })
 
-       -- Todo-comments keymap
-       vim.keymap.set('n', '<leader>ft', '<cmd>TodoTelescope<cr>', { desc = 'Find TODOs' })
+      -- Todo-comments keymap
+      vim.keymap.set('n', '<leader>ft', '<cmd>TodoTelescope<cr>', { desc = 'Find TODOs' })
 
-       -- Persistence keymaps
-       local persistence = require('persistence')
-       vim.keymap.set('n', '<leader>qs', function() persistence.load() end, { desc = 'Restore session' })
-       vim.keymap.set('n', '<leader>ql', function() persistence.load({ last = true }) end, { desc = 'Restore last' })
-       vim.keymap.set('n', '<leader>qd', function() persistence.stop() end, { desc = "Don't save session" })
+      -- Persistence keymaps
+      local persistence = require('persistence')
+      vim.keymap.set('n', '<leader>qs', function() persistence.load() end, { desc = 'Restore session' })
+      vim.keymap.set('n', '<leader>ql', function() persistence.load({ last = true }) end, { desc = 'Restore last' })
+      vim.keymap.set('n', '<leader>qd', function() persistence.stop() end, { desc = "Don't save session" })
 
-       -- Diffview keymaps
-       vim.keymap.set('n', '<leader>gd', '<cmd>DiffviewOpen<cr>', { desc = 'Diff view' })
-       vim.keymap.set('n', '<leader>gh', '<cmd>DiffviewFileHistory<cr>', { desc = 'File history' })
+      -- Diffview keymaps
+      vim.keymap.set('n', '<leader>gd', '<cmd>DiffviewOpen<cr>', { desc = 'Diff view' })
+      vim.keymap.set('n', '<leader>gh', '<cmd>DiffviewFileHistory<cr>', { desc = 'File history' })
 
-       -- Spectre keymap
-       vim.keymap.set('n', '<leader>sr', function() require('spectre').open() end, { desc = 'Replace (Spectre)' })
+      -- Spectre keymap
+      vim.keymap.set('n', '<leader>sr', function() require('spectre').open() end, { desc = 'Replace (Spectre)' })
 
-       -- Markdown preview
-       vim.keymap.set('n', '<leader>mp', '<cmd>MarkdownPreviewToggle<cr>', { desc = 'Markdown preview' })
+      -- Markdown preview
+      vim.keymap.set('n', '<leader>mp', '<cmd>MarkdownPreviewToggle<cr>', { desc = 'Markdown preview' })
 
-       -- Flash keymaps
-       vim.keymap.set({ 'n', 'x', 'o' }, 's', function() require('flash').jump() end, { desc = 'Flash' })
-       vim.keymap.set({ 'n', 'x', 'o' }, 'S', function() require('flash').treesitter() end, { desc = 'Flash treesitter' })
+      -- Flash keymaps
+      vim.keymap.set({ 'n', 'x', 'o' }, 's', function() require('flash').jump() end, { desc = 'Flash' })
+      vim.keymap.set({ 'n', 'x', 'o' }, 'S', function() require('flash').treesitter() end, { desc = 'Flash treesitter' })
 
-       -- Vim-visual-multi
-       vim.g.VM_maps = {
-         ['Find Under'] = '<C-d>',
-         ['Find Subword Under'] = '<C-d>',
-       }
+      -- Vim-visual-multi
+      vim.g.VM_maps = {
+        ['Find Under'] = '<C-d>',
+        ['Find Subword Under'] = '<C-d>',
+      }
 
-       -- Set up notify
-       vim.notify = require('notify')
+      -- Set up notify
+      vim.notify = require('notify')
 
-       -- Quickfix navigation
-       vim.keymap.set('n', '[q', '<cmd>cprev<cr>', { desc = 'Prev quickfix' })
-       vim.keymap.set('n', ']q', '<cmd>cnext<cr>', { desc = 'Next quickfix' })
-       vim.keymap.set('n', '<leader>qo', '<cmd>copen<cr>', { desc = 'Open quickfix' })
-       vim.keymap.set('n', '<leader>qc', '<cmd>cclose<cr>', { desc = 'Close quickfix' })
+      -- Quickfix navigation
+      vim.keymap.set('n', '[q', '<cmd>cprev<cr>', { desc = 'Prev quickfix' })
+      vim.keymap.set('n', ']q', '<cmd>cnext<cr>', { desc = 'Next quickfix' })
+      vim.keymap.set('n', '<leader>qo', '<cmd>copen<cr>', { desc = 'Open quickfix' })
+      vim.keymap.set('n', '<leader>qc', '<cmd>cclose<cr>', { desc = 'Close quickfix' })
 
-       -- Location list navigation
-       vim.keymap.set('n', '[l', '<cmd>lprev<cr>', { desc = 'Prev loclist' })
-       vim.keymap.set('n', ']l', '<cmd>lnext<cr>', { desc = 'Next loclist' })
+      -- Location list navigation
+      vim.keymap.set('n', '[l', '<cmd>lprev<cr>', { desc = 'Prev loclist' })
+      vim.keymap.set('n', ']l', '<cmd>lnext<cr>', { desc = 'Next loclist' })
 
-       -- Tab navigation
-       vim.keymap.set('n', '<leader><tab>l', '<cmd>tablast<cr>', { desc = 'Last tab' })
-       vim.keymap.set('n', '<leader><tab>f', '<cmd>tabfirst<cr>', { desc = 'First tab' })
+      -- Tab navigation
+      vim.keymap.set('n', '<leader><tab>l', '<cmd>tablast<cr>', { desc = 'Last tab' })
+      vim.keymap.set('n', '<leader><tab>f', '<cmd>tabfirst<cr>', { desc = 'First tab' })
       vim.keymap.set('n', '<leader><tab>n', '<cmd>tabnew<cr>', { desc = 'New tab' })
-       vim.keymap.set('n', '<leader><tab>]', '<cmd>tabnext<cr>', { desc = 'Next tab' })
-       vim.keymap.set('n', '<leader><tab>[', '<cmd>tabprevious<cr>', { desc = 'Prev tab' })
-       vim.keymap.set('n', '<leader><tab>d', '<cmd>tabclose<cr>', { desc = 'Close tab' })
+      vim.keymap.set('n', '<leader><tab>]', '<cmd>tabnext<cr>', { desc = 'Next tab' })
+      vim.keymap.set('n', '<leader><tab>[', '<cmd>tabprevious<cr>', { desc = 'Prev tab' })
+      vim.keymap.set('n', '<leader><tab>d', '<cmd>tabclose<cr>', { desc = 'Close tab' })
 
-       -- Format with conform
-       vim.keymap.set('n', '<leader>fm', function()
-         require('conform').format({ lsp_fallback = true })
-       end, { desc = 'Format file' })
+      -- Format with conform
+      vim.keymap.set('n', '<leader>fm', function()
+        require('conform').format({ lsp_fallback = true })
+      end, { desc = 'Format file' })
 
-       -- Setup persistence
-       require('persistence').setup({
-         dir = vim.fn.expand(vim.fn.stdpath('state') .. '/sessions/'),
-         options = { 'buffers', 'curdir', 'tabpages', 'winsize' },
-       })
+      -- Setup persistence
+      require('persistence').setup({
+        dir = vim.fn.expand(vim.fn.stdpath('state') .. '/sessions/'),
+        options = { 'buffers', 'curdir', 'tabpages', 'winsize' },
+      })
 
-       -- Setup dressing
-       require('dressing').setup({
-         input = {
-           enabled = true,
-           default_prompt = '➤ ',
-           win_options = { winblend = 0 },
-         },
-         select = {
-           enabled = true,
-           backend = { 'telescope', 'builtin' },
-         },
-       })
+      -- Setup dressing
+      require('dressing').setup({
+        input = {
+          enabled = true,
+          default_prompt = '➤ ',
+          win_options = { winblend = 0 },
+        },
+        select = {
+          enabled = true,
+          backend = { 'telescope', 'builtin' },
+        },
+      })
 
-       -- Setup diffview
-       require('diffview').setup({})
+      -- Setup diffview
+      require('diffview').setup({})
 
-       -- Setup spectre
-       require('spectre').setup({})
+      -- Setup spectre
+      require('spectre').setup({})
 
-       -- Setup nvim-bqf
-       require('bqf').setup({})
+      -- Setup nvim-bqf
+      require('bqf').setup({})
 
-       -- LSP diagnostic configuration
-       local signs = { Error = " ", Warn = " ", Hint = "󰌶 ", Info = " " }
-       for type, icon in pairs(signs) do
-         local hl = "DiagnosticSign" .. type
-         vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-       end
+      -- LSP diagnostic configuration
+      local signs = { Error = " ", Warn = " ", Hint = "󰌶 ", Info = " " }
+      for type, icon in pairs(signs) do
+        local hl = "DiagnosticSign" .. type
+        vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+      end
 
-       vim.diagnostic.config({
-         virtual_text = { prefix = "●", spacing = 4 },
-         signs = true,
-         underline = true,
-         update_in_insert = false,
-         severity_sort = true,
-         float = {
-           border = "rounded",
-           source = "always",
-           header = "",
-           prefix = "",
-         },
-       })
+      vim.diagnostic.config({
+        virtual_text = { prefix = "●", spacing = 4 },
+        signs = true,
+        underline = true,
+        update_in_insert = false,
+        severity_sort = true,
+        float = {
+          border = "rounded",
+          source = "always",
+          header = "",
+          prefix = "",
+        },
+      })
 
-       -- LSP handlers with borders
-       local handlers = {
-         ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" }),
-         ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" }),
-       }
+      -- LSP handlers with borders
+      local handlers = {
+        ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" }),
+        ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" }),
+      }
 
-       for method, handler in pairs(handlers) do
-         vim.lsp.handlers[method] = handler
-       end
+      for method, handler in pairs(handlers) do
+        vim.lsp.handlers[method] = handler
+      end
 
-       -- Additional LSP workspace keymaps
-       vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, { desc = 'Add workspace folder' })
-       vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, { desc = 'Remove workspace folder' })
-       vim.keymap.set('n', '<leader>wl', function()
-         print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-       end, { desc = 'List workspace folders' })
+      -- Additional LSP workspace keymaps
+      vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, { desc = 'Add workspace folder' })
+      vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, { desc = 'Remove workspace folder' })
+      vim.keymap.set('n', '<leader>wl', function()
+        print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+      end, { desc = 'List workspace folders' })
 
-       -- Telescope additional find all files keymap
-       vim.keymap.set('n', '<leader>fa', function()
-         require('telescope.builtin').find_files({
-           follow = true,
-           no_ignore = true,
-           hidden = true,
-         })
-       end, { desc = 'Find all files' })
+      -- Telescope additional find all files keymap
+      vim.keymap.set('n', '<leader>fa', function()
+        require('telescope.builtin').find_files({
+          follow = true,
+          no_ignore = true,
+          hidden = true,
+        })
+      end, { desc = 'Find all files' })
 
-       -- Quick source current file
-       vim.keymap.set('n', '<leader><leader>', function()
-         vim.cmd('source %')
-         vim.notify('Config sourced!', vim.log.levels.INFO)
-       end, { desc = 'Source current file' })
+      -- Quick source current file
+      vim.keymap.set('n', '<leader><leader>', function()
+        vim.cmd('source %')
+        vim.notify('Config sourced!', vim.log.levels.INFO)
+      end, { desc = 'Source current file' })
     '';
   };
 }
