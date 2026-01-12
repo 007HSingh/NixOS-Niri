@@ -179,9 +179,11 @@
     # ============================================================================
     plugins.fidget = {
       enable = lib.mkDefault true;
-      notification = {
-        window = {
-          winblend = 0;
+      settings = {
+        notification = {
+          window = {
+            winblend = 0;
+          };
         };
       };
     };

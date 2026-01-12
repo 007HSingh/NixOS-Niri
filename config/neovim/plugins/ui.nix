@@ -188,65 +188,67 @@
     # ============================================================================
     plugins.alpha = {
       enable = lib.mkDefault true;
-      layout = [
-        {
-          type = "padding";
-          val = 2;
-        }
-        {
-          opts = {
-            hl = "Type";
-            position = "center";
-          };
-          type = "text";
-          val = [
-            "███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗"
-            "████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║"
-            "██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║"
-            "██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║"
-            "██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║"
-            "╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝"
-          ];
-        }
-        {
-          type = "padding";
-          val = 2;
-        }
-        {
-          type = "group";
-          val = [
-            {
-              command = ":Telescope find_files";
-              desc = " Find File";
-              shortcut = "SPC f f";
-            }
-            {
-              command = ":ene | startinsert";
-              desc = " New File";
-              shortcut = "SPC n";
-            }
-            {
-              command = ":Telescope oldfiles";
-              desc = " Recent Files";
-              shortcut = "SPC f r";
-            }
-            {
-              command = ":Telescope live_grep";
-              desc = " Find Text";
-              shortcut = "SPC f g";
-            }
-            {
-              command = ":qa";
-              desc = " Quit";
-              shortcut = "SPC q";
-            }
-          ];
-        }
-        {
-          type = "padding";
-          val = 2;
-        }
-      ];
+      settings = {
+        layout = [
+          {
+            type = "padding";
+            val = 2;
+          }
+          {
+            opts = {
+              hl = "Type";
+              position = "center";
+            };
+            type = "text";
+            val = [
+              "███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗"
+              "████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║"
+              "██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║"
+              "██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║"
+              "██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║"
+              "╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝"
+            ];
+          }
+          {
+            type = "padding";
+            val = 2;
+          }
+          {
+            type = "group";
+            val = [
+              {
+                command = ":Telescope find_files";
+                desc = " Find File";
+                shortcut = "SPC f f";
+              }
+              {
+                command = ":ene | startinsert";
+                desc = " New File";
+                shortcut = "SPC n";
+              }
+              {
+                command = ":Telescope oldfiles";
+                desc = " Recent Files";
+                shortcut = "SPC f r";
+              }
+              {
+                command = ":Telescope live_grep";
+                desc = " Find Text";
+                shortcut = "SPC f g";
+              }
+              {
+                command = ":qa";
+                desc = " Quit";
+                shortcut = "SPC q";
+              }
+            ];
+          }
+          {
+            type = "padding";
+            val = 2;
+          }
+        ];
+      };
     };
 
     # ============================================================================
