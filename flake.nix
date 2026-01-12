@@ -68,7 +68,6 @@
           ./configuration.nix
           ./noctalia.nix
           catppuccin.nixosModules.catppuccin
-          nixvim.nixosModules.nixvim
           home-manager.nixosModules.home-manager
           {
             home-manager = {
@@ -78,6 +77,7 @@
                 imports = [
                   ./home.nix
                   catppuccin.homeModules.catppuccin
+		  nixvim.homeModules.nixvim
                   inputs.spicetify.homeManagerModules.default
                 ];
               };
