@@ -20,6 +20,10 @@ let
 in
 
 {
+  imports = [
+    ./nixvim.nix
+  ];
+
   home.username = "harsh";
   home.homeDirectory = "/home/harsh";
   home.stateVersion = "25.11";
