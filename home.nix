@@ -189,7 +189,6 @@ in
     appflowy
     inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
     tor-browser
-    inputs.nixvim.packages.x86_64-linux.default
   ];
 
   home.sessionVariables = {
