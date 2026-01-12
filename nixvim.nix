@@ -5,7 +5,7 @@
     enable = true;
     
     # ============================================================================
-    # COLORSCHEME - Catppuccin Mocha for consistency
+    # COLORSCHEME - Catppuccin Mocha for consistency with your system theme
     # ============================================================================
     colorschemes.catppuccin = {
       enable = true;
@@ -108,39 +108,48 @@
     };
 
     # ============================================================================
+    # WEB DEVICONS - Explicitly enable to avoid deprecation warning
+    # ============================================================================
+    plugins.web-devicons.enable = true;
+
+    # ============================================================================
     # FILE EXPLORER - nvim-tree for minimal sidebar navigation
     # ============================================================================
     plugins.nvim-tree = {
       enable = true;
       openOnSetup = false;
-      autoReloadOnWrite = true;
-      disableNetrw = true;
-      hijackCursor = true;
-      updateFocusedFile = {
-        enable = true;
-        updateRoot = false;
-      };
-      view = {
-        width = 35;
-        side = "left";
-        preserveWindowProportions = true;
-      };
-      renderer = {
-        highlightGit = true;
-        indentMarkers.enable = true;
-        icons = {
-          gitPlacement = "after";
-          show = {
-            file = true;
-            folder = true;
-            folderArrow = true;
-            git = true;
+      settings = {
+        auto_reload_on_write = true;
+        disable_netrw = true;
+        hijack_cursor = true;
+        update_focused_file = {
+          enable = true;
+          update_root = false;
+        };
+        view = {
+          width = 35;
+          side = "left";
+          preserve_window_proportions = true;
+        };
+        renderer = {
+          highlight_git = true;
+          indent_markers = {
+            enable = true;
+          };
+          icons = {
+            git_placement = "after";
+            show = {
+              file = true;
+              folder = true;
+              folder_arrow = true;
+              git = true;
+            };
           };
         };
-      };
-      filters = {
-        dotfiles = false;
-        custom = [ ".git" "node_modules" ".cache" ];
+        filters = {
+          dotfiles = false;
+          custom = [ ".git" "node_modules" ".cache" ];
+        };
       };
     };
 
@@ -228,7 +237,9 @@
     plugins.treesitter = {
       enable = true;
       nixvimInjections = true;
-      folding = false;
+      folding = {
+        enable = false;
+      };
       settings = {
         highlight = {
           enable = true;
@@ -991,7 +1002,7 @@
     # ============================================================================
     extraPackages = with pkgs; [
       # Formatters (already in your home.nix but ensuring they're available)
-      nixfmt-rfc-style
+      nixfmt # Use nixfmt instead of nixfmt-rfc-style
       stylua
       prettier
       black
