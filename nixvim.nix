@@ -76,7 +76,7 @@
       typescript-language-server
       vscode-langservers-extracted
       yaml-language-server
-      dockerfile-language-server-nodejs
+      dockerfile-language-server
       docker-compose-language-service
       pyright
       rust-analyzer

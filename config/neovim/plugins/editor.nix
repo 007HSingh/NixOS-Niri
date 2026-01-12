@@ -23,23 +23,7 @@
           "TelescopePrompt"
           "vim"
         ];
-        fast_wrap = {
-          map = "<M-e>";
-          chars = [
-            "{"
-            "["
-            "("
-            "\""
-            "'"
-          ];
-          pattern = "([%'%\"%>%]%)%}%,])[^%)%]%}%,]*";
-          offset = 0;
-          end_key = "$";
-          keys = "qwertyuiopzxcvbnmasdfghjkl";
-          check_comma = true;
-          highlight = "PmenuSel";
-          highlight_grey = "LineNr";
-        };
+        # Removed fast_wrap to avoid Lua parsing issues
       };
     };
 
@@ -208,13 +192,15 @@
     # ============================================================================
     plugins.illuminate = {
       enable = lib.mkDefault true;
-      filetypesDenylist = [
-        "alpha"
-        "dashboard"
-        "NvimTree"
-        "Trouble"
-        "toggleterm"
-      ];
+      settings = {
+        filetypes_denylist = [
+          "alpha"
+          "dashboard"
+          "NvimTree"
+          "Trouble"
+          "toggleterm"
+        ];
+      };
     };
 
     # ============================================================================
