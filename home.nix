@@ -132,11 +132,6 @@ in
       colorScheme = "mocha";
     };
 
-  programs.nixvim = {
-    enable = true;
-    imports = [ inputs.neve.nixvimModule ];
-  };
-
   xdg.configFile = builtins.mapAttrs (name: subpath: {
     source = create_symlink "${dotfiles}/${subpath}";
     recursive = true;
@@ -194,6 +189,7 @@ in
     appflowy
     inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
     tor-browser
+    inputs.nixvim.packages.x86_64-linux.default
   ];
 
   home.sessionVariables = {
