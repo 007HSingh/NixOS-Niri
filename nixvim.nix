@@ -936,43 +936,6 @@
         ];
       };
 
-      # Treesitter context
-      treesitter-context = {
-        enable = true;
-        settings = {
-          max_lines = 3;
-          min_window_height = 20;
-        };
-      };
-
-      # Treesitter text objects
-      treesitter-textobjects = {
-        enable = true;
-        settings.select = {
-          enable = true;
-          lookahead = true;
-          keymaps = {
-            "aa" = "@parameter.outer";
-            "ia" = "@parameter.inner";
-            "af" = "@function.outer";
-            "if" = "@function.inner";
-            "ac" = "@class.outer";
-            "ic" = "@class.inner";
-          };
-        };
-        settings.move = {
-          enable = true;
-          goto_next_start = {
-            "]f" = "@function.outer";
-            "]c" = "@class.outer";
-          };
-          goto_previous_start = {
-            "[f" = "@function.outer";
-            "[c" = "@class.outer";
-          };
-        };
-      };
-
       # Telescope
       telescope = {
         enable = true;
