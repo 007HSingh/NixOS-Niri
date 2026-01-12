@@ -10,24 +10,81 @@
     viAlias = true;
     vimAlias = true;
 
+    # Performance optimizations
+    performance = {
+      byteCompileLua = {
+        enable = true;
+        configs = true;
+        initLua = true;
+        nvimRuntime = true;
+        plugins = true;
+      };
+      combinePlugins = {
+        enable = true;
+        standalonePlugins = [
+          "nvim-treesitter"
+          "hmts.so"
+        ];
+      };
+    };
+
     # Color scheme
     colorschemes.catppuccin = {
       enable = true;
       settings = {
         flavour = "mocha";
         transparent_background = false;
+        term_colors = true;
+        dim_inactive = {
+          enabled = false;
+          shade = "dark";
+          percentage = 0.15;
+        };
+        styles = {
+          comments = [ "italic" ];
+          conditionals = [ "italic" ];
+          loops = [ ];
+          functions = [ ];
+          keywords = [ ];
+          strings = [ ];
+          variables = [ ];
+          numbers = [ ];
+          booleans = [ ];
+          properties = [ ];
+          types = [ ];
+          operators = [ ];
+        };
         integrations = {
           cmp = true;
           gitsigns = true;
           treesitter = true;
           notify = true;
-          telescope = true;
+          telescope.enabled = true;
           which_key = true;
+          fidget = true;
+          mason = true;
+          neotest = true;
+          noice = true;
+          native_lsp = {
+            enabled = true;
+            virtual_text = {
+              errors = [ "italic" ];
+              hints = [ "italic" ];
+              warnings = [ "italic" ];
+              information = [ "italic" ];
+            };
+            underlines = {
+              errors = [ "underline" ];
+              hints = [ "underline" ];
+              warnings = [ "underline" ];
+              information = [ "underline" ];
+            };
+          };
         };
       };
     };
 
-    # Global options
+    # Global settings
     globals = {
       mapleader = " ";
       maplocalleader = " ";
@@ -42,12 +99,15 @@
       # Tabs & indentation
       tabstop = 2;
       shiftwidth = 2;
+      softtabstop = 2;
       expandtab = true;
       autoindent = true;
       smartindent = true;
+      breakindent = true;
 
       # Line wrapping
       wrap = false;
+      linebreak = true;
 
       # Search settings
       ignorecase = true;
@@ -55,9 +115,10 @@
       hlsearch = true;
       incsearch = true;
 
-      # Cursor line
+      # Cursor
       cursorline = true;
       cursorlineopt = "both";
+      guicursor = "";
 
       # Appearance
       termguicolors = true;
@@ -66,6 +127,8 @@
       cmdheight = 1;
       scrolloff = 8;
       sidescrolloff = 8;
+      colorcolumn = "120";
+      showmode = false;
 
       # Backspace
       backspace = "indent,eol,start";
@@ -76,8 +139,9 @@
       # Split windows
       splitright = true;
       splitbelow = true;
+      splitkeep = "screen";
 
-      # Swapfile
+      # Swap and backup
       swapfile = false;
       backup = false;
       writebackup = false;
@@ -88,11 +152,12 @@
 
       # Update time
       updatetime = 200;
-      timeoutlen = 200;
+      timeoutlen = 300;
 
       # Completion
       completeopt = "menu,menuone,noselect";
-      pumheight = 10;
+      pumheight = 15;
+      pumblend = 10;
 
       # File encoding
       fileencoding = "utf-8";
@@ -113,7 +178,7 @@
 
       # Folding
       foldmethod = "expr";
-      foldexpr = "nvim_treesitter#foldexpr()";
+      foldexpr = "v:lua.vim.treesitter.foldexpr()";
       foldenable = false;
       foldcolumn = "1";
       foldlevel = 99;
@@ -121,26 +186,47 @@
 
       # Window title
       title = true;
+      titlestring = "%<%F%=%l/%L - nvim";
 
-      # Grep program
+      # Grep
       grepprg = "rg --vimgrep --smart-case --hidden";
       grepformat = "%f:%l:%c:%m";
 
       # Better diff
-      diffopt = "filler,iwhite,internal,linematch:60";
+      diffopt = "filler,iwhite,internal,linematch:60,algorithm:patience";
 
-      # Better formatting
+      # Formatting
       formatoptions = "jcroqlnt";
+
+      # Better experience
+      conceallevel = 2;
+      concealcursor = "nc";
+      virtualedit = "block";
+      inccommand = "split";
+      jumpoptions = "view";
+
+      # Session
+      sessionoptions = "buffers,curdir,tabpages,winsize,help,globals,skiprtp,folds";
+
+      # Spelling
+      spell = false;
+      spelllang = "en_us";
+
+      # Wildmenu
+      wildmode = "longest:full,full";
+      wildoptions = "pum";
+
+      # Preview substitutions
+      icm = "split";
     };
 
-    # Keymaps
     keymaps = [
       # General
       {
         mode = "n";
         key = ";";
         action = ":";
-        options.desc = "CMD enter command mode";
+        options.desc = "Command mode";
       }
       {
         mode = "i";
@@ -157,8 +243,28 @@
       {
         mode = "n";
         key = "<Esc>";
-        action = "<cmd>noh<cr>";
-        options.desc = "Clear highlights";
+        action = "<cmd>nohlsearch<cr>";
+        options.desc = "Clear search highlights";
+      }
+
+      # Better navigation
+      {
+        mode = "n";
+        key = "j";
+        action = "v:count == 0 ? 'gj' : 'j'";
+        options = {
+          expr = true;
+          desc = "Move down (wrapped lines)";
+        };
+      }
+      {
+        mode = "n";
+        key = "k";
+        action = "v:count == 0 ? 'gk' : 'k'";
+        options = {
+          expr = true;
+          desc = "Move up (wrapped lines)";
+        };
       }
 
       # Window navigation
@@ -166,25 +272,25 @@
         mode = "n";
         key = "<C-h>";
         action = "<C-w>h";
-        options.desc = "Window left";
+        options.desc = "Move to left window";
       }
       {
         mode = "n";
         key = "<C-l>";
         action = "<C-w>l";
-        options.desc = "Window right";
+        options.desc = "Move to right window";
       }
       {
         mode = "n";
         key = "<C-j>";
         action = "<C-w>j";
-        options.desc = "Window down";
+        options.desc = "Move to bottom window";
       }
       {
         mode = "n";
         key = "<C-k>";
         action = "<C-w>k";
-        options.desc = "Window up";
+        options.desc = "Move to top window";
       }
 
       # Resize windows
@@ -213,86 +319,6 @@
         options.desc = "Increase window width";
       }
 
-      # Better indenting
-      {
-        mode = "v";
-        key = "<";
-        action = "<gv";
-        options.desc = "Indent left and reselect";
-      }
-      {
-        mode = "v";
-        key = ">";
-        action = ">gv";
-        options.desc = "Indent right and reselect";
-      }
-
-      # Move lines
-      {
-        mode = "v";
-        key = "J";
-        action = ":m '>+1<CR>gv=gv";
-        options.desc = "Move line down";
-      }
-      {
-        mode = "v";
-        key = "K";
-        action = ":m '<-2<CR>gv=gv";
-        options.desc = "Move line up";
-      }
-      {
-        mode = "n";
-        key = "<A-j>";
-        action = "<cmd>m .+1<cr>==";
-        options.desc = "Move line down";
-      }
-      {
-        mode = "n";
-        key = "<A-k>";
-        action = "<cmd>m .-2<cr>==";
-        options.desc = "Move line up";
-      }
-
-      # Better paste
-      {
-        mode = "v";
-        key = "p";
-        action = ''"_dP'';
-        options.desc = "Paste without yanking";
-      }
-      {
-        mode = "x";
-        key = "p";
-        action = ''"_dP'';
-        options.desc = "Paste without yanking";
-      }
-
-      # Center when scrolling
-      {
-        mode = "n";
-        key = "<C-d>";
-        action = "<C-d>zz";
-        options.desc = "Scroll down and center";
-      }
-      {
-        mode = "n";
-        key = "<C-u>";
-        action = "<C-u>zz";
-        options.desc = "Scroll up and center";
-      }
-      {
-        mode = "n";
-        key = "n";
-        action = "nzzzv";
-        options.desc = "Next search result and center";
-      }
-      {
-        mode = "n";
-        key = "N";
-        action = "Nzzzv";
-        options.desc = "Previous search result and center";
-      }
-
       # Buffer navigation
       {
         mode = "n";
@@ -309,8 +335,91 @@
       {
         mode = "n";
         key = "<leader>bd";
-        action = "<cmd>bd<cr>";
+        action = "<cmd>bdelete<cr>";
         options.desc = "Delete buffer";
+      }
+      {
+        mode = "n";
+        key = "<leader>bD";
+        action = "<cmd>%bdelete|edit#|bdelete#<cr>";
+        options.desc = "Delete all buffers except current";
+      }
+
+      # Better indenting
+      {
+        mode = "v";
+        key = "<";
+        action = "<gv";
+        options.desc = "Indent left";
+      }
+      {
+        mode = "v";
+        key = ">";
+        action = ">gv";
+        options.desc = "Indent right";
+      }
+
+      # Move lines
+      {
+        mode = "v";
+        key = "J";
+        action = ":m '>+1<CR>gv=gv";
+        options.desc = "Move selection down";
+      }
+      {
+        mode = "v";
+        key = "K";
+        action = ":m '<-2<CR>gv=gv";
+        options.desc = "Move selection up";
+      }
+      {
+        mode = "n";
+        key = "<A-j>";
+        action = "<cmd>m .+1<cr>==";
+        options.desc = "Move line down";
+      }
+      {
+        mode = "n";
+        key = "<A-k>";
+        action = "<cmd>m .-2<cr>==";
+        options.desc = "Move line up";
+      }
+
+      # Better paste
+      {
+        mode = [
+          "v"
+          "x"
+        ];
+        key = "p";
+        action = ''"_dP'';
+        options.desc = "Paste without yanking";
+      }
+
+      # Center cursor
+      {
+        mode = "n";
+        key = "<C-d>";
+        action = "<C-d>zz";
+        options.desc = "Scroll down and center";
+      }
+      {
+        mode = "n";
+        key = "<C-u>";
+        action = "<C-u>zz";
+        options.desc = "Scroll up and center";
+      }
+      {
+        mode = "n";
+        key = "n";
+        action = "nzzzv";
+        options.desc = "Next search result";
+      }
+      {
+        mode = "n";
+        key = "N";
+        action = "Nzzzv";
+        options.desc = "Previous search result";
       }
 
       # Split management
@@ -330,16 +439,16 @@
         mode = "n";
         key = "<leader>se";
         action = "<C-w>=";
-        options.desc = "Make splits equal size";
+        options.desc = "Equal splits";
       }
       {
         mode = "n";
         key = "<leader>sx";
         action = "<cmd>close<cr>";
-        options.desc = "Close current split";
+        options.desc = "Close split";
       }
 
-      # Quick save and quit
+      # Quick actions
       {
         mode = "n";
         key = "<leader>w";
@@ -349,28 +458,46 @@
       {
         mode = "n";
         key = "<leader>q";
-        action = "<cmd>q<cr>";
+        action = "<cmd>confirm q<cr>";
         options.desc = "Quit";
       }
       {
         mode = "n";
         key = "<leader>Q";
         action = "<cmd>qa!<cr>";
-        options.desc = "Quit all without saving";
+        options.desc = "Quit all (no save)";
       }
 
       # Terminal
       {
         mode = "t";
-        key = "<C-x>";
-        action = "<C-\\><C-N>";
-        options.desc = "Escape terminal mode";
+        key = "<Esc><Esc>";
+        action = "<C-\\><C-n>";
+        options.desc = "Exit terminal mode";
       }
       {
         mode = "t";
-        key = "<Esc>";
-        action = "<C-\\><C-N>";
-        options.desc = "Escape terminal mode";
+        key = "<C-h>";
+        action = "<cmd>wincmd h<cr>";
+        options.desc = "Move to left window";
+      }
+      {
+        mode = "t";
+        key = "<C-j>";
+        action = "<cmd>wincmd j<cr>";
+        options.desc = "Move to bottom window";
+      }
+      {
+        mode = "t";
+        key = "<C-k>";
+        action = "<cmd>wincmd k<cr>";
+        options.desc = "Move to top window";
+      }
+      {
+        mode = "t";
+        key = "<C-l>";
+        action = "<cmd>wincmd l<cr>";
+        options.desc = "Move to right window";
       }
 
       # Select all
@@ -381,83 +508,76 @@
         options.desc = "Select all";
       }
 
-      # Better increment/decrement
-      {
-        mode = "n";
-        key = "+";
-        action = "<C-a>";
-        options.desc = "Increment number";
-      }
-      {
-        mode = "n";
-        key = "-";
-        action = "<C-x>";
-        options.desc = "Decrement number";
-      }
-
       # Toggle options
       {
         mode = "n";
-        key = "<leader>tn";
-        action = "<cmd>set nu!<cr>";
+        key = "<leader>uw";
+        action = "<cmd>set wrap!<cr>";
+        options.desc = "Toggle wrap";
+      }
+      {
+        mode = "n";
+        key = "<leader>us";
+        action = "<cmd>set spell!<cr>";
+        options.desc = "Toggle spell";
+      }
+      {
+        mode = "n";
+        key = "<leader>un";
+        action = "<cmd>set number!<cr>";
         options.desc = "Toggle line numbers";
       }
       {
         mode = "n";
-        key = "<leader>tr";
-        action = "<cmd>set rnu!<cr>";
+        key = "<leader>ur";
+        action = "<cmd>set relativenumber!<cr>";
         options.desc = "Toggle relative numbers";
       }
+
+      # Diagnostic
       {
         mode = "n";
-        key = "<leader>tw";
-        action = "<cmd>set wrap!<cr>";
-        options.desc = "Toggle line wrap";
+        key = "<leader>cd";
+        action = "vim.diagnostic.open_float";
+        lua = true;
+        options.desc = "Line diagnostics";
+      }
+
+      # Lazygit
+      {
+        mode = "n";
+        key = "<leader>gg";
+        action = "<cmd>LazyGit<cr>";
+        options.desc = "LazyGit";
       }
     ];
 
     # Autocommands
     autoGroups = {
-      highlight_yank = {
-        clear = true;
-      };
-      resize_splits = {
-        clear = true;
-      };
-      close_with_q = {
-        clear = true;
-      };
-      auto_create_dir = {
-        clear = true;
-      };
-      restore_cursor = {
-        clear = true;
-      };
-      conceallevel = {
-        clear = true;
-      };
+      highlight_yank.clear = true;
+      resize_splits.clear = true;
+      close_with_q.clear = true;
+      auto_create_dir.clear = true;
+      restore_cursor.clear = true;
+      conceallevel.clear = true;
+      checktime.clear = true;
     };
 
     autoCmd = [
-      # Highlight on yank
       {
         event = "TextYankPost";
         group = "highlight_yank";
         callback.__raw = ''
           function()
-            vim.highlight.on_yank({ higroup = "IncSearch", timeout = 200 })
+            vim.highlight.on_yank({ higroup = "Visual", timeout = 150 })
           end
         '';
       }
-
-      # Resize splits on window resize
       {
         event = "VimResized";
         group = "resize_splits";
         command = "tabdo wincmd =";
       }
-
-      # Close certain filetypes with 'q'
       {
         event = "FileType";
         group = "close_with_q";
@@ -468,6 +588,7 @@
           "notify"
           "lspinfo"
           "checkhealth"
+          "query"
         ];
         callback.__raw = ''
           function(event)
@@ -476,23 +597,17 @@
           end
         '';
       }
-
-      # Auto create directory when saving
       {
         event = "BufWritePre";
         group = "auto_create_dir";
         callback.__raw = ''
           function(event)
-            if event.match:match("^%w%w+://") then
-              return
-            end
+            if event.match:match("^%w%w+://") then return end
             local file = vim.loop.fs_realpath(event.match) or event.match
             vim.fn.mkdir(vim.fn.fnamemodify(file, ":p:h"), "p")
           end
         '';
       }
-
-      # Restore cursor position
       {
         event = "BufReadPost";
         group = "restore_cursor";
@@ -506,8 +621,6 @@
           end
         '';
       }
-
-      # Fix conceallevel for json/markdown
       {
         event = "FileType";
         group = "conceallevel";
@@ -515,45 +628,48 @@
           "json"
           "jsonc"
           "json5"
-          "markdown"
         ];
         command = "setlocal conceallevel=0";
       }
+      {
+        event = [
+          "FocusGained"
+          "TermClose"
+          "TermLeave"
+        ];
+        group = "checktime";
+        command = "checktime";
+      }
     ];
 
-    # Plugins
+    # Plugin configurations
     plugins = {
       # LSP
       lsp = {
         enable = true;
+        inlayHints = true;
         servers = {
           nil_ls.enable = true;
           lua_ls = {
             enable = true;
-            settings = {
-              Lua = {
-                diagnostics = {
-                  globals = [ "vim" ];
-                };
-                workspace = {
-                  library = [
-                    "\${3rd}/luv/library"
-                  ];
-                  checkThirdParty = false;
-                };
-                telemetry.enable = false;
+            settings.Lua = {
+              runtime.version = "LuaJIT";
+              diagnostics.globals = [ "vim" ];
+              workspace = {
+                library = [ "\${3rd}/luv/library" ];
+                checkThirdParty = false;
               };
+              telemetry.enable = false;
+              completion.callSnippet = "Replace";
             };
           };
           pyright = {
             enable = true;
-            settings = {
-              python.analysis = {
-                autoSearchPaths = true;
-                diagnosticMode = "workspace";
-                useLibraryCodeForTypes = true;
-                typeCheckingMode = "basic";
-              };
+            settings.python.analysis = {
+              autoSearchPaths = true;
+              diagnosticMode = "workspace";
+              useLibraryCodeForTypes = true;
+              typeCheckingMode = "basic";
             };
           };
           rust_analyzer = {
@@ -564,6 +680,14 @@
               cargo.allFeatures = true;
               checkOnSave.command = "clippy";
               procMacro.enable = true;
+              inlayHints = {
+                bindingModeHints.enable = true;
+                closingBraceHints.minLines = 10;
+                closureReturnTypeHints.enable = "with_block";
+                discriminantHints.enable = "fieldless";
+                lifetimeElisionHints.enable = "skip_trivial";
+                typeHints.hideClosureInitialization = false;
+              };
             };
           };
           bashls.enable = true;
@@ -586,50 +710,146 @@
                 includeInlayParameterNameHints = "all";
                 includeInlayFunctionParameterTypeHints = true;
                 includeInlayVariableTypeHints = true;
+                includeInlayPropertyDeclarationTypeHints = true;
+                includeInlayFunctionLikeReturnTypeHints = true;
               };
               javascript.inlayHints = {
                 includeInlayParameterNameHints = "all";
                 includeInlayFunctionParameterTypeHints = true;
                 includeInlayVariableTypeHints = true;
+                includeInlayPropertyDeclarationTypeHints = true;
+                includeInlayFunctionLikeReturnTypeHints = true;
               };
             };
           };
           jsonls = {
             enable = true;
-            settings = {
-              json = {
-                schemas.__raw = "require('schemastore').json.schemas()";
-                validate.enable = true;
-              };
+            settings.json = {
+              schemas.__raw = "require('schemastore').json.schemas()";
+              validate.enable = true;
             };
           };
           yamlls = {
             enable = true;
-            settings = {
-              yaml = {
-                schemas.__raw = "require('schemastore').yaml.schemas()";
-              };
-            };
+            settings.yaml.schemas.__raw = "require('schemastore').yaml.schemas()";
           };
+          dockerls.enable = true;
+          docker_compose_language_service.enable = true;
+          marksman.enable = true;
         };
         keymaps = {
           diagnostic = {
             "[d" = "goto_prev";
             "]d" = "goto_next";
-            "<leader>d" = "open_float";
-            "<leader>q" = "setloclist";
+            "<leader>e" = "open_float";
+            "<leader>qf" = "setloclist";
           };
           lspBuf = {
             "gd" = "definition";
             "gD" = "declaration";
             "gi" = "implementation";
             "gr" = "references";
+            "gt" = "type_definition";
             "K" = "hover";
             "<leader>ca" = "code_action";
-            "<leader>rn" = "rename";
-            "<leader>sh" = "signature_help";
+            "<leader>cr" = "rename";
+            "<C-k>" = "signature_help";
           };
         };
+      };
+
+      # Completion
+      cmp = {
+        enable = true;
+        autoEnableSources = true;
+        settings = {
+          snippet.expand = ''
+            function(args)
+              require('luasnip').lsp_expand(args.body)
+            end
+          '';
+          mapping = {
+            "<C-n>" = "cmp.mapping.select_next_item()";
+            "<C-p>" = "cmp.mapping.select_prev_item()";
+            "<C-b>" = "cmp.mapping.scroll_docs(-4)";
+            "<C-f>" = "cmp.mapping.scroll_docs(4)";
+            "<C-Space>" = "cmp.mapping.complete()";
+            "<C-e>" = "cmp.mapping.abort()";
+            "<CR>" = "cmp.mapping.confirm({ select = true })";
+            "<S-CR>" = "cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true })";
+            "<Tab>" = ''
+              cmp.mapping(function(fallback)
+                if cmp.visible() then
+                  cmp.select_next_item()
+                elseif require('luasnip').expand_or_jumpable() then
+                  require('luasnip').expand_or_jump()
+                else
+                  fallback()
+                end
+              end, { "i", "s" })
+            '';
+            "<S-Tab>" = ''
+              cmp.mapping(function(fallback)
+                if cmp.visible() then
+                  cmp.select_prev_item()
+                elseif require('luasnip').jumpable(-1) then
+                  require('luasnip').jump(-1)
+                else
+                  fallback()
+                end
+              end, { "i", "s" })
+            '';
+          };
+          sources = [
+            { name = "nvim_lsp"; }
+            { name = "luasnip"; }
+            { name = "path"; }
+            { name = "buffer"; }
+          ];
+          window = {
+            completion.border = "rounded";
+            documentation.border = "rounded";
+          };
+          formatting = {
+            fields = [
+              "kind"
+              "abbr"
+              "menu"
+            ];
+            format = ''
+              function(_, vim_item)
+                local icons = {
+                  Text = "󰉿", Method = "󰆧", Function = "󰊕",
+                  Constructor = "", Field = "󰜢", Variable = "󰀫",
+                  Class = "󰠱", Interface = "", Module = "",
+                  Property = "󰜢", Unit = "󰑭", Value = "󰎠",
+                  Enum = "", Keyword = "󰌋", Snippet = "",
+                  Color = "󰏘", File = "󰈙", Reference = "󰈇",
+                  Folder = "󰉋", EnumMember = "", Constant = "󰏿",
+                  Struct = "󰙅", Event = "", Operator = "󰆕",
+                  TypeParameter = "",
+                }
+                vim_item.kind = string.format('%s %s', icons[vim_item.kind], vim_item.kind)
+                return vim_item
+              end
+            '';
+          };
+          experimental.ghost_text = {
+            hl_group = "CmpGhostText";
+          };
+        };
+      };
+
+      # Snippets
+      luasnip = {
+        enable = true;
+        settings = {
+          enable_autosnippets = true;
+          store_selection_keys = "<Tab>";
+        };
+        fromVscode = [
+          { paths = "${pkgs.vimPlugins.friendly-snippets}"; }
+        ];
       };
 
       # Formatting
@@ -645,12 +865,26 @@
             markdown = [ "prettier" ];
             rust = [ "rustfmt" ];
             sh = [ "shfmt" ];
-            java = [ "google-java-format" ];
+            javascript = [ "prettier" ];
+            typescript = [ "prettier" ];
+            c = [ "clang-format" ];
+            cpp = [ "clang-format" ];
           };
           format_on_save = {
             timeout_ms = 500;
-            lsp_fallback = true;
+            lsp_format = "fallback";
           };
+        };
+      };
+
+      # Linting
+      lint = {
+        enable = true;
+        lintersByFt = {
+          python = [ "pylint" ];
+          javascript = [ "eslint_d" ];
+          typescript = [ "eslint_d" ];
+          sh = [ "shellcheck" ];
         };
       };
 
@@ -666,6 +900,7 @@
               init_selection = "<C-space>";
               node_incremental = "<C-space>";
               node_decremental = "<bs>";
+              scope_incremental = false;
             };
           };
         };
@@ -673,6 +908,7 @@
           lua
           vim
           vimdoc
+          query
           nix
           bash
           python
@@ -684,12 +920,57 @@
           css
           javascript
           typescript
+          tsx
           json
           yaml
           toml
           markdown
           markdown_inline
+          dockerfile
+          gitignore
+          git_config
+          git_rebase
+          gitcommit
+          gitattributes
+          diff
         ];
+      };
+
+      # Treesitter context
+      treesitter-context = {
+        enable = true;
+        settings = {
+          max_lines = 3;
+          min_window_height = 20;
+        };
+      };
+
+      # Treesitter text objects
+      treesitter-textobjects = {
+        enable = true;
+        select = {
+          enable = true;
+          lookahead = true;
+          keymaps = {
+            "aa" = "@parameter.outer";
+            "ia" = "@parameter.inner";
+            "af" = "@function.outer";
+            "if" = "@function.inner";
+            "ac" = "@class.outer";
+            "ic" = "@class.inner";
+          };
+        };
+        move = {
+          enable = true;
+          gotoNextStart = {
+            "]f" = "@function.outer";
+            "]c" = "@class.outer";
+          };
+          gotoPreviousStart = {
+            "[f" = "@function.outer";
+            "[c" = "@class.outer";
+          };
+        };
       };
 
       # Telescope
@@ -697,31 +978,69 @@
         enable = true;
         extensions = {
           fzf-native.enable = true;
+          ui-select.enable = true;
         };
         settings = {
           defaults = {
+            prompt_prefix = "   ";
             selection_caret = " ";
+            entry_prefix = "  ";
+            sorting_strategy = "ascending";
+            layout_strategy = "horizontal";
+            layout_config = {
+              horizontal = {
+                prompt_position = "top";
+                preview_width = 0.55;
+              };
+              width = 0.87;
+              height = 0.80;
+              preview_cutoff = 120;
+            };
             path_display = [ "truncate" ];
             file_ignore_patterns = [
-              "node_modules"
-              ".git/"
-              "dist/"
-              "build/"
+              "^.git/"
+              "^node_modules/"
+              "^target/"
+              "^dist/"
+              "^build/"
             ];
             mappings = {
               i = {
                 "<C-j>" = "move_selection_next";
                 "<C-k>" = "move_selection_previous";
+                "<C-n>" = "cycle_history_next";
+                "<C-p>" = "cycle_history_prev";
               };
             };
+            borderchars = [
+              "─"
+              "│"
+              "─"
+              "│"
+              "╭"
+              "╮"
+              "╯"
+              "╰"
+            ];
           };
           pickers = {
             find_files = {
               hidden = true;
+              find_command = [
+                "rg"
+                "--files"
+                "--hidden"
+                "--glob"
+                "!**/.git/*"
+              ];
             };
           };
         };
         keymaps = {
+          "<leader><space>" = {
+            action = "find_files";
+            options.desc = "Find files";
+          };
           "<leader>ff" = {
             action = "find_files";
             options.desc = "Find files";
@@ -744,15 +1063,15 @@
           };
           "<leader>fw" = {
             action = "grep_string";
-            options.desc = "Find word under cursor";
+            options.desc = "Find word";
           };
           "<leader>fc" = {
             action = "commands";
-            options.desc = "Find commands";
+            options.desc = "Commands";
           };
           "<leader>fk" = {
             action = "keymaps";
-            options.desc = "Find keymaps";
+            options.desc = "Keymaps";
           };
           "<leader>fs" = {
             action = "lsp_document_symbols";
@@ -762,6 +1081,10 @@
             action = "lsp_workspace_symbols";
             options.desc = "Workspace symbols";
           };
+          "<leader>fd" = {
+            action = "diagnostics";
+            options.desc = "Diagnostics";
+          };
           "<leader>gc" = {
             action = "git_commits";
             options.desc = "Git commits";
@@ -770,6 +1093,56 @@
             action = "git_status";
             options.desc = "Git status";
           };
+          "<leader>gb" = {
+            action = "git_branches";
+            options.desc = "Git branches";
+          };
+        };
+      };
+
+      # File explorer
+      neo-tree = {
+        enable = true;
+        closeIfLastWindow = true;
+        window = {
+          width = 35;
+          mappings = {
+            "<space>" = "none";
+            "l" = "open";
+            "h" = "close_node";
+            "P" = {
+              command = "toggle_preview";
+              config = {
+                use_float = true;
+              };
+            };
+          };
+        };
+        filesystem = {
+          followCurrentFile = {
+            enabled = true;
+            leaveDirsOpen = false;
+          };
+          hijackNetrwBehavior = "open_current";
+          useLibuvFileWatcher = true;
+          filteredItems = {
+            visible = true;
+            hideDotfiles = false;
+            hideGitignored = false;
+            hideByName = [
+              ".git"
+              "node_modules"
+            ];
+          };
+        };
+        buffers = {
+          followCurrentFile = {
+            enabled = true;
+            leaveDirsOpen = false;
+          };
+        };
+        gitStatus = {
+          window.position = "float";
         };
       };
 
@@ -783,24 +1156,169 @@
             virt_text_pos = "eol";
             delay = 300;
           };
+          signs = {
+            add.text = "▎";
+            change.text = "▎";
+            delete.text = "";
+            topdelete.text = "";
+            changedelete.text = "▎";
+            untracked.text = "▎";
+          };
         };
       };
+
+      # LazyGit integration
+      lazygit.enable = true;
 
       # Auto-pairs
       nvim-autopairs = {
         enable = true;
         settings = {
+          check_ts = true;
+          ts_config = {
+            lua = [ "string" ];
+            javascript = [ "template_string" ];
+          };
           fast_wrap = { };
-          disable_filetype = [
-            "TelescopePrompt"
-            "vim"
-          ];
         };
       };
 
       # Comments
       comment = {
         enable = true;
+        settings = {
+          opleader.line = "gc";
+          opleader.block = "gb";
+          toggler = {
+            line = "gcc";
+            block = "gbc";
+          };
+        };
+      };
+
+      # Todo comments
+      todo-comments = {
+        enable = true;
+        settings = {
+          signs = true;
+          keywords = {
+            FIX = {
+              icon = " ";
+              color = "error";
+              alt = [
+                "FIXME"
+                "BUG"
+                "FIXIT"
+                "ISSUE"
+              ];
+            };
+            TODO = {
+              icon = " ";
+              color = "info";
+            };
+            HACK = {
+              icon = " ";
+              color = "warning";
+            };
+            WARN = {
+              icon = " ";
+              color = "warning";
+              alt = [
+                "WARNING"
+                "XXX"
+              ];
+            };
+            PERF = {
+              icon = " ";
+              alt = [
+                "OPTIM"
+                "PERFORMANCE"
+                "OPTIMIZE"
+              ];
+            };
+            NOTE = {
+              icon = " ";
+              color = "hint";
+              alt = [ "INFO" ];
+            };
+            TEST = {
+              icon = "⏲ ";
+              color = "test";
+              alt = [
+                "TESTING"
+                "PASSED"
+                "FAILED"
+              ];
+            };
+          };
+        };
+      };
+
+      # Trouble
+      trouble = {
+        enable = true;
+        settings = {
+          auto_close = true;
+          focus = true;
+        };
+      };
+
+      # Which-key
+      which-key = {
+        enable = true;
+        settings = {
+          delay = 300;
+          preset = "modern";
+          spec = [
+            {
+              __unkeyed-1 = "<leader>b";
+              group = "buffer";
+            }
+            {
+              __unkeyed-1 = "<leader>c";
+              group = "code";
+            }
+            {
+              __unkeyed-1 = "<leader>f";
+              group = "find";
+            }
+            {
+              __unkeyed-1 = "<leader>g";
+              group = "git";
+            }
+            {
+              __unkeyed-1 = "<leader>q";
+              group = "quit/session";
+            }
+            {
+              __unkeyed-1 = "<leader>s";
+              group = "split";
+            }
+            {
+              __unkeyed-1 = "<leader>u";
+              group = "ui";
+            }
+            {
+              __unkeyed-1 = "<leader>x";
+              group = "diagnostics";
+            }
+            {
+              __unkeyed-1 = "[";
+              group = "prev";
+            }
+            {
+              __unkeyed-1 = "]";
+              group = "next";
+            }
+            {
+              __unkeyed-1 = "g";
+              group = "goto";
+            }
+          ];
+          icons = {
+            mappings = false;
+          };
+        };
       };
 
       # Indent guides
@@ -811,101 +1329,56 @@
             char = "│";
             tab_char = "│";
           };
-          scope.enabled = false;
+          scope = {
+            enabled = true;
+            show_start = false;
+            show_end = false;
+          };
           exclude = {
             filetypes = [
               "help"
               "alpha"
               "dashboard"
-              "nvdash"
               "neo-tree"
               "Trouble"
               "lazy"
               "mason"
+              "notify"
+              "toggleterm"
+              "lazyterm"
             ];
           };
-        };
-      };
-
-      # Todo comments
-      todo-comments = {
-        enable = true;
-      };
-
-      # Trouble (diagnostics)
-      trouble = {
-        enable = true;
-      };
-
-      # File explorer
-      neo-tree = {
-        enable = true;
-        settings = {
-          filesystem = {
-            follow_current_file = {
-              enabled = true;
-            };
-            hijack_netrw_behavior = "open_current";
-            filtered_items = {
-              visible = true;
-              hide_dotfiles = false;
-              hide_gitignored = false;
-            };
-          };
-          window = {
-            width = 30;
-            mappings = {
-              "l" = "open";
-              "h" = "close_node";
-            };
-          };
-        };
-      };
-
-      # Which-key
-      which-key = {
-        enable = true;
-        settings = {
-          preset = "modern";
-          delay = 200;
         };
       };
 
       # Notifications
       notify = {
         enable = true;
-        settings.timeout = 3000;
+        backgroundColour = "#000000";
+        fps = 60;
+        render = "compact";
+        timeout = 3000;
+        topDown = true;
       };
 
-      # Smooth scrolling
-      neoscroll.enable = true;
-
-      # Surround
-      nvim-surround.enable = true;
-
-      # Color highlighter
-      nvim-colorizer = {
+      # UI enhancements
+      noice = {
         enable = true;
-        settings = {
-          user_default_options = {
-            RGB = true;
-            RRGGBB = true;
-            names = false;
-            RRGGBBAA = true;
-            rgb_fn = true;
-            hsl_fn = true;
-            css = true;
-            css_fn = true;
-          };
+        lsp.override = {
+          "vim.lsp.util.convert_input_to_markdown_lines" = true;
+          "vim.lsp.util.stylize_markdown" = true;
+          "cmp.entry.get_documentation" = true;
+        };
+        presets = {
+          bottom_search = true;
+          command_palette = true;
+          long_message_to_split = true;
+          inc_rename = false;
+          lsp_doc_border = true;
         };
       };
 
-      # Better code folding
-      nvim-ufo = {
-        enable = true;
-      };
-
-      # Lualine (statusline)
+      # Statusline
       lualine = {
         enable = true;
         settings = {
@@ -920,6 +1393,28 @@
               left = "";
               right = "";
             };
+            disabled_filetypes = {
+              statusline = [
+                "dashboard"
+                "alpha"
+              ];
+            };
+          };
+          sections = {
+            lualine_a = [ "mode" ];
+            lualine_b = [
+              "branch"
+              "diff"
+              "diagnostics"
+            ];
+            lualine_c = [ "filename" ];
+            lualine_x = [
+              "encoding"
+              "fileformat"
+              "filetype"
+            ];
+            lualine_y = [ "progress" ];
+            lualine_z = [ "location" ];
           };
         };
       };
@@ -929,7 +1424,9 @@
         enable = true;
         settings = {
           options = {
+            mode = "buffers";
             diagnostics = "nvim_lsp";
+            always_show_bufferline = false;
             offsets = [
               {
                 filetype = "neo-tree";
@@ -938,6 +1435,9 @@
                 text_align = "left";
               }
             ];
+            separator_style = "slant";
+            show_buffer_close_icons = true;
+            show_close_icon = false;
           };
         };
       };
@@ -959,41 +1459,118 @@
             center = [
               {
                 icon = "  ";
-                desc = "Find File";
+                desc = "Find File           ";
                 key = "f";
                 action = "Telescope find_files";
               }
               {
                 icon = "  ";
-                desc = "Recent Files";
+                desc = "Recent Files        ";
                 key = "r";
                 action = "Telescope oldfiles";
               }
               {
                 icon = "  ";
-                desc = "Find Text";
+                desc = "Find Text           ";
                 key = "g";
                 action = "Telescope live_grep";
               }
               {
                 icon = "  ";
-                desc = "Config";
+                desc = "Config              ";
                 key = "c";
                 action = "edit ~/.config/nvim/init.lua";
               }
               {
                 icon = "  ";
-                desc = "Quit";
+                desc = "LazyGit             ";
+                key = "l";
+                action = "LazyGit";
+              }
+              {
+                icon = "  ";
+                desc = "Quit                ";
                 key = "q";
                 action = "qa";
               }
+            ];
+            footer = [
+              ""
+              "🚀 Happy Coding!"
             ];
           };
         };
       };
 
+      # Color highlighter
+      nvim-colorizer = {
+        enable = true;
+        settings = {
+          user_default_options = {
+            RGB = true;
+            RRGGBB = true;
+            names = false;
+            RRGGBBAA = true;
+            rgb_fn = true;
+            hsl_fn = true;
+            css = true;
+            css_fn = true;
+            mode = "background";
+          };
+        };
+      };
+
+      # Surround
+      nvim-surround.enable = true;
+
+      # Smooth scrolling
+      neoscroll.enable = true;
+
+      # Better code folding
+      nvim-ufo = {
+        enable = true;
+        settings = {
+          provider_selector = ''
+            function()
+              return {'treesitter', 'indent'}
+            end
+          '';
+        };
+      };
+
       # Web devicons
       web-devicons.enable = true;
+
+      # Fidget (LSP progress)
+      fidget = {
+        enable = true;
+        notification = {
+          window = {
+            winblend = 0;
+            border = "rounded";
+          };
+        };
+      };
+
+      # Illuminate (highlight word under cursor)
+      illuminate = {
+        enable = true;
+        underCursor = true;
+        filetypesDenylist = [
+          "neo-tree"
+          "Trouble"
+          "alpha"
+          "dashboard"
+        ];
+      };
+
+      # Flash (enhanced navigation)
+      flash = {
+        enable = true;
+        settings = {
+          modes.search.enabled = true;
+        };
+      };
     };
 
     # Extra plugins not available in nixvim
@@ -1010,164 +1587,163 @@
 
     # Extra Lua configuration
     extraConfigLua = ''
-      -- Additional gitsigns keymaps
-            local gitsigns = require('gitsigns')
-            vim.keymap.set('n', '<leader>gb', gitsigns.toggle_current_line_blame, { desc = 'Toggle git blame line' })
-            vim.keymap.set('n', '<leader>gB', function() gitsigns.blame_line({ full = true }) end, { desc = 'Show git blame' })
-            vim.keymap.set('n', ']h', gitsigns.next_hunk, { desc = 'Next git hunk' })
-            vim.keymap.set('n', '[h', gitsigns.prev_hunk, { desc = 'Previous git hunk' })
-            vim.keymap.set('n', '<leader>gp', gitsigns.preview_hunk, { desc = 'Preview git hunk' })
-            vim.keymap.set('n', '<leader>gr', gitsigns.reset_hunk, { desc = 'Reset git hunk' })
-            vim.keymap.set('n', '<leader>gR', gitsigns.reset_buffer, { desc = 'Reset git buffer' })
-            vim.keymap.set('n', '<leader>ga', gitsigns.stage_hunk, { desc = 'Stage git hunk' })
-            vim.keymap.set('n', '<leader>gu', gitsigns.undo_stage_hunk, { desc = 'Undo stage git hunk' })
+       -- Additional gitsigns keymaps
+       local gitsigns = require('gitsigns')
+       vim.keymap.set('n', '<leader>gB', gitsigns.toggle_current_line_blame, { desc = 'Toggle blame line' })
+       vim.keymap.set('n', '<leader>gbl', function() gitsigns.blame_line({ full = true }) end, { desc = 'Show blame' })
+       vim.keymap.set('n', ']h', gitsigns.next_hunk, { desc = 'Next hunk' })
+       vim.keymap.set('n', '[h', gitsigns.prev_hunk, { desc = 'Prev hunk' })
+       vim.keymap.set('n', '<leader>gp', gitsigns.preview_hunk, { desc = 'Preview hunk' })
+       vim.keymap.set('n', '<leader>gr', gitsigns.reset_hunk, { desc = 'Reset hunk' })
+       vim.keymap.set('n', '<leader>gR', gitsigns.reset_buffer, { desc = 'Reset buffer' })
+       vim.keymap.set('n', '<leader>ga', gitsigns.stage_hunk, { desc = 'Stage hunk' })
+       vim.keymap.set('n', '<leader>gu', gitsigns.undo_stage_hunk, { desc = 'Undo stage hunk' })
 
-            -- Neo-tree keymaps
-            vim.keymap.set('n', '<leader>e', '<cmd>Neotree toggle<cr>', { desc = 'Toggle file explorer' })
-            vim.keymap.set('n', '<leader>o', '<cmd>Neotree focus<cr>', { desc = 'Focus file explorer' })
+       -- Neo-tree keymaps
+       vim.keymap.set('n', '<leader>e', '<cmd>Neotree toggle<cr>', { desc = 'Toggle explorer' })
+       vim.keymap.set('n', '<leader>o', '<cmd>Neotree focus<cr>', { desc = 'Focus explorer' })
 
-            -- Trouble keymaps
-            vim.keymap.set('n', '<leader>xx', '<cmd>Trouble diagnostics toggle<cr>', { desc = 'Diagnostics (Trouble)' })
-            vim.keymap.set('n', '<leader>xX', '<cmd>Trouble diagnostics toggle filter.buf=0<cr>', { desc = 'Buffer Diagnostics (Trouble)' })
-            vim.keymap.set('n', '<leader>xl', '<cmd>Trouble loclist toggle<cr>', { desc = 'Location List (Trouble)' })
-            vim.keymap.set('n', '<leader>xq', '<cmd>Trouble qflist toggle<cr>', { desc = 'Quickfix List (Trouble)' })
+       -- Trouble keymaps
+       vim.keymap.set('n', '<leader>xx', '<cmd>Trouble diagnostics toggle<cr>', { desc = 'Diagnostics (Trouble)' })
+       vim.keymap.set('n', '<leader>xX', '<cmd>Trouble diagnostics toggle filter.buf=0<cr>', { desc = 'Buffer diagnostics' })
+       vim.keymap.set('n', '<leader>xl', '<cmd>Trouble loclist toggle<cr>', { desc = 'Location list' })
+       vim.keymap.set('n', '<leader>xq', '<cmd>Trouble qflist toggle<cr>', { desc = 'Quickfix list' })
 
-            -- Todo-comments keymap
-            vim.keymap.set('n', '<leader>ft', '<cmd>TodoTelescope<cr>', { desc = 'Find TODOs' })
+       -- Todo-comments keymap
+       vim.keymap.set('n', '<leader>ft', '<cmd>TodoTelescope<cr>', { desc = 'Find TODOs' })
 
-            -- Persistence keymaps
-            local persistence = require('persistence')
-            vim.keymap.set('n', '<leader>qs', function() persistence.load() end, { desc = 'Restore Session' })
-            vim.keymap.set('n', '<leader>ql', function() persistence.load({ last = true }) end, { desc = 'Restore Last Session' })
-            vim.keymap.set('n', '<leader>qd', function() persistence.stop() end, { desc = "Don't Save Current Session" })
+       -- Persistence keymaps
+       local persistence = require('persistence')
+       vim.keymap.set('n', '<leader>qs', function() persistence.load() end, { desc = 'Restore session' })
+       vim.keymap.set('n', '<leader>ql', function() persistence.load({ last = true }) end, { desc = 'Restore last' })
+       vim.keymap.set('n', '<leader>qd', function() persistence.stop() end, { desc = "Don't save session" })
 
-            -- Diffview keymaps
-            vim.keymap.set('n', '<leader>gd', '<cmd>DiffviewOpen<cr>', { desc = 'Git Diff View' })
-            vim.keymap.set('n', '<leader>gh', '<cmd>DiffviewFileHistory<cr>', { desc = 'Git File History' })
+       -- Diffview keymaps
+       vim.keymap.set('n', '<leader>gd', '<cmd>DiffviewOpen<cr>', { desc = 'Diff view' })
+       vim.keymap.set('n', '<leader>gh', '<cmd>DiffviewFileHistory<cr>', { desc = 'File history' })
 
-            -- Spectre keymap
-            vim.keymap.set('n', '<leader>sr', function() require('spectre').open() end, { desc = 'Replace in files (Spectre)' })
+       -- Spectre keymap
+       vim.keymap.set('n', '<leader>sr', function() require('spectre').open() end, { desc = 'Replace (Spectre)' })
 
-            -- Markdown preview keymap
-            vim.keymap.set('n', '<leader>mp', '<cmd>MarkdownPreviewToggle<cr>', { desc = 'Markdown Preview' })
+       -- Markdown preview
+       vim.keymap.set('n', '<leader>mp', '<cmd>MarkdownPreviewToggle<cr>', { desc = 'Markdown preview' })
 
-            -- Vim-visual-multi settings
-            vim.g.VM_maps = {
-              ['Find Under'] = '<C-d>',
-              ['Find Subword Under'] = '<C-d>',
-            }
+       -- Flash keymaps
+       vim.keymap.set({ 'n', 'x', 'o' }, 's', function() require('flash').jump() end, { desc = 'Flash' })
+       vim.keymap.set({ 'n', 'x', 'o' }, 'S', function() require('flash').treesitter() end, { desc = 'Flash treesitter' })
 
-            -- Set up notify as default
-            vim.notify = require('notify')
+       -- Vim-visual-multi
+       vim.g.VM_maps = {
+         ['Find Under'] = '<C-d>',
+         ['Find Subword Under'] = '<C-d>',
+       }
 
-            -- Quickfix and location list navigation
-            vim.keymap.set('n', '[q', '<cmd>cprev<cr>', { desc = 'Previous quickfix' })
-            vim.keymap.set('n', ']q', '<cmd>cnext<cr>', { desc = 'Next quickfix' })
-            vim.keymap.set('n', '<leader>qo', '<cmd>copen<cr>', { desc = 'Open quickfix' })
-            vim.keymap.set('n', '<leader>qc', '<cmd>cclose<cr>', { desc = 'Close quickfix' })
-            vim.keymap.set('n', '[l', '<cmd>lprev<cr>', { desc = 'Previous loclist' })
-            vim.keymap.set('n', ']l', '<cmd>lnext<cr>', { desc = 'Next loclist' })
-            vim.keymap.set('n', '<leader>lo', '<cmd>lopen<cr>', { desc = 'Open loclist' })
-            vim.keymap.set('n', '<leader>lc', '<cmd>lclose<cr>', { desc = 'Close loclist' })
+       -- Set up notify
+       vim.notify = require('notify')
 
-            -- Tab navigation
-            vim.keymap.set('n', '<leader><tab>l', '<cmd>tablast<cr>', { desc = 'Last Tab' })
-            vim.keymap.set('n', '<leader><tab>f', '<cmd>tabfirst<cr>', { desc = 'First Tab' })
-            vim.keymap.set('n', '<leader><tab>n', '<cmd>tabnew<cr>', { desc = 'New Tab' })
-            vim.keymap.set('n', '<leader><tab>]', '<cmd>tabnext<cr>', { desc = 'Next Tab' })
-            vim.keymap.set('n', '<leader><tab>[', '<cmd>tabprevious<cr>', { desc = 'Previous Tab' })
-            vim.keymap.set('n', '<leader><tab>d', '<cmd>tabclose<cr>', { desc = 'Close Tab' })
+       -- Quickfix navigation
+       vim.keymap.set('n', '[q', '<cmd>cprev<cr>', { desc = 'Prev quickfix' })
+       vim.keymap.set('n', ']q', '<cmd>cnext<cr>', { desc = 'Next quickfix' })
+       vim.keymap.set('n', '<leader>qo', '<cmd>copen<cr>', { desc = 'Open quickfix' })
+       vim.keymap.set('n', '<leader>qc', '<cmd>cclose<cr>', { desc = 'Close quickfix' })
 
-            -- Format with conform
-            vim.keymap.set('n', '<leader>fm', function() 
-              require('conform').format({ lsp_fallback = true }) 
-            end, { desc = 'Format file' })
+       -- Location list navigation
+       vim.keymap.set('n', '[l', '<cmd>lprev<cr>', { desc = 'Prev loclist' })
+       vim.keymap.set('n', ']l', '<cmd>lnext<cr>', { desc = 'Next loclist' })
 
-            -- Setup persistence
-            require('persistence').setup({
-              dir = vim.fn.expand(vim.fn.stdpath('state') .. '/sessions/'),
-              options = { 'buffers', 'curdir', 'tabpages', 'winsize' },
-            })
+       -- Tab navigation
+       vim.keymap.set('n', '<leader><tab>l', '<cmd>tablast<cr>', { desc = 'Last tab' })
+       vim.keymap.set('n', '<leader><tab>f', '<cmd>tabfirst<cr>', { desc = 'First tab' })
+      vim.keymap.set('n', '<leader><tab>n', '<cmd>tabnew<cr>', { desc = 'New tab' })
+       vim.keymap.set('n', '<leader><tab>]', '<cmd>tabnext<cr>', { desc = 'Next tab' })
+       vim.keymap.set('n', '<leader><tab>[', '<cmd>tabprevious<cr>', { desc = 'Prev tab' })
+       vim.keymap.set('n', '<leader><tab>d', '<cmd>tabclose<cr>', { desc = 'Close tab' })
 
-            -- Setup dressing for better UI
-            require('dressing').setup({
-              input = {
-                enabled = true,
-                default_prompt = '➤ ',
-                win_options = {
-                  winblend = 0,
-                },
-              },
-              select = {
-                enabled = true,
-                backend = { 'telescope', 'builtin' },
-              },
-            })
+       -- Format with conform
+       vim.keymap.set('n', '<leader>fm', function()
+         require('conform').format({ lsp_fallback = true })
+       end, { desc = 'Format file' })
 
-            -- Setup diffview
-            require('diffview').setup({})
+       -- Setup persistence
+       require('persistence').setup({
+         dir = vim.fn.expand(vim.fn.stdpath('state') .. '/sessions/'),
+         options = { 'buffers', 'curdir', 'tabpages', 'winsize' },
+       })
 
-            -- Setup spectre
-            require('spectre').setup({})
+       -- Setup dressing
+       require('dressing').setup({
+         input = {
+           enabled = true,
+           default_prompt = '➤ ',
+           win_options = { winblend = 0 },
+         },
+         select = {
+           enabled = true,
+           backend = { 'telescope', 'builtin' },
+         },
+       })
 
-            -- Setup nvim-bqf
-            require('bqf').setup({})
+       -- Setup diffview
+       require('diffview').setup({})
 
-            -- LSP diagnostic configuration
-            local signs = { Error = "󰅚 ", Warn = "󰀪 ", Hint = "󰌶 ", Info = " " }
-            for type, icon in pairs(signs) do
-              local hl = "DiagnosticSign" .. type
-              vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-            end
+       -- Setup spectre
+       require('spectre').setup({})
 
-            vim.diagnostic.config({
-              virtual_text = {
-                prefix = "●",
-                spacing = 4,
-              },
-              signs = true,
-              underline = true,
-              update_in_insert = false,
-              severity_sort = true,
-              float = {
-                border = "rounded",
-                source = "always",
-                header = "",
-                prefix = "",
-              },
-            })
+       -- Setup nvim-bqf
+       require('bqf').setup({})
 
-            -- LSP handlers with borders
-            local handlers = {
-              ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" }),
-              ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" }),
-            }
+       -- LSP diagnostic configuration
+       local signs = { Error = " ", Warn = " ", Hint = "󰌶 ", Info = " " }
+       for type, icon in pairs(signs) do
+         local hl = "DiagnosticSign" .. type
+         vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+       end
 
-            for method, handler in pairs(handlers) do
-              vim.lsp.handlers[method] = handler
-            end
+       vim.diagnostic.config({
+         virtual_text = { prefix = "●", spacing = 4 },
+         signs = true,
+         underline = true,
+         update_in_insert = false,
+         severity_sort = true,
+         float = {
+           border = "rounded",
+           source = "always",
+           header = "",
+           prefix = "",
+         },
+       })
 
-            -- Additional LSP workspace keymaps
-            vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, { desc = 'Add workspace folder' })
-            vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, { desc = 'Remove workspace folder' })
-            vim.keymap.set('n', '<leader>wl', function()
-              print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-            end, { desc = 'List workspace folders' })
+       -- LSP handlers with borders
+       local handlers = {
+         ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" }),
+         ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" }),
+       }
 
-            -- Telescope additional find all files keymap
-            vim.keymap.set('n', '<leader>fa', function()
-              require('telescope.builtin').find_files({
-                follow = true,
-                no_ignore = true,
-                hidden = true,
-              })
-            end, { desc = 'Find all files' })
+       for method, handler in pairs(handlers) do
+         vim.lsp.handlers[method] = handler
+       end
 
-            -- Quick source current file
-            vim.keymap.set('n', '<leader><leader>', function()
-              vim.cmd('source %')
-              vim.notify('Config sourced!', vim.log.levels.INFO)
-            end, { desc = 'Source current file' })
+       -- Additional LSP workspace keymaps
+       vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, { desc = 'Add workspace folder' })
+       vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, { desc = 'Remove workspace folder' })
+       vim.keymap.set('n', '<leader>wl', function()
+         print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+       end, { desc = 'List workspace folders' })
+
+       -- Telescope additional find all files keymap
+       vim.keymap.set('n', '<leader>fa', function()
+         require('telescope.builtin').find_files({
+           follow = true,
+           no_ignore = true,
+           hidden = true,
+         })
+       end, { desc = 'Find all files' })
+
+       -- Quick source current file
+       vim.keymap.set('n', '<leader><leader>', function()
+         vim.cmd('source %')
+         vim.notify('Config sourced!', vim.log.levels.INFO)
+       end, { desc = 'Source current file' })
     '';
   };
 }
