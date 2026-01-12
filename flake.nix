@@ -45,6 +45,7 @@
       nixvim,
       spicetify,
       zen-browser,
+      neve,
       ...
     }:
     let
