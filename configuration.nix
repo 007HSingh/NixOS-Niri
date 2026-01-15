@@ -245,6 +245,7 @@
     android-tools
     mangohud
     protonup-ng
+    scilab-bin
   ];
 
   fonts.packages = with pkgs; [
