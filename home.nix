@@ -189,7 +189,7 @@ in
     yq
     hyperfine
     stable.keepassxc
-    jdk25_headless
+    javaPackages.compiler.temurin-bin.jdk-25
     appflowy
     inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
     tor-browser
