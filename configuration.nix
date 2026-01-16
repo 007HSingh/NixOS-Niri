@@ -261,6 +261,7 @@
           --set JAVA_TOOL_OPTIONS "-Dawt.useSystemAAFontSettings=on -Dswing.defaultlaf=javax.swing.plaf.metal.MetalLookAndFeel"
       '';
     }))
+    octaveFull
   ];
 
   fonts.packages = with pkgs; [
