@@ -245,22 +245,6 @@
     android-tools
     mangohud
     protonup-ng
-    (stable.scilab-bin.overrideAttrs (oldAttrs: {
-      nativeBuildInputs = (oldAttrs.nativeBuildInputs or [ ]) ++ [ pkgs.makeWrapper ];
-      postFixup = (oldAttrs.postFixup or "") + ''
-        wrapProgram $out/bin/scilab \
-          --prefix LD_LIBRARY_PATH : "${
-            pkgs.lib.makeLibraryPath [
-              pkgs.libGL
-              pkgs.libGLU
-              pkgs.xorg.libX11
-              pkgs.xorg.libXext
-              pkgs.xorg.libXrender
-            ]
-          }" \
-          --set JAVA_TOOL_OPTIONS "-Dawt.useSystemAAFontSettings=on -Dswing.defaultlaf=javax.swing.plaf.metal.MetalLookAndFeel"
-      '';
-    }))
     octaveFull
   ];
 
@@ -350,6 +334,8 @@
       ];
     };
   };
+
+  virtualisation.podman.enable = true;
 
   system.stateVersion = "25.11";
 
