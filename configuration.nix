@@ -245,7 +245,6 @@
     android-tools
     mangohud
     protonup-ng
-    octaveFull
   ];
 
   fonts.packages = with pkgs; [
@@ -334,8 +333,6 @@
       ];
     };
   };
-
-  virtualisation.podman.enable = true;
 
   system.stateVersion = "25.11";
 
