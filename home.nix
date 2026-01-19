@@ -193,6 +193,7 @@ in
     appflowy
     inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
     tor-browser
+    racket
   ];
 
   home.sessionVariables = {
