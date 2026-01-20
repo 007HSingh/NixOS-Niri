@@ -6,7 +6,6 @@
     enable = true;
     modules = {
       "core.defaults" = { };
-      "core.concealer" = { };
       "core.dirman" = {
         config = {
           workspaces = {
