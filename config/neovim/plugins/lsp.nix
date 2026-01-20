@@ -97,7 +97,7 @@
       # LSP keymaps
       keymaps = {
         diagnostic = {
-          "<leader>e" = {
+          "<leader>cd" = {
             action = "open_float";
             desc = "Show diagnostic";
           };

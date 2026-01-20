@@ -25,9 +25,9 @@
 
     home.file.".cache/noctalia/wallpapers.json" = {
       text = builtins.toJSON {
-        defaultWallpaper = "/home/harsh/Pictures/Wallpapers/wallpaper(13).png";
+        defaultWallpaper = "/home/harsh/.config/wallpapers/wallpaper(13).png";
         wallpapers = {
-          "eDP-1" = "/home/harsh/Pictures/Wallpapers/wallpaper(13).png";
+          "eDP-1" = "/home/harsh/.config/wallpapers/wallpaper(13).png";
         };
       };
     };
@@ -61,7 +61,6 @@
             left = [
               {
                 id = "ControlCenter";
-                useDistroLogo = true;
               }
               {
                 id = "WiFi";
