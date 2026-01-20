@@ -46,7 +46,7 @@
     # OIL - File navigation like a buffer
     # ============================================================================
     plugins.oil = {
-      enable = lib.mkDefault false; # Optional - alternative to nvim-tree
+      enable = lib.mkDefault true;
       settings = {
         columns = [ "icon" ];
         view_options = {

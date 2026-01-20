@@ -26,10 +26,6 @@
       url = "github:Gerg-L/spicetify-nix";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
-    zen-browser = {
-      url = "github:youwen5/zen-browser-flake";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
   };
   outputs =
     inputs@{
@@ -40,7 +36,6 @@
       home-manager,
       nixvim,
       spicetify,
-      zen-browser,
       ...
     }:
     let
@@ -77,7 +72,7 @@
                 imports = [
                   ./home.nix
                   catppuccin.homeModules.catppuccin
-		  nixvim.homeModules.nixvim
+                  nixvim.homeModules.nixvim
                   inputs.spicetify.homeManagerModules.default
                 ];
               };

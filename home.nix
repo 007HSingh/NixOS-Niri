@@ -16,6 +16,7 @@ let
     fuzzel = "fuzzel";
     fastfetch = "fastfetch";
     btop = "btop";
+    wallpapers = "wallpapers";
   };
 in
 
@@ -141,10 +142,6 @@ in
     recursive = true;
   }) configs;
 
-  home.file = {
-    "Pictures/Wallpapers".source = ./config/wallpapers;
-  };
-
   home.packages = with pkgs; [
     cava
     poppler
@@ -190,8 +187,6 @@ in
     hyperfine
     stable.keepassxc
     javaPackages.compiler.temurin-bin.jdk-25
-    appflowy
-    inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
     tor-browser
     racket
   ];
