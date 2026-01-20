@@ -187,8 +187,8 @@ in
     hyperfine
     stable.keepassxc
     javaPackages.compiler.temurin-bin.jdk-25
-    tor-browser
     racket
+    git-absorb
   ];
 
   home.sessionVariables = {
