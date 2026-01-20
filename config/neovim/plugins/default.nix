@@ -10,5 +10,6 @@
     ./treesitter.nix
     ./telescope.nix
     ./utilities.nix
+    ./productivity.nix
   ];
 }

@@ -186,10 +186,20 @@
       thunar-volman
       thunar-archive-plugin
       thunar-vcs-plugin
+      thunar-media-tags-plugin
     ];
   };
 
-  programs.yazi.enable = true;
+  programs.yazi = {
+    enable = true;
+    enableZshIntegration = true;
+    settings = {
+      manager = {
+        show_hidden = true;
+        sort_by = "natural";
+      };
+    };
+  };
 
   security = {
     rtkit.enable = true;
@@ -245,11 +255,37 @@
     android-tools
     mangohud
     protonup-ng
+    cachix
+    devenv
+    grim
+    slurp
+    swappy
+    satty
   ];
 
   fonts.packages = with pkgs; [
     nerd-fonts.jetbrains-mono
+    nerd-fonts.fira-code
+    nerd-fonts.hack
+    nerd-fonts.meslo-lg
+    noto-fonts
+    noto-fonts-cjk
+    noto-fonts-emoji
+    font-awesome
+    material-design-icons
   ];
+
+  fonts.fontconfig = {
+    enable = true;
+    defaultFonts = {
+      monospace = [ "JetBrainsMono Nerd Font" ];
+      sansSerif = [ "Noto Sans" ];
+      serif = [ "Noto Serif" ];
+    };
+    antialias = true;
+    hinting.enable = true;
+    subpixel.rgba = "rgb";
+  };
 
   nix = {
     settings = {
@@ -258,6 +294,16 @@
         "flakes"
       ];
       auto-optimise-store = true;
+      max-jobs = "auto";
+      cores = 0;
+      substituters = [
+        "https://cache.nixos.org"
+        "https://nix-community.cachix.org"
+      ];
+      trusted-public-keys = [
+        "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      ];
     };
     gc = {
       automatic = true;
