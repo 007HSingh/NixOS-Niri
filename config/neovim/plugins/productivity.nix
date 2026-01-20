@@ -5,7 +5,6 @@
   plugins.neorg = {
     enable = true;
     modules = {
-      "core.defaults" = { };
       "core.dirman" = {
         config = {
           workspaces = {
