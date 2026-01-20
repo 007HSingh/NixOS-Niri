@@ -258,8 +258,8 @@
     nerd-fonts.hack
     nerd-fonts.meslo-lg
     noto-fonts
-    noto-fonts-cjk
-    noto-fonts-emoji
+    noto-fonts-cjk-sans
+    noto-fonts-color-emoji
     font-awesome
     material-design-icons
   ];
