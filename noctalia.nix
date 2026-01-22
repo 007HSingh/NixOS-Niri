@@ -74,6 +74,9 @@
               {
                 id = "PowerProfile";
               }
+              {
+                id = "NightLight";
+              }
             ];
             center = [
               {

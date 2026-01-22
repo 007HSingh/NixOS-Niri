@@ -162,7 +162,7 @@ layout {
     // You can change how the focus ring looks.
     focus-ring {
         // Uncomment this line to disable the focus ring.
-        // off
+        off
 
         // How many logical pixels the ring extends out from the windows.
         width 2.5
@@ -203,7 +203,7 @@ layout {
         // If you enable the border, you probably want to disable the focus ring.
         off
 
-        width 2.5
+        width 0.5
         active-color "#ffc87f"
         inactive-color "#505050"
 
@@ -370,6 +370,26 @@ window-rule {
 window-rule {
     match app-id=r#"^steam_app_"#
     open-maximized true
+}
+
+window-rule {
+    match app-id=r#"kitty"#
+    opacity 0.8
+}
+
+window-rule {
+    match app-id=r#"thunar"#
+    opacity 0.9
+}
+
+window-rule {
+  match app-id=r#"discord"#
+  opacity 0.9
+}
+
+window-rule {
+  match app-id=r#"org.gnome.Evince"#
+  opacity 0.7
 }
 
 binds {
