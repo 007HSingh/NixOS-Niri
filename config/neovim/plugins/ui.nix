@@ -13,18 +13,14 @@
     plugins.web-devicons.enable = lib.mkDefault true;
 
     # ============================================================================
-    # ALPHA - Startup dashboard
+    # DASHBOARD - Startup dashboard
     # ============================================================================
-    plugins.alpha = {
+    plugins.dashboard = {
       enable = lib.mkDefault true;
-      setting.layout = [
-        {
-          type = "padding";
-          val = 2;
-        }
-        {
-          type = "text";
-          val = [
+      settings = {
+        theme = "doom";
+        config = {
+          header = [
             "                                                     "
             "  ███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗"
             "  ████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║"
@@ -34,165 +30,74 @@
             "  ╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝"
             "                                                     "
           ];
-          opts = {
-            position = "center";
-            hl = "Type";
-          };
-        }
-        {
-          type = "padding";
-          val = 2;
-        }
-        {
-          type = "group";
-          val = [
+          center = [
             {
-              type = "button";
-              val = "  Find File";
-              on_press.__raw = "function() require('telescope.builtin').find_files() end";
-              opts = {
-                keymap = [
-                  "n"
-                  "f"
-                  ":Telescope find_files<CR>"
-                  {
-                    noremap = true;
-                    silent = true;
-                  }
-                ];
-                shortcut = "f";
-                position = "center";
-                cursor = 3;
-                width = 50;
-                align_shortcut = "right";
-                hl_shortcut = "Keyword";
-              };
+              icon = "  ";
+              icon_hl = "Title";
+              desc = "Find File";
+              desc_hl = "String";
+              key = "f";
+              key_hl = "Number";
+              key_format = " %s";
+              action = "Telescope find_files";
             }
             {
-              type = "button";
-              val = "  New File";
-              on_press.__raw = "function() vim.cmd[[ene]] end";
-              opts = {
-                keymap = [
-                  "n"
-                  "n"
-                  ":ene <BAR> startinsert<CR>"
-                  {
-                    noremap = true;
-                    silent = true;
-                  }
-                ];
-                shortcut = "n";
-                position = "center";
-                cursor = 3;
-                width = 50;
-                align_shortcut = "right";
-                hl_shortcut = "Keyword";
-              };
+              icon = "  ";
+              icon_hl = "Title";
+              desc = "New File";
+              desc_hl = "String";
+              key = "n";
+              key_hl = "Number";
+              key_format = " %s";
+              action = "ene | startinsert";
             }
             {
-              type = "button";
-              val = "  Recent Files";
-              on_press.__raw = "function() require('telescope.builtin').oldfiles() end";
-              opts = {
-                keymap = [
-                  "n"
-                  "r"
-                  ":Telescope oldfiles<CR>"
-                  {
-                    noremap = true;
-                    silent = true;
-                  }
-                ];
-                shortcut = "r";
-                position = "center";
-                cursor = 3;
-                width = 50;
-                align_shortcut = "right";
-                hl_shortcut = "Keyword";
-              };
+              icon = "  ";
+              icon_hl = "Title";
+              desc = "Recent Files";
+              desc_hl = "String";
+              key = "r";
+              key_hl = "Number";
+              key_format = " %s";
+              action = "Telescope oldfiles";
             }
             {
-              type = "button";
-              val = "  Find Text";
-              on_press.__raw = "function() require('telescope.builtin').live_grep() end";
-              opts = {
-                keymap = [
-                  "n"
-                  "g"
-                  ":Telescope live_grep<CR>"
-                  {
-                    noremap = true;
-                    silent = true;
-                  }
-                ];
-                shortcut = "g";
-                position = "center";
-                cursor = 3;
-                width = 50;
-                align_shortcut = "right";
-                hl_shortcut = "Keyword";
-              };
+              icon = "  ";
+              icon_hl = "Title";
+              desc = "Find Text";
+              desc_hl = "String";
+              key = "g";
+              key_hl = "Number";
+              key_format = " %s";
+              action = "Telescope live_grep";
             }
             {
-              type = "button";
-              val = "  Configuration";
-              on_press.__raw = "function() vim.cmd[[cd ~/.config/nvim | e init.lua]] end";
-              opts = {
-                keymap = [
-                  "n"
-                  "c"
-                  ":cd ~/nixos-config<CR>"
-                  {
-                    noremap = true;
-                    silent = true;
-                  }
-                ];
-                shortcut = "c";
-                position = "center";
-                cursor = 3;
-                width = 50;
-                align_shortcut = "right";
-                hl_shortcut = "Keyword";
-              };
+              icon = "  ";
+              icon_hl = "Title";
+              desc = "Configuration";
+              desc_hl = "String";
+              key = "c";
+              key_hl = "Number";
+              key_format = " %s";
+              action = "cd ~/nixos-config | Telescope find_files";
             }
             {
-              type = "button";
-              val = "  Quit";
-              on_press.__raw = "function() vim.cmd[[qa]] end";
-              opts = {
-                keymap = [
-                  "n"
-                  "q"
-                  ":qa<CR>"
-                  {
-                    noremap = true;
-                    silent = true;
-                  }
-                ];
-                shortcut = "q";
-                position = "center";
-                cursor = 3;
-                width = 50;
-                align_shortcut = "right";
-                hl_shortcut = "Keyword";
-              };
+              icon = "  ";
+              icon_hl = "Title";
+              desc = "Quit";
+              desc_hl = "String";
+              key = "q";
+              key_hl = "Number";
+              key_format = " %s";
+              action = "qa";
             }
           ];
-        }
-        {
-          type = "padding";
-          val = 2;
-        }
-        {
-          type = "text";
-          val = "🚀 Happy Coding!";
-          opts = {
-            position = "center";
-            hl = "Comment";
-          };
-        }
-      ];
+          footer = [
+            ""
+            "🚀 Happy Coding!"
+          ];
+        };
+      };
     };
 
     # ============================================================================
