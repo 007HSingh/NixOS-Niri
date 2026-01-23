@@ -285,7 +285,7 @@
           rust = [ "rustfmt" ];
           sh = [ "shfmt" ];
           bash = [ "shfmt" ];
-          kdl = [ "knufmt" ];
+          kdl = [ "kdlfmt" ];
         };
       };
     };
