@@ -13,6 +13,189 @@
     plugins.web-devicons.enable = lib.mkDefault true;
 
     # ============================================================================
+    # ALPHA - Startup dashboard
+    # ============================================================================
+    plugins.alpha = {
+      enable = lib.mkDefault true;
+      layout = [
+        {
+          type = "padding";
+          val = 2;
+        }
+        {
+          type = "text";
+          val = [
+            "                                                     "
+            "  ███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗"
+            "  ████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║"
+            "  ██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║"
+            "  ██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║"
+            "  ██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║"
+            "  ╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝"
+            "                                                     "
+          ];
+          opts = {
+            position = "center";
+            hl = "Type";
+          };
+        }
+        {
+          type = "padding";
+          val = 2;
+        }
+        {
+          type = "group";
+          val = [
+            {
+              type = "button";
+              val = "  Find File";
+              on_press.__raw = "function() require('telescope.builtin').find_files() end";
+              opts = {
+                keymap = [
+                  "n"
+                  "f"
+                  ":Telescope find_files<CR>"
+                  {
+                    noremap = true;
+                    silent = true;
+                  }
+                ];
+                shortcut = "f";
+                position = "center";
+                cursor = 3;
+                width = 50;
+                align_shortcut = "right";
+                hl_shortcut = "Keyword";
+              };
+            }
+            {
+              type = "button";
+              val = "  New File";
+              on_press.__raw = "function() vim.cmd[[ene]] end";
+              opts = {
+                keymap = [
+                  "n"
+                  "n"
+                  ":ene <BAR> startinsert<CR>"
+                  {
+                    noremap = true;
+                    silent = true;
+                  }
+                ];
+                shortcut = "n";
+                position = "center";
+                cursor = 3;
+                width = 50;
+                align_shortcut = "right";
+                hl_shortcut = "Keyword";
+              };
+            }
+            {
+              type = "button";
+              val = "  Recent Files";
+              on_press.__raw = "function() require('telescope.builtin').oldfiles() end";
+              opts = {
+                keymap = [
+                  "n"
+                  "r"
+                  ":Telescope oldfiles<CR>"
+                  {
+                    noremap = true;
+                    silent = true;
+                  }
+                ];
+                shortcut = "r";
+                position = "center";
+                cursor = 3;
+                width = 50;
+                align_shortcut = "right";
+                hl_shortcut = "Keyword";
+              };
+            }
+            {
+              type = "button";
+              val = "  Find Text";
+              on_press.__raw = "function() require('telescope.builtin').live_grep() end";
+              opts = {
+                keymap = [
+                  "n"
+                  "g"
+                  ":Telescope live_grep<CR>"
+                  {
+                    noremap = true;
+                    silent = true;
+                  }
+                ];
+                shortcut = "g";
+                position = "center";
+                cursor = 3;
+                width = 50;
+                align_shortcut = "right";
+                hl_shortcut = "Keyword";
+              };
+            }
+            {
+              type = "button";
+              val = "  Configuration";
+              on_press.__raw = "function() vim.cmd[[cd ~/.config/nvim | e init.lua]] end";
+              opts = {
+                keymap = [
+                  "n"
+                  "c"
+                  ":cd ~/nixos-config<CR>"
+                  {
+                    noremap = true;
+                    silent = true;
+                  }
+                ];
+                shortcut = "c";
+                position = "center";
+                cursor = 3;
+                width = 50;
+                align_shortcut = "right";
+                hl_shortcut = "Keyword";
+              };
+            }
+            {
+              type = "button";
+              val = "  Quit";
+              on_press.__raw = "function() vim.cmd[[qa]] end";
+              opts = {
+                keymap = [
+                  "n"
+                  "q"
+                  ":qa<CR>"
+                  {
+                    noremap = true;
+                    silent = true;
+                  }
+                ];
+                shortcut = "q";
+                position = "center";
+                cursor = 3;
+                width = 50;
+                align_shortcut = "right";
+                hl_shortcut = "Keyword";
+              };
+            }
+          ];
+        }
+        {
+          type = "padding";
+          val = 2;
+        }
+        {
+          type = "text";
+          val = "🚀 Happy Coding!";
+          opts = {
+            position = "center";
+            hl = "Comment";
+          };
+        }
+      ];
+    };
+
+    # ============================================================================
     # LUALINE - Status line
     # ============================================================================
     plugins.lualine = {
@@ -22,26 +205,50 @@
           icons_enabled = true;
           theme = "catppuccin";
           component_separators = {
-            left = "";
-            right = "";
+            left = "|";
+            right = "|";
           };
           section_separators = {
             left = "";
             right = "";
           };
           globalstatus = true;
+          disabled_filetypes = {
+            statusline = [ "alpha" ];
+          };
         };
         sections = {
-          lualine_a = [ "mode" ];
+          lualine_a = [
+            {
+              __unkeyed-1 = "mode";
+              icon = "";
+            }
+          ];
           lualine_b = [
-            "branch"
+            {
+              __unkeyed-1 = "branch";
+              icon = "";
+            }
             "diff"
             "diagnostics"
           ];
-          lualine_c = [ "filename" ];
+          lualine_c = [
+            {
+              __unkeyed-1 = "filename";
+              file_status = true;
+              path = 1;
+            }
+          ];
           lualine_x = [
             "encoding"
-            "fileformat"
+            {
+              __unkeyed-1 = "fileformat";
+              symbols = {
+                unix = "";
+                dos = "";
+                mac = "";
+              };
+            }
             "filetype"
           ];
           lualine_y = [ "progress" ];
@@ -67,9 +274,28 @@
         options = {
           mode = "buffers";
           numbers = "none";
+          close_command = "bdelete! %d";
+          right_mouse_command = "bdelete! %d";
+          left_mouse_command = "buffer %d";
+          middle_mouse_command = null;
+          indicator = {
+            style = "icon";
+            icon = "▎";
+          };
+          buffer_close_icon = "󰅖";
+          modified_icon = "●";
+          close_icon = "";
+          left_trunc_marker = "";
+          right_trunc_marker = "";
           diagnostics = "nvim_lsp";
+          diagnostics_indicator = ''
+            function(count, level, diagnostics_dict, context)
+              local icon = level:match("error") and " " or " "
+              return " " .. icon .. count
+            end
+          '';
           separator_style = "thin";
-          show_buffer_close_icons = false;
+          show_buffer_close_icons = true;
           show_close_icon = false;
           always_show_bufferline = true;
           offsets = [
@@ -188,6 +414,31 @@
     # ============================================================================
     plugins.nvim-scrollbar = {
       enable = lib.mkDefault true;
+      settings = {
+        handle = {
+          color = "#45475a";
+        };
+        marks = {
+          Search = {
+            color = "#f9e2af";
+          };
+          Error = {
+            color = "#f38ba8";
+          };
+          Warn = {
+            color = "#fab387";
+          };
+          Info = {
+            color = "#89dceb";
+          };
+          Hint = {
+            color = "#94e2d5";
+          };
+          Misc = {
+            color = "#cba6f7";
+          };
+        };
+      };
     };
 
     # ============================================================================
@@ -199,6 +450,9 @@
         RGB = true;
         RRGGBB = true;
         names = false;
+        RRGGBBAA = true;
+        rgb_fn = true;
+        hsl_fn = true;
         mode = "background";
       };
     };
@@ -207,7 +461,7 @@
     # NOICE - Enhanced UI
     # ============================================================================
     plugins.noice = {
-      enable = lib.mkDefault false; # Optional - can be overwhelming
+      enable = lib.mkDefault true;
       settings = {
         lsp = {
           override = {
@@ -215,12 +469,83 @@
             "vim.lsp.util.stylize_markdown" = true;
             "cmp.entry.get_documentation" = true;
           };
+          progress = {
+            enabled = true;
+          };
+          hover = {
+            enabled = true;
+          };
+          signature = {
+            enabled = true;
+          };
         };
         presets = {
           bottom_search = true;
           command_palette = true;
           long_message_to_split = true;
+          inc_rename = false;
+          lsp_doc_border = true;
         };
+        views = {
+          cmdline_popup = {
+            position = {
+              row = 5;
+              col = "50%";
+            };
+            size = {
+              width = 60;
+              height = "auto";
+            };
+          };
+          popupmenu = {
+            relative = "editor";
+            position = {
+              row = 8;
+              col = "50%";
+            };
+            size = {
+              width = 60;
+              height = 10;
+            };
+            border = {
+              style = "rounded";
+              padding = [
+                0
+                1
+              ];
+            };
+            win_options = {
+              winhighlight = {
+                Normal = "Normal";
+                FloatBorder = "DiagnosticInfo";
+              };
+            };
+          };
+        };
+      };
+    };
+
+    # ============================================================================
+    # NOTIFY - Better notifications
+    # ============================================================================
+    plugins.notify = {
+      enable = lib.mkDefault true;
+      settings = {
+        background_colour = "#1e1e2e";
+        fps = 60;
+        icons = {
+          DEBUG = "";
+          ERROR = "";
+          INFO = "";
+          TRACE = "✎";
+          WARN = "";
+        };
+        level = 2;
+        minimum_width = 50;
+        render = "compact";
+        stages = "fade_in_slide_out";
+        timeout = 3000;
+        top_down = true;
       };
     };
 
@@ -229,63 +554,62 @@
     # ============================================================================
     plugins.dressing = {
       enable = lib.mkDefault true;
+      settings = {
+        input = {
+          enabled = true;
+          default_prompt = "➤ ";
+          win_options = {
+            winblend = 0;
+          };
+        };
+        select = {
+          enabled = true;
+          backend = [
+            "telescope"
+            "builtin"
+          ];
+        };
+      };
     };
 
     # ============================================================================
-    # DASHBOARD
+    # NAVIC - Breadcrumbs
     # ============================================================================
-    plugins.dashboard = {
+    plugins.navic = {
       enable = lib.mkDefault true;
       settings = {
-        theme = "doom";
-        config = {
-          header = [
-            ""
-            "███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗"
-            "████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║"
-            "██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║"
-            "██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║"
-            "██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║"
-            "╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝"
-            ""
-          ];
-          center = [
-            {
-              action = "Telescope find_files";
-              desc = " Find File";
-              icon = " ";
-              key = "f";
-            }
-            {
-              action = "ene | startinsert";
-              desc = " New File";
-              icon = " ";
-              key = "n";
-            }
-            {
-              action = "Telescope oldfiles";
-              desc = " Recent Files";
-              icon = " ";
-              key = "r";
-            }
-            {
-              action = "Telescope live_grep";
-              desc = " Find Text";
-              icon = " ";
-              key = "g";
-            }
-            {
-              action = "qa";
-              desc = " Quit";
-              icon = " ";
-              key = "q";
-            }
-          ];
-          footer = [
-            ""
-            "🚀 Happy Coding!"
-          ];
+        icons = {
+          File = " ";
+          Module = " ";
+          Namespace = " ";
+          Package = " ";
+          Class = " ";
+          Method = " ";
+          Property = " ";
+          Field = " ";
+          Constructor = " ";
+          Enum = " ";
+          Interface = " ";
+          Function = " ";
+          Variable = " ";
+          Constant = " ";
+          String = " ";
+          Number = " ";
+          Boolean = " ";
+          Array = " ";
+          Object = " ";
+          Key = " ";
+          Null = " ";
+          EnumMember = " ";
+          Struct = " ";
+          Event = " ";
+          Operator = " ";
+          TypeParameter = " ";
         };
+        highlight = true;
+        separator = " > ";
+        depth_limit = 0;
+        depth_limit_indicator = "..";
       };
     };
   };
