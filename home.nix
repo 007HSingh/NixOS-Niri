@@ -92,6 +92,18 @@ in
   programs.zsh = {
     enable = true;
     dotDir = "${config.xdg.configHome}/zsh";
+
+    enableCompletion = true;
+    completionInit = ''
+      autoload -Uz compinit
+            if [[ -n ~/.zcompdump(#qN.mh+24) ]]; then
+              compinit
+            else
+              compinit -C
+            fi
+            zstyle ':completion:*' menu select
+            zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+    '';
     initContent = ''
       eval "$(zoxide init zsh)"
       eval "$(direnv hook zsh)"

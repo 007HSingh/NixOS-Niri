@@ -92,6 +92,7 @@
       black
       rustfmt
       shfmt
+      knufmt
 
       # Essential tools
       ripgrep

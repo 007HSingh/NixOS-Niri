@@ -121,6 +121,15 @@
           monthBeforeDay = true;
           name = "Kolkata, India";
         };
+        dock = {
+          enabled = false;
+        };
+        nightLight = {
+          enabled = true;
+          autoSchedule = true;
+          nightTemp = "3000";
+          dayTemp = "6500";
+        };
         templates = {
           gtk = true;
           qt = true;
