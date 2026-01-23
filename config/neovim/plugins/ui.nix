@@ -17,7 +17,7 @@
     # ============================================================================
     plugins.alpha = {
       enable = lib.mkDefault true;
-      layout = [
+      setting.layout = [
         {
           type = "padding";
           val = 2;
