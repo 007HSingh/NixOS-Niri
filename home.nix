@@ -141,11 +141,24 @@ in
       "...." = "cd ../../..";
     };
 
+    autosuggestion = {
+      enable = true;
+      strategy = [
+        "history"
+        "completion"
+      ];
+    };
+
     syntaxHighlighting = {
       enable = true;
     };
 
-    ohMyZsh.enable = false;
+    oh-my-zsh.enable = false;
+  };
+
+  programs.starship = {
+    enable = true;
+    enableZshIntegration = true;
   };
 
   programs.spicetify =
