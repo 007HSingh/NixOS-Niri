@@ -141,15 +141,6 @@ in
       "...." = "cd ../../..";
     };
 
-    autosuggestions = {
-      enable = true;
-      async = true;
-      strategy = [
-        "history"
-        "completion"
-      ];
-    };
-
     syntaxHighlighting = {
       enable = true;
     };
