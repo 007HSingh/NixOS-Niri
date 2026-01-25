@@ -239,6 +239,7 @@ in
     javaPackages.compiler.temurin-bin.jdk-25
     racket
     git-absorb
+    libreoffice-qt
   ];
 
   home.sessionVariables = {
