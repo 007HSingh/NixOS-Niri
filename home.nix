@@ -38,6 +38,11 @@ in
 
   gtk = {
     enable = true;
+    colorScheme = "dark";
+    theme = {
+      name = "catppuccin";
+      package = pkgs.catppuccin-gtk;
+    };
 
     iconTheme = {
       name = "Papirus-Dark";
