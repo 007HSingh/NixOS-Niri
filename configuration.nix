@@ -132,8 +132,6 @@
     withNodeJs = true;
   };
 
-  programs.xfconf.enable = true;
-
   programs.niri.enable = true;
 
   programs.starship.enable = true;
@@ -180,18 +178,6 @@
 
   programs.dconf.enable = true;
 
-  programs.evince.enable = true;
-
-  programs.thunar = {
-    enable = true;
-    plugins = with pkgs; [
-      thunar-volman
-      thunar-archive-plugin
-      thunar-vcs-plugin
-      thunar-media-tags-plugin
-    ];
-  };
-
   security = {
     rtkit.enable = true;
 
@@ -236,7 +222,6 @@
     chafa
     ffmpegthumbnailer
     mediainfo
-    evince
     nwg-look
     fastfetch
     gh
@@ -253,6 +238,8 @@
     swappy
     satty
     antigravity
+    nemo
+    zathura
   ];
 
   fonts.packages = with pkgs; [
@@ -309,10 +296,6 @@
   services.power-profiles-daemon.enable = true;
 
   services.upower.enable = true;
-
-  services.gvfs.enable = true;
-
-  services.tumbler.enable = true;
 
   services.xserver = {
     enable = true;
