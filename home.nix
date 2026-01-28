@@ -124,11 +124,6 @@ in
       completion-highlight-bg = "#45475a";
       completion-highlight-fg = "#cdd6f4";
 
-      index-bg = "#1e1e2e";
-      index-fg = "#cdd6f4";
-      index-active-bg = "#45475a";
-      index-active-fg = "#cdd6f4";
-
       inputbar-bg = "#1e1e2e";
       inputbar-fg = "#cdd6f4";
 
@@ -152,14 +147,12 @@ in
       adjust-open = "width";
       pages-per-row = 1;
       scroll-page-aware = true;
-      smooth-scroll = true;
       zoom-min = 10;
       guioptions = "sv";
       font = "JetBrainsMono Nerd Font 11";
       selection-clipboard = "clipboard";
     };
     extraConfig = ''
-      # Vim-like keybindings
       map u scroll half-up
       map d scroll half-down
       map D toggle_page_mode
