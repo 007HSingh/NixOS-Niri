@@ -238,7 +238,6 @@
     swappy
     satty
     antigravity
-    nemo
     zathura
   ];
 

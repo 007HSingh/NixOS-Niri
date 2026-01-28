@@ -325,16 +325,8 @@ window-rule {
     opacity 0.8
 }
 window-rule {
-    match app-id="thunar"
-    opacity 0.9
-}
-window-rule {
     match app-id="discord"
     opacity 0.9
-}
-window-rule {
-    match app-id="org.gnome.Evince"
-    opacity 0.7
 }
 window-rule {
     match app-id="jetbrains-idea"
