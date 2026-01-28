@@ -250,6 +250,7 @@
     slurp
     swappy
     satty
+    antigravity
   ];
 
   fonts.packages = with pkgs; [
