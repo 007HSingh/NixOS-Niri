@@ -36,24 +36,8 @@ in
     size = 24;
   };
 
-  dconf.settings = {
-    "org/gnome/desktop/interface" = {
-      color-scheme = "prefer-dark";
-      gtk-theme = "Catppuccin-Mocha-Standard-Blue-Dark";
-    };
-  };
-
   gtk = {
     enable = true;
-    colorScheme = "dark";
-    theme = {
-      name = "Catppuccin-Mocha-Standard-Blue-Dark";
-      package = pkgs.catppuccin-gtk.override {
-        accents = [ "blue" ];
-        size = "standard";
-        variant = "mocha";
-      };
-    };
 
     iconTheme = {
       name = "Papirus-Dark";
@@ -265,6 +249,5 @@ in
     TERMINAL = "kitty";
     STEAM_EXTRA_COMPAT_TOOLS_PATHS = "\${HOME}/.steam/root/compatibilitiytools.d";
     _JAVA_AWT_WM_NONREPARENTING = "1";
-    GTK_THEME = "Catppuccin-Mocha-Standard-Blue-Dark";
   };
 }
