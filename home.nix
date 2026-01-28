@@ -39,7 +39,7 @@ in
   dconf.settings = {
     "org/gnome/desktop/interface" = {
       color-scheme = "prefer-dark";
-      gtk-theme = "Catppuccin-Mocha";
+      gtk-theme = "Catppuccin-Mocha-Standard-Blue-Dark";
     };
   };
 
@@ -47,7 +47,7 @@ in
     enable = true;
     colorScheme = "dark";
     theme = {
-      name = "Catppuccin-Mocha";
+      name = "Catppuccin-Mocha-Standard-Blue-Dark";
       package = pkgs.catppuccin-gtk.override {
         accents = [ "blue" ];
         size = "standard";
