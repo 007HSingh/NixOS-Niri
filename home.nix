@@ -517,9 +517,6 @@ in
     fzf
     lazygit
     zoxide
-    bibata-cursors
-    catppuccin-gtk
-    papirus-icon-theme
     gcc
     unzip
     nil
