@@ -132,6 +132,8 @@
     withNodeJs = true;
   };
 
+  programs.xfconf.enable = true;
+
   programs.niri.enable = true;
 
   programs.starship.enable = true;
