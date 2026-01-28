@@ -47,8 +47,12 @@ in
     enable = true;
     colorScheme = "dark";
     theme = {
-      name = "catppuccin";
-      package = pkgs.catppuccin-gtk;
+      name = "Catppuccin-Mocha";
+      package = pkgs.catppuccin-gtk.override {
+        accents = [ "blue" ];
+        size = "standard";
+        variant = "mocha";
+      };
     };
 
     iconTheme = {
