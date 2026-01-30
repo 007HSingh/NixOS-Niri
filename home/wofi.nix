@@ -73,7 +73,4 @@
       }
     '';
   };
-
-  catppuccin.wofi.enable = true;
-  catppuccin.wofi.flavor = "mocha";
 }
