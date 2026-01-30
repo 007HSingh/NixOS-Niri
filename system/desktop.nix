@@ -3,11 +3,18 @@
 { pkgs, ... }:
 
 {
-  # SDDM display manager with Wayland
-  services.displayManager.sddm = {
+  # ly display manager (TUI)
+  services.displayManager.ly = {
     enable = true;
-    wayland.enable = true;
+    settings = {
+      animation = "none";
+      clock = "null";
+      preset = "null";
+    };
   };
+
+  # Disable SDDM
+  services.displayManager.sddm.enable = false;
 
   # Keyboard layout
   services.xserver.xkb.layout = "us";
