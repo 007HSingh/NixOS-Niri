@@ -16,7 +16,7 @@
 
     # Wallpaper (required by Stylix)
     # Using local wallpaper
-    image = ../config/wallpapers/wallpaper-13.png;
+    image = home/harsh/.config/wallpapers/wallpaper-13.png;
 
     # Cursor Theme
     cursor = {
