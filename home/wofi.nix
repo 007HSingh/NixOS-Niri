@@ -73,8 +73,4 @@
       }
     '';
   };
-
-  # Enable catppuccin theme for wofi
-  catppuccin.wofi.enable = true;
-  catppuccin.wofi.flavor = "mocha";
 }
