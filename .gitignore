@@ -1,1 +1,24 @@
+# Nix build results
+result
+result-*
+*.qcow2
 
+# NixOS specific
+.direnv
+.devenv
+.envrc
+
+# Editors
+.idea/
+.vscode/
+*.swp
+*~
+*.bak
+dump.rdb
+
+# System
+.DS_Store
+Thumbs.db
+
+# Misc
+repl-history
