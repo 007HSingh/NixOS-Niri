@@ -110,12 +110,12 @@
           icons_enabled = true;
 
           component_separators = {
-            left = "|";
-            right = "|";
+            left = "";
+            right = "";
           };
           section_separators = {
-            left = "";
-            right = "";
+            left = "";
+            right = "";
           };
           globalstatus = true;
           disabled_filetypes = {
