@@ -67,7 +67,7 @@
     targets = {
       # We will let Stylix handle most things automatically
       # Explicitly enable/disable as needed
-      nixvim.enable = false; # We have manual config, but let's check
+      nixvim.enable = true;
       gnome.enable = false; # We don't use GNOME
     };
   };

@@ -6,39 +6,9 @@
   programs.zathura = {
     enable = true;
     options = {
-      notification-error-bg = "#1e1e2e";
-      notification-error-fg = "#f38ba8";
-      notification-warning-bg = "#1e1e2e";
-      notification-warning-fg = "#fab387";
-      notification-bg = "#1e1e2e";
-      notification-fg = "#cdd6f4";
+      # Colors managed by Stylix
 
-      completion-bg = "#1e1e2e";
-      completion-fg = "#cdd6f4";
-      completion-group-bg = "#313244";
-      completion-group-fg = "#89b4fa";
-      completion-highlight-bg = "#45475a";
-      completion-highlight-fg = "#cdd6f4";
-
-      inputbar-bg = "#1e1e2e";
-      inputbar-fg = "#cdd6f4";
-
-      statusbar-bg = "#1e1e2e";
-      statusbar-fg = "#cdd6f4";
-
-      highlight-color = "#f9e2af";
-      highlight-active-color = "#a6e3a1";
-
-      default-bg = "#1e1e2e";
-      default-fg = "#cdd6f4";
-      render-loading = true;
-      render-loading-bg = "#1e1e2e";
-      render-loading-fg = "#cdd6f4";
-
-      recolor-lightcolor = "#1e1e2e";
-      recolor-darkcolor = "#cdd6f4";
-      recolor = false;
-      recolor-keephue = true;
+      # Functional options
 
       adjust-open = "width";
       pages-per-row = 1;
