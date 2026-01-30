@@ -30,10 +30,4 @@
       ];
     };
   };
-
-  # Catppuccin system theming
-  catppuccin = {
-    enable = true;
-    cache.enable = true;
-  };
 }
