@@ -69,7 +69,7 @@ in
                     ../users/${username}
                     nixvim.homeModules.nixvim
                     spicetify.homeManagerModules.default
-                    catppuccin.homeManagerModules.catppuccin
+                    catppuccin.homeModules.catppuccin
                   ];
                 };
               }) users
