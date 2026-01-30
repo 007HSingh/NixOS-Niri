@@ -9,7 +9,7 @@
 
     # Color scheme: Catppuccin Mocha
     # Can also be set to path from base16-schemes if desired
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/tokyo-night-storm.yaml";
 
     # Polarity must be set to either "dark" or "light"
     polarity = "dark";
