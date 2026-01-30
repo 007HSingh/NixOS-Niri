@@ -10,7 +10,6 @@ let
   configs = {
     kitty = "kitty";
     niri = "niri";
-    fuzzel = "fuzzel";
     fastfetch = "fastfetch";
     btop = "btop";
     wallpapers = "wallpapers";
