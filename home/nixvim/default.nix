@@ -1,3 +1,5 @@
+# Nixvim Configuration
+# Neovim configuration via nixvim
 {
   config,
   lib,
@@ -6,11 +8,11 @@
 }:
 
 {
-  # Import all module configurations
+  # Import plugin configurations from config/neovim (preserved from original)
   imports = [
-    ./config/neovim/options.nix
-    ./config/neovim/keymaps.nix
-    ./config/neovim/plugins
+    ../../config/neovim/options.nix
+    ../../config/neovim/keymaps.nix
+    ../../config/neovim/plugins
   ];
 
   programs.nixvim = {

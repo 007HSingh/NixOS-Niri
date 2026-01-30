@@ -1,0 +1,65 @@
+# System-wide Packages
+{ pkgs, stable, ... }:
+
+{
+  environment.systemPackages = with pkgs; [
+    # Core utilities
+    wget2
+    git
+    file
+    xdg-utils
+
+    # Terminal
+    kitty
+
+    # Wayland/Niri
+    niri
+    xwayland-satellite
+    fuzzel
+    swaylock
+    wayclip
+    brightnessctl
+    cliphist
+    wlsunset
+
+    # Screenshots
+    grim
+    slurp
+    swappy
+    satty
+
+    # Media
+    spotify
+    vlc
+
+    # System monitoring
+    btop
+    fastfetch
+
+    # Development
+    lazygit
+    starship
+    gh
+    delta
+    docker-compose
+    cachix
+    devenv
+
+    # Applications
+    stable.discord
+    pywalfox-native
+    jetbrains.idea
+    android-studio
+    android-tools
+    nwg-look
+    chafa
+    ffmpegthumbnailer
+    mediainfo
+    zathura
+    antigravity
+
+    # Gaming
+    mangohud
+    protonup-ng
+  ];
+}
