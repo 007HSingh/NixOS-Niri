@@ -9,7 +9,6 @@
     # Flake-parts for modular flake structure
     flake-parts = {
       url = "github:hercules-ci/flake-parts";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     # Home Manager for user environment management
