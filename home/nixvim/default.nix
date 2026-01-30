@@ -24,13 +24,25 @@
     # ============================================================================
     # COLORSCHEME
     # ============================================================================
-    # ============================================================================
-    # COLORSCHEME
-    # ============================================================================
     colorschemes.catppuccin = {
       enable = true;
       settings = {
         flavour = "mocha";
+        transparent_background = true;
+        integrations = {
+          cmp = true;
+          gitsigns = true;
+          nvimtree = true;
+          treesitter = true;
+          notify = true;
+          telescope.enabled = true;
+          bufferline = true;
+          noice = true;
+          which_key = true;
+          indent_blankline.enabled = true;
+          dashboard = true;
+          native_lsp.enabled = true;
+        };
       };
     };
 
