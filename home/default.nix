@@ -14,5 +14,6 @@
     ./xdg.nix
     ./yazi.nix
     ./zathura.nix
+    ./wofi.nix
   ];
 }

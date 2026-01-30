@@ -19,9 +19,6 @@
             zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
     '';
     initContent = ''
-      eval "$(zoxide init zsh --no-cmd)"
-      alias cd='__zoxide_z'
-      alias cdi='__zoxide_zi'
       eval "$(direnv hook zsh)"
 
       bindkey -r '^T'
@@ -71,6 +68,11 @@
   };
 
   programs.starship = {
+    enable = true;
+    enableZshIntegration = true;
+  };
+
+  programs.zoxide = {
     enable = true;
     enableZshIntegration = true;
   };
