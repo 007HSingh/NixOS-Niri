@@ -93,7 +93,6 @@
       wallpaper = {
         overviewEnabled = true;
       };
-      colorSchemes.predefinedScheme = "Catppuccin";
       location = {
         monthBeforeDay = true;
         name = "Kolkata, India";
@@ -114,6 +113,7 @@
         pywalfox = true;
         cava = true;
         niri = true;
+        discord = true;
       };
     };
   };
