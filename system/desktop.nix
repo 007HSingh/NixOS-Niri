@@ -7,9 +7,9 @@
   services.displayManager.ly = {
     enable = true;
     settings = {
-      animation = "none";
-      clock = "null";
-      preset = "null";
+      animation = "matrix";
+      clock = "%c";
+
     };
   };
 
