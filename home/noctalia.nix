@@ -90,6 +90,7 @@
           ];
         };
       };
+      colorSchemes.predefinedScheme = "Catppuccin";
       wallpaper = {
         overviewEnabled = true;
       };
@@ -101,7 +102,7 @@
         enabled = false;
       };
       nightLight = {
-        enabled = true;
+        enabled = false;
         autoSchedule = true;
         nightTemp = "3000";
         dayTemp = "6500";
