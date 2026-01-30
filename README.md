@@ -30,7 +30,7 @@ nixos-config/
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/yourusername/nixos-config.git ~/nixos-config
+   git clone https://github.com/007HSingh/nixos-config.git ~/nixos-config
    cd ~/nixos-config
    ```
 
