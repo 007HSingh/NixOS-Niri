@@ -24,6 +24,7 @@
     hyperfine
     tokei
     gnumake
+    nix-index
 
     # Development
     gcc
@@ -54,6 +55,12 @@
     obsidian
     stable.keepassxc
     libreoffice-qt
+    vesktop
+    mpv
+
+    # Wayland utilities
+    wl-clipboard
+    playerctl
 
     # Languages
     javaPackages.compiler.temurin-bin.jdk-25

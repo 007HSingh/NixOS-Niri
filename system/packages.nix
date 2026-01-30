@@ -15,7 +15,6 @@
     # Wayland/Niri
     niri
     xwayland-satellite
-    fuzzel
     swaylock
     wayclip
     brightnessctl
