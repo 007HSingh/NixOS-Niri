@@ -59,6 +59,7 @@ nixos-config/
 
 ## ✨ Features
 
+- **Display Manager:** [ly](https://github.com/fairyglade/ly) (TUI with Matrix animation)
 - **Window Manager:** [Niri](https://github.com/YaLTeR/niri) (Scrollable Tiling Wayland Compositor)
 - **Shell:** [Noctalia](https://github.com/noctalia-dev/noctalia-shell) / Zsh + Starship
 - **Editor:** Neovim (via [Nixvim](https://github.com/nix-community/nixvim))
