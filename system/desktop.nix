@@ -9,12 +9,6 @@
     wayland.enable = true;
   };
 
-  catppuccin = {
-    sddm.enable = true;
-    sddm.flavor = "mocha";
-    sddm.clockEnabled = true;
-  };
-
   # Keyboard layout
   services.xserver.xkb.layout = "us";
 

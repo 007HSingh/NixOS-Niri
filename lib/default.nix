@@ -3,7 +3,14 @@
 { inputs }:
 
 let
-  inherit (inputs) nixpkgs-stable nixpkgs-unstable home-manager catppuccin nixvim spicetify;
+  inherit (inputs)
+    nixpkgs-stable
+    nixpkgs-unstable
+    home-manager
+    catppuccin
+    nixvim
+    spicetify
+    ;
 in
 {
   # Create a NixOS host configuration
@@ -41,8 +48,8 @@ in
         # System-wide modules
         ../system
 
-        # Catppuccin NixOS theming
-        catppuccin.nixosModules.catppuccin
+        # Stylix System-wide Theming
+        inputs.stylix.nixosModules.stylix
 
         # Home Manager integration
         home-manager.nixosModules.home-manager
@@ -60,7 +67,6 @@ in
                 value = {
                   imports = [
                     ../users/${username}
-                    catppuccin.homeModules.catppuccin
                     nixvim.homeModules.nixvim
                     spicetify.homeManagerModules.default
                   ];

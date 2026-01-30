@@ -46,12 +46,4 @@
     algorithm = "lz4";
     priority = 100;
   };
-
-  # Catppuccin boot theming
-  catppuccin = {
-    grub.enable = true;
-    grub.flavor = "mocha";
-    plymouth.enable = true;
-    plymouth.flavor = "mocha";
-  };
 }
