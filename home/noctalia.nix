@@ -111,7 +111,6 @@
         gtk = true;
         qt = true;
         kitty = true;
-        fuzzel = true;
         pywalfox = true;
         cava = true;
         niri = true;
