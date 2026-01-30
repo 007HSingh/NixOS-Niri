@@ -14,10 +14,6 @@
     # Polarity must be set to either "dark" or "light"
     polarity = "dark";
 
-    # Wallpaper (required by Stylix)
-    # Using local wallpaper
-    image = home/harsh/.config/wallpapers/wallpaper-13.png;
-
     # Cursor Theme
     cursor = {
       package = pkgs.bibata-cursors;
