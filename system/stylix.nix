@@ -9,7 +9,7 @@
 
     # Color scheme: Catppuccin Mocha
     # Can also be set to path from base16-schemes if desired
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/tokyo-night-storm.yaml";
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
 
     # Polarity must be set to either "dark" or "light"
     polarity = "dark";
@@ -63,7 +63,7 @@
     targets = {
       # We will let Stylix handle most things automatically
       # Explicitly enable/disable as needed
-      nixvim.enable = true;
+      nixvim.enable = false;
       gnome.enable = false; # We don't use GNOME
     };
   };
