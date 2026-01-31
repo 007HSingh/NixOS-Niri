@@ -69,8 +69,6 @@
     # Git tools
     git-absorb
     git-lfs
-
-    google-chrome
   ];
 
   home.sessionVariables = {
