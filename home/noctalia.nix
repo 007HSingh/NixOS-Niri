@@ -109,7 +109,6 @@
       };
       templates = {
         kitty = true;
-        cava = true;
         niri = true;
         discord = true;
       };
