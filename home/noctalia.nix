@@ -108,10 +108,7 @@
         dayTemp = "6500";
       };
       templates = {
-        gtk = true;
-        qt = true;
         kitty = true;
-        pywalfox = true;
         cava = true;
         niri = true;
         discord = true;
