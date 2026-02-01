@@ -71,7 +71,6 @@
       # Explicitly enable/disable as needed
       nixvim.enable = false;
       gnome.enable = false;
-      gtk.enable = true;
     };
   };
 }
