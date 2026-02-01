@@ -10,8 +10,11 @@
 
       servers = {
         # Nix
-        nil = {
+        nixd = {
           enable = lib.mkDefault true;
+          nixpkgs = {
+            expr = "import <nixpkgs> { }";
+          };
         };
 
         # Lua

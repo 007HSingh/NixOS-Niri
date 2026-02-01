@@ -10,14 +10,14 @@
         name = "nixos-config";
         packages = with pkgs; [
           nixfmt-rfc-style
-          nil
+          nixd
           statix
           deadnix
         ];
 
         shellHook = ''
           echo "NixOS Config Development Shell"
-          echo "Available tools: nixfmt, nil, statix, deadnix"
+          echo "Available tools: nixfmt, nixd, statix, deadnix"
         '';
       };
     };
