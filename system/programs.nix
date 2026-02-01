@@ -64,4 +64,6 @@
   };
 
   programs.dconf.enable = true;
+
+  programs.evince.enable = true;
 }
