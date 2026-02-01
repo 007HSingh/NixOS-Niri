@@ -17,6 +17,12 @@
   # SSD TRIM
   services.fstrim.enable = true;
 
+  services.gvfs.enable = true;
+
+  services.tumbler.enable = true;
+
+  services.udisks2.enable = true;
+
   # Docker
   virtualisation.docker = {
     enable = true;

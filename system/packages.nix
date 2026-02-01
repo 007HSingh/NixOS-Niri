@@ -50,7 +50,6 @@
     jetbrains.idea
     android-studio
     android-tools
-    nwg-look
     chafa
     ffmpegthumbnailer
     mediainfo

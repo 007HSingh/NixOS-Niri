@@ -14,6 +14,12 @@
     # Polarity must be set to either "dark" or "light"
     polarity = "dark";
 
+    # Icon Theme
+    iconTheme = {
+      enable = true;
+      package = pkgs.catppucciin-papirus-folders;
+    };
+
     # Cursor Theme
     cursor = {
       package = pkgs.bibata-cursors;
@@ -64,7 +70,8 @@
       # We will let Stylix handle most things automatically
       # Explicitly enable/disable as needed
       nixvim.enable = false;
-      gnome.enable = false; # We don't use GNOME
+      gnome.enable = false;
+      gtk.enable = true;
     };
   };
 }

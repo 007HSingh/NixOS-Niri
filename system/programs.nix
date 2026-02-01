@@ -54,5 +54,14 @@
     nix-direnv.enable = true;
   };
 
-  programs.dconf.enable = true;
+  programs.thunar = {
+    enable = true;
+    plugins = with pkgs; [
+      thunar-archive-plugin
+      thunar-volman
+      thunar-media-tags-plugin
+    ];
+  };
+
+  programs.file-roller.enable = true;
 }
