@@ -46,7 +46,6 @@
     devenv
 
     # Applications
-    stable.discord
     pywalfox-native
     jetbrains.idea
     android-studio
