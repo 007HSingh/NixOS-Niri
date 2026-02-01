@@ -18,8 +18,8 @@
     iconTheme = {
       enable = true;
       package = pkgs.catppuccin-papirus-folders;
-      name = "Papirus";
-      dark = true;
+      dark = "Papirus-Dark";
+      light = "Papirus-Light";
     };
 
     # Cursor Theme
