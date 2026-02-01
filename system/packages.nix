@@ -8,6 +8,7 @@
     git
     file
     xdg-utils
+    file-roller
 
     # Terminal
     kitty
