@@ -75,7 +75,7 @@
     # EXTRA PACKAGES
     # ============================================================================
     extraPackages = with pkgs; [
-      nil
+      nixd
       lua-language-server
       typescript-language-server
       vscode-langservers-extracted
