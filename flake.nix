@@ -52,10 +52,21 @@
       url = "github:danth/stylix";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
+
+    # Treefmt-nix for unified formatting
+    treefmt-nix = {
+      url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
   };
 
   outputs =
-    inputs@{ flake-parts, nixpkgs-unstable, ... }:
+    inputs@{
+      flake-parts,
+      nixpkgs-unstable,
+      treefmt-nix,
+      ...
+    }:
     flake-parts.lib.mkFlake { inherit inputs; } {
       # Systems to build for
       systems = [
@@ -67,6 +78,8 @@
       imports = [
         ./parts/nixos.nix
         ./parts/dev.nix
+        ./parts/treefmt.nix
+        treefmt-nix.flakeModule
       ];
 
       # Provide pkgs for perSystem modules (since we use nixpkgs-unstable, not nixpkgs)

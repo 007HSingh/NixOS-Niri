@@ -54,6 +54,10 @@
             priority = 1000;
           }
           {
+            name = "nvim_lsp_signature_help";
+            priority = 1000;
+          }
+          {
             name = "luasnip";
             priority = 750;
           }
@@ -68,55 +72,12 @@
         ];
 
         formatting = {
+          expandable_indicator = true;
           fields = [
             "kind"
             "abbr"
             "menu"
           ];
-          format = ''
-            function(entry, vim_item)
-              local kind_icons = {
-                Text = "󰊄",
-                Method = "",
-                Function = "󰊕",
-                Constructor = "",
-                Field = "",
-                Variable = "󰫧",
-                Class = "",
-                Interface = "",
-                Module = "󰕳",
-                Property = "",
-                Unit = "",
-                Value = "",
-                Enum = "",
-                Keyword = "",
-                Snippet = "",
-                Color = "",
-                File = "",
-                Reference = "",
-                Folder = "",
-                EnumMember = "",
-                Constant = "",
-                Struct = "",
-                Event = "",
-                Operator = "",
-                TypeParameter = "",
-              }
-              
-              -- Set the icon
-              vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind)
-              
-              -- Set the source name
-              vim_item.menu = ({
-                nvim_lsp = "[LSP]",
-                luasnip = "[Snippet]",
-                buffer = "[Buffer]",
-                path = "[Path]",
-              })[entry.source.name]
-              
-              return vim_item
-            end
-          '';
         };
 
         window = {
@@ -159,4 +120,7 @@
       enable = lib.mkDefault true;
     };
   };
+
+  # Enable signature help plugin
+  programs.nixvim.plugins.cmp-nvim-lsp-signature-help.enable = true;
 }

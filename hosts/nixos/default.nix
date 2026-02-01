@@ -1,6 +1,11 @@
 # Host: nixos (primary laptop)
 # This is the main configuration for this specific machine
-{ config, pkgs, inputs, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 
 {
   imports = [

@@ -12,15 +12,20 @@
         # Nix
         nixd = {
           enable = lib.mkDefault true;
-          nixpkgs = {
-            expr = "import (builtins.getFlake \"/home/harsh/nixos-config\").inputs.nixpkgs-unstable { }";
-          };
-          options = {
-            nixos = {
-              expr = "(builtins.getFlake \"/home/harsh/nixos-config\").nixosConfigurations.nixos.options";
+          settings = {
+            nixpkgs = {
+              expr = "import <unstable> { }";
             };
-            home_manager = {
-              expr = "(builtins.getFlake \"/home/harsh/nixos-config\").homeConfigurations.nixos.options";
+            formatting = {
+              command = [ "nixfmt" ];
+            };
+            options = {
+              nixos = {
+                expr = "(builtins.getFlake \"${config.home.homeDirectory}/nixos-config\").nixosConfigurations.nixos.options";
+              };
+              home_manager = {
+                expr = "(builtins.getFlake \"${config.home.homeDirectory}/nixos-config\").homeConfigurations.nixos.options";
+              };
             };
           };
         };
@@ -82,6 +87,18 @@
           enable = lib.mkDefault true;
           installCargo = false;
           installRustc = false;
+          settings = {
+            checkOnSave = true;
+            procMacro = {
+              enable = true;
+            };
+            hover = {
+              actions = {
+                enable = true;
+                references = true;
+              };
+            };
+          };
         };
 
         # Bash
@@ -172,48 +189,127 @@
     };
 
     # ============================================================================
-    # LSP-LINES - Better diagnostic display
+    # RENDER-MARKDOWN - Beautiful docs
     # ============================================================================
-    plugins.lsp-lines = {
-      enable = lib.mkDefault true;
-    };
-
-    # ============================================================================
-    # LSP-FORMAT - Formatting integration
-    # ============================================================================
-    plugins.lsp-format = {
-      enable = lib.mkDefault true;
-    };
-
-    # ============================================================================
-    # FIDGET - LSP progress indicator
-    # ============================================================================
-    plugins.fidget = {
-      enable = lib.mkDefault true;
+    plugins.render-markdown = {
+      enable = true;
       settings = {
-        notification = {
-          window = {
-            winblend = 0;
+        render_modes = [
+          "n"
+          "c"
+          "i"
+          "v"
+        ];
+        win_options = {
+          conceallevel = {
+            default = 2;
           };
         };
       };
     };
 
     # ============================================================================
-    # TROUBLE - Better diagnostics list
+    # LSPSAGA - Beautiful LSP UI
     # ============================================================================
-    plugins.trouble = {
+    plugins.lspsaga = {
       enable = lib.mkDefault true;
       settings = {
-        auto_close = false;
-        auto_open = false;
-        auto_preview = true;
-        auto_fold = false;
+        beacon.enable = true;
+        ui = {
+          border = "rounded";
+          code_action = "󰌵";
+        };
+        hover = {
+          open_cmd = "!firefox";
+          open_link = "gx";
+        };
+        lightbulb.enable = false;
+        outline = {
+          auto_preview = true;
+          close_after_jump = true;
+          layout = "float";
+          win_width = 30;
+        };
       };
     };
 
-    # Add trouble keymaps
+    # Override standard LSP keymaps with Saga when available
     keymaps = [
+      # LSPSAGA Keymaps
+      {
+        mode = "n";
+        key = "K";
+        action = ":Lspsaga hover_doc<CR>";
+        options = {
+          silent = true;
+          desc = "Hover documentation (Saga)";
+        };
+      }
+      {
+        mode = "n";
+        key = "gh";
+        action = ":Lspsaga finder<CR>";
+        options = {
+          silent = true;
+          desc = "LSP Finder (Saga)";
+        };
+      }
+      {
+        mode = "n";
+        key = "gp";
+        action = ":Lspsaga peek_definition<CR>";
+        options = {
+          silent = true;
+          desc = "Peek definition (Saga)";
+        };
+      }
+      {
+        mode = "n";
+        key = "<leader>ca";
+        action = ":Lspsaga code_action<CR>";
+        options = {
+          silent = true;
+          desc = "Code action (Saga)";
+        };
+      }
+      {
+        mode = "v";
+        key = "<leader>ca";
+        action = ":<C-U>Lspsaga code_action<CR>";
+        options = {
+          silent = true;
+          desc = "Code action (Saga)";
+        };
+      }
+      {
+        mode = "n";
+        key = "<leader>cr";
+        action = ":Lspsaga rename<CR>";
+        options = {
+          silent = true;
+          desc = "Rename (Saga)";
+        };
+      }
+      {
+        mode = "n";
+        key = "<leader>cl";
+        action = ":Lspsaga show_line_diagnostics<CR>";
+        options = {
+          silent = true;
+          desc = "Line diagnostics (Saga)";
+        };
+      }
+      {
+        mode = "n";
+        key = "<leader>co";
+        action = ":Lspsaga outline<CR>";
+        options = {
+          silent = true;
+          desc = "Toggle outline (Saga)";
+        };
+      }
+
+      # TROUBLE Keymaps
       {
         mode = "n";
         key = "<leader>xx";

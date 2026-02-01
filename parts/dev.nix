@@ -6,18 +6,31 @@
   perSystem =
     { pkgs, ... }:
     {
-      devShells.default = pkgs.mkShell {
-        name = "nixos-config";
+      devShells.default = pkgs.mkShellNoCC {
+        name = "nixos-config-shell";
+
+        # Tools for Nix development
         packages = with pkgs; [
-          nixfmt-rfc-style
+          nixfmt
           nixd
           statix
           deadnix
+          nh # Nix Helper - great for builds/updates
+          nix-tree # Explore dependency graph
         ];
 
         shellHook = ''
-          echo "NixOS Config Development Shell"
-          echo "Available tools: nixfmt, nixd, statix, deadnix"
+          echo "󱄅 NixOS Configuration Development Environment"
+          echo "--------------------------------------------"
+          echo "Available tools:"
+          echo "  • nixfmt: Formatting"
+          echo "  • nixd: Language Server"
+          echo "  • statix/deadnix: Linting"
+          echo "  • nh: Nix Helper (nh os switch)"
+          echo "  • nix-tree: Dependency visualization"
+
+          # Optional: set an env var to indicate we are in this shell
+          export NIX_CONFIG_SHELL=1
         '';
       };
     };

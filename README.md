@@ -29,6 +29,7 @@ nixos-config/
 ### Installation
 
 1. **Clone the repository:**
+
    ```bash
    git clone https://github.com/007HSingh/nixos-config.git ~/nixos-config
    cd ~/nixos-config
@@ -43,11 +44,13 @@ nixos-config/
 ### Daily Operations
 
 - **Update System:**
+
   ```bash
   update  # Alias for sudo nixos-rebuild switch --flake ...
   ```
 
 - **Update Flake Inputs:**
+
   ```bash
   nix flake update
   ```
@@ -70,10 +73,12 @@ nixos-config/
 ## 🛠️ Extending
 
 ### Adding a New Host
+
 1. Create `hosts/<new-host>/default.nix` (importing hardware config).
 2. Register it in `parts/nixos.nix` using `lib.mkHost`.
 
 ### Adding a New Module
+
 1. Create the module in `system/` (NixOS) or `home/` (Home Manager).
 2. Add it to the `imports` list in `system/default.nix` or `home/default.nix`.
 
