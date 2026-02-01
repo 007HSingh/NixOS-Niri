@@ -57,6 +57,7 @@
     libreoffice-qt
     vesktop
     mpv
+    thunar
 
     # Wayland utilities
     wl-clipboard
