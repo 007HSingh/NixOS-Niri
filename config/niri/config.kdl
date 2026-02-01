@@ -325,7 +325,7 @@ window-rule {
     opacity 0.8
 }
 window-rule {
-    match app-id="discord"
+    match app-id="vesktop"
     opacity 0.9
 }
 window-rule {
