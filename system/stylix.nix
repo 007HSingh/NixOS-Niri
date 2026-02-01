@@ -18,6 +18,8 @@
     iconTheme = {
       enable = true;
       package = pkgs.catppuccin-papirus-folders;
+      name = "Papirus";
+      dark = true;
     };
 
     # Cursor Theme
@@ -71,6 +73,7 @@
       # Explicitly enable/disable as needed
       nixvim.enable = false;
       gnome.enable = false;
+      gtk.enable = true;
     };
   };
 }
