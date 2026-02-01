@@ -25,33 +25,11 @@
   programs.zsh = {
     enable = true;
     enableCompletion = true;
-    autosuggestions = {
-      enable = true;
-      async = true;
-    };
-    syntaxHighlighting.enable = true;
-    ohMyZsh = {
-      enable = true;
-      plugins = [
-        "git"
-        "starship"
-        "colored-man-pages"
-        "docker"
-        "kubectl"
-      ];
-    };
     shellAliases = {
-      ls = "eza -la --icons";
-      cat = "bat";
       update = "sudo nixos-rebuild switch --flake /home/harsh/nixos-config#nixos";
       generations = "sudo nix-env --list-generations --profile /nix/var/nix/profiles/system";
       clean = "sudo nix-collect-garbage -d";
     };
-  };
-
-  programs.direnv = {
-    enable = true;
-    nix-direnv.enable = true;
   };
 
   programs.thunar = {

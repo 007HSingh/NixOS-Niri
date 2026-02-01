@@ -31,10 +31,5 @@
           stylua.includes = [ "*.lua" ];
         };
       };
-
-      # Allow 'nix fmt' to use treefmt
-      formatter = pkgs.writeShellScriptBin "nix-fmt" ''
-        ${pkgs.treefmt}/bin/treefmt "$@"
-      '';
     };
 }
