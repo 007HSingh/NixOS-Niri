@@ -63,7 +63,5 @@
     ];
   };
 
-  programs.file-roller.enable = true;
-
   programs.dconf.enable = true;
 }
