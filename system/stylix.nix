@@ -17,7 +17,7 @@
     # Icon Theme
     iconTheme = {
       enable = true;
-      package = pkgs.catppucciin-papirus-folders;
+      package = pkgs.catppuccin-papirus-folders;
     };
 
     # Cursor Theme
