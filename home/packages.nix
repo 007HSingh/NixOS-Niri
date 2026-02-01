@@ -18,6 +18,7 @@
     lazygit
     zoxide
     unzip
+    zip
     p7zip
     jq
     yq
@@ -57,7 +58,6 @@
     libreoffice-qt
     vesktop
     mpv
-    thunar
 
     # Wayland utilities
     wl-clipboard
