@@ -54,7 +54,6 @@
     chafa
     ffmpegthumbnailer
     mediainfo
-    zathura
     antigravity
 
     # Gaming
