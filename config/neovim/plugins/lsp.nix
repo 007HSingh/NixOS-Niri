@@ -13,7 +13,15 @@
         nixd = {
           enable = lib.mkDefault true;
           nixpkgs = {
-            expr = "import <nixpkgs> { }";
+            expr = "import (builtins.getFlake \"/home/harsh/nixos-config\").inputs.nixpkgs-unstable { }";
+          };
+          options = {
+            nixos = {
+              expr = "(builtins.getFlake \"/home/harsh/nixos-config\").nixosConfigurations.nixos.options";
+            };
+            home_manager = {
+              expr = "(builtins.getFlake \"/home/harsh/nixos-config\").homeConfigurations.nixos.options";
+            };
           };
         };
 
