@@ -15,7 +15,7 @@
     polarity = "dark";
 
     # Icon Theme
-    iconTheme = {
+    icons = {
       enable = true;
       package = pkgs.catppuccin-papirus-folders;
       dark = "Papirus-Dark";
