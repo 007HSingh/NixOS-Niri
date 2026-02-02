@@ -88,20 +88,6 @@
 
   programs.bat = {
     enable = true;
-    config = {
-      theme = "catppuccin-mocha";
-    };
-    themes = {
-      "catppuccin-mocha" = {
-        src = pkgs.fetchFromGitHub {
-          owner = "catppuccin";
-          repo = "bat";
-          rev = "d2bbee4f7e7d5bac63c3d4bc4d0b64625f3c5fc1";
-          sha256 = "sha256-x1yqPCWuoBSx/cI94eA+AWwhiSA42cLNUOFJl7qjhmw=";
-        };
-        file = "themes/catppuccin-mocha.tmTheme";
-      };
-    };
   };
 
   programs.ripgrep.enable = true;

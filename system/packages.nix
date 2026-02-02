@@ -53,7 +53,6 @@
     chafa
     ffmpegthumbnailer
     mediainfo
-    antigravity
 
     # Gaming
     mangohud
