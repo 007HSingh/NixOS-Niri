@@ -5,18 +5,10 @@
 {
   home.packages = with pkgs; [
     # Audio visualization
-    cava
     poppler
     resvg
 
     # CLI tools
-    eza
-    bat
-    ripgrep
-    fd
-    fzf
-    lazygit
-    zoxide
     unzip
     zip
     p7zip
@@ -31,7 +23,7 @@
     obsidian
     stable.keepassxc
     libreoffice-qt
-    vesktop
+    stable.vesktop
     mpv
 
     # Wayland utilities

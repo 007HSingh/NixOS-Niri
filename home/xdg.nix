@@ -13,6 +13,7 @@ let
     fastfetch = "fastfetch";
     btop = "btop";
     wallpapers = "wallpapers";
+    eza = "eza";
   };
 in
 {
