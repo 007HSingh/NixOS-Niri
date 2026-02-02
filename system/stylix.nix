@@ -74,6 +74,7 @@
       nixvim.enable = false;
       gnome.enable = false;
       gtk.enable = true;
+      bat.enable = false;
     };
   };
 }
