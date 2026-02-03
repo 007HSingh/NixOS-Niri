@@ -30,7 +30,7 @@
             ms-azuretools.vscode-docker
             eamodio.gitlens
           ]
-          ++ pkgs.vscode-extensionsFromVscodeMarketplace [
+          ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
             {
               name = "vscode-containers";
               publisher = "ms-azuretools";
