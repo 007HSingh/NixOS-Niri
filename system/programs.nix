@@ -11,6 +11,8 @@
       catppuccin.catppuccin-vsc
       catppuccin.catppuccin-vsc-icons
       jnoortheen.nix-ide
+      github.copilot-chat
+      eamodio.gitlens
     ];
   };
 
