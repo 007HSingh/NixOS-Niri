@@ -9,7 +9,7 @@
     enable = true;
     extensions = with pkgs; [
       (vscode-with-extensions.override {
-        vscode-extensions =
+        vscodeExtensions =
           with vscode-extensions;
           [
             catppuccin.catppuccin-vsc
