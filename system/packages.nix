@@ -57,5 +57,21 @@
     # Gaming
     mangohud
     protonup-ng
+
+    # VsCode Extensions
+    (vscode-with-extensions.override {
+      vscodeExtensions =
+        with scode-extensions;
+        [
+        ]
+        ++ vscode-utils.extensionsFromVscodeMarketplace [
+          {
+            name = "vscode-containers";
+            publisher = "ms-azuretools";
+            version = "2.4.0";
+            sha256 = "0q6c65qh96nl7qdmk58hm2sipcsv3xj9vvfvrvhl4w36k9zbar4q";
+          }
+        ];
+    })
   ];
 }
