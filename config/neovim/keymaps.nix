@@ -463,10 +463,17 @@
           desc = "Search in current file";
         };
       }
+      # ========================================================================
+      # HARPOON 2 MAPPINGS (UPDATED)
+      # ========================================================================
       {
         mode = "n";
         key = "<leader>ha";
-        action = ":lua require('harpoon.mark').add_file()<CR>";
+        action.__raw = ''
+          function()
+            require("harpoon"):list():add()
+          end
+        '';
         options = {
           silent = true;
           desc = "Harpoon add file";
@@ -475,7 +482,11 @@
       {
         mode = "n";
         key = "<leader>hm";
-        action = ":lua require('harpoon.ui').toggle_quick_menu()<CR>";
+        action.__raw = ''
+          function()
+            require("harpoon").ui:toggle_quick_menu(require("harpoon"):list())
+          end
+        '';
         options = {
           silent = true;
           desc = "Harpoon menu";
@@ -484,7 +495,11 @@
       {
         mode = "n";
         key = "<leader>1";
-        action = ":lua require('harpoon.ui').nav_file(1)<CR>";
+        action.__raw = ''
+          function()
+            require("harpoon"):list():select(1)
+          end
+        '';
         options = {
           silent = true;
           desc = "Harpoon file 1";
@@ -493,7 +508,11 @@
       {
         mode = "n";
         key = "<leader>2";
-        action = ":lua require('harpoon.ui').nav_file(2)<CR>";
+        action.__raw = ''
+          function()
+            require("harpoon"):list():select(2)
+          end
+        '';
         options = {
           silent = true;
           desc = "Harpoon file 2";
@@ -502,7 +521,11 @@
       {
         mode = "n";
         key = "<leader>3";
-        action = ":lua require('harpoon.ui').nav_file(3)<CR>";
+        action.__raw = ''
+          function()
+            require("harpoon"):list():select(3)
+          end
+        '';
         options = {
           silent = true;
           desc = "Harpoon file 3";
@@ -511,12 +534,19 @@
       {
         mode = "n";
         key = "<leader>4";
-        action = ":lua require('harpoon.ui').nav_file(4)<CR>";
+        action.__raw = ''
+          function()
+            require("harpoon"):list():select(4)
+          end
+        '';
         options = {
           silent = true;
           desc = "Harpoon file 4";
         };
       }
+      # ========================================================================
+      # END HARPOON MAPPINGS
+      # ========================================================================
       {
         mode = "n";
         key = "zR";
