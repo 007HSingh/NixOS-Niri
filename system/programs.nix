@@ -7,38 +7,24 @@
 
   programs.vscode = {
     enable = true;
-    extensions = with pkgs; [
-      (vscode-with-extensions.override {
-        vscodeExtensions =
-          with vscode-extensions;
-          [
-            catppuccin.catppuccin-vsc
-            catppuccin.catppuccin-vsc-icons
-            jnoortheen.nix-ide
-            github.copilot-chat
-            github.copilot
-            ms-python.vscode-pylance
-            ms-python.python
-            ms-python.debugpy
-            ms-python.flake8
-            ms-vscode.cpptools-extension-pack
-            redhat.java
-            vscjava.vscode-java-pack
-            vscjava.vscode-spring-initializr
-            ms-vscode-remote.remote-containers
-            docker.docker
-            ms-azuretools.vscode-docker
-            eamodio.gitlens
-          ]
-          ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
-            {
-              name = "vscode-containers";
-              publisher = "ms-azuretools";
-              version = "2.4.0";
-              sha256 = "0q6c65qh96nl7qdmk58hm2sipcsv3xj9vvfvrvhl4w36k9zbar4q";
-            }
-          ];
-      })
+    extensions = with pkgs.vscode-extensions; [
+      catppuccin.catppuccin-vsc
+      catppuccin.catppuccin-vsc-icons
+      jnoortheen.nix-ide
+      github.copilot-chat
+      github.copilot
+      ms-python.vscode-pylance
+      ms-python.python
+      ms-python.debugpy
+      ms-python.flake8
+      ms-vscode.cpptools-extension-pack
+      redhat.java
+      vscjava.vscode-java-pack
+      vscjava.vscode-spring-initializr
+      ms-vscode-remote.remote-containers
+      docker.docker
+      ms-azuretools.vscode-docker
+      eamodio.gitlens
     ];
   };
 
