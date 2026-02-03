@@ -12,6 +12,17 @@
       catppuccin.catppuccin-vsc-icons
       jnoortheen.nix-ide
       github.copilot-chat
+      github.copilot
+      ms-python.vscode-pylance
+      ms-python.python
+      ms-python.debugpy
+      ms-python.flake8
+      ms-vscode.cpptools-extension-pack
+      redhat.java
+      vscjava.vscode-java-pack
+      vscjava.vscode-spring-initializr
+      ms-vscode-remote.remote-containers
+      docker.docker
       eamodio.gitlens
     ];
   };
