@@ -393,6 +393,7 @@
           sh = [ "shfmt" ];
           bash = [ "shfmt" ];
           kdl = [ "kdlfmt" ];
+          java = [ "google-java-format" ];
         };
       };
     };

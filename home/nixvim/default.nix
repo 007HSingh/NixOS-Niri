@@ -97,6 +97,7 @@
       rustfmt
       shfmt
       kdlfmt
+      google-java-format
 
       # Essential tools
       ripgrep
