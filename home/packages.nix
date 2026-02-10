@@ -33,8 +33,8 @@
     # Languages
     javaPackages.compiler.temurin-bin.jdk-25
     racket
-    python315
-    python315Packages.pip
+    python314
+    python314Packages.pip
 
     # Git tools
     git-absorb
