@@ -298,7 +298,6 @@ window-rule {
     // - host Firefox (app-id is "firefox")
     // - Flatpak Firefox (app-id is "org.mozilla.firefox")
     match title="Firefox"
-    opacity 0.9
     open-maximized true
 }
 // Example: block out two password managers from screen capture.
