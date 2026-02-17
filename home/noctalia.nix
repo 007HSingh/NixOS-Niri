@@ -22,9 +22,9 @@
 
   home.file.".cache/noctalia/wallpapers.json" = {
     text = builtins.toJSON {
-      defaultWallpaper = "home/harsh/.config/wallpapers/wallpaper-13.png";
+      defaultWallpaper = "home/harsh/.config/wallpapers/wallpaper-18.png";
       wallpapers = {
-        "eDP-1" = "/home/harsh/.config/wallpapers/wallpaper-13.png";
+        "eDP-1" = "/home/harsh/.config/wallpapers/wallpaper-18.png";
       };
     };
   };
@@ -102,7 +102,7 @@
         enabled = false;
       };
       nightLight = {
-        enabled = false;
+        enabled = true;
         autoSchedule = true;
         nightTemp = "3000";
         dayTemp = "6500";
