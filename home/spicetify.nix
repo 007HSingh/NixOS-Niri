@@ -24,7 +24,6 @@ in
       rotatingCoverart
       pointer
     ];
-    # theme = spicePkgs.themes.catppuccin; # Managed by Stylix
-    # colorScheme = "mocha"; # Managed by Stylix
+    theme = spicePkgs.themes.text;
   };
 }
