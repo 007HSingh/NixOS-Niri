@@ -1,6 +1,11 @@
 # Spicetify Configuration
 # Spotify theming and extensions
-{ pkgs, inputs, ... }:
+{
+  pkgs,
+  inputs,
+  lib,
+  ...
+}:
 
 let
   spicePkgs = inputs.spicetify.legacyPackages.${pkgs.stdenv.hostPlatform.system};
@@ -24,6 +29,6 @@ in
       rotatingCoverart
       pointer
     ];
-    theme = spicePkgs.themes.text;
+    theme = lib.mkForce spicePkgs.themes.text;
   };
 }
