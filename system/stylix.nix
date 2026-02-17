@@ -74,7 +74,7 @@
       nixvim.enable = false;
       gnome.enable = false;
       gtk.enable = true;
-      spotify.enable = false;
+      spicetify.enable = false;
     };
   };
 }
