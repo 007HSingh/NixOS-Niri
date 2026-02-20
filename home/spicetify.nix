@@ -29,6 +29,5 @@ in
       rotatingCoverart
       pointer
     ];
-    theme = lib.mkForce spicePkgs.themes.text;
   };
 }
