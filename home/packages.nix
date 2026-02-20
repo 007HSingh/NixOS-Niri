@@ -22,7 +22,6 @@
     # Applications
     obsidian
     stable.keepassxc
-    libreoffice-qt
     stable.vesktop
     mpv
 
