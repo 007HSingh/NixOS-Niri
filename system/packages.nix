@@ -61,12 +61,13 @@
     # VsCode Extensions
     (vscode-with-extensions.override {
       vscodeExtensions =
-        with vscode-extensions;
+        with stable.vscode-extensions;
         [
           catppuccin.catppuccin-vsc
           catppuccin.catppuccin-vsc-icons
           jnoortheen.nix-ide
           github.copilot-chat
+          github.copilot
           ms-python.vscode-pylance
           ms-python.python
           ms-python.debugpy

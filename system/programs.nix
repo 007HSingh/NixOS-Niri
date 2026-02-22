@@ -5,7 +5,10 @@
 {
   programs.firefox.enable = true;
 
-  programs.vscode.enable = true;
+  programs.vscode = {
+    enable = true;
+    package = pkgs.stable.vscode;
+  };
 
   programs.neovim = {
     enable = true;
