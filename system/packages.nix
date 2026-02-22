@@ -1,5 +1,5 @@
 # System-wide Packages
-{ pkgs, stable, ... }:
+{ pkgs, ... }:
 
 {
   environment.systemPackages = with pkgs; [
@@ -61,13 +61,11 @@
     # VsCode Extensions
     (vscode-with-extensions.override {
       vscodeExtensions =
-        with stable.vscode-extensions;
+        with vscode-extensions;
         [
           catppuccin.catppuccin-vsc
           catppuccin.catppuccin-vsc-icons
           jnoortheen.nix-ide
-          github.copilot-chat
-          github.copilot
           ms-python.vscode-pylance
           ms-python.python
           ms-python.debugpy
@@ -85,8 +83,20 @@
           {
             name = "vscode-containers";
             publisher = "ms-azuretools";
-            version = "2.4.0";
-            sha256 = "0q6c65qh96nl7qdmk58hm2sipcsv3xj9vvfvrvhl4w36k9zbar4q";
+            version = "2.4.1";
+            sha256 = "02zqkdxazzppmj7pg9g0633fn1ima2qrb4jpb6pwir5maljlj31v";
+          }
+          {
+            name = "copilot-chat";
+            publisher = "Github";
+            version = "0.38.2026022002";
+            sha256 = "0fzrw766g7ssjgjwb8j406s6yy89l6x5708ncdryshnpqvvvd66p";
+          }
+          {
+            name = "copilot";
+            publisher = "Github";
+            version = "1.388.0";
+            sha256 = "06dyyp5qb63a7c8sfxbmvz7j405kdw50n7qlp74fl8ydwgrwl67d";
           }
         ];
     })
