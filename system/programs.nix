@@ -7,9 +7,7 @@
 
   programs.vscode = {
     enable = true;
-    package = with pkgs; [
-      stable.vscode
-    ];
+    package = stable.vscode;
   };
 
   programs.neovim = {
