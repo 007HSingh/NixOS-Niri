@@ -1,13 +1,12 @@
 # System Programs
 # Programs enabled via NixOS programs.* options
-{ pkgs, stable, ... }:
+{ pkgs, ... }:
 
 {
   programs.firefox.enable = true;
 
   programs.vscode = {
     enable = true;
-    package = stable.vscode;
   };
 
   programs.neovim = {
