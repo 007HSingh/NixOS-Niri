@@ -1,6 +1,6 @@
 # System Programs
 # Programs enabled via NixOS programs.* options
-{ pkgs, ... }:
+{ pkgs, stable, ... }:
 
 {
   programs.firefox.enable = true;
