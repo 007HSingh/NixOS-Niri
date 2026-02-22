@@ -67,7 +67,6 @@
           catppuccin.catppuccin-vsc-icons
           jnoortheen.nix-ide
           github.copilot-chat
-          github.copilot
           ms-python.vscode-pylance
           ms-python.python
           ms-python.debugpy
