@@ -22,10 +22,8 @@
     # Applications
     obsidian
     stable.keepassxc
-    vesktop
+    stable.vesktop
     mpv
-    libxcrypt
-    glib
 
     # Wayland utilities
     wl-clipboard
@@ -49,7 +47,5 @@
     TERMINAL = "kitty";
     STEAM_EXTRA_COMPAT_TOOLS_PATHS = "\${HOME}/.steam/root/compatibilitiytools.d";
     _JAVA_AWT_WM_NONREPARENTING = "1";
-    PULSE_RUNTIME_PATH = "/run/user/1000/pulse";
-    PIPEWIRE_RUNTIME_DIR = "/run/user/1000";
   };
 }
