@@ -2,11 +2,6 @@
 # Packages installed via Home Manager
 { pkgs, stable, ... }:
 
-let
-  vesktop-wrapped = pkgs.vesktop.override {
-    withVencord = true;
-  };
-in
 {
   home.packages = with pkgs; [
     # Audio visualization
@@ -27,7 +22,7 @@ in
     # Applications
     obsidian
     stable.keepassxc
-    vesktop-wrapped
+    vesktop
     mpv
     libxcrypt
     glib
