@@ -22,7 +22,7 @@
     # Applications
     obsidian
     stable.keepassxc
-    stable.vesktop
+    stable.discord
     mpv
 
     # Wayland utilities
