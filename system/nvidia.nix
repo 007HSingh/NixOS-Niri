@@ -12,7 +12,7 @@
     modesetting.enable = true;
     powerManagement.enable = true;
     powerManagement.finegrained = false;
-    open = false;
+    open = true;
     package = config.boot.kernelPackages.nvidiaPackages.stable;
     nvidiaSettings = true;
     # Note: prime configuration is in hosts/nixos/hardware.nix
