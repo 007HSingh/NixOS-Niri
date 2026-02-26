@@ -78,6 +78,7 @@
           docker.docker
           ms-azuretools.vscode-docker
           eamodio.gitlens
+          github.codespaces
         ]
         ++ vscode-utils.extensionsFromVscodeMarketplace [
           {
