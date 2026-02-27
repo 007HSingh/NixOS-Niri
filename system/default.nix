@@ -17,5 +17,6 @@
     ./services.nix
     ./stylix.nix
     ./users.nix
+    ./vm.nix
   ];
 }
