@@ -24,6 +24,7 @@
     stable.keepassxc
     discord
     mpv
+    antigravity-fhs
 
     # Wayland utilities
     wl-clipboard
