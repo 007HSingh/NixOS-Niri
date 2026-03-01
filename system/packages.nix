@@ -31,6 +31,7 @@
     # Media
     spotify
     vlc
+    pwvucontrol
 
     # System monitoring
     btop
