@@ -11,6 +11,7 @@
       "wheel"
       "docker"
       "kvm"
+      "libvirtd"
     ];
     packages = with pkgs; [
       tree
