@@ -25,6 +25,7 @@
     discord
     mpv
     antigravity-fhs
+    google-chrome
 
     # Wayland utilities
     wl-clipboard
