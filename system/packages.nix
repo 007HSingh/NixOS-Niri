@@ -54,6 +54,7 @@
     chafa
     ffmpegthumbnailer
     mediainfo
+    awscli2
 
     # Gaming
     mangohud
