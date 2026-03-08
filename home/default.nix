@@ -13,5 +13,6 @@
     ./theming.nix
     ./xdg.nix
     ./wofi.nix
+    ./obs.nix
   ];
 }
