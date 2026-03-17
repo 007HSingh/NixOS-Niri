@@ -8,6 +8,22 @@
     qemu.swtpm.enable = true;
 
     qemu.runAsRoot = false;
+
+    allowedBridges = [ "virbr0" ];
+  };
+
+  systemd.services.libvirt-default-network = {
+    description = "Start libvirt default network";
+    after = [ "libvirtd.service" ];
+    requires = [ "libvirtd.service" ];
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStart = "${pkgs.libvirt}/bin/virsh net-start default";
+      ExecStartPost = "${pkgs.libvirt}/bin/virsh net-autostart default";
+    };
+    serviceConfig.SuccessExitStatus = [ 1 ];
   };
 
   programs.virt-manager.enable = true;
