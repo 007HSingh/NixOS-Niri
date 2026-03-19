@@ -107,7 +107,7 @@
       enable = lib.mkDefault true;
       settings = {
         options = {
-          theme = "catppuccin";
+          theme = "auto";
           icons_enabled = true;
 
           component_separators = {
