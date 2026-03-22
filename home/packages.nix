@@ -26,6 +26,7 @@
     mpv
     antigravity-fhs
     google-chrome
+    mysql84
 
     # Wayland utilities
     wl-clipboard
