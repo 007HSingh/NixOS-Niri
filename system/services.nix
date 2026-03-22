@@ -1,6 +1,6 @@
 # System Services
 # Blueman, power management, Docker, misc services
-{ ... }:
+{ pkgs, ... }:
 
 {
   # Locale and timezone
@@ -22,6 +22,11 @@
   services.tumbler.enable = true;
 
   services.udisks2.enable = true;
+
+  services.mysql = {
+    enable = true;
+    package = pkgs.mysql;
+  }
 
   # Docker
   virtualisation.docker = {
