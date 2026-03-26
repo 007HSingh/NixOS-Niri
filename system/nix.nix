@@ -28,6 +28,7 @@
     };
   };
 
-  # Allow unfree packages
+  # Allow unfree packages (system-wide)
+  # Note: flake.nix also sets allowUnfree in perSystem for the dev shell pkgs — both are intentional
   nixpkgs.config.allowUnfree = true;
 }

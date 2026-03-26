@@ -10,6 +10,7 @@ let
     catppuccin
     nixvim
     spicetify
+    nix-index-database
     ;
 in
 {
@@ -70,6 +71,7 @@ in
                     nixvim.homeModules.nixvim
                     spicetify.homeManagerModules.default
                     catppuccin.homeModules.catppuccin
+                    nix-index-database.homeModules.nix-index
                   ];
                 };
               }) users

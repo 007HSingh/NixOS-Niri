@@ -58,6 +58,12 @@
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
+
+    # Nix-index database
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
   };
 
   outputs =
@@ -69,10 +75,7 @@
     }:
     flake-parts.lib.mkFlake { inherit inputs; } {
       # Systems to build for
-      systems = [
-        "x86_64-linux"
-        "aarch64-linux"
-      ];
+      systems = [ "x86_64-linux" ];
 
       # Import flake-parts modules
       imports = [

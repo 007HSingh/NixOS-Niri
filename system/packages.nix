@@ -16,11 +16,11 @@
     # Wayland/Niri
     niri
     xwayland-satellite
-    swaylock
     wayclip
     brightnessctl
     cliphist
     wlsunset
+    swww              # smooth animated wallpaper transitions
 
     # Screenshots
     grim
@@ -38,8 +38,6 @@
     fastfetch
 
     # Development
-    lazygit
-    starship
     gh
     delta
     docker-compose
@@ -59,43 +57,5 @@
     # Gaming
     mangohud
     protonup-ng
-
-    # VsCode Extensions
-    (vscode-with-extensions.override {
-      vscodeExtensions =
-        with vscode-extensions;
-        [
-          catppuccin.catppuccin-vsc
-          catppuccin.catppuccin-vsc-icons
-          jnoortheen.nix-ide
-          ms-python.vscode-pylance
-          ms-python.python
-          ms-python.debugpy
-          ms-python.flake8
-          ms-vscode.cpptools-extension-pack
-          redhat.java
-          vscjava.vscode-java-pack
-          vscjava.vscode-spring-initializr
-          ms-vscode-remote.remote-containers
-          docker.docker
-          ms-azuretools.vscode-docker
-          eamodio.gitlens
-          github.codespaces
-        ]
-        ++ vscode-utils.extensionsFromVscodeMarketplace [
-          {
-            name = "vscode-containers";
-            publisher = "ms-azuretools";
-            version = "2.4.1";
-            sha256 = "02zqkdxazzppmj7pg9g0633fn1ima2qrb4jpb6pwir5maljlj31v";
-          }
-          {
-            name = "copilot-chat";
-            publisher = "Github";
-            version = "0.37.6";
-            sha256 = "19vialjfbpgjrjngmg4f1jwcp9sq670yfnl94v6zmbr6c4bynaml";
-          }
-        ];
-    })
   ];
 }

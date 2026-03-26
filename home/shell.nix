@@ -1,5 +1,5 @@
 # Shell Configuration
-# Zsh, Starship, Zoxide integration
+# Zsh, Starship, Zoxide, Direnv, and CLI tool integrations
 { config, pkgs, ... }:
 
 {
@@ -10,20 +10,20 @@
     enableCompletion = true;
     history = {
       size = 10000;
-      path = "${config.home.homeDirectory}/.zsh_history";
+      # XDG-compliant location (previously polluted $HOME)
+      path = "${config.xdg.dataHome}/zsh/history";
       save = 10000;
       share = true;
       ignoreDups = true;
       ignoreSpace = true;
     };
-    initContent = ''
-      # Direnv integration
-      eval "$(direnv hook zsh)"
 
+    initContent = ''
       # Better completion styling
       zstyle ':completion:*' menu select
       zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
     '';
+
     shellAliases = {
       # Modern replacements
       ls = "eza -la --icons";
@@ -55,12 +55,49 @@
       enable = true;
     };
 
+    # zsh-you-should-use: reminds you when you forget your own aliases
+    plugins = [
+      {
+        name = "zsh-you-should-use";
+        src = pkgs.zsh-you-should-use;
+      }
+    ];
+
     oh-my-zsh.enable = false;
   };
 
   programs.starship = {
     enable = true;
     enableZshIntegration = true;
+    settings = {
+      format = "$directory$git_branch$git_status$nix_shell$cmd_duration$line_break$character";
+      add_newline = false;
+      character = {
+        success_symbol = "[❯](bold green)";
+        error_symbol = "[❯](bold red)";
+      };
+      directory = {
+        style = "bold blue";
+        truncation_length = 3;
+        fish_style_pwd_dir_length = 1;
+      };
+      git_branch = {
+        symbol = " ";
+        style = "bold purple";
+      };
+      git_status = {
+        style = "bold red";
+      };
+      nix_shell = {
+        symbol = " ";
+        style = "bold cyan";
+        format = "[$symbol$state]($style) ";
+      };
+      cmd_duration = {
+        min_time = 2000;
+        style = "bold yellow";
+      };
+    };
   };
 
   programs.zoxide = {
@@ -73,6 +110,7 @@
     enableZshIntegration = true;
   };
 
+  # direnv: enableZshIntegration handles the hook — no manual eval needed
   programs.direnv = {
     enable = true;
     nix-direnv.enable = true;
@@ -104,5 +142,11 @@
 
   programs.cava = {
     enable = true;
+  };
+
+  # pay-respects: corrects mistyped commands (replaces thefuck, removed from nixpkgs)
+  programs.pay-respects = {
+    enable = true;
+    enableZshIntegration = true;
   };
 }

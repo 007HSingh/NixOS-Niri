@@ -37,8 +37,8 @@
       };
 
       sansSerif = {
-        package = pkgs.noto-fonts;
-        name = "Noto Sans";
+        package = pkgs.inter;
+        name = "Inter";
       };
 
       serif = {
@@ -59,12 +59,12 @@
       };
     };
 
-    # Opacity settings (optional)
+    # Opacity settings — synced with Niri per-window rules and kitty config
     opacity = {
-      applications = 1.0;
-      terminal = 1.0;
+      applications = 0.95;
+      terminal = 0.85;     # matches kitty background_opacity
       desktop = 1.0;
-      popups = 1.0;
+      popups = 0.92;
     };
 
     # Target-specific Overrides

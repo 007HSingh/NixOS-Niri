@@ -111,7 +111,7 @@ layout {
     // - "always", the focused column will always be centered.
     // - "on-overflow", focusing a column will center it if it doesn't fit
     //   together with the previously focused column.
-    center-focused-column "never"
+    center-focused-column "on-overflow"
     // You can customize the widths that "switch-preset-column-width" (Mod+R) toggles between.
     preset-column-widths {
         // Proportion sets the width as a fraction of the output width, taking gaps into account.
@@ -192,32 +192,10 @@ layout {
     }
     // You can enable drop shadows for windows.
     shadow {
-        // Uncomment the next line to enable shadows.
-        // on
-        // By default, the shadow draws only around its window, and not behind it.
-        // Uncomment this setting to make the shadow draw behind its window.
-        //
-        // Note that niri has no way of knowing about the CSD window corner
-        // radius. It has to assume that windows have square corners, leading to
-        // shadow artifacts inside the CSD rounded corners. This setting fixes
-        // those artifacts.
-        //
-        // However, instead you may want to set prefer-no-csd and/or
-        // geometry-corner-radius. Then, niri will know the corner radius and
-        // draw the shadow correctly, without having to draw it behind the
-        // window. These will also remove client-side shadows if the window
-        // draws any.
-        //
-        // draw-behind-window true
-        // You can change how shadows look. The values below are in logical
-        // pixels and match the CSS box-shadow properties.
-        // Softness controls the shadow blur radius.
+        on
         softness 30
-        // Spread expands the shadow.
         spread 5
-        // Offset moves the shadow relative to the window.
         offset x=0 y=5
-        // You can also change the shadow color and opacity.
         color "#0007"
     }
     // Struts shrink the area occupied by windows, similarly to layer-shell panels.
@@ -239,6 +217,7 @@ layout {
 // See the binds section below for more spawn examples.
 // This line starts waybar, a commonly used bar for Wayland compositors.
 spawn-at-startup "noctalia-shell"
+spawn-at-startup "swww-daemon"
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
 // spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"
 hotkey-overlay {
@@ -350,9 +329,10 @@ window-rule {
 }
 // ── Inactive window dimming ────────────────────────────────────
 // Subtle opacity reduction on unfocused windows for visual depth.
+// Raised from 0.75 — at 75% it stacked badly with per-app transparency.
 window-rule {
     match is-active=false
-    opacity 0.75
+    opacity 0.88
 }
 binds {
     // Keys consist of modifiers separated by + signs, followed by an XKB key name
@@ -376,8 +356,8 @@ binds {
     Mod+D hotkey-overlay-title="Run an Application: wofi" {
         spawn "wofi"
     }
-    Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" {
-        spawn "swaylock"
+    Super+Alt+L hotkey-overlay-title="Lock the Screen" {
+        spawn-sh "loginctl lock-session"
     }
     // Use spawn-sh to run a shell command. Do this if you need pipes, multiple commands, etc.
     // Note: the entire command goes as a single argument. It's passed verbatim to `sh -c`.
@@ -805,6 +785,22 @@ binds {
     }
     Alt+Print {
         screenshot-window
+    }
+    // Screenshot region → straight to clipboard (no file saved)
+    Mod+Shift+Print {
+        spawn-sh "grim -g \"$(slurp)\" - | wl-copy"
+    }
+    // Screenshot region → annotate with satty
+    Mod+Alt+Print {
+        spawn-sh "grim -g \"$(slurp)\" /tmp/ss-annotate.png && satty -f /tmp/ss-annotate.png"
+    }
+    // Clipboard history via cliphist + wofi
+    Mod+Ctrl+V {
+        spawn-sh "cliphist list | wofi --dmenu --prompt 'Clipboard' | cliphist decode | wl-copy"
+    }
+    // Open file manager
+    Mod+E {
+        spawn "thunar"
     }
     // Applications such as remote-desktop clients and software KVM switches may
     // request that niri stops processing the keyboard shortcuts defined here
