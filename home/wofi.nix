@@ -15,7 +15,7 @@
       halign = "fill";
       orientation = "vertical";
       content_halign = "fill";
-      insensitivy = true;
+      insensitive = true;
       allow_images = true;
       image_size = 24;
       gtk_dark = true;

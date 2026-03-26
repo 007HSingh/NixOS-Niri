@@ -5,9 +5,7 @@
 {
   programs.firefox.enable = true;
 
-  programs.vscode = {
-    enable = true;
-  };
+  # VSCode is managed by Home Manager (home/vscode.nix)
 
   programs.neovim = {
     enable = true;
@@ -17,8 +15,6 @@
   };
 
   programs.niri.enable = true;
-
-  programs.starship.enable = true;
 
   programs.steam.enable = true;
   programs.steam.gamescopeSession.enable = true;

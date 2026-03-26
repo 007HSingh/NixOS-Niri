@@ -4,15 +4,18 @@
 
 {
   imports = [
+    ./clipboard.nix
     ./git.nix
+    ./idle.nix
     ./nixvim
     ./noctalia.nix
+    ./obs.nix
     ./packages.nix
     ./shell.nix
     ./spicetify.nix
     ./theming.nix
-    ./xdg.nix
+    ./vscode.nix
     ./wofi.nix
-    ./obs.nix
+    ./xdg.nix
   ];
 }
