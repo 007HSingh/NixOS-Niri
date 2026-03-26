@@ -511,6 +511,29 @@ window-rule {
     match app-id="^steam_app_"
     open-maximized true
 }
+
+// ── Glass effect: Firefox ──────────────────────────────────────
+// Semi-transparent browser for a frosted glass aesthetic.
+// Niri doesn't have native blur yet, so opacity creates the depth effect.
+// Toggle with Mod+Shift+O (toggle-window-rule-opacity) for full opaque.
+window-rule {
+    match app-id="firefox"
+    opacity 0.92
+}
+
+// ── Transparency: Kitty terminal ───────────────────────────────
+// Works with kitty's own background_opacity (0.85) for layered transparency.
+window-rule {
+    match app-id="kitty"
+    opacity 0.90
+}
+
+// ── Inactive window dimming ────────────────────────────────────
+// Subtle opacity reduction on unfocused windows for visual depth.
+window-rule {
+    match is-active=false
+    opacity 0.95
+}
 binds {
     // Keys consist of modifiers separated by + signs, followed by an XKB key name
     // in the end. To find an XKB name for a particular key, you may use a program
