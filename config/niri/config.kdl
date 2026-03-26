@@ -344,11 +344,15 @@ window-rule {
     match app-id="spotify"
     opacity 0.8
 }
+window-rule {
+    match app-id="discord"
+    opacity 0.8
+}
 // ── Inactive window dimming ────────────────────────────────────
 // Subtle opacity reduction on unfocused windows for visual depth.
 window-rule {
     match is-active=false
-    opacity 0.95
+    opacity 0.75
 }
 binds {
     // Keys consist of modifiers separated by + signs, followed by an XKB key name
