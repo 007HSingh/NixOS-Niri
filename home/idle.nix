@@ -23,13 +23,10 @@
         command = "${pkgs.niri}/bin/niri msg action power-off-monitors";
       }
     ];
-    events = [
+    events = {
       # Lock immediately on suspend/sleep
-      {
-        event = "before-sleep";
-        command = "${pkgs.niri}/bin/niri msg action spawn -- bash -c 'loginctl lock-session'";
-      }
-    ];
+      before-sleep = "${pkgs.niri}/bin/niri msg action spawn -- bash -c 'loginctl lock-session'";
+    };
   };
 
   # Register swayidle with the graphical session
