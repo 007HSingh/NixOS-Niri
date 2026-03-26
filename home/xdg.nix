@@ -22,6 +22,7 @@ in
     userDirs = {
       enable = true;
       createDirectories = true;
+      setSessionVariables = true; # keep legacy behavior (stateVersion < 26.05)
     };
   };
 
