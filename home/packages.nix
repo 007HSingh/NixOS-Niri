@@ -17,7 +17,7 @@
     hyperfine
     tokei
     gnumake
-    nix-index
+    # nix-index is provided by the nix-index-database HM module (with pre-built DB)
 
     # Applications
     obsidian
