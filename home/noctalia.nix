@@ -22,9 +22,9 @@
 
   home.file.".cache/noctalia/wallpapers.json" = {
     text = builtins.toJSON {
-      defaultWallpaper = "home/harsh/.config/wallpapers/wallpaper-24.png";
+      defaultWallpaper = "home/harsh/.config/wallpapers/wallpaper-10.jpg";
       wallpapers = {
-        "eDP-1" = "/home/harsh/.config/wallpapers/wallpaper-24.png";
+        "eDP-1" = "/home/harsh/.config/wallpapers/wallpaper-10.jpg";
       };
     };
   };
