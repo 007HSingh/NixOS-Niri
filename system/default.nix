@@ -1,5 +1,6 @@
 # System Modules Index
 # Imports all system-wide NixOS modules
+# Note: nvidia.nix lives in hosts/<hostname>/ — it is machine-specific, not universal.
 { ... }:
 
 {
@@ -10,7 +11,6 @@
     ./hardware.nix
     ./networking.nix
     ./nix.nix
-    ./nvidia.nix
     ./packages.nix
     ./programs.nix
     ./security.nix

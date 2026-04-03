@@ -41,6 +41,12 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
+    # Noctalia plugins
+    noctalia-plugins = {
+      url = "github:noctalia-dev/noctalia-plugins/00c554207b77aaa3a899bd8c2c8a0fdc327d6d85";
+      flake = false;
+    };
+
     # Spicetify for Spotify theming
     spicetify = {
       url = "github:Gerg-L/spicetify-nix";
@@ -62,6 +68,12 @@
     # Nix-index database
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
+    # Secrets management
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
   };

@@ -1,6 +1,6 @@
 # Noctalia Shell Configuration
 # Status bar and desktop shell for Niri
-{ pkgs, inputs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
   imports = [
@@ -9,22 +9,14 @@
 
   home.file.".config/noctalia/plugins" = {
     recursive = true;
-    source = pkgs.fetchFromGitHub {
-      owner = "noctalia-dev";
-      repo = "noctalia-plugins";
-      rev = "00c554207b77aaa3a899bd8c2c8a0fdc327d6d85";
-      hash = "sha256-x54meFWkMgvUSLTsVi7ipdcKyjIn3O5nw96GQyoRay4=";
-      sparseCheckout = [
-        "catwalk"
-      ];
-    };
+    source = "${inputs.noctalia-plugins}/catwalk";
   };
 
   home.file.".cache/noctalia/wallpapers.json" = {
     text = builtins.toJSON {
-      defaultWallpaper = "home/harsh/.config/wallpapers/wallpaper-14.jpg";
+      defaultWallpaper = "${config.xdg.configHome}/wallpapers/wallpaper-14.jpg";
       wallpapers = {
-        "eDP-1" = "/home/harsh/.config/wallpapers/wallpaper-14.jpg";
+        "eDP-1" = "${config.xdg.configHome}/wallpapers/wallpaper-14.jpg";
       };
     };
   };

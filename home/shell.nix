@@ -25,6 +25,9 @@
     '';
 
     shellAliases = {
+      update = "nh os switch";
+      home-update = "nh home switch";
+
       # Modern replacements
       ls = "eza -la --icons";
       cat = "bat";

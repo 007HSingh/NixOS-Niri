@@ -47,7 +47,7 @@
     VISUAL = "nvim";
     BROWSER = "firefox";
     TERMINAL = "kitty";
-    STEAM_EXTRA_COMPAT_TOOLS_PATHS = "\${HOME}/.steam/root/compatibilitiytools.d";
+    STEAM_EXTRA_COMPAT_TOOLS_PATHS = "\${HOME}/.steam/root/compatibilitytools.d";
     _JAVA_AWT_WM_NONREPARENTING = "1";
   };
 }
