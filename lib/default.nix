@@ -11,6 +11,7 @@ let
     nixvim
     spicetify
     nix-index-database
+    sops-nix
     ;
 in
 {
@@ -51,6 +52,10 @@ in
 
         # Stylix System-wide Theming
         inputs.stylix.nixosModules.stylix
+
+        # Secrets management (sops-nix)
+        # Usage: sops.secrets.my_secret = { sopsFile = ./secrets/secrets.yaml; };
+        sops-nix.nixosModules.sops
 
         # Home Manager integration
         home-manager.nixosModules.home-manager

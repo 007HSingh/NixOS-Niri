@@ -23,13 +23,14 @@
   services.libinput.enable = true;
 
   # XDG portals for Wayland integration
+  # Note: wlr portal NOT used — Niri is Smithay-based, not Wlroots.
+  # GTK portal handles file pickers; Niri provides its own screencast support.
   xdg.portal = {
     enable = true;
-    wlr.enable = true;
     extraPortals = with pkgs; [
       xdg-desktop-portal-gtk
     ];
-    config.common.default = "*";
+    config.common.default = "gtk";
   };
 
   # PipeWire audio stack

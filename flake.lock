@@ -329,6 +329,23 @@
         "type": "github"
       }
     },
+    "noctalia-plugins": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1769722729,
+        "narHash": "sha256-+Hc3l6lOwrPpYif1tu7gGUHUNqjmXAKYdV1O68MT9ag=",
+        "owner": "noctalia-dev",
+        "repo": "noctalia-plugins",
+        "rev": "00c554207b77aaa3a899bd8c2c8a0fdc327d6d85",
+        "type": "github"
+      },
+      "original": {
+        "owner": "noctalia-dev",
+        "repo": "noctalia-plugins",
+        "rev": "00c554207b77aaa3a899bd8c2c8a0fdc327d6d85",
+        "type": "github"
+      }
+    },
     "noctalia-qs": {
       "inputs": {
         "nixpkgs": [
@@ -407,10 +424,32 @@
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nixvim": "nixvim",
         "noctalia": "noctalia",
+        "noctalia-plugins": "noctalia-plugins",
         "quickshell": "quickshell",
+        "sops-nix": "sops-nix",
         "spicetify": "spicetify",
         "stylix": "stylix",
         "treefmt-nix": "treefmt-nix_2"
+      }
+    },
+    "sops-nix": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs-unstable"
+        ]
+      },
+      "locked": {
+        "lastModified": 1775188331,
+        "narHash": "sha256-/0BoSi0Dg0ON7IW0oscM12WSPBaMSCn36XTt0lHZoy8=",
+        "owner": "Mic92",
+        "repo": "sops-nix",
+        "rev": "8f093d0d2f08f37317778bd94db5951d6cce6c46",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Mic92",
+        "repo": "sops-nix",
+        "type": "github"
       }
     },
     "spicetify": {

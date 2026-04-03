@@ -10,6 +10,7 @@
 {
   imports = [
     ./hardware.nix
+    ../../system/nvidia.nix # NVIDIA is specific to this machine
   ];
 
   # Machine identity
