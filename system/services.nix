@@ -23,11 +23,6 @@
 
   services.udisks2.enable = true;
 
-  services.mysql = {
-    enable = true;
-    package = pkgs.mysql84;
-  };
-
   # Docker
   virtualisation.docker = {
     enable = true;
