@@ -1,6 +1,10 @@
 # Noctalia Shell Configuration
 # Status bar and desktop shell for Niri
-{ config, pkgs, inputs, ... }:
+{
+  config,
+  inputs,
+  ...
+}:
 
 {
   imports = [
@@ -14,9 +18,9 @@
 
   home.file.".cache/noctalia/wallpapers.json" = {
     text = builtins.toJSON {
-      defaultWallpaper = "${config.xdg.configHome}/wallpapers/wallpaper-14.jpg";
+      defaultWallpaper = "${config.xdg.configHome}/wallpapers/wallpaper-13.png";
       wallpapers = {
-        "eDP-1" = "${config.xdg.configHome}/wallpapers/wallpaper-14.jpg";
+        "eDP-1" = "${config.xdg.configHome}/wallpapers/wallpaper-13.png";
       };
     };
   };
