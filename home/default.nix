@@ -9,7 +9,6 @@
     ./idle.nix
     ./nixvim
     ./noctalia.nix
-    ./obs.nix
     ./packages.nix
     ./shell.nix
     ./spicetify.nix

@@ -17,7 +17,6 @@
     hyperfine
     tokei
     gnumake
-    # nix-index is provided by the nix-index-database HM module (with pre-built DB)
 
     # Applications
     obsidian
@@ -25,7 +24,6 @@
     discord
     mpv
     antigravity-fhs
-    google-chrome
 
     # Wayland utilities
     wl-clipboard
@@ -39,7 +37,6 @@
 
     # Git tools
     git-absorb
-    git-lfs
   ];
 
   home.sessionVariables = {

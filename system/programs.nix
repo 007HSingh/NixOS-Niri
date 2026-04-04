@@ -5,15 +5,6 @@
 {
   programs.firefox.enable = true;
 
-  # VSCode is managed by Home Manager (home/vscode.nix)
-
-  programs.neovim = {
-    enable = true;
-    vimAlias = true;
-    withPython3 = true;
-    withNodeJs = true;
-  };
-
   programs.niri.enable = true;
 
   programs.steam.enable = true;

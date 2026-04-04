@@ -22,17 +22,14 @@
       RemainAfterExit = true;
       ExecStart = "${pkgs.libvirt}/bin/virsh net-start default";
       ExecStartPost = "${pkgs.libvirt}/bin/virsh net-autostart default";
+      # virsh returns 1 when the network is already started — treat as success
+      SuccessExitStatus = [ 1 ];
     };
-    serviceConfig.SuccessExitStatus = [ 1 ];
   };
 
   programs.virt-manager.enable = true;
 
-  boot.kernelModules = [
-    "kvm_intel"
-    "kvm_amd"
-    "vhost_net"
-  ];
+  boot.kernelModules = [ "vhost_net" ];
 
   systemd.services.virt-secret-init-encryption.serviceConfig.ExecStart = lib.mkForce [
     ""
