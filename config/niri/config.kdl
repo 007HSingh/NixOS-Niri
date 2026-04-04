@@ -310,7 +310,7 @@ window-rule {
 // Niri doesn't have native blur yet, so opacity creates the depth effect.
 // Toggle with Mod+Shift+O (toggle-window-rule-opacity) for full opaque.
 window-rule {
-    match app-id="firefox"
+    match app-id="zen-beta"
     opacity 0.92
 }
 // ── Transparency: Kitty terminal ───────────────────────────────
