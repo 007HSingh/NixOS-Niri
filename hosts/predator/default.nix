@@ -1,5 +1,4 @@
-# Host: nixos (primary laptop)
-# This is the main configuration for this specific machine
+# Host: predator (primary laptop — Acer Predator with Intel + NVIDIA)
 {
   config,
   pkgs,
