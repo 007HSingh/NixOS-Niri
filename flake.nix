@@ -71,10 +71,19 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
-    # Nix User Repository
+    # Nix User Repository (for Firefox/Zen addons)
     nur = {
       url = "github:nix-community/NUR";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
+    # Zen Browser (Firefox-based, with declarative HM module)
+    zen-browser = {
+      url = "github:0xc000022070/zen-browser-flake";
+      inputs = {
+        nixpkgs.follows = "nixpkgs-unstable";
+        home-manager.follows = "home-manager";
+      };
     };
 
     # Secrets management

@@ -1,5 +1,5 @@
-# Firefox Browser Configuration
-# Declarative Firefox setup via Home Manager + Catppuccin Mocha userChrome.css
+# Zen Browser Configuration
+# Declarative Zen (Firefox-based) setup via Home Manager + Catppuccin Mocha userChrome.css
 { pkgs, ... }:
 
 {
@@ -7,8 +7,9 @@
   # Disable it here since theming is handled manually via userChrome below.
   stylix.targets.firefox.enable = false;
 
-  programs.firefox = {
+  programs.zen-browser = {
     enable = true;
+    setAsDefaultBrowser = true;
 
     profiles.default = {
       id = 0;
@@ -23,16 +24,17 @@
         keepassxc-browser
       ];
 
+      # Declarative search engine
+      search = {
+        force = true;
+        default = "ddg";
+      };
+
       # Privacy, UX, and performance settings
       settings = {
-        # Extensions: prevent Firefox auto-disabling Nix-installed extensions
+        # Extensions: prevent Zen auto-disabling Nix-installed extensions
         "extensions.autoDisableScopes" = 0;
         "extensions.enabledScopes" = 5;
-
-        # Search
-        "browser.search.suggest.enabled" = false;
-        "browser.urlbar.placeholderName" = "DuckDuckGo";
-        "browser.urlbar.suggest.searches" = false;
 
         # New tab — no sponsored/algorithmic content
         "browser.newtabpage.activity-stream.feeds.section.topstories" = false;
@@ -62,16 +64,14 @@
         # Enable userChrome.css
         "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
 
-        # Vertical tabs sidebar
+        # Vertical tabs sidebar (native feature in Zen)
         "sidebar.verticalTabs" = true;
-        "sidebar.main.tools" = "aivichat,syncedtabs,history";
       };
 
       # Catppuccin Mocha userChrome.css
-      # Applied to the browser UI (toolbar, tabs, sidebar, URL bar)
       userChrome = ''
         /* ═══════════════════════════════════════════════
-           Catppuccin Mocha — Firefox userChrome.css
+           Catppuccin Mocha — Zen Browser userChrome.css
            ═══════════════════════════════════════════════ */
 
         :root {
@@ -83,7 +83,6 @@
           --ctp-surface1: #45475a;
           --ctp-surface2: #585b70;
           --ctp-overlay0: #6c7086;
-          --ctp-overlay1: #7f849c;
           --ctp-text:     #cdd6f4;
           --ctp-subtext1: #bac2de;
           --ctp-subtext0: #a6adc8;
@@ -92,35 +91,32 @@
           --ctp-lavender: #b4befe;
 
           /* Override Firefox LWT variables */
-          --lwt-accent-color:               var(--ctp-mantle)   !important;
-          --lwt-text-color:                 var(--ctp-text)      !important;
-          --toolbar-bgcolor:                var(--ctp-mantle)    !important;
-          --toolbar-color:                  var(--ctp-text)      !important;
-          --toolbarbutton-hover-background: var(--ctp-surface0)  !important;
-          --toolbarbutton-active-background:var(--ctp-surface1)  !important;
-          --tab-selected-bgcolor:           var(--ctp-base)      !important;
-          --tab-selected-color:             var(--ctp-text)      !important;
-          --urlbar-box-bgcolor:             var(--ctp-surface0)  !important;
-          --urlbar-box-focus-bgcolor:       var(--ctp-surface0)  !important;
-          --urlbar-box-hover-bgcolor:       var(--ctp-surface1)  !important;
-          --urlbar-box-active-bgcolor:      var(--ctp-surface1)  !important;
-          --urlbar-separator-color:         var(--ctp-surface1)  !important;
-          --urlbar-popup-bgcolor:           var(--ctp-base)      !important;
+          --lwt-accent-color:                var(--ctp-mantle)   !important;
+          --lwt-text-color:                  var(--ctp-text)      !important;
+          --toolbar-bgcolor:                 var(--ctp-mantle)    !important;
+          --toolbar-color:                   var(--ctp-text)      !important;
+          --toolbarbutton-hover-background:  var(--ctp-surface0)  !important;
+          --toolbarbutton-active-background: var(--ctp-surface1)  !important;
+          --tab-selected-bgcolor:            var(--ctp-base)      !important;
+          --tab-selected-color:              var(--ctp-text)      !important;
+          --urlbar-box-bgcolor:              var(--ctp-surface0)  !important;
+          --urlbar-box-focus-bgcolor:        var(--ctp-surface0)  !important;
+          --urlbar-box-hover-bgcolor:        var(--ctp-surface1)  !important;
+          --urlbar-box-active-bgcolor:       var(--ctp-surface1)  !important;
+          --urlbar-popup-bgcolor:            var(--ctp-base)      !important;
           --urlbar-popup-color:             var(--ctp-text)      !important;
-          --input-bgcolor:                  var(--ctp-surface0)  !important;
-          --input-color:                    var(--ctp-text)      !important;
-          --panel-background:               var(--ctp-base)      !important;
-          --panel-color:                    var(--ctp-text)      !important;
-          --panel-border-color:             var(--ctp-surface0)  !important;
+          --panel-background:                var(--ctp-base)      !important;
+          --panel-color:                     var(--ctp-text)      !important;
+          --panel-border-color:              var(--ctp-surface0)  !important;
         }
 
-        /* Navigator toolbox (top chrome area) */
+        /* Navigator toolbox */
         #navigator-toolbox {
           background-color: var(--ctp-mantle) !important;
           border-bottom: 1px solid var(--ctp-surface0) !important;
         }
 
-        /* Tab bar */
+        /* Tabs */
         #TabsToolbar {
           background-color: var(--ctp-mantle) !important;
         }
@@ -180,7 +176,7 @@
           background-color: var(--ctp-surface1) !important;
         }
 
-        /* Sidebar (vertical tabs + sidebar panel) */
+        /* Sidebar */
         #sidebar-box {
           background-color: var(--ctp-mantle) !important;
           border-right: 1px solid var(--ctp-surface0) !important;
