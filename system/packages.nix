@@ -45,7 +45,6 @@
     nh
 
     # Applications
-    pywalfox-native
     jetbrains.idea
     android-studio
     android-tools
