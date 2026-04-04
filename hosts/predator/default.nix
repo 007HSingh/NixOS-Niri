@@ -14,7 +14,7 @@
   ];
 
   # Machine identity
-  networking.hostName = "nixos";
+  networking.hostName = "predator";
 
   # NixOS version - DO NOT CHANGE without migration
   system.stateVersion = "25.11";
