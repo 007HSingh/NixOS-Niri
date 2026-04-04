@@ -22,3 +22,6 @@ Thumbs.db
 
 # Misc
 repl-history
+
+# Secrets (encrypted with sops/age — never commit plaintext)
+secrets/
