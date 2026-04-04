@@ -1,6 +1,6 @@
 # System Services
 # Blueman, power management, Docker, misc services
-{ pkgs, ... }:
+{ ... }:
 
 {
   # Locale and timezone
