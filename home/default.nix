@@ -5,6 +5,7 @@
 {
   imports = [
     ./clipboard.nix
+    ./firefox.nix
     ./git.nix
     ./idle.nix
     ./nixvim

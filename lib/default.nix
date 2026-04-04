@@ -12,6 +12,7 @@ let
     spicetify
     nix-index-database
     sops-nix
+    nur
     ;
 in
 {
