@@ -3,6 +3,8 @@
 { pkgs, stable, ... }:
 
 {
+  programs.nix-index-database.comma.enable = true;
+
   home.packages = with pkgs; [
     # Audio visualization
     poppler
@@ -17,6 +19,7 @@
     hyperfine
     tokei
     gnumake
+    nixfmt
 
     # Applications
     obsidian
