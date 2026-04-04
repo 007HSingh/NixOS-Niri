@@ -35,7 +35,7 @@ in
 
       # Common specialArgs for both NixOS and Home Manager
       specialArgs = {
-        inherit inputs;
+        inherit inputs users;
         inherit pkgs-stable pkgs-unstable;
         stable = pkgs-stable;
         unstable = pkgs-unstable;

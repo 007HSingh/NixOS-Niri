@@ -66,7 +66,6 @@
       }
     ];
 
-    oh-my-zsh.enable = false;
   };
 
   programs.starship = {

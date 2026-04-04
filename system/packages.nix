@@ -20,7 +20,6 @@
     brightnessctl
     cliphist
     wlsunset
-    swww              # smooth animated wallpaper transitions
 
     # Screenshots
     grim
@@ -43,6 +42,7 @@
     docker-compose
     cachix
     devenv
+    nh
 
     # Applications
     pywalfox-native
@@ -52,7 +52,6 @@
     chafa
     ffmpegthumbnailer
     mediainfo
-    awscli2
 
     # Gaming
     mangohud

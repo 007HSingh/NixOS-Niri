@@ -11,14 +11,15 @@
 
         # Tools for Nix development
         packages = with pkgs; [
-          nixfmt
-          nixd
+          # Linters (not in nixvim extraPackages)
           statix
           deadnix
-          nh # Nix Helper - great for builds/updates
-          nix-tree # Explore dependency graph
-          age # Key generation & encryption
-          sops # Secrets editor (uses age key from ~/.config/sops/age/keys.txt)
+          # Shell management
+          nh
+          nix-tree
+          # Secrets tooling
+          age
+          sops
         ];
 
         shellHook = ''

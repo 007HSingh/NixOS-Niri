@@ -1,6 +1,6 @@
 # Security Configuration
 # Polkit, sudo, doas, apparmor
-{ pkgs, ... }:
+{ pkgs, users, ... }:
 
 {
   security = {
@@ -11,13 +11,11 @@
 
     doas = {
       enable = true;
-      extraRules = [
-        {
-          users = [ "harsh" ];
-          keepEnv = true;
-          persist = true;
-        }
-      ];
+      extraRules = map (u: {
+        users = [ u ];
+        keepEnv = true;
+        persist = true;
+      }) users;
     };
   };
 
