@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+    branches: ["main", "master"]
+  pull_request:
+
+jobs:
+  check:
+    name: Lint & Evaluate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@main
+        with:
+          extra-conf: |
+            experimental-features = nix-command flakes
+            accept-flake-config = true
+
+      - name: Restore Nix cache
+        uses: DeterminateSystems/magic-nix-cache-action@main
+
+      - name: Add nix-community cache
+        uses: cachix/cachix-action@v15
+        with:
+          name: nix-community
+          # No auth token needed for read-only pull from nix-community
+
+      # ── Formatting (treefmt via nix fmt) ──────────────────────────────────
+      - name: Check formatting
+        run: nix fmt -- --fail-on-change
+
+      # ── Static analysis ───────────────────────────────────────────────────
+      - name: statix (lint)
+        run: nix run nixpkgs#statix -- check .
+
+      - name: deadnix (dead code)
+        run: nix run nixpkgs#deadnix -- --fail .
+
+      # ── Flake evaluation (no build — just verify modules evaluate cleanly) ─
+      - name: nix flake check
+        run: nix flake check --no-build
