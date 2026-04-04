@@ -10,7 +10,6 @@
     enableCompletion = true;
     history = {
       size = 10000;
-      # XDG-compliant location (previously polluted $HOME)
       path = "${config.xdg.dataHome}/zsh/history";
       save = 10000;
       share = true;
@@ -19,9 +18,10 @@
     };
 
     initContent = ''
-      # Better completion styling
       zstyle ':completion:*' menu select
       zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+      (( $+commands[gh]     )) && eval "$(gh completion -s zsh)"
+      (( $+commands[docker] )) && eval "$(docker completion zsh)"
     '';
 
     shellAliases = {

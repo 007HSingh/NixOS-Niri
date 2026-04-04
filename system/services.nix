@@ -23,6 +23,9 @@
 
   services.udisks2.enable = true;
 
+  # Memory-management
+  systemd.oomd.enable = true;
+
   # Docker
   virtualisation.docker = {
     enable = true;
