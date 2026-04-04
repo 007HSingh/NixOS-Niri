@@ -54,7 +54,6 @@ in
         inputs.stylix.nixosModules.stylix
 
         # Secrets management (sops-nix)
-        # Usage: sops.secrets.my_secret = { sopsFile = ./secrets/secrets.yaml; };
         sops-nix.nixosModules.sops
 
         # Home Manager integration
@@ -77,6 +76,7 @@ in
                     spicetify.homeManagerModules.default
                     catppuccin.homeModules.catppuccin
                     nix-index-database.homeModules.nix-index
+                    inputs.sops-nix.homeManagerModules.sops
                   ];
                 };
               }) users
