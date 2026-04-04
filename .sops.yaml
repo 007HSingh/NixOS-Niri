@@ -1,0 +1,8 @@
+keys:
+  - &harsh age1ydmnljr2yw03r8x3xyu730urmk7cpfqj7ywmjf8xs28mxa8mgfnsd6ckln
+
+creation_rules:
+  - path_regex: secrets/.*\.yaml$
+    key_groups:
+      - age:
+          - *harsh
