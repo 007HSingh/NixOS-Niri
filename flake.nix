@@ -71,6 +71,12 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
+    # Nix User Repository
+    nur = {
+      url = "github:nix-community/NUR";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
     # Secrets management
     sops-nix = {
       url = "github:Mic92/sops-nix";

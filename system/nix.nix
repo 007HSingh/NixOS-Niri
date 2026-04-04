@@ -1,6 +1,6 @@
 # Nix Settings
 # Flakes, optimization, garbage collection, substituters
-{ ... }:
+{ inputs, ... }:
 
 {
   nix = {
@@ -31,4 +31,8 @@
   # Allow unfree packages (system-wide)
   # Note: flake.nix also sets allowUnfree in perSystem for the dev shell pkgs — both are intentional
   nixpkgs.config.allowUnfree = true;
+
+  # System-wide overlays — applied before pkgs is evaluated, so all consumers
+  # (including home-manager with useGlobalPkgs = true) see pkgs.nur
+  nixpkgs.overlays = [ inputs.nur.overlays.default ];
 }
