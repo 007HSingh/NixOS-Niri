@@ -2,11 +2,15 @@
 { ... }:
 
 {
+  sops.secrets.git_email = {
+    sopsFile = ../../secrets/user.yaml;
+  }
+
   programs.git = {
     enable = true;
     settings = {
       user.name = "Harsh Singh";
-      user.email = "singhharsh25032008@gmail.com";
+      user.email = config.sops.secrets.git_email.path;
       init.defaultBranch = "main";
 
       aliases = {
