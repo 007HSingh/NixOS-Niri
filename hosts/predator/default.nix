@@ -1,6 +1,5 @@
 # Host: predator (primary laptop — Acer Predator with Intel + NVIDIA)
 {
-  config,
   pkgs,
   inputs,
   ...

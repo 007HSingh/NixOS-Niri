@@ -1,6 +1,6 @@
 # Flake-parts module: Development Shells
 # Provides dev shells for working on this configuration
-{ inputs, ... }:
+{ ... }:
 
 {
   perSystem =
