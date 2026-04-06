@@ -62,7 +62,7 @@
     # Opacity settings — synced with Niri per-window rules and kitty config
     opacity = {
       applications = 0.95;
-      terminal = 0.85;     # matches kitty background_opacity
+      terminal = 0.85; # matches kitty background_opacity
       desktop = 1.0;
       popups = 0.92;
     };
