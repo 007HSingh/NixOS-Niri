@@ -12,7 +12,6 @@ let
     spicetify
     nix-index-database
     sops-nix
-    nur
     zen-browser
     ;
 in
