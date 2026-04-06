@@ -45,7 +45,7 @@
   home.sessionVariables = {
     EDITOR = "nvim";
     VISUAL = "nvim";
-    BROWSER = "zen-browser";
+    BROWSER = "zen-beta";
     TERMINAL = "kitty";
     NH_FLAKE = "/home/harsh/nixos-config";
     STEAM_EXTRA_COMPAT_TOOLS_PATHS = "\${HOME}/.steam/root/compatibilitytools.d";
