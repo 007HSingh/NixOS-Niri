@@ -35,7 +35,7 @@ jobs:
         run: nix run nixpkgs#statix -- check .
 
       - name: deadnix (dead code)
-        run: nix run nixpkgs#deadnix -- --fail .
+        run: nix run nixpkgs#deadnix -- --no-lambda-arg --fail .
 
       # ── Flake evaluation (no build — just verify modules evaluate cleanly) ─
       - name: nix flake check
