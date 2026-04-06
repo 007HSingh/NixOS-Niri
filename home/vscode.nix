@@ -32,6 +32,7 @@
           ms-azuretools.vscode-docker
           eamodio.gitlens
           github.codespaces
+          github.vscode-github-actions
         ]
         ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
           {
