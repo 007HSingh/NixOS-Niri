@@ -1,8 +1,6 @@
 # Nixvim Configuration
 # Neovim configuration via nixvim
 {
-  config,
-  lib,
   pkgs,
   ...
 }:

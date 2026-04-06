@@ -1,6 +1,6 @@
 # GTK, QT, and Cursor Theming
 # Managed by Stylix now
-{ config, pkgs, ... }:
+{ config, ... }:
 
 {
   # Stylix handles all GTK, QT, and cursor theming automatically.

@@ -3,7 +3,7 @@ _:
 
 {
   perSystem =
-    { pkgs, ... }:
+    { ... }:
     {
       # Treefmt configuration
       treefmt = {

@@ -1,6 +1,6 @@
 # Stylix System-wide Theming
 # Single source of truth for colors, fonts, and wallpapers
-{ pkgs, inputs, ... }:
+{ pkgs, ... }:
 
 {
   stylix = {
