@@ -2,10 +2,11 @@
 
 {
   programs.nixvim = {
-    # ============================================================================
-    # LSP CONFIGURATION
-    # ============================================================================
-    plugins.lsp = {
+    plugins = {
+      # ============================================================================
+      # LSP CONFIGURATION
+      # ============================================================================
+      lsp = {
       enable = lib.mkDefault true;
 
       servers = {
@@ -188,10 +189,10 @@
       };
     };
 
-    # ============================================================================
-    # RENDER-MARKDOWN - Beautiful docs
-    # ============================================================================
-    plugins.render-markdown = {
+      # ============================================================================
+      # RENDER-MARKDOWN - Beautiful docs
+      # ============================================================================
+      render-markdown = {
       enable = true;
       settings = {
         render_modes = [
@@ -208,10 +209,10 @@
       };
     };
 
-    # ============================================================================
-    # LSPSAGA - Beautiful LSP UI
-    # ============================================================================
-    plugins.lspsaga = {
+      # ============================================================================
+      # LSPSAGA - Beautiful LSP UI
+      # ============================================================================
+      lspsaga = {
       enable = lib.mkDefault true;
       settings = {
         beacon.enable = true;
@@ -229,6 +230,53 @@
           close_after_jump = true;
           layout = "float";
           win_width = 30;
+        };
+      };
+    };
+
+      # ============================================================================
+      # CONFORM - Formatting
+      # ============================================================================
+      conform-nvim = {
+        enable = lib.mkDefault true;
+        settings = {
+          format_on_save = {
+            lsp_fallback = true;
+            timeout_ms = 500;
+          };
+          formatters_by_ft = {
+            nix = [ "nixfmt" ];
+            lua = [ "stylua" ];
+            javascript = [ "prettier" ];
+            typescript = [ "prettier" ];
+            javascriptreact = [ "prettier" ];
+            typescriptreact = [ "prettier" ];
+            json = [ "prettier" ];
+            yaml = [ "prettier" ];
+            markdown = [ "prettier" ];
+            html = [ "prettier" ];
+            css = [ "prettier" ];
+            python = [ "black" ];
+            rust = [ "rustfmt" ];
+            sh = [ "shfmt" ];
+            bash = [ "shfmt" ];
+            kdl = [ "kdlfmt" ];
+            java = [ "google-java-format" ];
+          };
+        };
+      };
+
+      # ============================================================================
+      # LINT - Linting
+      # ============================================================================
+      lint = {
+        enable = lib.mkDefault true;
+        lintersByFt = {
+          python = [ "pylint" ];
+          javascript = [ "eslint" ];
+          typescript = [ "eslint" ];
+          sh = [ "shellcheck" ];
+          bash = [ "shellcheck" ];
         };
       };
     };
@@ -365,51 +413,5 @@
         };
       }
     ];
-
-    # ============================================================================
-    # CONFORM - Formatting
-    # ============================================================================
-    plugins.conform-nvim = {
-      enable = lib.mkDefault true;
-      settings = {
-        format_on_save = {
-          lsp_fallback = true;
-          timeout_ms = 500;
-        };
-        formatters_by_ft = {
-          nix = [ "nixfmt" ];
-          lua = [ "stylua" ];
-          javascript = [ "prettier" ];
-          typescript = [ "prettier" ];
-          javascriptreact = [ "prettier" ];
-          typescriptreact = [ "prettier" ];
-          json = [ "prettier" ];
-          yaml = [ "prettier" ];
-          markdown = [ "prettier" ];
-          html = [ "prettier" ];
-          css = [ "prettier" ];
-          python = [ "black" ];
-          rust = [ "rustfmt" ];
-          sh = [ "shfmt" ];
-          bash = [ "shfmt" ];
-          kdl = [ "kdlfmt" ];
-          java = [ "google-java-format" ];
-        };
-      };
-    };
-
-    # ============================================================================
-    # LINT - Linting
-    # ============================================================================
-    plugins.lint = {
-      enable = lib.mkDefault true;
-      lintersByFt = {
-        python = [ "pylint" ];
-        javascript = [ "eslint" ];
-        typescript = [ "eslint" ];
-        sh = [ "shellcheck" ];
-        bash = [ "shellcheck" ];
-      };
-    };
   };
 }

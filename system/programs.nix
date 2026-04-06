@@ -3,33 +3,37 @@
 { pkgs, ... }:
 
 {
-  programs.niri.enable = true;
+  programs = {
+    niri.enable = true;
 
-  programs.steam.enable = true;
-  programs.steam.gamescopeSession.enable = true;
-  programs.gamemode.enable = true;
-
-  programs.gpu-screen-recorder.enable = true;
-
-  programs.zsh = {
-    enable = true;
-    enableCompletion = true;
-    shellAliases = {
-      generations = "sudo nix-env --list-generations --profile /nix/var/nix/profiles/system";
-      clean = "sudo nix-collect-garbage -d";
+    steam = {
+      enable = true;
+      gamescopeSession.enable = true;
     };
+    gamemode.enable = true;
+
+    gpu-screen-recorder.enable = true;
+
+    zsh = {
+      enable = true;
+      enableCompletion = true;
+      shellAliases = {
+        generations = "sudo nix-env --list-generations --profile /nix/var/nix/profiles/system";
+        clean = "sudo nix-collect-garbage -d";
+      };
+    };
+
+    thunar = {
+      enable = true;
+      plugins = with pkgs; [
+        thunar-archive-plugin
+        thunar-volman
+        thunar-media-tags-plugin
+      ];
+    };
+
+    dconf.enable = true;
+
+    evince.enable = true;
   };
-
-  programs.thunar = {
-    enable = true;
-    plugins = with pkgs; [
-      thunar-archive-plugin
-      thunar-volman
-      thunar-media-tags-plugin
-    ];
-  };
-
-  programs.dconf.enable = true;
-
-  programs.evince.enable = true;
 }

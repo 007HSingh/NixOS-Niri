@@ -11,32 +11,34 @@
     inputs.noctalia.homeModules.default
   ];
 
-  home.file.".config/noctalia/plugins" = {
-    recursive = true;
-    source = "${inputs.noctalia-plugins}/catwalk";
-  };
+  home.file = {
+    ".config/noctalia/plugins" = {
+      recursive = true;
+      source = "${inputs.noctalia-plugins}/catwalk";
+    };
 
-  home.file.".cache/noctalia/wallpapers.json" = {
-    text = builtins.toJSON {
-      defaultWallpaper = "${config.xdg.configHome}/wallpapers/wallpaper-13.png";
-      wallpapers = {
-        "eDP-1" = "${config.xdg.configHome}/wallpapers/wallpaper-13.png";
+    ".cache/noctalia/wallpapers.json" = {
+      text = builtins.toJSON {
+        defaultWallpaper = "${config.xdg.configHome}/wallpapers/wallpaper-13.png";
+        wallpapers = {
+          "eDP-1" = "${config.xdg.configHome}/wallpapers/wallpaper-13.png";
+        };
       };
     };
-  };
 
-  home.file.".config/noctalia/plugins.json" = {
-    text = builtins.toJSON {
-      sources = [
-        {
-          enabled = true;
-          name = "Official Noctalia Plugins";
-          url = "https://github.com/noctalia-dev/noctalia-plugins";
-        }
-      ];
-      states = {
-        catwalk = {
-          enabled = true;
+    ".config/noctalia/plugins.json" = {
+      text = builtins.toJSON {
+        sources = [
+          {
+            enabled = true;
+            name = "Official Noctalia Plugins";
+            url = "https://github.com/noctalia-dev/noctalia-plugins";
+          }
+        ];
+        states = {
+          catwalk = {
+            enabled = true;
+          };
         };
       };
     };

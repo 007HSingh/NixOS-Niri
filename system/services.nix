@@ -1,27 +1,22 @@
 # System Services
 # Blueman, power management, Docker, misc services
-{ ... }:
+_:
 
 {
   # Locale and timezone
   time.timeZone = "Asia/Kolkata";
   i18n.defaultLocale = "en_US.UTF-8";
 
-  # Bluetooth manager
-  services.blueman.enable = true;
-
-  # Power management
-  services.power-profiles-daemon.enable = true;
-  services.upower.enable = true;
-
-  # SSD TRIM
-  services.fstrim.enable = true;
-
-  services.gvfs.enable = true;
-
-  services.tumbler.enable = true;
-
-  services.udisks2.enable = true;
+  # Bluetooth manager, power management, SSD TRIM, and other services
+  services = {
+    blueman.enable = true;
+    power-profiles-daemon.enable = true;
+    upower.enable = true;
+    fstrim.enable = true;
+    gvfs.enable = true;
+    tumbler.enable = true;
+    udisks2.enable = true;
+  };
 
   # Memory-management
   systemd.oomd.enable = true;
