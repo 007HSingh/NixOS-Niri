@@ -1,5 +1,5 @@
 # Git Configuration
-{ ... }:
+_:
 
 {
   programs.git = {

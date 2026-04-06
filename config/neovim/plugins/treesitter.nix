@@ -2,14 +2,15 @@
 
 {
   programs.nixvim = {
-    # ============================================================================
-    # TREESITTER - Syntax highlighting and text objects
-    # ============================================================================
-    plugins.treesitter = {
-      enable = lib.mkDefault true;
-      nixvimInjections = true;
+    plugins = {
+      # ============================================================================
+      # TREESITTER - Syntax highlighting and text objects
+      # ============================================================================
+      treesitter = {
+        enable = lib.mkDefault true;
+        nixvimInjections = true;
 
-      folding = {
+        folding = {
         enable = false;
       };
 
@@ -69,13 +70,14 @@
           "yaml"
         ];
       };
-    };
+      };
 
-    # ============================================================================
-    # RAINBOW-DELIMITERS - Colored brackets
-    # ============================================================================
-    plugins.rainbow-delimiters = {
-      enable = lib.mkDefault true;
+      # ============================================================================
+      # RAINBOW-DELIMITERS - Colored brackets
+      # ============================================================================
+      rainbow-delimiters = {
+        enable = lib.mkDefault true;
+      };
     };
   };
 }

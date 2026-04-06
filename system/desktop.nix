@@ -3,24 +3,36 @@
 { pkgs, ... }:
 
 {
-  # ly display manager (TUI)
-  services.displayManager.ly = {
-    enable = true;
-    settings = {
-      animation = "matrix";
-      clock = "%c";
+  # Display manager, keyboard, input, and audio services
+  services = {
+    # ly display manager (TUI)
+    displayManager.ly = {
+      enable = true;
+      settings = {
+        animation = "matrix";
+        clock = "%c";
+      };
+    };
 
+    # Disable SDDM
+    displayManager.sddm.enable = false;
+
+    # Keyboard layout
+    xserver.xkb.layout = "us";
+
+    # Libinput for touchpad/input
+    libinput.enable = true;
+
+    # PipeWire audio stack
+    pipewire = {
+      enable = true;
+      pulse.enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      jack.enable = true;
+      wireplumber.enable = true;
     };
   };
-
-  # Disable SDDM
-  services.displayManager.sddm.enable = false;
-
-  # Keyboard layout
-  services.xserver.xkb.layout = "us";
-
-  # Libinput for touchpad/input
-  services.libinput.enable = true;
 
   # XDG portals for Wayland integration
   # Note: wlr portal NOT used — Niri is Smithay-based, not Wlroots.
@@ -31,16 +43,6 @@
       xdg-desktop-portal-gtk
     ];
     config.common.default = "gtk";
-  };
-
-  # PipeWire audio stack
-  services.pipewire = {
-    enable = true;
-    pulse.enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    jack.enable = true;
-    wireplumber.enable = true;
   };
 
   # Wayland session variables

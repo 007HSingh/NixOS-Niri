@@ -1,6 +1,6 @@
 # Hardware Configuration (base)
 # Graphics, Bluetooth - not NVIDIA-specific
-{ ... }:
+_:
 
 {
   hardware = {

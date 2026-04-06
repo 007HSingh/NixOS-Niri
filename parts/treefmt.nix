@@ -1,5 +1,5 @@
 # Flake-parts module: Treefmt configuration
-{ ... }:
+_:
 
 {
   perSystem =
