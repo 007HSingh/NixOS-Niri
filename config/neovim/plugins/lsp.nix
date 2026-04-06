@@ -7,232 +7,232 @@
       # LSP CONFIGURATION
       # ============================================================================
       lsp = {
-      enable = lib.mkDefault true;
+        enable = lib.mkDefault true;
 
-      servers = {
-        # Nix
-        nixd = {
-          enable = lib.mkDefault true;
-          settings = {
-            nixpkgs = {
-              expr = "import <unstable> { }";
-            };
-            formatting = {
-              command = [ "nixfmt" ];
-            };
-            options = {
-              nixos = {
-                expr = "(builtins.getFlake \"${config.home.homeDirectory}/nixos-config\").nixosConfigurations.nixos.options";
+        servers = {
+          # Nix
+          nixd = {
+            enable = lib.mkDefault true;
+            settings = {
+              nixpkgs = {
+                expr = "import <unstable> { }";
               };
-              home_manager = {
-                expr = "(builtins.getFlake \"${config.home.homeDirectory}/nixos-config\").homeConfigurations.nixos.options";
+              formatting = {
+                command = [ "nixfmt" ];
+              };
+              options = {
+                nixos = {
+                  expr = "(builtins.getFlake \"${config.home.homeDirectory}/nixos-config\").nixosConfigurations.nixos.options";
+                };
+                home_manager = {
+                  expr = "(builtins.getFlake \"${config.home.homeDirectory}/nixos-config\").homeConfigurations.nixos.options";
+                };
               };
             };
           };
-        };
 
-        # Lua
-        lua_ls = {
-          enable = lib.mkDefault true;
-          settings = {
-            telemetry.enable = false;
-            diagnostics = {
-              globals = [ "vim" ];
+          # Lua
+          lua_ls = {
+            enable = lib.mkDefault true;
+            settings = {
+              telemetry.enable = false;
+              diagnostics = {
+                globals = [ "vim" ];
+              };
             };
           };
-        };
 
-        # TypeScript/JavaScript
-        ts_ls = {
-          enable = lib.mkDefault true;
-        };
+          # TypeScript/JavaScript
+          ts_ls = {
+            enable = lib.mkDefault true;
+          };
 
-        eslint = {
-          enable = lib.mkDefault true;
-        };
+          eslint = {
+            enable = lib.mkDefault true;
+          };
 
-        # HTML/CSS/JSON
-        html = {
-          enable = lib.mkDefault true;
-        };
+          # HTML/CSS/JSON
+          html = {
+            enable = lib.mkDefault true;
+          };
 
-        cssls = {
-          enable = lib.mkDefault true;
-        };
+          cssls = {
+            enable = lib.mkDefault true;
+          };
 
-        jsonls = {
-          enable = lib.mkDefault true;
-        };
+          jsonls = {
+            enable = lib.mkDefault true;
+          };
 
-        # YAML
-        yamlls = {
-          enable = lib.mkDefault true;
-        };
+          # YAML
+          yamlls = {
+            enable = lib.mkDefault true;
+          };
 
-        # Docker
-        dockerls = {
-          enable = lib.mkDefault true;
-        };
+          # Docker
+          dockerls = {
+            enable = lib.mkDefault true;
+          };
 
-        docker_compose_language_service = {
-          enable = lib.mkDefault true;
-        };
+          docker_compose_language_service = {
+            enable = lib.mkDefault true;
+          };
 
-        # Python
-        pyright = {
-          enable = lib.mkDefault true;
-        };
+          # Python
+          pyright = {
+            enable = lib.mkDefault true;
+          };
 
-        # Rust
-        rust_analyzer = {
-          enable = lib.mkDefault true;
-          installCargo = false;
-          installRustc = false;
-          settings = {
-            checkOnSave = true;
-            procMacro = {
-              enable = true;
-            };
-            hover = {
-              actions = {
+          # Rust
+          rust_analyzer = {
+            enable = lib.mkDefault true;
+            installCargo = false;
+            installRustc = false;
+            settings = {
+              checkOnSave = true;
+              procMacro = {
                 enable = true;
-                references = true;
+              };
+              hover = {
+                actions = {
+                  enable = true;
+                  references = true;
+                };
               };
             };
           };
+
+          # Bash
+          bashls = {
+            enable = lib.mkDefault true;
+          };
+
+          # Java
+          jdtls = {
+            enable = lib.mkDefault true;
+          };
+
+          # C/C++
+          clangd = {
+            enable = lib.mkDefault true;
+          };
+
+          # Markdown
+          marksman = {
+            enable = lib.mkDefault true;
+          };
         };
 
-        # Bash
-        bashls = {
-          enable = lib.mkDefault true;
-        };
+        # LSP keymaps
+        keymaps = {
+          diagnostic = {
+            "<leader>cd" = {
+              action = "open_float";
+              desc = "Show diagnostic";
+            };
+            "[d" = {
+              action = "goto_prev";
+              desc = "Previous diagnostic";
+            };
+            "]d" = {
+              action = "goto_next";
+              desc = "Next diagnostic";
+            };
+            "<leader>xq" = {
+              action = "setloclist";
+              desc = "Diagnostics to loclist";
+            };
+          };
 
-        # Java
-        jdtls = {
-          enable = lib.mkDefault true;
-        };
-
-        # C/C++
-        clangd = {
-          enable = lib.mkDefault true;
-        };
-
-        # Markdown
-        marksman = {
-          enable = lib.mkDefault true;
+          lspBuf = {
+            "gd" = {
+              action = "definition";
+              desc = "Go to definition";
+            };
+            "gD" = {
+              action = "declaration";
+              desc = "Go to declaration";
+            };
+            "gi" = {
+              action = "implementation";
+              desc = "Go to implementation";
+            };
+            "go" = {
+              action = "type_definition";
+              desc = "Go to type definition";
+            };
+            "gr" = {
+              action = "references";
+              desc = "Show references";
+            };
+            "gs" = {
+              action = "signature_help";
+              desc = "Signature help";
+            };
+            "K" = {
+              action = "hover";
+              desc = "Hover documentation";
+            };
+            "<leader>ca" = {
+              action = "code_action";
+              desc = "Code action";
+            };
+            "<leader>cr" = {
+              action = "rename";
+              desc = "Rename symbol";
+            };
+            "<leader>cf" = {
+              action = "format";
+              desc = "Format buffer";
+            };
+          };
         };
       };
-
-      # LSP keymaps
-      keymaps = {
-        diagnostic = {
-          "<leader>cd" = {
-            action = "open_float";
-            desc = "Show diagnostic";
-          };
-          "[d" = {
-            action = "goto_prev";
-            desc = "Previous diagnostic";
-          };
-          "]d" = {
-            action = "goto_next";
-            desc = "Next diagnostic";
-          };
-          "<leader>xq" = {
-            action = "setloclist";
-            desc = "Diagnostics to loclist";
-          };
-        };
-
-        lspBuf = {
-          "gd" = {
-            action = "definition";
-            desc = "Go to definition";
-          };
-          "gD" = {
-            action = "declaration";
-            desc = "Go to declaration";
-          };
-          "gi" = {
-            action = "implementation";
-            desc = "Go to implementation";
-          };
-          "go" = {
-            action = "type_definition";
-            desc = "Go to type definition";
-          };
-          "gr" = {
-            action = "references";
-            desc = "Show references";
-          };
-          "gs" = {
-            action = "signature_help";
-            desc = "Signature help";
-          };
-          "K" = {
-            action = "hover";
-            desc = "Hover documentation";
-          };
-          "<leader>ca" = {
-            action = "code_action";
-            desc = "Code action";
-          };
-          "<leader>cr" = {
-            action = "rename";
-            desc = "Rename symbol";
-          };
-          "<leader>cf" = {
-            action = "format";
-            desc = "Format buffer";
-          };
-        };
-      };
-    };
 
       # ============================================================================
       # RENDER-MARKDOWN - Beautiful docs
       # ============================================================================
       render-markdown = {
-      enable = true;
-      settings = {
-        render_modes = [
-          "n"
-          "c"
-          "i"
-          "v"
-        ];
-        win_options = {
-          conceallevel = {
-            default = 2;
+        enable = true;
+        settings = {
+          render_modes = [
+            "n"
+            "c"
+            "i"
+            "v"
+          ];
+          win_options = {
+            conceallevel = {
+              default = 2;
+            };
           };
         };
       };
-    };
 
       # ============================================================================
       # LSPSAGA - Beautiful LSP UI
       # ============================================================================
       lspsaga = {
-      enable = lib.mkDefault true;
-      settings = {
-        beacon.enable = true;
-        ui = {
-          border = "rounded";
-          code_action = "󰌵";
-        };
-        hover = {
-          open_cmd = "!firefox";
-          open_link = "gx";
-        };
-        lightbulb.enable = false;
-        outline = {
-          auto_preview = true;
-          close_after_jump = true;
-          layout = "float";
-          win_width = 30;
+        enable = lib.mkDefault true;
+        settings = {
+          beacon.enable = true;
+          ui = {
+            border = "rounded";
+            code_action = "󰌵";
+          };
+          hover = {
+            open_cmd = "!firefox";
+            open_link = "gx";
+          };
+          lightbulb.enable = false;
+          outline = {
+            auto_preview = true;
+            close_after_jump = true;
+            layout = "float";
+            win_width = 30;
+          };
         };
       };
-    };
 
       # ============================================================================
       # CONFORM - Formatting
