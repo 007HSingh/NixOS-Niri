@@ -7,7 +7,7 @@
       # HARPOON - File navigation
       # ============================================================================
       harpoon = {
-        enable = lib.mkDefault true;
+        enable = true;
         enableTelescope = true;
       };
 
@@ -15,14 +15,17 @@
       # SPECTRE - Search and replace
       # ============================================================================
       spectre = {
-        enable = lib.mkDefault true;
+        enable = true;
       };
 
       # ============================================================================
-      # OIL - File explorer
+      # OIL - File explorer (buffer-based, disabled by default)
       # ============================================================================
+      # NOTE: Coexists with nvim-tree in ui.nix. Oil provides buffer-based file
+      # browsing (better for quick edits), nvim-tree provides sidebar browsing.
+      # Both disabled on startup; use per-workflow preference.
       oil = {
-        enable = lib.mkDefault true;
+        enable = true;
         settings = {
           default_file_explorer = false;
           columns = [
@@ -41,7 +44,7 @@
       # UNDOTREE - Undo history visualizer
       # ============================================================================
       undotree = {
-        enable = lib.mkDefault true;
+        enable = true;
         settings = {
           autoOpenDiff = true;
           focusOnToggle = true;
@@ -52,14 +55,14 @@
       # PERSISTENCE - Session management
       # ============================================================================
       persistence = {
-        enable = lib.mkDefault true;
+        enable = true;
       };
 
       # ============================================================================
       # PROJECT-NVIM - Project management
       # ============================================================================
       project-nvim = {
-        enable = lib.mkDefault true;
+        enable = true;
         enableTelescope = true;
       };
 
@@ -67,7 +70,7 @@
       # MARKDOWN-PREVIEW - Preview markdown files
       # ============================================================================
       markdown-preview = {
-        enable = lib.mkDefault true;
+        enable = true;
         settings = {
           theme = "dark";
         };
@@ -77,7 +80,7 @@
       # UFO - Better folding
       # ============================================================================
       nvim-ufo = {
-        enable = lib.mkDefault true;
+        enable = true;
       };
     };
   };

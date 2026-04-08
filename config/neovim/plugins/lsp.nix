@@ -7,12 +7,12 @@
       # LSP CONFIGURATION
       # ============================================================================
       lsp = {
-        enable = lib.mkDefault true;
+        enable = true;
 
         servers = {
           # Nix
           nixd = {
-            enable = lib.mkDefault true;
+            enable = true;
             settings = {
               nixpkgs = {
                 expr = "import <unstable> { }";
@@ -33,7 +33,7 @@
 
           # Lua
           lua_ls = {
-            enable = lib.mkDefault true;
+            enable = true;
             settings = {
               telemetry.enable = false;
               diagnostics = {
@@ -44,48 +44,48 @@
 
           # TypeScript/JavaScript
           ts_ls = {
-            enable = lib.mkDefault true;
+            enable = true;
           };
 
           eslint = {
-            enable = lib.mkDefault true;
+            enable = true;
           };
 
           # HTML/CSS/JSON
           html = {
-            enable = lib.mkDefault true;
+            enable = true;
           };
 
           cssls = {
-            enable = lib.mkDefault true;
+            enable = true;
           };
 
           jsonls = {
-            enable = lib.mkDefault true;
+            enable = true;
           };
 
           # YAML
           yamlls = {
-            enable = lib.mkDefault true;
+            enable = true;
           };
 
           # Docker
           dockerls = {
-            enable = lib.mkDefault true;
+            enable = true;
           };
 
           docker_compose_language_service = {
-            enable = lib.mkDefault true;
+            enable = true;
           };
 
           # Python
           pyright = {
-            enable = lib.mkDefault true;
+            enable = true;
           };
 
           # Rust
           rust_analyzer = {
-            enable = lib.mkDefault true;
+            enable = true;
             installCargo = false;
             installRustc = false;
             settings = {
@@ -104,22 +104,22 @@
 
           # Bash
           bashls = {
-            enable = lib.mkDefault true;
+            enable = true;
           };
 
           # Java
           jdtls = {
-            enable = lib.mkDefault true;
+            enable = true;
           };
 
           # C/C++
           clangd = {
-            enable = lib.mkDefault true;
+            enable = true;
           };
 
           # Markdown
           marksman = {
-            enable = lib.mkDefault true;
+            enable = true;
           };
         };
 
@@ -169,18 +169,6 @@
               action = "signature_help";
               desc = "Signature help";
             };
-            "K" = {
-              action = "hover";
-              desc = "Hover documentation";
-            };
-            "<leader>ca" = {
-              action = "code_action";
-              desc = "Code action";
-            };
-            "<leader>cr" = {
-              action = "rename";
-              desc = "Rename symbol";
-            };
             "<leader>cf" = {
               action = "format";
               desc = "Format buffer";
@@ -213,7 +201,7 @@
       # LSPSAGA - Beautiful LSP UI
       # ============================================================================
       lspsaga = {
-        enable = lib.mkDefault true;
+        enable = true;
         settings = {
           beacon.enable = true;
           ui = {
@@ -238,7 +226,7 @@
       # CONFORM - Formatting
       # ============================================================================
       conform-nvim = {
-        enable = lib.mkDefault true;
+        enable = true;
         settings = {
           format_on_save = {
             lsp_fallback = true;
@@ -270,7 +258,7 @@
       # LINT - Linting
       # ============================================================================
       lint = {
-        enable = lib.mkDefault true;
+        enable = true;
         lintersByFt = {
           python = [ "pylint" ];
           javascript = [ "eslint" ];

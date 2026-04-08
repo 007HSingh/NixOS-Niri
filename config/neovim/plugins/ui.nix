@@ -9,13 +9,13 @@
       # ============================================================================
       # WEB DEVICONS - Icons for UI components
       # ============================================================================
-      web-devicons.enable = lib.mkDefault true;
+      web-devicons.enable = true;
 
       # ============================================================================
       # DASHBOARD - Startup dashboard
       # ============================================================================
       dashboard = {
-        enable = lib.mkDefault true;
+        enable = true;
         settings = {
           theme = "doom";
           config = {
@@ -103,7 +103,7 @@
       # LUALINE - Status line
       # ============================================================================
       lualine = {
-        enable = lib.mkDefault true;
+        enable = true;
         settings = {
           options = {
             theme = "auto";
@@ -174,7 +174,7 @@
       # BUFFERLINE - Buffer tabs
       # ============================================================================
       bufferline = {
-        enable = lib.mkDefault true;
+        enable = true;
         settings = {
           options = {
             mode = "buffers";
@@ -216,10 +216,14 @@
       };
 
       # ============================================================================
-      # NVIM-TREE - File explorer
+      # NVIM-TREE - File explorer (sidebar, disabled on startup)
       # ============================================================================
+      # NOTE: Coexists with oil.nvim below. Oil is buffer-based (default disabled),
+      # nvim-tree is sidebar-based (also disabled on startup). This allows both
+      # workflows. nvim-tree disables netrw, but oil also hijacks it — UFOn picks
+      # whichever best matches the use case. Toggle nvim-tree with :NvimTreeToggle
       nvim-tree = {
-        enable = lib.mkDefault true;
+        enable = true;
         openOnSetup = false;
         settings = {
           auto_reload_on_write = true;
@@ -288,7 +292,7 @@
       # INDENT BLANKLINE - Indent guides
       # ============================================================================
       indent-blankline = {
-        enable = lib.mkDefault true;
+        enable = true;
         settings = {
           indent = {
             char = "│";
@@ -318,7 +322,7 @@
       # SCROLLBAR - Visual scrollbar
       # ============================================================================
       nvim-scrollbar = {
-        enable = lib.mkDefault true;
+        enable = true;
         settings = {
           handle = {
             color = "#45475a";
@@ -350,7 +354,7 @@
       # COLORIZER - Highlight colors
       # ============================================================================
       nvim-colorizer = {
-        enable = lib.mkDefault true;
+        enable = true;
         userDefaultOptions = {
           RGB = true;
           RRGGBB = true;
@@ -366,7 +370,7 @@
       # NOICE - Enhanced UI
       # ============================================================================
       noice = {
-        enable = lib.mkDefault true;
+        enable = true;
         settings = {
           lsp = {
             override = {
@@ -434,7 +438,7 @@
       # NOTIFY - Better notifications
       # ============================================================================
       notify = {
-        enable = lib.mkDefault true;
+        enable = true;
         settings = {
           background_colour = "#1e1e2e";
           fps = 60;
@@ -458,7 +462,7 @@
       # DRESSING - Better UI for inputs/selects
       # ============================================================================
       dressing = {
-        enable = lib.mkDefault true;
+        enable = true;
         settings = {
           input = {
             enabled = true;
@@ -481,7 +485,7 @@
       # NAVIC - Breadcrumbs
       # ============================================================================
       navic = {
-        enable = lib.mkDefault true;
+        enable = true;
         settings = {
           icons = {
             File = " ";

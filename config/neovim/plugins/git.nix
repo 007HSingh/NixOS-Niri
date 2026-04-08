@@ -7,7 +7,7 @@
       # GITSIGNS - Git integration in gutter
       # ============================================================================
       gitsigns = {
-        enable = lib.mkDefault true;
+        enable = true;
         settings = {
           signs = {
             add = {
@@ -105,7 +105,7 @@
       # NEOGIT - Git client
       # ============================================================================
       neogit = {
-        enable = lib.mkDefault true;
+        enable = true;
         settings = {
           disable_signs = false;
           disable_hint = false;
@@ -149,7 +149,7 @@
       # DIFFVIEW - Git diff viewer
       # ============================================================================
       diffview = {
-        enable = lib.mkDefault true;
+        enable = true;
       };
     };
   };

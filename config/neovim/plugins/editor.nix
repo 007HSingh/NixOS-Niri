@@ -7,7 +7,7 @@
       # AUTO-PAIRS - Bracket/quote pairing
       # ============================================================================
       nvim-autopairs = {
-        enable = lib.mkDefault true;
+        enable = true;
         settings = {
           check_ts = true;
           ts_config = {
@@ -32,7 +32,7 @@
       # COMMENT - Comment toggle
       # ============================================================================
       comment = {
-        enable = lib.mkDefault true;
+        enable = true;
         settings = {
           toggler = {
             line = "gcc";
@@ -54,14 +54,14 @@
       # SURROUND - Surround text objects
       # ============================================================================
       nvim-surround = {
-        enable = lib.mkDefault true;
+        enable = true;
       };
 
       # ============================================================================
       # TODO-COMMENTS - Highlight TODO comments
       # ============================================================================
       todo-comments = {
-        enable = lib.mkDefault true;
+        enable = true;
         settings = {
           signs = true;
           keywords = {
@@ -112,7 +112,7 @@
       # WHICH-KEY - Keybinding hints
       # ============================================================================
       which-key = {
-        enable = lib.mkDefault true;
+        enable = true;
         settings = {
           delay = 300;
           icons = {
@@ -161,7 +161,7 @@
       # FLASH - Quick navigation with labels
       # ============================================================================
       flash = {
-        enable = lib.mkDefault true;
+        enable = true;
         settings = {
           labels = "asdfghjklqwertyuiopzxcvbnm";
           modes = {
@@ -179,7 +179,7 @@
       # MINI.AI - Better text objects
       # ============================================================================
       mini = {
-        enable = lib.mkDefault true;
+        enable = true;
         modules = {
           ai = {
             n_lines = 500;
@@ -192,7 +192,7 @@
       # ILLUMINATE - Highlight word under cursor
       # ============================================================================
       illuminate = {
-        enable = lib.mkDefault true;
+        enable = true;
         settings = {
           filetypes_denylist = [
             "alpha"
@@ -208,7 +208,7 @@
       # TOGGLETERM - Terminal integration
       # ============================================================================
       toggleterm = {
-        enable = lib.mkDefault true;
+        enable = true;
         settings = {
           direction = "float";
           float_opts = {
