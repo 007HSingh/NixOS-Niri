@@ -327,6 +327,10 @@ window-rule {
     match app-id="discord"
     opacity 0.8
 }
+window-rule {
+    match app-id="code"
+    opacity 0.8
+}
 // ── Inactive window dimming ────────────────────────────────────
 // Subtle opacity reduction on unfocused windows for visual depth.
 // Raised from 0.75 — at 75% it stacked badly with per-app transparency.
