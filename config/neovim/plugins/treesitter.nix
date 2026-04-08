@@ -7,7 +7,7 @@
       # TREESITTER - Syntax highlighting and text objects
       # ============================================================================
       treesitter = {
-        enable = lib.mkDefault true;
+        enable = true;
         nixvimInjections = true;
 
         folding = {
@@ -76,7 +76,7 @@
       # RAINBOW-DELIMITERS - Colored brackets
       # ============================================================================
       rainbow-delimiters = {
-        enable = lib.mkDefault true;
+        enable = true;
       };
     };
   };

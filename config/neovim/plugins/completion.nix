@@ -7,7 +7,7 @@
       # CMP - Completion engine
       # ============================================================================
       cmp = {
-        enable = lib.mkDefault true;
+        enable = true;
         autoEnableSources = true;
 
         settings = {
@@ -102,7 +102,7 @@
       # LUASNIP - Snippet engine
       # ============================================================================
       luasnip = {
-        enable = lib.mkDefault true;
+        enable = true;
         settings = {
           enable_autosnippets = true;
           store_selection_keys = "<Tab>";
@@ -118,11 +118,10 @@
       # FRIENDLY-SNIPPETS - Snippet collection
       # ============================================================================
       friendly-snippets = {
-        enable = lib.mkDefault true;
+        enable = true;
       };
 
-      # Enable signature help plugin
-      cmp-nvim-lsp-signature-help.enable = true;
+      # NOTE: Noice handles LSP signature display, so cmp-nvim-lsp-signature-help is redundant
     };
   };
 }

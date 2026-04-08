@@ -62,9 +62,7 @@ _:
       # Clipboard
       clipboard = "unnamedplus";
 
-      # Folding
-      foldmethod = "expr";
-      foldexpr = "nvim_treesitter#foldexpr()";
+      # Folding - managed by UFO
       foldenable = false;
       foldlevel = 99;
 

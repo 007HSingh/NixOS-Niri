@@ -6,7 +6,7 @@
     # TELESCOPE - Fuzzy finder
     # ============================================================================
     plugins.telescope = {
-      enable = lib.mkDefault true;
+      enable = true;
 
       extensions = {
         fzf-native = {
