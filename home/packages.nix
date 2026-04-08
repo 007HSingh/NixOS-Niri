@@ -27,6 +27,7 @@
     discord
     mpv
     antigravity-fhs
+    primslauncher
 
     # Wayland utilities
     wl-clipboard
