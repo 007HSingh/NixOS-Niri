@@ -3,9 +3,8 @@
 { pkgs, ... }:
 
 {
-  # Stylix auto-enables the Firefox target via autoEnable = true in system/stylix.nix.
-  # Disable it here since theming is handled manually via userChrome below.
   stylix.targets.firefox.enable = false;
+  stylix.targets.zen-browser.profileNames = [ "default" ];
 
   programs.zen-browser = {
     enable = true;
