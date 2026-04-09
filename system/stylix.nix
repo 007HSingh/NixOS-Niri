@@ -90,6 +90,7 @@
       nixvim.enable = false;
       gnome.enable = false;
       gtk.enable = true;
+      zen-browser.profileNames = [ "Home" ];
     };
   };
 }
