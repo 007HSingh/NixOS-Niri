@@ -70,6 +70,10 @@ _:
               name = "buffer";
               priority = 250;
             }
+            {
+              name = "emoji";
+              priority = 300;
+            }
           ];
 
           formatting = {
