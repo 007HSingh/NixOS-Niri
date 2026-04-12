@@ -21,7 +21,6 @@
       initContent = ''
         zstyle ':completion:*' menu select
         zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
-        (( $+commands[gh]     )) && eval "$(gh completion -s zsh)"
         (( $+commands[docker] )) && eval "$(docker completion zsh)"
       '';
 
@@ -151,10 +150,94 @@
       enable = true;
     };
 
-    # pay-respects: corrects mistyped commands (replaces thefuck, removed from nixpkgs)
     pay-respects = {
       enable = true;
       enableZshIntegration = true;
+    };
+
+    # -------------------------------------------------------------------------
+    # ATUIN - Magical shell history with fuzzy search
+    # Replaces Ctrl+R with a powerful TUI backed by SQLite
+    # -------------------------------------------------------------------------
+    atuin = {
+      enable = true;
+      enableZshIntegration = true;
+      settings = {
+        # Local-only, no sync
+        auto_sync = false;
+        update_check = false;
+        # Search behaviour
+        search_mode = "fuzzy";
+        filter_mode = "global";
+        filter_mode_shell_up_key_binding = "session";
+        # Style
+        style = "compact";
+        show_preview = true;
+        max_preview_height = 4;
+        show_help = false;
+        # Avoid duplication
+        history_filter = [
+          "^ls$"
+          "^cd$"
+          "^pwd$"
+          "^exit$"
+          "^clear$"
+        ];
+      };
+    };
+
+    # -------------------------------------------------------------------------
+    # YAZI - Blazing-fast TUI file manager with preview
+    # Use 'y' instead of 'yazi' to have it cd into the last directory on exit
+    # -------------------------------------------------------------------------
+    yazi = {
+      enable = true;
+      enableZshIntegration = true;
+      shellWrapperName = "y";
+      settings = {
+        manager = {
+          show_hidden = true;
+          sort_by = "natural";
+          sort_dir_first = true;
+        };
+      };
+    };
+
+    # -------------------------------------------------------------------------
+    # NIX-YOUR-SHELL - Stay in zsh when entering nix shell / nix develop
+    # -------------------------------------------------------------------------
+    nix-your-shell = {
+      enable = true;
+      enableZshIntegration = true;
+    };
+
+    # -------------------------------------------------------------------------
+    # GH - GitHub CLI with declarative config & credential helper
+    # -------------------------------------------------------------------------
+    gh = {
+      enable = true;
+      gitCredentialHelper.enable = true;
+      settings = {
+        git_protocol = "https";
+        prompt = "enabled";
+      };
+    };
+
+    # -------------------------------------------------------------------------
+    # TEALDEER - Fast tldr client with auto-update
+    # -------------------------------------------------------------------------
+    tealdeer = {
+      enable = true;
+      settings = {
+        updates = {
+          auto_update = true;
+          auto_update_interval_hours = 720; # ~monthly
+        };
+        display = {
+          compact = false;
+          use_pager = false;
+        };
+      };
     };
   };
 }
