@@ -57,80 +57,10 @@ _:
             ];
           };
 
-          # UI enhancements
-          ui = {
-            enable = true;
-            checkboxes = {
-              " " = {
-                char = "󰄱";
-                hl_group = "ObsidianTodo";
-              };
-              "x" = {
-                char = "";
-                hl_group = "ObsidianDone";
-              };
-              ">" = {
-                char = "";
-                hl_group = "ObsidianRightArrow";
-              };
-              "~" = {
-                char = "󰰱";
-                hl_group = "ObsidianTilde";
-              };
-            };
-            bullets = {
-              char = "•";
-              hl_group = "ObsidianBullet";
-            };
-            external_link_icon = {
-              char = "";
-              hl_group = "ObsidianExtLinkIcon";
-            };
-            reference_text.hl_group = "ObsidianRefText";
-            highlight_text.hl_group = "ObsidianHighlightText";
-            tags.hl_group = "ObsidianTag";
-            block_ids.hl_group = "ObsidianBlockID";
-            hl_groups = {
-              ObsidianTodo = {
-                bold = true;
-                fg = "#f0a050";
-              };
-              ObsidianDone = {
-                bold = true;
-                fg = "#89b4fa";
-              };
-              ObsidianRightArrow = {
-                bold = true;
-                fg = "#f0a050";
-              };
-              ObsidianTilde = {
-                bold = true;
-                fg = "#ff5555";
-              };
-              ObsidianImportant = {
-                bold = true;
-                fg = "#d73128";
-              };
-              ObsidianBullet = {
-                bold = true;
-                fg = "#89b4fa";
-              };
-              ObsidianRefText = {
-                underline = true;
-                fg = "#cba6f7";
-              };
-              ObsidianExtLinkIcon.fg = "#cba6f7";
-              ObsidianTag = {
-                italic = true;
-                fg = "#89b4fa";
-              };
-              ObsidianBlockID = {
-                italic = true;
-                fg = "#89b4fa";
-              };
-              ObsidianHighlightText.bg = "#45475a";
-            };
-          };
+          # UI disabled — render-markdown.nvim handles all rendering.
+          # Enabling both causes a conflict error on startup.
+          ui.enable = false;
+
 
           # attachments.img_folder → attachments.folder (renamed in 3.x)
           attachments.folder = "assets/imgs";
