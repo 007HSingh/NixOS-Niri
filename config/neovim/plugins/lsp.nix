@@ -255,6 +255,31 @@
       };
 
       # ============================================================================
+      # TROUBLE - Pretty diagnostics panel
+      # ============================================================================
+      trouble = {
+        enable = true;
+        settings = {
+          auto_close = false;
+          auto_preview = true;
+          auto_refresh = true;
+          focus = true;
+          modes = {
+            symbols = {
+              win.size.width = 30;
+            };
+          };
+        };
+      };
+
+      # ============================================================================
+      # INC-RENAME - Animated incremental rename
+      # ============================================================================
+      inc-rename = {
+        enable = true;
+      };
+
+      # ============================================================================
       # LINT - Linting
       # ============================================================================
       lint = {
@@ -320,10 +345,14 @@
       {
         mode = "n";
         key = "<leader>cr";
-        action = ":Lspsaga rename<CR>";
+        action.__raw = ''
+          function()
+            return ":IncRename " .. vim.fn.expand("<cword>")
+          end
+        '';
         options = {
-          silent = true;
-          desc = "Rename (Saga)";
+          expr = true;
+          desc = "Rename (IncRename)";
         };
       }
       {

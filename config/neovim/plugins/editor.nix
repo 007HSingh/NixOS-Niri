@@ -157,6 +157,10 @@ _:
               __unkeyed-1 = "<leader>o";
               group = "Obsidian";
             }
+            {
+              __unkeyed-1 = "<leader>d";
+              group = "Debugger";
+            }
           ];
         };
       };

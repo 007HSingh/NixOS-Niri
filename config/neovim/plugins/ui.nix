@@ -389,7 +389,7 @@ _:
             bottom_search = true;
             command_palette = true;
             long_message_to_split = true;
-            inc_rename = false;
+            inc_rename = true; # pairs with inc-rename.nvim
             lsp_doc_border = true;
           };
           views = {
@@ -481,6 +481,13 @@ _:
       # ============================================================================
       # NAVIC - Breadcrumbs
       # ============================================================================
+      # ============================================================================
+      # CELLULAR-AUTOMATON - Fun buffer animations
+      # ============================================================================
+      cellular-automaton = {
+        enable = true;
+      };
+
       navic = {
         enable = true;
         settings = {

@@ -11,5 +11,7 @@ _:
     ./telescope.nix
     ./utilities.nix
     ./obsidian.nix
+    ./dap.nix
+    ./git-extras.nix
   ];
 }
