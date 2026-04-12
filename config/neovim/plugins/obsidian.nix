@@ -16,7 +16,6 @@ _:
             }
           ];
 
-
           # Disable legacy commands (ObsidianBacklinks → Obsidian backlinks)
           legacy_commands = false;
 
@@ -60,7 +59,6 @@ _:
           # UI disabled — render-markdown.nvim handles all rendering.
           # Enabling both causes a conflict error on startup.
           ui.enable = false;
-
 
           # attachments.img_folder → attachments.folder (renamed in 3.x)
           attachments.folder = "assets/imgs";
