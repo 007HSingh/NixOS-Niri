@@ -10,5 +10,6 @@ _:
     ./treesitter.nix
     ./telescope.nix
     ./utilities.nix
+    ./obsidian.nix
   ];
 }
