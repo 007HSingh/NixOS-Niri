@@ -12,13 +12,10 @@ _:
           workspaces = [
             {
               name = "notes";
-              # Update this to your actual vault path
-              path = "~/notes";
+              path = "~/Notes";
             }
           ];
 
-          # Don't crash if vault path doesn't exist yet
-          log_level = "warn";
 
           # Disable legacy commands (ObsidianBacklinks → Obsidian backlinks)
           legacy_commands = false;
