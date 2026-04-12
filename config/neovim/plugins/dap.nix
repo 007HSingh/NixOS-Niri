@@ -6,111 +6,106 @@
       # ============================================================================
       # DAP - Debug Adapter Protocol client
       # ============================================================================
-      dap = {
-        enable = true;
+      dap.enable = true;
 
-        extensions = {
-          # ---- DAP UI ----
-          dap-ui = {
-            enable = true;
-            settings = {
-              icons = {
-                expanded = "";
-                collapsed = "";
-                current_frame = "";
-              };
-              controls = {
-                enabled = true;
-                element = "repl";
-                icons = {
-                  pause = "";
-                  play = "";
-                  step_into = "";
-                  step_over = "";
-                  step_out = "";
-                  step_back = "";
-                  run_last = "";
-                  terminate = "";
-                };
-              };
-              layouts = [
+      # ---- DAP UI ----
+      dap-ui = {
+        enable = true;
+        settings = {
+          icons = {
+            expanded = "";
+            collapsed = "";
+            current_frame = "";
+          };
+          controls = {
+            enabled = true;
+            element = "repl";
+            icons = {
+              pause = "";
+              play = "";
+              step_into = "";
+              step_over = "";
+              step_out = "";
+              step_back = "";
+              run_last = "";
+              terminate = "";
+            };
+          };
+          layouts = [
+            {
+              elements = [
                 {
-                  elements = [
-                    {
-                      id = "scopes";
-                      size = 0.25;
-                    }
-                    {
-                      id = "breakpoints";
-                      size = 0.25;
-                    }
-                    {
-                      id = "stacks";
-                      size = 0.25;
-                    }
-                    {
-                      id = "watches";
-                      size = 0.25;
-                    }
-                  ];
-                  position = "left";
-                  size = 40;
+                  id = "scopes";
+                  size = 0.25;
                 }
                 {
-                  elements = [
-                    {
-                      id = "repl";
-                      size = 0.5;
-                    }
-                    {
-                      id = "console";
-                      size = 0.5;
-                    }
-                  ];
-                  position = "bottom";
-                  size = 10;
+                  id = "breakpoints";
+                  size = 0.25;
+                }
+                {
+                  id = "stacks";
+                  size = 0.25;
+                }
+                {
+                  id = "watches";
+                  size = 0.25;
                 }
               ];
-              floating = {
-                max_height = null;
-                max_width = null;
-                border = "rounded";
-                mappings = {
-                  close = [
-                    "q"
-                    "<Esc>"
-                  ];
-                };
-              };
-              render = {
-                max_type_length = null;
-                max_value_lines = 100;
-              };
+              position = "left";
+              size = 40;
+            }
+            {
+              elements = [
+                {
+                  id = "repl";
+                  size = 0.5;
+                }
+                {
+                  id = "console";
+                  size = 0.5;
+                }
+              ];
+              position = "bottom";
+              size = 10;
+            }
+          ];
+          floating = {
+            max_height = null;
+            max_width = null;
+            border = "rounded";
+            mappings = {
+              close = [
+                "q"
+                "<Esc>"
+              ];
             };
           };
-
-          # ---- DAP Virtual Text ----
-          dap-virtual-text = {
-            enable = true;
-            settings = {
-              enabled = true;
-              enabled_commands = true;
-              highlight_changed_variables = true;
-              highlight_new_as_changed = false;
-              show_stop_reason = true;
-              commented = false;
-              virt_text_pos = "eol";
-              all_frames = false;
-            };
-          };
-
-          # ---- DAP Python ----
-          dap-python = {
-            enable = true;
-            # Use a python interpreter that has debugpy available
-            adapterPythonPath = "${pkgs.python3.withPackages (ps: [ ps.debugpy ])}/bin/python";
+          render = {
+            max_type_length = null;
+            max_value_lines = 100;
           };
         };
+      };
+
+      # ---- DAP Virtual Text ----
+      dap-virtual-text = {
+        enable = true;
+        settings = {
+          enabled = true;
+          enabled_commands = true;
+          highlight_changed_variables = true;
+          highlight_new_as_changed = false;
+          show_stop_reason = true;
+          commented = false;
+          virt_text_pos = "eol";
+          all_frames = false;
+        };
+      };
+
+      # ---- DAP Python ----
+      dap-python = {
+        enable = true;
+        adapterPythonPath = "${pkgs.python3.withPackages (ps: [ ps.debugpy ])}/bin/python";
       };
     };
 
