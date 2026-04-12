@@ -12,17 +12,24 @@ _:
           workspaces = [
             {
               name = "notes";
+              # Update this to your actual vault path
               path = "~/notes";
             }
           ];
 
-          # Completion via nvim-cmp (already configured in completion.nix)
+          # Don't crash if vault path doesn't exist yet
+          log_level = "warn";
+
+          # Disable legacy commands (ObsidianBacklinks → Obsidian backlinks)
+          legacy_commands = false;
+
+          # Completion via nvim-cmp
           completion = {
             nvim_cmp = true;
             min_chars = 2;
           };
 
-          # Note naming: use title-based slugs
+          # Note naming: timestamp + title slug
           note_id_func.__raw = ''
             function(title)
               local suffix = ""
@@ -37,12 +44,20 @@ _:
             end
           '';
 
-          # Open notes in current buffer, not a new split
           new_notes_location = "current_dir";
 
-          # Use telescope for search/find (already configured in telescope.nix)
           picker = {
             name = "telescope.nvim";
+          };
+
+          # Checkbox cycle order (replaces old ui.checkboxes ordering)
+          checkbox = {
+            order = [
+              " "
+              "x"
+              ">"
+              "~"
+            ];
           };
 
           # UI enhancements
@@ -74,18 +89,10 @@ _:
               char = "";
               hl_group = "ObsidianExtLinkIcon";
             };
-            reference_text = {
-              hl_group = "ObsidianRefText";
-            };
-            highlight_text = {
-              hl_group = "ObsidianHighlightText";
-            };
-            tags = {
-              hl_group = "ObsidianTag";
-            };
-            block_ids = {
-              hl_group = "ObsidianBlockID";
-            };
+            reference_text.hl_group = "ObsidianRefText";
+            highlight_text.hl_group = "ObsidianHighlightText";
+            tags.hl_group = "ObsidianTag";
+            block_ids.hl_group = "ObsidianBlockID";
             hl_groups = {
               ObsidianTodo = {
                 bold = true;
@@ -115,9 +122,7 @@ _:
                 underline = true;
                 fg = "#cba6f7";
               };
-              ObsidianExtLinkIcon = {
-                fg = "#cba6f7";
-              };
+              ObsidianExtLinkIcon.fg = "#cba6f7";
               ObsidianTag = {
                 italic = true;
                 fg = "#89b4fa";
@@ -126,15 +131,12 @@ _:
                 italic = true;
                 fg = "#89b4fa";
               };
-              ObsidianHighlightText = {
-                bg = "#45475a";
-              };
+              ObsidianHighlightText.bg = "#45475a";
             };
           };
 
-          attachments = {
-            img_folder = "assets/imgs";
-          };
+          # attachments.img_folder → attachments.folder (renamed in 3.x)
+          attachments.folder = "assets/imgs";
 
           daily_notes = {
             folder = "daily";
@@ -149,12 +151,7 @@ _:
             time_format = "%H:%M";
           };
 
-          # Follow URLs with <CR> in normal mode
-          follow_url_func.__raw = ''
-            function(url)
-              vim.fn.jobstart({ "xdg-open", url })
-            end
-          '';
+          # follow_url_func removed — vim.ui.open is the default in 3.x
         };
       };
     };
@@ -163,11 +160,10 @@ _:
     # OBSIDIAN KEYMAPS
     # ============================================================================
     keymaps = [
-      # Open/find notes
       {
         mode = "n";
         key = "<leader>on";
-        action = ":ObsidianNew<CR>";
+        action = ":Obsidian new<CR>";
         options = {
           silent = true;
           desc = "New note";
@@ -176,7 +172,7 @@ _:
       {
         mode = "n";
         key = "<leader>oo";
-        action = ":ObsidianOpen<CR>";
+        action = ":Obsidian open<CR>";
         options = {
           silent = true;
           desc = "Open in Obsidian app";
@@ -185,7 +181,7 @@ _:
       {
         mode = "n";
         key = "<leader>of";
-        action = ":ObsidianQuickSwitch<CR>";
+        action = ":Obsidian quick_switch<CR>";
         options = {
           silent = true;
           desc = "Find note";
@@ -194,7 +190,7 @@ _:
       {
         mode = "n";
         key = "<leader>os";
-        action = ":ObsidianSearch<CR>";
+        action = ":Obsidian search<CR>";
         options = {
           silent = true;
           desc = "Search notes";
@@ -203,7 +199,7 @@ _:
       {
         mode = "n";
         key = "<leader>ob";
-        action = ":ObsidianBacklinks<CR>";
+        action = ":Obsidian backlinks<CR>";
         options = {
           silent = true;
           desc = "Show backlinks";
@@ -212,7 +208,7 @@ _:
       {
         mode = "n";
         key = "<leader>ol";
-        action = ":ObsidianLinks<CR>";
+        action = ":Obsidian links<CR>";
         options = {
           silent = true;
           desc = "Show links";
@@ -221,7 +217,7 @@ _:
       {
         mode = "n";
         key = "<leader>od";
-        action = ":ObsidianToday<CR>";
+        action = ":Obsidian today<CR>";
         options = {
           silent = true;
           desc = "Daily note (today)";
@@ -230,7 +226,7 @@ _:
       {
         mode = "n";
         key = "<leader>oy";
-        action = ":ObsidianYesterday<CR>";
+        action = ":Obsidian yesterday<CR>";
         options = {
           silent = true;
           desc = "Daily note (yesterday)";
@@ -239,7 +235,7 @@ _:
       {
         mode = "n";
         key = "<leader>ot";
-        action = ":ObsidianTemplate<CR>";
+        action = ":Obsidian template<CR>";
         options = {
           silent = true;
           desc = "Insert template";
@@ -248,7 +244,7 @@ _:
       {
         mode = "n";
         key = "<leader>op";
-        action = ":ObsidianPasteImg<CR>";
+        action = ":Obsidian paste_img<CR>";
         options = {
           silent = true;
           desc = "Paste image";
@@ -257,27 +253,25 @@ _:
       {
         mode = "n";
         key = "<leader>or";
-        action = ":ObsidianRename<CR>";
+        action = ":Obsidian rename<CR>";
         options = {
           silent = true;
           desc = "Rename note";
         };
       }
-      # Toggle checkbox under cursor
       {
         mode = "n";
         key = "<leader>oc";
-        action = ":ObsidianToggleCheckbox<CR>";
+        action = ":Obsidian toggle_checkbox<CR>";
         options = {
           silent = true;
           desc = "Toggle checkbox";
         };
       }
-      # Create link from selection
       {
         mode = "v";
         key = "<leader>ol";
-        action = ":ObsidianLink<CR>";
+        action = ":Obsidian link<CR>";
         options = {
           silent = true;
           desc = "Link selection";
@@ -286,17 +280,16 @@ _:
       {
         mode = "v";
         key = "<leader>on";
-        action = ":ObsidianLinkNew<CR>";
+        action = ":Obsidian link_new<CR>";
         options = {
           silent = true;
           desc = "Link to new note";
         };
       }
-      # Follow link under cursor
       {
         mode = "n";
         key = "gf";
-        action = ":ObsidianFollowLink<CR>";
+        action = ":Obsidian follow_link<CR>";
         options = {
           silent = true;
           desc = "Follow Obsidian link";
