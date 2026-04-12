@@ -153,6 +153,10 @@ _:
               __unkeyed-1 = "<leader>x";
               group = "Diagnostics";
             }
+            {
+              __unkeyed-1 = "<leader>o";
+              group = "Obsidian";
+            }
           ];
         };
       };
