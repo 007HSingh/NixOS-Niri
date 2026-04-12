@@ -20,6 +20,7 @@
     tokei
     gnumake
     nixfmt
+    nix-output-monitor
 
     # Applications
     obsidian

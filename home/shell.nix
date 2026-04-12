@@ -29,6 +29,11 @@
         update = "nh os switch";
         home-update = "nh home switch";
 
+        nom-build = "nom build";
+        nom-shell = "nom shell";
+        nom-develop = "nom develop";
+        nom-run = "nom run";
+
         # Modern replacements
         ls = "eza -la --icons";
         cat = "bat";
