@@ -109,8 +109,8 @@ _:
 
             # Rounded pill/bubble section separators
             section_separators = {
-              left = "";
-              right = "";
+              left = "";
+              right = "";
             };
 
             # Soft inner component separators
@@ -120,6 +120,7 @@ _:
             };
 
             globalstatus = true;
+            refresh = { statusline = 100; };
             disabled_filetypes = {
               statusline = [ "alpha" ];
             };

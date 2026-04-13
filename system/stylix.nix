@@ -49,7 +49,7 @@
     fonts = {
       monospace = {
         package = pkgs.maple-mono.NF;
-        name = "Maple Mono";
+        name = "Maple Mono NF";
       };
 
       sansSerif = {
