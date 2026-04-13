@@ -9,7 +9,6 @@
     ./firefox.nix
     ./git.nix
     ./idle.nix
-    ./nixvim
     ./noctalia.nix
     ./packages.nix
     ./shell.nix
