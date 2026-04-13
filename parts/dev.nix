@@ -11,7 +11,7 @@ _:
 
         # Tools for Nix development
         packages = with pkgs; [
-          # Linters (not in nixvim extraPackages)
+          # Linters
           statix
           deadnix
           # Shell management

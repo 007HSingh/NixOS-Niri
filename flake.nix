@@ -17,12 +17,6 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
-    # Nixvim for Neovim configuration
-    nixvim = {
-      url = "github:nix-community/nixvim";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
-
     # Catppuccin theming
     catppuccin = {
       url = "github:catppuccin/nix";

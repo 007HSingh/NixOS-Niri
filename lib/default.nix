@@ -8,7 +8,6 @@ let
     nixpkgs-unstable
     home-manager
     catppuccin
-    nixvim
     spicetify
     nix-index-database
     sops-nix
@@ -73,7 +72,6 @@ in
                 value = {
                   imports = [
                     ../users/${username}
-                    nixvim.homeModules.nixvim
                     spicetify.homeManagerModules.default
                     catppuccin.homeModules.catppuccin
                     nix-index-database.homeModules.nix-index
