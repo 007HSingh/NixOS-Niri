@@ -24,6 +24,11 @@
     gnumake
     nix-output-monitor
 
+    # Build tools
+    gcc
+    pkg-config
+    pcre
+
     # Applications
     obsidian
     stable.keepassxc
