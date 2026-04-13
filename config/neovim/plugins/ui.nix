@@ -103,46 +103,82 @@ _:
         enable = true;
         settings = {
           options = {
+            # Dynamic — inherits Catppuccin/Stylix active colorscheme (no hardcoded colors)
             theme = "auto";
             icons_enabled = true;
 
-            component_separators = {
-              left = "";
-              right = "";
-            };
+            # Rounded pill/bubble section separators
             section_separators = {
               left = "";
               right = "";
             };
+
+            # Soft inner component separators
+            component_separators = {
+              left = "";
+              right = "";
+            };
+
             globalstatus = true;
             disabled_filetypes = {
               statusline = [ "alpha" ];
             };
           };
+
           sections = {
             lualine_a = [
               {
                 __unkeyed-1 = "mode";
                 icon = "";
+                padding = {
+                  left = 2;
+                  right = 2;
+                };
               }
             ];
             lualine_b = [
               {
                 __unkeyed-1 = "branch";
                 icon = "";
+                padding = {
+                  left = 2;
+                  right = 1;
+                };
               }
-              "diff"
-              "diagnostics"
+              {
+                __unkeyed-1 = "diff";
+                padding = {
+                  left = 1;
+                  right = 1;
+                };
+              }
+              {
+                __unkeyed-1 = "diagnostics";
+                padding = {
+                  left = 1;
+                  right = 2;
+                };
+              }
             ];
             lualine_c = [
               {
                 __unkeyed-1 = "filename";
                 file_status = true;
                 path = 1;
+                padding = {
+                  left = 2;
+                  right = 2;
+                };
               }
             ];
             lualine_x = [
-              "encoding"
+              {
+                __unkeyed-1 = "encoding";
+                padding = {
+                  left = 2;
+                  right = 1;
+                };
+              }
               {
                 __unkeyed-1 = "fileformat";
                 symbols = {
@@ -150,12 +186,39 @@ _:
                   dos = "";
                   mac = "";
                 };
+                padding = {
+                  left = 1;
+                  right = 1;
+                };
               }
-              "filetype"
+              {
+                __unkeyed-1 = "filetype";
+                padding = {
+                  left = 1;
+                  right = 2;
+                };
+              }
             ];
-            lualine_y = [ "progress" ];
-            lualine_z = [ "location" ];
+            lualine_y = [
+              {
+                __unkeyed-1 = "progress";
+                padding = {
+                  left = 2;
+                  right = 1;
+                };
+              }
+            ];
+            lualine_z = [
+              {
+                __unkeyed-1 = "location";
+                padding = {
+                  left = 1;
+                  right = 2;
+                };
+              }
+            ];
           };
+
           inactive_sections = {
             lualine_a = [ ];
             lualine_b = [ ];
