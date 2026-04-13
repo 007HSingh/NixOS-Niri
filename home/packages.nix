@@ -10,6 +10,9 @@
     poppler
     resvg
 
+    # Editor
+    neovim
+
     # CLI tools
     unzip
     zip
