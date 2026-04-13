@@ -6,6 +6,11 @@
 // Find the full list of options on the wiki:
 // https://yalter.github.io/niri/Configuration:-Input
 prefer-no-csd
+
+// ── Glassmorphism: Note on blur ─────────────────────────────────────────────
+// window-blur is not yet in this Niri build; frosted glass is achieved via
+// per-window opacity (see window-rule blocks below) + kitty's native
+// background_blur. The aesthetic is consistent across the compositor.
 input {
     keyboard {
         repeat-rate 35
@@ -190,13 +195,14 @@ layout {
 
         // inactive-gradient from="#505050" to="#808080" angle=45 relative-to="workspace-view"
     }
-    // You can enable drop shadows for windows.
+    // Drop shadows — increase softness to complement glass transparency.
+    // Lighter colour (vs pure black) avoids harsh edges on translucent windows.
     shadow {
         on
-        softness 30
-        spread 5
-        offset x=0 y=5
-        color "#0007"
+        softness 40
+        spread 3
+        offset x=0 y=6
+        color "#00000066"
     }
     // Struts shrink the area occupied by windows, similarly to layer-shell panels.
     // You can think of them as a kind of outer gaps. They are set in logical pixels.
@@ -295,8 +301,22 @@ window-rule {
  // Use this instead if you want them visible on third-party screenshot tools.
     // block-out-from "screencast"
 }
-// Example: enable rounded corners for all windows.
-// (This example rule is commented out with a "/-" in front.)
+// ── Glassmorphism: Global default opacity (catch-all, no match filter) ───────
+// Applied to every window unless a later per-app rule overrides it.
+// Kitty is excluded (next rule) because it manages opacity internally via
+// background_opacity; stacking two opacity multipliers would make it too dark.
+window-rule {
+    opacity 0.92
+}
+
+// ── Kitty: opt out of global opacity — kitty handles it natively ─────────────
+window-rule {
+    match app-id="kitty"
+    opacity 1.0
+}
+
+// ── Rounded corners for all windows ──────────────────────────────────────────
+// 20 px radius matches the glassmorphism aesthetic; increase for pill-like UI.
 window-rule {
     geometry-corner-radius 20
     clip-to-geometry true
@@ -327,13 +347,7 @@ window-rule {
     match app-id="code"
     opacity 0.8
 }
-// ── Inactive window dimming ────────────────────────────────────
-// Subtle opacity reduction on unfocused windows for visual depth.
-// Raised from 0.75 — at 75% it stacked badly with per-app transparency.
-window-rule {
-    match is-active=false
-    opacity 0.88
-}
+// Inactive window dimming removed — no global transparency
 binds {
     // Keys consist of modifiers separated by + signs, followed by an XKB key name
     // in the end. To find an XKB name for a particular key, you may use a program
