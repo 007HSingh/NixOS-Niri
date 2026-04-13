@@ -17,7 +17,6 @@ return {
   },
   event = "BufReadPre",
   config = function()
-    local lspconfig = require("lspconfig")
     local mason = require("mason")
     local mason_lspconfig = require("mason-lspconfig")
     local null_ls = require("null-ls")
@@ -25,7 +24,7 @@ return {
 
     mason.setup()
     mason_lspconfig.setup({
-      ensure_installed = { "lua_ls", "pyright", "tsserver", "rust_analyzer", "gopls", "bashls", "html", "cssls", "jsonls", "yamlls" },
+      ensure_installed = { "lua_ls", "pyright", "rust_analyzer", "bashls", "jsonls", "yamlls", "jdtls", "nil_ls"},
     })
 
     -- on_attach common mappings
@@ -43,11 +42,15 @@ return {
       buf_set_keymap('n', '<leader>cf', '<cmd>lua vim.lsp.buf.format{ async = true }<CR>', opts)
     end
 
-    -- Setup servers with default config + on_attach
-    local servers = { "lua_ls", "pyright", "tsserver", "rust_analyzer", "gopls", "bashls", "html", "cssls", "jsonls", "yamlls" }
+    -- Setup servers with new vim.lsp.config API (Neovim 0.11+)
+    local servers = { "lua_ls", "pyright", "ts_ls", "rust_analyzer", "gopls", "bashls", "html", "cssls", "jsonls", "yamlls" }
     for _, name in ipairs(servers) do
-      lspconfig[name].setup({ on_attach = on_attach, flags = { debounce_text_changes = 150 } })
+      vim.lsp.config(name, {
+        on_attach = on_attach,
+        flags = { debounce_text_changes = 150 }
+      })
     end
+    vim.lsp.enable(servers)
 
     -- Null-ls for formatting / diagnostics (conform integration)
     null_ls.setup({

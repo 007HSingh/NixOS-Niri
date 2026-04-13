@@ -28,6 +28,7 @@
     gcc
     pkg-config
     pcre
+    cargo
 
     # Applications
     obsidian
