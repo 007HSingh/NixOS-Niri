@@ -19,7 +19,6 @@
     hyperfine
     tokei
     gnumake
-    nixfmt
     nix-output-monitor
 
     # Applications
@@ -41,6 +40,37 @@
 
     # Git tools
     git-absorb
+
+    # ── Neovim: LSP servers ─────────────────────────────────────────────────
+    nixd
+    lua-language-server
+    typescript-language-server
+    vscode-langservers-extracted  # html, css, json, eslint
+    yaml-language-server
+    dockerfile-language-server
+    docker-compose-language-service
+    pyright
+    rust-analyzer
+    bash-language-server
+    jdt-language-server
+    clang-tools
+    marksman
+
+    # ── Neovim: Formatters ──────────────────────────────────────────────────
+    nixfmt-rfc-style
+    stylua
+    prettier
+    black
+    rustfmt
+    shfmt
+    kdlfmt
+    google-java-format
+
+    # ── Neovim: CLI tools (Telescope, DAP, etc.) ────────────────────────────
+    ripgrep
+    fd
+    tree-sitter
+    nodejs  # required by markdown-preview.nvim
   ];
 
   home.sessionVariables = {
