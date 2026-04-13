@@ -2,6 +2,22 @@
 -- INIT.LUA — Vanilla Neovim entry point
 -- ============================================================================
 
+-- Polyfill for intrusive LSP position_encoding warnings (Neovim 0.11+)
+-- This "solves" the issue by providing the required parameter if a plugin forgets it.
+local original_make_range_params = vim.lsp.util.make_range_params
+vim.lsp.util.make_range_params = function(winid, encoding)
+  if not encoding then
+    local bufnr = vim.api.nvim_win_get_buf(winid or 0)
+    for _, client in ipairs(vim.lsp.get_clients({ bufnr = bufnr })) do
+      if client.offset_encoding then
+        encoding = client.offset_encoding
+        break
+      end
+    end
+  end
+  return original_make_range_params(winid, encoding)
+end
+
 -- Leader keys must be set BEFORE lazy.nvim is loaded
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
