@@ -64,8 +64,6 @@
     jdt-language-server
     clang-tools
     marksman
-    python314Packages.flake8
-    eslint
 
     # ── Neovim: Formatters ──────────────────────────────────────────────────
     nixfmt
