@@ -34,14 +34,7 @@ return {
     event = "LspAttach",
     dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" },
     config = function()
-      require("lspsaga").setup({
-        ui = { border = "rounded", code_action = "💡" },
-        symbol_in_winbar = { enable = true },
-        lightbulb = { enable = true, virtual_text = false },
-        finder = { keys = { toggle_or_open = "o", quit = "q" } },
-        code_action = { keys = { quit = "q", exec = "<CR>" } },
-        rename = { keys = { quit = "<C-c>", exec = "<CR>" } },
-      })
+      require("lspsaga").setup({})
     end,
   },
 
