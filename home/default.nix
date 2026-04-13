@@ -4,6 +4,7 @@
 
 {
   imports = [
+    ./audio.nix
     ./clipboard.nix
     ./firefox.nix
     ./git.nix
