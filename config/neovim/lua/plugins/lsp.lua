@@ -7,10 +7,9 @@ return {
     "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",
     "jay-babu/mason-null-ls.nvim",
-    "jose-elias-alvarez/null-ls.nvim",
+    "nvimtools/none-ls.nvim",
     "stevearc/conform.nvim",
     "folke/trouble.nvim",
-    "tami5/lspsaga.nvim",
     "ray-x/lsp_signature.nvim",
     "folke/lsp-colors.nvim",
     "folke/neodev.nvim",
@@ -19,12 +18,16 @@ return {
   config = function()
     local mason = require("mason")
     local mason_lspconfig = require("mason-lspconfig")
+    local mason_null_ls = require("mason-null-ls")
     local null_ls = require("null-ls")
     local conform = require("conform")
 
     mason.setup()
     mason_lspconfig.setup({
       ensure_installed = { "lua_ls", "pyright", "rust_analyzer", "bashls", "jsonls", "yamlls", "jdtls", "nil_ls"},
+    })
+    mason_null_ls.setup({
+      ensure_installed = { "stylua", "black", "prettier", "flake8", "eslint" },
     })
 
     -- on_attach common mappings

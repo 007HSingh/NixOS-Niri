@@ -57,9 +57,9 @@ return {
         stages = "fade",
         timeout = 3000,
         render = "compact",
-        -- NONE lets notify inherit the terminal's transparent background;
-        -- avoids a solid dark rectangle breaking the glass aesthetic.
-        background_colour = "NONE",
+        -- nvim-notify requires a hex color for its animations/transparency calculations.
+        -- Using #000000 to maintain compatibility with the transparent/glass aesthetic.
+        background_colour = "#000000",
       })
       vim.notify = notify
     end,
