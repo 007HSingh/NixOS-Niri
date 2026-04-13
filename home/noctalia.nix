@@ -19,9 +19,9 @@
 
     ".cache/noctalia/wallpapers.json" = {
       text = builtins.toJSON {
-        defaultWallpaper = "${config.xdg.configHome}/wallpapers/wallpaper-13.png";
+        defaultWallpaper = "${config.xdg.configHome}/wallpapers/wallpaper-25.jpg";
         wallpapers = {
-          "eDP-1" = "${config.xdg.configHome}/wallpapers/wallpaper-13.png";
+          "eDP-1" = "${config.xdg.configHome}/wallpapers/wallpaper-25.jpg";
         };
       };
     };
