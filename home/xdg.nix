@@ -14,7 +14,7 @@ let
     btop = "btop";
     wallpapers = "wallpapers";
     eza = "eza";
-    neovim = "nvim";
+    nvim = "neovim";
   };
 in
 {
