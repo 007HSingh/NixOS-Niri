@@ -48,7 +48,7 @@
     nixd
     lua-language-server
     typescript-language-server
-    vscode-langservers-extracted  # html, css, json, eslint
+    vscode-langservers-extracted # html, css, json, eslint
     yaml-language-server
     dockerfile-language-server
     docker-compose-language-service
@@ -60,7 +60,7 @@
     marksman
 
     # ── Neovim: Formatters ──────────────────────────────────────────────────
-    nixfmt-rfc-style
+    nixfmt
     stylua
     prettier
     black
@@ -73,7 +73,7 @@
     ripgrep
     fd
     tree-sitter
-    nodejs  # required by markdown-preview.nvim
+    nodejs # required by markdown-preview.nvim
   ];
 
   home.sessionVariables = {
