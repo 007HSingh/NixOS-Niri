@@ -40,8 +40,7 @@ return {
         lightbulb = { enable = true, virtual_text = false },
         finder = { keys = { toggle_or_open = "o", quit = "q" } },
         code_action = { keys = { quit = "q", exec = "<CR>" } },
-        rename    = { keys = { quit = "<C-c>", exec = "<CR>" } },
-        diagnostic = { show_code_action = true },
+        rename = { keys = { quit = "<C-c>", exec = "<CR>" } },
       })
     end,
   },
