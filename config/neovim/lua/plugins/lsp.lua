@@ -8,6 +8,7 @@ return {
     "williamboman/mason-lspconfig.nvim",
     "jay-babu/mason-null-ls.nvim",
     "nvimtools/none-ls.nvim",
+    "nvimtools/none-ls-extras.nvim",
     "stevearc/conform.nvim",
     "folke/trouble.nvim",
     "ray-x/lsp_signature.nvim",
@@ -61,8 +62,8 @@ return {
         null_ls.builtins.formatting.stylua,
         null_ls.builtins.formatting.black,
         null_ls.builtins.formatting.prettier,
-        null_ls.builtins.diagnostics.flake8,
-        null_ls.builtins.diagnostics.eslint,
+        require("none-ls.diagnostics.flake8"),
+        require("none-ls.diagnostics.eslint"),
       },
     })
 
