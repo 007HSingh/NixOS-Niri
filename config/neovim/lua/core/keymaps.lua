@@ -262,3 +262,12 @@ map("n", "<leader>oc", ":Obsidian toggle_checkbox<CR>", { desc = "Toggle checkbo
 map("v", "<leader>ol", ":Obsidian link<CR>", { desc = "Link selection" })
 map("v", "<leader>on", ":Obsidian link_new<CR>", { desc = "Link to new note" })
 map("n", "gf", ":Obsidian follow_link<CR>", { desc = "Follow Obsidian link" })
+
+-- ============================================================================
+-- YANKY (yank ring)
+-- ============================================================================
+map({ "n", "x" }, "p", "<Plug>(YankyPutAfter)", { desc = "Put after" })
+map({ "n", "x" }, "P", "<Plug>(YankyPutBefore)", { desc = "Put before" })
+map("n", "<C-p>", "<Plug>(YankyPreviousEntry)", { desc = "Previous yank" })
+map("n", "<C-n>", "<Plug>(YankyNextEntry)", { desc = "Next yank" })
+map("n", "<leader>fy", "<cmd>YankyRingHistory<cr>", { desc = "Yank history" })
