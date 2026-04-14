@@ -119,10 +119,10 @@ map("n", "<leader><space>", ":Telescope find_files<CR>", { desc = "Find files" }
 -- LSP (set in lsp.lua on_attach, but Saga keymaps are global)
 -- ============================================================================
 map("n", "<leader>cl", vim.diagnostic.open_float, { desc = "Line diagnostics" })
-map("n", "<leader>cf", vim.lsp.buf.format, { desc = "Format buffer" })
+map("n", "<leader>cf", function()
+	require("conform").format({ async = true })
+end, { desc = "Format buffer" })
 
--- Diagnostics (standard)
-map("n", "<leader>cd", vim.diagnostic.open_float, { desc = "Show diagnostic" })
 map("n", "[d", vim.diagnostic.goto_prev, { desc = "Previous diagnostic" })
 map("n", "]d", vim.diagnostic.goto_next, { desc = "Next diagnostic" })
 map("n", "<leader>xq", vim.diagnostic.setloclist, { desc = "Diagnostics to loclist" })
