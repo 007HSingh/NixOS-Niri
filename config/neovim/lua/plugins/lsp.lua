@@ -35,7 +35,7 @@ return {
 				},
 			})
 			mason_null_ls.setup({
-				ensure_installed = { "stylua", "black", "prettier", "flake8", "eslint" },
+				ensure_installed = { "flake8", "eslint" },
 			})
 
 			-- Peek definition helper (Lspsaga replacement)
@@ -109,13 +109,18 @@ return {
 			-- Null-ls for formatting / diagnostics
 			null_ls.setup({
 				sources = {
-					require("none-ls.diagnostics.flake8"),
-					require("none-ls.diagnostics.eslint"),
 				},
 			})
 
 			-- Conform (fallback formatter)
 			conform.setup({
+        formatters = {
+          google_java_format = {
+            command = "google-java-format",
+            args = { "-" },
+            stdin = true,
+          },
+        },
 				formatters_by_ft = {
 					lua = { "stylua" },
 					python = { "black" },
@@ -124,6 +129,12 @@ return {
 					json = { "prettier" },
 					yaml = { "prettier" },
 					markdown = { "prettier" },
+          nix = { "nixfmt" },
+          rust = { "rustfmt" },
+          sh = { "shfmt" },
+          bash = { "shfmt" },
+          kdl = { "kdlfmt" },
+          java = { "google_java_format" },
 				},
 			})
 		end,

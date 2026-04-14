@@ -75,6 +75,14 @@
     kdlfmt
     google-java-format
 
+    # ── Neovim: Linters ─────────────────────────────────────────────────────
+    luacheck
+    shellcheck
+    python314Packages.flake8
+    eslint_d
+    markdownlint-cli
+
+
     # ── Neovim: CLI tools (Telescope, DAP, etc.) ────────────────────────────
     ripgrep
     fd
