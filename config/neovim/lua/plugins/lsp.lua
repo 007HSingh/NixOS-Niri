@@ -88,7 +88,8 @@ return {
 				"cssls",
 				"jsonls",
 				"yamlls",
-				"nil_ls",
+				"nixd",
+				"jdtls",
 			}
 			for _, name in ipairs(servers) do
 				vim.lsp.config(name, {
