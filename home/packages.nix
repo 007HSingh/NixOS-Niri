@@ -76,12 +76,11 @@
     google-java-format
 
     # ── Neovim: Linters ─────────────────────────────────────────────────────
-    luacheck
+    lua55Packages.luacheck
     shellcheck
     python314Packages.flake8
     eslint_d
-    markdownlint-cli
-
+    markdownlint-cli2
 
     # ── Neovim: CLI tools (Telescope, DAP, etc.) ────────────────────────────
     ripgrep
