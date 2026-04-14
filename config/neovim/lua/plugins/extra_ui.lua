@@ -21,9 +21,10 @@ return {
 		event = "BufReadPost",
 		config = function()
 			require("illuminate").configure({
-				providers = { "lsp", "treesitter", "regex" },
+				providers = { "lsp", "regex" },
 				delay = 200,
 				under_cursor = true,
+				large_file_cutoff = 2000,
 			})
 		end,
 	},
