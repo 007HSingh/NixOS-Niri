@@ -43,6 +43,13 @@ vim.validate = function(opt, ...)
 	return original_validate(opt, ...)
 end
 
+-- Polyfill for vim.lsp.buf_get_clients (removed in Neovim 0.12)
+-- Used by project.nvim and other legacy plugins.
+---@diagnostic disable-next-line: duplicate-set-field
+vim.lsp.buf_get_clients = function(bufnr)
+	return vim.lsp.get_clients({ bufnr = bufnr or 0 })
+end
+
 -- Leader keys must be set BEFORE lazy.nvim is loaded
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
