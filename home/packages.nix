@@ -76,7 +76,7 @@
     google-java-format
 
     # ── Neovim: Linters ─────────────────────────────────────────────────────
-    lua55Packages.luacheck
+    luajitPackages.luacheck
     shellcheck
     python314Packages.flake8
     eslint_d
