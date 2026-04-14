@@ -104,3 +104,54 @@ autocmd("LspAttach", {
 		end
 	end,
 })
+
+-- ============================================================================
+-- Glass (Transparency) Overrides
+-- ============================================================================
+
+local function apply_glass()
+	local hl = vim.api.nvim_set_hl
+
+	-- ── Core editor surfaces ─────────────────────────────────────────────
+	hl(0, "Normal", { bg = "NONE", ctermbg = "NONE" })
+	hl(0, "NormalNC", { bg = "NONE", ctermbg = "NONE" })
+	hl(0, "EndOfBuffer", { bg = "NONE", ctermbg = "NONE" })
+	hl(0, "SignColumn", { bg = "NONE", ctermbg = "NONE" })
+	hl(0, "LineNr", { bg = "NONE", ctermbg = "NONE" })
+	hl(0, "CursorLineNr", { bg = "NONE", ctermbg = "NONE" })
+	hl(0, "FoldColumn", { bg = "NONE", ctermbg = "NONE" })
+
+	-- ── Floating windows — subtle tinted glass ───────────────────────────
+	local ok, cp = pcall(require, "catppuccin.palettes")
+	if ok then
+		local palette = cp.get_palette("mocha")
+		hl(0, "NormalFloat", { bg = palette.mantle, ctermbg = "NONE" })
+		hl(0, "FloatBorder", { fg = palette.lavender, bg = palette.mantle })
+		hl(0, "FloatTitle", { fg = palette.lavender, bg = palette.mantle, bold = true })
+	else
+		hl(0, "NormalFloat", { bg = "NONE", ctermbg = "NONE" })
+		hl(0, "FloatBorder", { bg = "NONE", ctermbg = "NONE" })
+	end
+
+	-- ── Pmenu (completion menu) ──────────────────────────────────────────
+	hl(0, "Pmenu", { bg = "NONE", ctermbg = "NONE" })
+	hl(0, "PmenuSbar", { bg = "NONE", ctermbg = "NONE" })
+
+	-- ── Telescope ────────────────────────────────────────────────────────
+	hl(0, "TelescopeNormal", { bg = "NONE", ctermbg = "NONE" })
+	hl(0, "TelescopePreviewNormal", { bg = "NONE", ctermbg = "NONE" })
+	hl(0, "TelescopeResultsNormal", { bg = "NONE", ctermbg = "NONE" })
+	hl(0, "TelescopePromptNormal", { bg = "NONE", ctermbg = "NONE" })
+
+	-- ── StatusLine ───────────────────────────────────────────────────────
+	hl(0, "StatusLine", { bg = "NONE", ctermbg = "NONE" })
+	hl(0, "StatusLineNC", { bg = "NONE", ctermbg = "NONE" })
+end
+
+apply_glass()
+
+autocmd("ColorScheme", {
+	group = augroup("GlassHighlights", { clear = true }),
+	callback = apply_glass,
+	desc = "Re-apply glass (transparent) highlight overrides after colorscheme change",
+})

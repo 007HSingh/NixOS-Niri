@@ -118,16 +118,7 @@ map("n", "<leader><space>", ":Telescope find_files<CR>", { desc = "Find files" }
 -- ============================================================================
 -- LSP (set in lsp.lua on_attach, but Saga keymaps are global)
 -- ============================================================================
-map("n", "K", ":Lspsaga hover_doc<CR>", { desc = "Hover documentation (Saga)" })
-map("n", "gh", ":Lspsaga finder<CR>", { desc = "LSP Finder (Saga)" })
-map("n", "gp", ":Lspsaga peek_definition<CR>", { desc = "Peek definition (Saga)" })
-map("n", "<leader>ca", ":Lspsaga code_action<CR>", { desc = "Code action (Saga)" })
-map("v", "<leader>ca", ":<C-U>Lspsaga code_action<CR>", { desc = "Code action (Saga)" })
-map("n", "<leader>cr", function()
-	return ":IncRename " .. vim.fn.expand("<cword>")
-end, { expr = true, desc = "Rename (IncRename)" })
-map("n", "<leader>cl", ":Lspsaga show_line_diagnostics<CR>", { desc = "Line diagnostics (Saga)" })
-map("n", "<leader>co", ":Lspsaga outline<CR>", { desc = "Toggle outline (Saga)" })
+map("n", "<leader>cl", vim.diagnostic.open_float, { desc = "Line diagnostics" })
 map("n", "<leader>cf", vim.lsp.buf.format, { desc = "Format buffer" })
 
 -- Diagnostics (standard)
@@ -136,13 +127,6 @@ map("n", "[d", vim.diagnostic.goto_prev, { desc = "Previous diagnostic" })
 map("n", "]d", vim.diagnostic.goto_next, { desc = "Next diagnostic" })
 map("n", "<leader>xq", vim.diagnostic.setloclist, { desc = "Diagnostics to loclist" })
 
--- LSP buf actions (set globally; also set per-buffer in on_attach)
-map("n", "gd", vim.lsp.buf.definition, { desc = "Go to definition" })
-map("n", "gD", vim.lsp.buf.declaration, { desc = "Go to declaration" })
-map("n", "gi", vim.lsp.buf.implementation, { desc = "Go to implementation" })
-map("n", "go", vim.lsp.buf.type_definition, { desc = "Go to type definition" })
-map("n", "gr", vim.lsp.buf.references, { desc = "Show references" })
-map("n", "gs", vim.lsp.buf.signature_help, { desc = "Signature help" })
 
 -- ============================================================================
 -- TROUBLE
