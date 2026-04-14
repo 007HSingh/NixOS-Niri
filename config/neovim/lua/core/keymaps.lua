@@ -170,7 +170,7 @@ end, { desc = "Harpoon file 4" })
 map("n", "<leader>mp", ":MarkdownPreview<CR>", { desc = "Markdown preview" })
 map("n", "<leader>ms", ":MarkdownPreviewStop<CR>", { desc = "Stop markdown preview" })
 map("n", "<leader>u", ":UndotreeToggle<CR>", { desc = "Toggle undotree" })
-map("n", "<leader>o", ":Oil<CR>", { desc = "Open oil" })
+map("n", "<leader>O", ":Oil<CR>", { desc = "Open oil" })
 
 -- UFO (folding)
 map("n", "zR", function()
@@ -263,3 +263,12 @@ map("n", "<leader>a", "<cmd>AerialToggle<cr>", { desc = "Toggle aerial outline" 
 map("n", "<leader>fa", "<cmd>Telescope aerial<cr>", { desc = "Find symbol (aerial)" })
 map("n", "{", "<cmd>AerialPrev<cr>", { desc = "Previous symbol" })
 map("n", "}", "<cmd>AerialNext<cr>", { desc = "Next symbol" })
+
+-- Toggle format-on-save
+map("n", "<leader>tf", function()
+  vim.g.disable_format_on_save = not vim.g.disable_format_on_save
+  vim.notify(
+    "Format on save: " .. (vim.g.disable_format_on_save and "disabled" or "enabled"),
+    vim.log.levels.INFO
+  )
+end, { desc = "Toggle format on save" })
