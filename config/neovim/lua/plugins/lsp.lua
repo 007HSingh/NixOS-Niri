@@ -23,19 +23,10 @@ return {
 
 			mason.setup()
 			mason_lspconfig.setup({
-				ensure_installed = {
-					"lua_ls",
-					"pyright",
-					"rust_analyzer",
-					"bashls",
-					"jsonls",
-					"yamlls",
-					"jdtls",
-					"nil_ls",
-				},
+				ensure_installed = {},
 			})
 			mason_null_ls.setup({
-				ensure_installed = { "flake8", "eslint" },
+				ensure_installed = {},
 			})
 
 			-- Peek definition helper (Lspsaga replacement)
@@ -108,19 +99,18 @@ return {
 
 			-- Null-ls for formatting / diagnostics
 			null_ls.setup({
-				sources = {
-				},
+				sources = {},
 			})
 
 			-- Conform (fallback formatter)
 			conform.setup({
-        formatters = {
-          google_java_format = {
-            command = "google-java-format",
-            args = { "-" },
-            stdin = true,
-          },
-        },
+				formatters = {
+					google_java_format = {
+						command = "google-java-format",
+						args = { "-" },
+						stdin = true,
+					},
+				},
 				formatters_by_ft = {
 					lua = { "stylua" },
 					python = { "black" },
@@ -129,12 +119,12 @@ return {
 					json = { "prettier" },
 					yaml = { "prettier" },
 					markdown = { "prettier" },
-          nix = { "nixfmt" },
-          rust = { "rustfmt" },
-          sh = { "shfmt" },
-          bash = { "shfmt" },
-          kdl = { "kdlfmt" },
-          java = { "google_java_format" },
+					nix = { "nixfmt" },
+					rust = { "rustfmt" },
+					sh = { "shfmt" },
+					bash = { "shfmt" },
+					kdl = { "kdlfmt" },
+					java = { "google_java_format" },
 				},
 			})
 		end,

@@ -266,9 +266,6 @@ map("n", "}", "<cmd>AerialNext<cr>", { desc = "Next symbol" })
 
 -- Toggle format-on-save
 map("n", "<leader>tf", function()
-  vim.g.disable_format_on_save = not vim.g.disable_format_on_save
-  vim.notify(
-    "Format on save: " .. (vim.g.disable_format_on_save and "disabled" or "enabled"),
-    vim.log.levels.INFO
-  )
+	vim.g.disable_format_on_save = not vim.g.disable_format_on_save
+	vim.notify("Format on save: " .. (vim.g.disable_format_on_save and "disabled" or "enabled"), vim.log.levels.INFO)
 end, { desc = "Toggle format on save" })

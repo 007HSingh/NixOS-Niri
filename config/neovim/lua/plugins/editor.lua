@@ -68,12 +68,12 @@ return {
 			require("mini.ai").setup({ n_lines = 500 })
 		end,
 	},
-  {
-    "andymass/vim-matchup",
-    event = "BufReadPost",
-    init = function()
-      vim.g.matchup_matchparen_offscreen = { method = "popup" }
-      vim.g.matchup_surround_enabled = 1
-    end,
-  },
+	{
+		"andymass/vim-matchup",
+		event = "BufReadPost",
+		init = function()
+			vim.g.matchup_matchparen_offscreen = { method = "popup" }
+			vim.g.matchup_surround_enabled = 1
+		end,
+	},
 }
