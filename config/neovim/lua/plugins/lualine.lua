@@ -169,12 +169,10 @@ return {
 								.. "/"
 								.. vim.fn.expand("%:t")
 
-							local ok, aerial = pcall(require, "aerial")
-							if ok then
-								local symbols = aerial.get_location(true)
-								if #symbols > 0 then
-									local crumb = symbols[#symbols].name
-
+							local ok, navic = pcall(require, "nvim-navic")
+							if ok and navic.is_available() then
+								local crumb = navic.get_location()
+								if crumb ~= "" then
 									-- Truncation Logic
 									local total_str = breadcrumb .. " / " .. crumb
 									if #total_str > max_len then

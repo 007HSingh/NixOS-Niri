@@ -13,7 +13,6 @@ return {
 			"folke/trouble.nvim",
 			"ray-x/lsp_signature.nvim",
 			"folke/lsp-colors.nvim",
-			"folke/neodev.nvim",
 		},
 		event = "BufReadPre",
 		config = function()
@@ -67,8 +66,8 @@ return {
 				map("n", "<leader>ca", vim.lsp.buf.code_action, "Code action")
 				map("n", "<leader>cl", vim.diagnostic.open_float, "Line diagnostics")
 				map("n", "<leader>cf", function()
-					vim.lsp.buf.format({ async = true })
-				end, "Format buffer")
+					require("conform").format({ bufnr = bufnr, async = true })
+				end, "Format buffer (conform)")
 
 				-- Lspsaga replacements
 				map("n", "gh", vim.lsp.buf.references, "LSP References (Finder replacement)")
@@ -110,9 +109,6 @@ return {
 			-- Null-ls for formatting / diagnostics
 			null_ls.setup({
 				sources = {
-					null_ls.builtins.formatting.stylua,
-					null_ls.builtins.formatting.black,
-					null_ls.builtins.formatting.prettier,
 					require("none-ls.diagnostics.flake8"),
 					require("none-ls.diagnostics.eslint"),
 				},

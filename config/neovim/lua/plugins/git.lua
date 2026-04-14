@@ -17,7 +17,7 @@ return {
 					end
 					map("n", "<leader>gs", gs.stage_hunk)
 					map("n", "<leader>gu", gs.undo_stage_hunk)
-					map("n", "<leader>gp", gs.preview_hunk)
+					map("n", "<leader>gP", gs.preview_hunk)
 					map("n", "<leader>gb", gs.toggle_current_line_blame)
 				end,
 			})
