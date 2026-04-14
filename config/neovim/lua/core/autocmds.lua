@@ -159,18 +159,20 @@ autocmd({ "VimEnter", "ColorScheme" }, {
 -- ============================================================================
 augroup("FormatOnSave", { clear = true })
 autocmd("BufWritePre", {
-  group = "FormatOnSave",
-  callback = function(args)
-    -- Skip if buffer is not writable or is a special buffer
-    if vim.g.disable_format_on_save then return end
-    if vim.bo[args.buf].modifiable and not vim.bo[args.buf].readonly then
-      require("conform").format({
-        bufnr     = args.buf,
-        timeout_ms = 500,
-        -- Falls back to LSP formatter if no conform formatter is configured
-        -- (covers rust_analyzer, gopls, jdtls, nil_ls, etc.)
-        lsp_fallback = true,
-      })
-    end
-  end,
+	group = "FormatOnSave",
+	callback = function(args)
+		-- Skip if buffer is not writable or is a special buffer
+		if vim.g.disable_format_on_save then
+			return
+		end
+		if vim.bo[args.buf].modifiable and not vim.bo[args.buf].readonly then
+			require("conform").format({
+				bufnr = args.buf,
+				timeout_ms = 500,
+				-- Falls back to LSP formatter if no conform formatter is configured
+				-- (covers rust_analyzer, gopls, jdtls, nil_ls, etc.)
+				lsp_fallback = true,
+			})
+		end
+	end,
 })
