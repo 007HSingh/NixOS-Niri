@@ -3,10 +3,10 @@
 -- ============================================================================
 return {
 	"ThePrimeagen/harpoon",
-  branch = "harpoon2",
+	branch = "harpoon2",
 	dependencies = { "nvim-lua/plenary.nvim" },
 	event = "VeryLazy",
 	config = function()
-		require("harpoon").setup()
+		require("harpoon"):setup()
 	end,
 }
