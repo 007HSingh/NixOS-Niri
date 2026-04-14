@@ -61,11 +61,11 @@ return {
 			require("toggleterm").setup({ open_mapping = [[<c-\>]], direction = "float" })
 		end,
 	},
-  {
-    "echasnovski/mini.ai",
-    event = "VeryLazy",
-    config = function()
-      require("mini.ai").setup({ n_lines = 500 })
-    end,
-  },
+	{
+		"echasnovski/mini.ai",
+		event = "VeryLazy",
+		config = function()
+			require("mini.ai").setup({ n_lines = 500 })
+		end,
+	},
 }

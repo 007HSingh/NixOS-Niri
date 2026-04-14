@@ -1,17 +1,7 @@
 -- ============================================================================
--- UTILITIES — harpoon, spectre, oil, undotree, persistence, project-nvim, UFO
+-- UTILITIES — harpoon, oil, undotree, persistence, project-nvim, UFO
 -- ============================================================================
 return {
-	-- ── Spectre (search & replace) ────────────────────────────────────────────
-	{
-		"windwp/nvim-spectre",
-		cmd = "Spectre",
-		dependencies = { "nvim-lua/plenary.nvim" },
-		config = function()
-			require("spectre").setup()
-		end,
-	},
-
 	-- ── Oil (file manager as a buffer) ────────────────────────────────────────
 	{
 		"stevearc/oil.nvim",
