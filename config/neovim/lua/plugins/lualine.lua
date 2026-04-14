@@ -171,7 +171,7 @@ return {
 
 							local ok, navic = pcall(require, "nvim-navic")
 							if ok and navic.is_available() then
-								local crumb = navic.get_location()
+								local crumb = navic.get_location({ highlight = false })
 								if crumb ~= "" then
 									-- Truncation Logic
 									local total_str = breadcrumb .. " / " .. crumb

@@ -12,7 +12,6 @@ return {
 			"stevearc/conform.nvim",
 			"folke/trouble.nvim",
 			"ray-x/lsp_signature.nvim",
-			"folke/lsp-colors.nvim",
 		},
 		event = "BufReadPre",
 		config = function()
@@ -41,12 +40,13 @@ return {
 
 			-- Peek definition helper (Lspsaga replacement)
 			local function peek_definition()
-				local params = vim.lsp.util.make_position_params()
+				local params = vim.lsp.util.make_position_params(0, "utf-16")
 				vim.lsp.buf_request(0, "textDocument/definition", params, function(_, result)
 					if not result or vim.tbl_isempty(result) then
 						return
 					end
-					vim.lsp.util.preview_location(result[1] or result, { border = "rounded" })
+          local target = vim.islist(result) and result[1] or result
+					vim.lsp.util.preview_location(target, { border = "rounded" })
 				end)
 			end
 
@@ -74,9 +74,9 @@ return {
 				map("n", "gp", peek_definition, "Peek definition")
 				map("n", "<leader>co", "<cmd>Trouble symbols toggle focus=true<cr>", "Symbols outline (Trouble)")
 
-				-- IncRename mapping (if available)
+				-- IncRename mapping
 				map("n", "<leader>cr", function()
-					return ":IncRename " .. vim.fn.expand("<cword>")
+					vim.cmd("IncRename " .. vim.fn.expand("<cword>"))
 				end, "Rename (IncRename)")
 
 				-- Signature help (ray-x/lsp_signature)
