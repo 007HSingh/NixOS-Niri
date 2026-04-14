@@ -45,7 +45,7 @@ return {
 					if not result or vim.tbl_isempty(result) then
 						return
 					end
-          local target = vim.islist(result) and result[1] or result
+					local target = vim.islist(result) and result[1] or result
 					vim.lsp.util.preview_location(target, { border = "rounded" })
 				end)
 			end
