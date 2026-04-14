@@ -148,10 +148,8 @@ local function apply_glass()
 	hl(0, "StatusLineNC", { bg = "NONE", ctermbg = "NONE" })
 end
 
-apply_glass()
-
-autocmd("ColorScheme", {
+autocmd({ "VimEnter", "ColorScheme" }, {
 	group = augroup("GlassHighlights", { clear = true }),
 	callback = apply_glass,
-	desc = "Re-apply glass (transparent) highlight overrides after colorscheme change",
+	desc = "Apply and re-apply glass (transparent) highlight overrides",
 })

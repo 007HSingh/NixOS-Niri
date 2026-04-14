@@ -3,6 +3,7 @@
 -- ============================================================================
 return {
 	"nvim-lualine/lualine.nvim",
+	lazy = false,
 	dependencies = { "nvim-tree/nvim-web-devicons", "catppuccin" },
 	config = function()
 		local utils = require("lualine.utils.utils")

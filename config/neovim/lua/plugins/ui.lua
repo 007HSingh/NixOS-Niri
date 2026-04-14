@@ -119,7 +119,7 @@ return {
 	{
 		"lukas-reineke/indent-blankline.nvim",
 		main = "ibl",
-		event = "BufReadPost",
+		lazy = false,
 		config = function()
 			require("ibl").setup({
 				indent = { char = "│" },
