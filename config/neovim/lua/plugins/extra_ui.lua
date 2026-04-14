@@ -29,7 +29,6 @@ return {
 		end,
 	},
 
-
 	-- ── Markdown Preview ──────────────────────────────────────────────────────
 	{
 		"iamcco/markdown-preview.nvim",
