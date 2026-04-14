@@ -165,22 +165,6 @@ map("n", "<leader>4", function()
 end, { desc = "Harpoon file 4" })
 
 -- ============================================================================
--- SPECTRE (search & replace)
--- ============================================================================
-map("n", "<leader>sr", function()
-	require("spectre").open()
-end, { desc = "Search and replace" })
-map("n", "<leader>sw", function()
-	require("spectre").open_visual({ select_word = true })
-end, { desc = "Search current word" })
-map("v", "<leader>sw", function()
-	require("spectre").open_visual()
-end, { desc = "Search selection" })
-map("n", "<leader>sp", function()
-	require("spectre").open_file_search({ select_word = true })
-end, { desc = "Search in current file" })
-
--- ============================================================================
 -- MISC PLUGINS
 -- ============================================================================
 map("n", "<leader>mp", ":MarkdownPreview<CR>", { desc = "Markdown preview" })
@@ -271,3 +255,11 @@ map({ "n", "x" }, "P", "<Plug>(YankyPutBefore)", { desc = "Put before" })
 map("n", "<C-p>", "<Plug>(YankyPreviousEntry)", { desc = "Previous yank" })
 map("n", "<C-n>", "<Plug>(YankyNextEntry)", { desc = "Next yank" })
 map("n", "<leader>fy", "<cmd>YankyRingHistory<cr>", { desc = "Yank history" })
+
+-- ============================================================================
+-- AERIAL (symbol outline)
+-- ============================================================================
+map("n", "<leader>a", "<cmd>AerialToggle<cr>", { desc = "Toggle aerial outline" })
+map("n", "<leader>fa", "<cmd>Telescope aerial<cr>", { desc = "Find symbol (aerial)" })
+map("n", "{", "<cmd>AerialPrev<cr>", { desc = "Previous symbol" })
+map("n", "}", "<cmd>AerialNext<cr>", { desc = "Next symbol" })

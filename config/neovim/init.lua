@@ -27,7 +27,7 @@ vim.validate = function(opt, ...)
 	if type(opt) == "table" and select("#", ...) == 0 and next(opt) ~= nil then
 		local is_old_syntax = true
 		for _, v in pairs(opt) do
-			if type(v) ~= "table" then
+			if type(v) ~= "table" or type(v[2]) ~= "string" then
 				is_old_syntax = false
 				break
 			end
