@@ -77,7 +77,7 @@ require("core.autocmds")
 -- PLUGINS via lazy.nvim
 -- ============================================================================
 require("lazy").setup("plugins", {
-	defaults = { lazy = false },
+		defaults = { lazy = true },
 	install = { colorscheme = { "catppuccin-mocha", "habamax" } },
 	checker = { enabled = false },
 	performance = {
