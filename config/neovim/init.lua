@@ -18,6 +18,31 @@ vim.lsp.util.make_range_params = function(winid, encoding)
 	return original_make_range_params(winid, encoding)
 end
 
+-- Refined Polyfill for vim.validate deprecation (Neovim 1.0+)
+-- Intercepts the old { name = { value, type, optional } } syntax and converts it to the new positional syntax.
+local original_validate = vim.validate
+---@diagnostic disable-next-line: duplicate-set-field
+vim.validate = function(opt, ...)
+	-- Only intercept if it's a single table argument and smells like the old syntax
+	if type(opt) == "table" and select("#", ...) == 0 and next(opt) ~= nil then
+		local is_old_syntax = true
+		for _, v in pairs(opt) do
+			if type(v) ~= "table" then
+				is_old_syntax = false
+				break
+			end
+		end
+
+		if is_old_syntax then
+			for k, v in pairs(opt) do
+				original_validate(k, v[1], v[2], v[3])
+			end
+			return
+		end
+	end
+	return original_validate(opt, ...)
+end
+
 -- Leader keys must be set BEFORE lazy.nvim is loaded
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
