@@ -1,6 +1,6 @@
 # System Services
 # Blueman, power management, Docker, misc services
-_:
+{ pkgs, ... }:
 
 {
   # Locale and timezone
@@ -19,6 +19,7 @@ _:
     ollama = {
       enable = true;
       acceleration = "cuda";
+      package = pkgs.ollama-cuda;
     };
   };
 
