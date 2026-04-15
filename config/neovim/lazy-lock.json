@@ -95,6 +95,10 @@
     "branch": "main",
     "commit": "ff2cbcba459b637ec3fd165a2be59b7bbaeedf0d"
   },
+  "leetcode.nvim": {
+    "branch": "master",
+    "commit": "fdd3f91800b3983e27bc9fcfb99cfa7293d7f11a"
+  },
   "lsp_signature.nvim": {
     "branch": "master",
     "commit": "a65b38f260cc3470a05b4afb84c8d868617d476d"
