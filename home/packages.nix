@@ -81,6 +81,7 @@
     python314Packages.flake8
     eslint_d
     markdownlint-cli2
+    statix
 
     # ── Neovim: CLI tools (Telescope, DAP, etc.) ────────────────────────────
     ripgrep
