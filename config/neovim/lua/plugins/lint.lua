@@ -11,6 +11,7 @@ return {
 			lua = { "luacheck" },
 			bash = { "shellcheck" },
 			markdown = { "markdownlint" },
+			nix = { "statix" },
 		}
 
 		vim.api.nvim_create_autocmd({ "BufWritePost", "BufReadPost", "InsertLeave" }, {

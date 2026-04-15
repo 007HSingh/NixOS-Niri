@@ -12,7 +12,7 @@
   programs.git = {
     enable = true;
     includes = [
-      { path = config.sops.templates."git-credentials".path; }
+      { inherit (config.sops.templates."git-credentials") path; }
     ];
     settings = {
       user.name = "Harsh Singh";
