@@ -52,7 +52,7 @@
     chafa
     ffmpegthumbnailer
     mediainfo
-    ollama
+    claude-code
 
     # Gaming
     mangohud

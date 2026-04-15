@@ -16,6 +16,10 @@ _:
     gvfs.enable = true;
     tumbler.enable = true;
     udisks2.enable = true;
+    ollama = {
+      enable = true;
+      acceleration = "cuda";
+    };
   };
 
   # Memory-management
