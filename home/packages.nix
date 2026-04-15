@@ -50,7 +50,7 @@
     # Git tools
     git-absorb
 
-    # ── Neovim: LSP servers ─────────────────────────────────────────────────
+    # LSP servers
     nixd
     lua-language-server
     typescript-language-server
@@ -65,7 +65,7 @@
     clang-tools
     marksman
 
-    # ── Neovim: Formatters ──────────────────────────────────────────────────
+    # Formatters
     nixfmt
     stylua
     prettier
@@ -75,7 +75,7 @@
     kdlfmt
     google-java-format
 
-    # ── Neovim: Linters ─────────────────────────────────────────────────────
+    # Linters
     luajitPackages.luacheck
     shellcheck
     python314Packages.flake8
