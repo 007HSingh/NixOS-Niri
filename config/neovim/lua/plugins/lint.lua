@@ -10,7 +10,7 @@ return {
 			typescript = { "eslint_d" },
 			lua = { "luacheck" },
 			bash = { "shellcheck" },
-			markdown = { "markdownlint" },
+			markdown = { "markdownlint-cli2" },
 			nix = { "statix" },
 		}
 
