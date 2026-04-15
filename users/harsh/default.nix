@@ -1,12 +1,18 @@
 # User: harsh
 # Primary user configuration combining all home modules
-{ ... }:
+{ config, ... }:
 
 {
   # Import all home modules
   imports = [
     ../../home
   ];
+
+  sops = {
+    defaultSopsFile = ../../secrets/user.yaml;
+    defaultSopsFormat = "yaml";
+    age.keyFile = "${config.home.homeDirectory}/.config/sops/age/keys.txt";
+  };
 
   # User identity and Home Manager version
   home = {
