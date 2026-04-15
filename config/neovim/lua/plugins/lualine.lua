@@ -1,357 +1,423 @@
 -- ============================================================================
--- LUALINE — Bubbly style with catppuccin integration
+-- LUALINE — Informative statusline with Catppuccin integration
 -- ============================================================================
 return {
 	"nvim-lualine/lualine.nvim",
 	lazy = false,
-	dependencies = { "nvim-tree/nvim-web-devicons", "catppuccin" },
+	dependencies = {
+		"nvim-tree/nvim-web-devicons",
+		"catppuccin",
+		"SmiteshP/nvim-navic",
+	},
 	config = function()
-		local utils = require("lualine.utils.utils")
-		local modes = {
-			"normal",
-			"insert",
-			"visual",
-			"replace",
-			"command",
-			"inactive",
-			"terminal",
-		}
-		local expand_mode = {
-			["n"] = "normal",
-			["no"] = "normal",
-			["nov"] = "normal",
-			["noV"] = "normal",
-			["no\22"] = "normal",
-			["niI"] = "insert",
-			["niR"] = "replace",
-			["niV"] = "replace",
-			["v"] = "visual",
-			["V"] = "visual",
-			["\22"] = "visual",
-			["s"] = "visual",
-			["S"] = "visual",
-			["\19"] = "visual",
-			["i"] = "insert",
-			["ic"] = "insert",
-			["ix"] = "insert",
-			["R"] = "replace",
-			["Rc"] = "replace",
-			["Rx"] = "replace",
-			["Rv"] = "replace",
-			["c"] = "command",
-			["cv"] = "command",
-			["ce"] = "command",
-			["r"] = "command",
-			["rm"] = "command",
-			["r?"] = "command",
-			["!"] = "command",
-			["t"] = "terminal",
-		}
-		local function bufferinfo()
-			local bufs = vim.fn.getbufinfo({ buflisted = 1 })
-			local current_buf = vim.api.nvim_get_current_buf()
-			for index, buf in ipairs(bufs) do
-				if buf.bufnr == current_buf then
-					return { index = index, count = #bufs }
-				end
+		local lualine = require("lualine")
+		local navic = require("nvim-navic")
+
+		-- ── Helpers ───────────────────────────────────────────────────────────
+
+		local function mode_icon()
+			local icons = {
+				n = "󰋜 NORMAL",
+				i = "󰏫 INSERT",
+				v = "󰒉 VISUAL",
+				V = "󰒉 V-LINE",
+				["\22"] = "󰒉 V-BLOCK",
+				c = "󰞷 COMMAND",
+				s = "󰒅 SELECT",
+				S = "󰒅 S-LINE",
+				R = "󰊄 REPLACE",
+				r = "󰊄 REPLACE",
+				["!"] = " SHELL",
+				t = " TERMINAL",
+			}
+			return icons[vim.fn.mode()] or "󰋜 NORMAL"
+		end
+
+		local function diff_source()
+			local gitsigns = vim.b.gitsigns_status_dict
+			if gitsigns then
+				return {
+					added = gitsigns.added,
+					modified = gitsigns.changed,
+					removed = gitsigns.removed,
+				}
 			end
 		end
 
-		-- Adjust theme ----------------------------------------------------------------
+		local function lsp_clients()
+			local clients = vim.lsp.get_clients({ bufnr = 0 })
+			if #clients == 0 then
+				return ""
+			end
+			local names = {}
+			for _, c in ipairs(clients) do
+				if c.name ~= "null-ls" and c.name ~= "copilot" then
+					table.insert(names, c.name)
+				end
+			end
+			if #names == 0 then
+				return ""
+			end
+			return "󰒋 " .. table.concat(names, ", ")
+		end
 
-		local function custom_mocha_theme()
-			local cp = require("catppuccin.palettes").get_palette("mocha")
-			local transparent_bg = "NONE"
+		local function macro_recording()
+			local reg = vim.fn.reg_recording()
+			if reg == "" then
+				return ""
+			end
+			return "󰑋 @" .. reg
+		end
 
+		local function file_info()
+			local enc = vim.opt.fileencoding:get()
+			if enc == "" then
+				enc = vim.opt.encoding:get()
+			end
+			local ff = vim.opt.fileformat:get()
+			local ff_icons = { unix = "󰌽 LF", dos = " CRLF", mac = "󰀶 CR" }
+			return (enc ~= "utf-8" and enc .. " · " or "") .. (ff_icons[ff] or ff)
+		end
+
+		local function indent_info()
+			if vim.opt.expandtab:get() then
+				return "Spaces: " .. vim.opt.shiftwidth:get()
+			else
+				return "Tab: " .. vim.opt.tabstop:get()
+			end
+		end
+
+		local function search_count()
+			if vim.v.hlsearch == 0 then
+				return ""
+			end
+			local ok, result = pcall(vim.fn.searchcount, { maxcount = 999, timeout = 50 })
+			if not ok or result.total == 0 then
+				return ""
+			end
+			return ("󰍉 %d/%d"):format(result.current, result.total)
+		end
+
+		-- ── Catppuccin palette ────────────────────────────────────────────────
+		local ok, cp = pcall(require, "catppuccin.palettes")
+		local palette = ok and cp.get_palette("mocha")
+			or {
+				base = "#1e1e2e",
+				mantle = "#181825",
+				crust = "#11111b",
+				text = "#cdd6f4",
+				subtext0 = "#a6adc8",
+				overlay0 = "#6c7086",
+				surface0 = "#313244",
+				surface1 = "#45475a",
+				surface2 = "#585b70",
+				blue = "#89b4fa",
+				green = "#a6e3a1",
+				red = "#f38ba8",
+				yellow = "#f9e2af",
+				peach = "#fab387",
+				mauve = "#cba6f7",
+				teal = "#94e2d5",
+				sky = "#89dceb",
+				lavender = "#b4befe",
+				pink = "#f5c2e7",
+				flamingo = "#f2cdcd",
+				rosewater = "#f5e0dc",
+			}
+
+		local mode_colors = {
+			n = palette.blue,
+			i = palette.green,
+			v = palette.mauve,
+			V = palette.mauve,
+			["\22"] = palette.mauve,
+			c = palette.peach,
+			s = palette.pink,
+			S = palette.pink,
+			R = palette.red,
+			r = palette.red,
+			["!"] = palette.red,
+			t = palette.teal,
+		}
+
+		local function mode_color()
+			return mode_colors[vim.fn.mode()] or palette.blue
+		end
+
+		-- ── Theme ─────────────────────────────────────────────────────────────
+		local function build_theme()
+			local mc = mode_color()
 			return {
 				normal = {
-					a = { fg = cp.base, bg = cp.blue },
-					b = { fg = cp.text, bg = cp.surface0 },
-					c = { fg = cp.text, bg = transparent_bg },
+					a = { fg = palette.base, bg = mc, gui = "bold" },
+					b = { fg = palette.text, bg = palette.surface1 },
+					c = { fg = palette.subtext0, bg = palette.base },
 				},
 				insert = {
-					a = { fg = cp.base, bg = cp.green },
-					b = { fg = cp.text, bg = cp.surface0 },
-					c = { fg = cp.text, bg = transparent_bg },
+					a = { fg = palette.base, bg = palette.green, gui = "bold" },
+					b = { fg = palette.text, bg = palette.surface1 },
+					c = { fg = palette.subtext0, bg = palette.base },
 				},
 				visual = {
-					a = { fg = cp.base, bg = cp.mauve },
-					b = { fg = cp.text, bg = cp.surface0 },
-					c = { fg = cp.text, bg = transparent_bg },
+					a = { fg = palette.base, bg = palette.mauve, gui = "bold" },
+					b = { fg = palette.text, bg = palette.surface1 },
+					c = { fg = palette.subtext0, bg = palette.base },
 				},
 				replace = {
-					a = { fg = cp.base, bg = cp.red },
-					b = { fg = cp.text, bg = cp.surface0 },
-					c = { fg = cp.text, bg = transparent_bg },
+					a = { fg = palette.base, bg = palette.red, gui = "bold" },
+					b = { fg = palette.text, bg = palette.surface1 },
+					c = { fg = palette.subtext0, bg = palette.base },
 				},
 				command = {
-					a = { fg = cp.base, bg = cp.peach },
-					b = { fg = cp.text, bg = cp.surface0 },
-					c = { fg = cp.text, bg = transparent_bg },
+					a = { fg = palette.base, bg = palette.peach, gui = "bold" },
+					b = { fg = palette.text, bg = palette.surface1 },
+					c = { fg = palette.subtext0, bg = palette.base },
+				},
+				terminal = {
+					a = { fg = palette.base, bg = palette.teal, gui = "bold" },
+					b = { fg = palette.text, bg = palette.surface1 },
+					c = { fg = palette.subtext0, bg = palette.base },
 				},
 				inactive = {
-					a = { fg = cp.text, bg = cp.surface0 },
-					b = { fg = cp.text, bg = cp.surface0 },
-					c = { fg = cp.text, bg = transparent_bg },
+					a = { fg = palette.overlay0, bg = palette.surface0 },
+					b = { fg = palette.overlay0, bg = palette.surface0 },
+					c = { fg = palette.overlay0, bg = palette.base },
 				},
 			}
 		end
 
-		local function adjust_colors()
-			-- Kill underlying Neovim statusline backgrounds
-			for _, hlname in ipairs({ "StatusLine", "StatusLineNC" }) do
-				vim.api.nvim_set_hl(0, hlname, { bg = "NONE", ctermbg = "NONE" })
-			end
-
-			-- Repopulate adjusted highlight groups
-			for _, modename in ipairs(modes) do
-				local base_lualine_a = "lualine_a_" .. modename
-				local base_lualine_b = "lualine_b_" .. modename
-
-				vim.api.nvim_set_hl(0, "lualine_b_" .. modename .. "_transparent", {
-					fg = utils.extract_highlight_colors(base_lualine_b, "fg"),
-					bg = "NONE",
-				})
-
-				vim.api.nvim_set_hl(0, "lualineItalicCrumb_" .. modename, {
-					fg = utils.extract_highlight_colors(base_lualine_a, "fg"),
-					bg = utils.extract_highlight_colors(base_lualine_a, "bg"),
-					italic = true,
-				})
-			end
-		end
-
-		vim.api.nvim_create_autocmd({ "ColorScheme", "VimEnter" }, {
-			group = vim.api.nvim_create_augroup("LualineTransparentRefresh", { clear = true }),
-			callback = function()
-				require("lualine").setup({
-					options = {
-						theme = custom_mocha_theme(),
-					},
-				})
-				adjust_colors()
-			end,
-		})
-
-		-- Construct the lualine -------------------------------------------------------
-
-		require("lualine").setup({
+		-- ── Setup ─────────────────────────────────────────────────────────────
+		lualine.setup({
 			options = {
+				theme = build_theme(),
 				section_separators = { left = "", right = "" },
-				component_separators = { left = "", right = "" },
-				always_divide_middle = false,
-				ignore_focus = { "help" },
+				component_separators = { left = "│", right = "│" },
+				globalstatus = true,
+				refresh = { statusline = 100 },
 			},
+
 			sections = {
+				-- ── LEFT ──────────────────────────────────────────────────────
 				lualine_a = {
 					{
-						function()
-							local count = math.floor(vim.api.nvim_win_get_width(0) / 8)
-							return string.rep(" ", count)
-						end,
-						color = { fg = "NONE", bg = "NONE" },
-					},
-					{
-						function()
-							local count = bufferinfo().index - 1
-							return string.rep("", count, " ")
-						end,
-						color = function()
-							local modename = expand_mode[vim.fn.mode()] or "normal"
-							return "lualine_b_" .. modename .. "_transparent"
-						end,
-					},
-					{
-						function()
-							local max_len = math.floor(vim.api.nvim_win_get_width(0) / 3)
-
-							local breadcrumb = vim.fn.fnamemodify(vim.fn.expand("%:p:h"), ":~:t")
-								.. "/"
-								.. vim.fn.expand("%:t")
-
-							local ok, navic = pcall(require, "nvim-navic")
-							if ok and navic.is_available() then
-								local crumb = navic.get_location({ highlight = false })
-								if crumb ~= "" then
-									-- Truncation Logic
-									local total_str = breadcrumb .. " / " .. crumb
-									if #total_str > max_len then
-										if #crumb > (max_len / 2) then
-											crumb = string.sub(crumb, 1, (max_len / 2) - 1) .. "…"
-										end
-									end
-
-									local modename = expand_mode[vim.fn.mode()] or "normal"
-									local hl_name = "%#lualineItalicCrumb_" .. modename .. "#"
-
-									return breadcrumb .. "/" .. hl_name .. crumb
-								end
-							end
-							return breadcrumb
-						end,
+						mode_icon,
 						separator = { left = "", right = "" },
+						padding = { left = 1, right = 1 },
 					},
-					{
-						function()
-							local count = bufferinfo().count - bufferinfo().index
-							return string.rep("", count, " ")
-						end,
-						color = function()
-							local modename = expand_mode[vim.fn.mode()] or "normal"
-							return "lualine_b_" .. modename .. "_transparent"
-						end,
-					},
-					{ "%=", color = { bg = "NONE" } },
 				},
-				lualine_b = {},
-				lualine_c = {},
-				lualine_x = {},
-				lualine_y = {
-					{
-						"location",
-						fmt = function(str)
-							local line, col = str:match("(%d+):(%d+)")
-							return string.format(" %s.%s", line, col)
-						end,
-						separator = { left = " ", right = "  " },
-						padding = 0,
-						cond = function()
-							local mode = vim.fn.mode()
-							return not (mode == "v" or mode == "V" or mode == "\22")
-								and (vim.v.hlsearch == 0 or vim.fn.getreg("/") == "")
-						end,
-					},
-					{
-						"searchcount",
-						fmt = function(str)
-							if str == "" then
-								return ""
-							end
-							local count, of = str:match("(%d+)/(%d+)")
-							return string.format(" %s/%s", count, of)
-						end,
-						separator = { left = "", right = "  " },
-						padding = 0,
-						cond = function()
-							local mode = vim.fn.mode()
-							return vim.v.hlsearch == 1
-								and vim.fn.getreg("/") ~= ""
-								and not (mode == "v" or mode == "V" or mode == "\22")
-						end,
-					},
-					{
-						"selectioncount",
-						fmt = function(str)
-							if str == "" then
-								return ""
-							end
 
-							return string.format(" %s", str)
-						end,
-						padding = 0,
-						separator = { left = " ", right = "  " },
+				lualine_b = {
+					-- Git branch
+					{
+						"branch",
+						icon = "",
+						color = { fg = palette.mauve, bg = palette.surface1, gui = "bold" },
+						padding = { left = 1, right = 0 },
+					},
+					-- Git diff
+					{
+						"diff",
+						source = diff_source,
+						symbols = { added = " ", modified = " ", removed = " " },
+						diff_color = {
+							added = { fg = palette.green },
+							modified = { fg = palette.yellow },
+							removed = { fg = palette.red },
+						},
+						padding = { left = 1, right = 1 },
+					},
+					-- Macro recording (shows when active)
+					{
+						macro_recording,
+						color = { fg = palette.peach, gui = "bold,italic" },
+						padding = { left = 1, right = 1 },
 					},
 				},
-				lualine_z = {},
-			},
-			inactive_sections = {
-				lualine_a = {
+
+				lualine_c = {
+					-- File icon + name + modified + readonly
 					{
-						function()
-							local count = math.floor(vim.api.nvim_win_get_width(0) / 8)
-							return string.rep(" ", count)
-						end,
-						color = { fg = "NONE", bg = "NONE" },
-					},
-					{
-						function()
-							local count = bufferinfo().index - 1
-							return string.rep("", count, " ")
-						end,
-						color = function()
-							local u = require("lualine.utils.utils")
-							return {
-								fg = u.extract_highlight_colors("TabLine", "bg"),
-								bg = "NONE",
-							}
-						end,
+						"filetype",
+						icon_only = true,
+						padding = { left = 2, right = 0 },
+						color = { bg = palette.base },
 					},
 					{
 						"filename",
-						file_status = false,
-						path = 4,
-						symbols = { readonly = "" },
-						separator = { left = "", right = "" },
-						color = "TabLine",
+						path = 1, -- relative path
+						symbols = {
+							modified = " ●",
+							readonly = " 󰌾",
+							unnamed = "[No Name]",
+							newfile = "[New]",
+						},
+						color = { fg = palette.text, bg = palette.base, gui = "bold" },
+						padding = { left = 0, right = 1 },
 					},
+					-- Navic breadcrumbs
 					{
 						function()
-							local count = bufferinfo().count - bufferinfo().index
-							return string.rep("", count, " ")
+							if navic.is_available() then
+								local loc = navic.get_location()
+								if loc and loc ~= "" then
+									return "  " .. loc
+								end
+							end
+							return ""
 						end,
-						color = function()
-							local u = require("lualine.utils.utils")
-							return {
-								fg = u.extract_highlight_colors("TabLine", "bg"),
-								bg = "NONE",
-							}
-						end,
-					},
-					{
-						"%=",
-						color = { bg = "NONE" },
+						color = { fg = palette.overlay0, bg = palette.base },
+						padding = { left = 0, right = 1 },
 					},
 				},
+
+				-- ── RIGHT ─────────────────────────────────────────────────────
+				lualine_x = {
+					-- Search count
+					{
+						search_count,
+						color = { fg = palette.yellow, gui = "bold" },
+						padding = { left = 1, right = 1 },
+					},
+					-- Diagnostics
+					{
+						"diagnostics",
+						sources = { "nvim_lsp", "nvim_diagnostic" },
+						sections = { "error", "warn", "info", "hint" },
+						symbols = { error = " ", warn = " ", info = " ", hint = "󰌵 " },
+						diagnostics_color = {
+							error = { fg = palette.red },
+							warn = { fg = palette.yellow },
+							info = { fg = palette.sky },
+							hint = { fg = palette.teal },
+						},
+						padding = { left = 1, right = 1 },
+					},
+					-- Active LSP clients
+					{
+						lsp_clients,
+						color = { fg = palette.green, gui = "italic" },
+						padding = { left = 1, right = 1 },
+					},
+				},
+
+				lualine_y = {
+					-- Indent style
+					{
+						indent_info,
+						color = { fg = palette.subtext0, bg = palette.surface1 },
+						padding = { left = 1, right = 1 },
+					},
+					-- File encoding / line ending
+					{
+						file_info,
+						color = { fg = palette.subtext0, bg = palette.surface1 },
+						padding = { left = 1, right = 1 },
+					},
+					-- File size
+					{
+						"filesize",
+						color = { fg = palette.subtext0, bg = palette.surface1 },
+						padding = { left = 1, right = 1 },
+					},
+				},
+
+				lualine_z = {
+					-- Line:Col + progress
+					{
+						"location",
+						separator = { left = "", right = "" },
+						color = function()
+							return { fg = palette.base, bg = mode_color(), gui = "bold" }
+						end,
+						padding = { left = 1, right = 0 },
+					},
+					{
+						"progress",
+						separator = { left = "", right = "" },
+						color = function()
+							return { fg = palette.base, bg = mode_color(), gui = "bold" }
+						end,
+						padding = { left = 0, right = 1 },
+					},
+				},
+			},
+
+			inactive_sections = {
+				lualine_a = {},
 				lualine_b = {},
-				lualine_c = {},
-				lualine_x = {},
+				lualine_c = {
+					{
+						"filename",
+						path = 1,
+						color = { fg = palette.overlay0 },
+					},
+				},
+				lualine_x = { "location" },
 				lualine_y = {},
 				lualine_z = {},
 			},
+
+			-- ── Winbar: breadcrumbs on each split ─────────────────────────────
 			winbar = {
-				lualine_a = {},
-				lualine_b = {},
-				lualine_c = {},
+				lualine_c = {
+					{
+						"filetype",
+						icon_only = true,
+						padding = { left = 2, right = 0 },
+						color = { bg = "NONE" },
+					},
+					{
+						"filename",
+						path = 1,
+						symbols = { modified = " ●", readonly = " 󰌾" },
+						color = { fg = palette.text, bg = "NONE", gui = "bold" },
+						padding = { left = 0, right = 1 },
+					},
+					{
+						function()
+							if navic.is_available() then
+								local loc = navic.get_location()
+								if loc and loc ~= "" then
+									return "  " .. loc
+								end
+							end
+							return ""
+						end,
+						color = { fg = palette.overlay0, bg = "NONE" },
+					},
+				},
 				lualine_x = {
 					{
 						"lsp_status",
 						icon = "",
-						color = "NonText",
-						symbols = {
-							done = "",
-							separator = " ",
-						},
-						padding = { right = 1 },
-					},
-					{
-						"filetype",
-						colored = false,
-						icon_only = false,
-						icon = { align = "right" },
-						separator = { left = "", right = "" },
-						color = function()
-							local modename = expand_mode[vim.fn.mode()] or "normal"
-							return "lualine_b_" .. modename .. "_transparent"
-						end,
-						padding = 0,
+						color = { fg = palette.overlay0, bg = "NONE" },
+						symbols = { done = "", separator = " " },
+						padding = { right = 2 },
 					},
 				},
-				lualine_y = {},
-				lualine_z = {},
 			},
 
 			inactive_winbar = {
-				lualine_a = {},
-				lualine_b = {},
 				lualine_c = {
-					function()
-						return " "
-					end,
+					{
+						"filename",
+						path = 1,
+						color = { fg = palette.overlay0, bg = "NONE" },
+						padding = { left = 2 },
+					},
 				},
-				lualine_x = {},
-				lualine_y = {},
-				lualine_z = {},
 			},
+		})
+
+		-- Re-apply on colorscheme change so mode colors stay in sync
+		vim.api.nvim_create_autocmd("ColorScheme", {
+			group = vim.api.nvim_create_augroup("LualineThemeRefresh", { clear = true }),
+			callback = function()
+				-- Small delay to let the new theme settle
+				vim.defer_fn(function()
+					lualine.setup({ options = { theme = build_theme() } })
+				end, 10)
+			end,
 		})
 	end,
 }
