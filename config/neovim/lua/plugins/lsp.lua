@@ -5,6 +5,7 @@ return {
 	{
 		"williamboman/mason.nvim",
 		dependencies = {
+			"neovim/nvim-lspconfig",
 			"williamboman/mason-lspconfig.nvim",
 			"jay-babu/mason-null-ls.nvim",
 			"nvimtools/none-ls.nvim",
@@ -82,7 +83,6 @@ return {
 				"pyright",
 				"ts_ls",
 				"rust_analyzer",
-				"gopls",
 				"bashls",
 				"html",
 				"cssls",
