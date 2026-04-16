@@ -116,7 +116,6 @@
         character = {
           success_symbol = "[❯](bold green)";
           error_symbol = "[❯](bold red)";
-          error_style = "bold red";
           vim_indicator = "[V](bold yellow)";
         };
         directory = {
