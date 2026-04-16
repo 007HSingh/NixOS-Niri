@@ -53,6 +53,7 @@
     ffmpegthumbnailer
     mediainfo
     claude-code
+    claude-code-router
 
     # Gaming
     mangohud
