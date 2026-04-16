@@ -339,6 +339,15 @@ return {
 						end,
 						padding = { left = 0, right = 1 },
 					},
+					{
+						function()
+							return os.date("󰥔 %H:%M")
+						end,
+						color = function()
+							return { fg = palette.base, bg = mode_color(), gui = "bold" }
+						end,
+						padding = { left = 1, right = 1 },
+					},
 				},
 			},
 
@@ -419,5 +428,16 @@ return {
 				end, 10)
 			end,
 		})
+
+		local timer = vim.uv.new_timer()
+		timer:start(
+			0,
+			60000,
+			vim.schedule_wrap(function()
+				if package.loaded["lualine"] then
+					require("lualine").refresh()
+				end
+			end)
+		)
 	end,
 }
