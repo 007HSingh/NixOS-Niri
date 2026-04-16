@@ -3,12 +3,6 @@
 { config, pkgs, ... }:
 
 {
-  sops.secrets.GEMINI_API_KEY = { };
-
-  sops.templates."env-secrets".content = ''
-    GEMINI_API_KEY ="${config.sops.placeholder.GEMINI_API_KEY}"
-  '';
-
   programs = {
     zsh = {
       enable = true;
@@ -28,8 +22,6 @@
         zstyle ':completion:*' menu select
         zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
         (( $+commands[docker] )) && eval "$(docker completion zsh)"
-        [[ -f "${config.sops.templates."env-secrets".path}" ]] && \
-          source "${config.sops.templates."env-secrets".path}"
       '';
 
       shellAliases = {
@@ -244,6 +236,32 @@
         display = {
           compact = false;
           use_pager = false;
+        };
+      };
+    };
+
+    sops.templates."claude-code-router-config" = {
+      path = "${config.home.homeDirectory}/.claude-code-router/config.json";
+      content = builtins.toJSON {
+        LOG = true;
+        LOG_LEVEL = "info";
+        HOST = "127.0.0.1";
+        PORT = 3456;
+        API_TIMEOUT_MS = 600000;
+        Providers = [
+          {
+            name = "gemini";
+            api_base_url = "https://generativelanguage.googleapis.com/v1beta/models/";
+            api_key = config.sops.placeholder.GEMINI_API_KEY;
+            models = [ "gemini-2.5-flash" ];
+            transformer.use = [ "gemini" ];
+          }
+        ];
+        Router = {
+          default = "gemini,gemini-2.5-flash";
+          background = "gemini,gemini-2.5-flash";
+          think = "gemini,gemini-2.5-flash";
+          longContext = "gemini,gemini-2.5-flash";
         };
       };
     };
