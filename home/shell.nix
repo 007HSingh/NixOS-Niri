@@ -3,6 +3,12 @@
 { config, pkgs, ... }:
 
 {
+  sops.secrets.gemini_api_key = { };
+
+  sops.templates."env-secrets".content = ''
+    GEMINI_API_KEY ="${config.sops.placeholder.gemini_api_key}"
+  '';
+
   programs = {
     zsh = {
       enable = true;
@@ -22,6 +28,8 @@
         zstyle ':completion:*' menu select
         zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
         (( $+commands[docker] )) && eval "$(docker completion zsh)"
+        [[ -f "${config.sops.templates."env-secrets".path}" ]] && \
+          source "${config.sops.templates."env-secrets".path}"
       '';
 
       shellAliases = {
