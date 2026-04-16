@@ -36,7 +36,7 @@ _:
         backdrop-filter: blur(20px);
         -gtk-backdrop-filter: blur(20px);
         border: 1px solid rgba(180, 190, 254, 0.35);
-        border-radius: 16px;
+        border-radius: 20px;
         margin: 0px;
         font-family: "JetBrainsMono Nerd Font";
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
@@ -83,21 +83,26 @@ _:
       }
 
       #entry {
-        padding: 4px 8px;
-        border-radius: 10px;
+        padding: 6px 10px;
+        border-radius: 12px;
         transition: background-color 80ms ease;
       }
 
       #entry:selected {
         /* Pill highlight — surface1 at 80% + lavender left accent strip */
         background-color: rgba(69, 71, 90, 0.80);
-        border-radius: 10px;
+        border-radius: 12px;
         border-left: 3px solid rgba(180, 190, 254, 0.85);
         outline: none;
       }
 
+      #text {
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+      }
+
       #text:selected {
         color: rgba(180, 190, 254, 1.0);
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
       }
     '';
   };
