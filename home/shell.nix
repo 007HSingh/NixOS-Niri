@@ -116,27 +116,44 @@
         character = {
           success_symbol = "[❯](bold green)";
           error_symbol = "[❯](bold red)";
+          error_style = "bold red";
+          vim_indicator = "[V](bold yellow)";
         };
         directory = {
           style = "bold blue";
           truncation_length = 3;
           fish_style_pwd_dir_length = 1;
+          truncate_to_repo = true;
+          read_only = " ";
         };
         git_branch = {
-          symbol = " ";
+          symbol = "  ";
           style = "bold purple";
+          format = "on [$symbol$branch]($style) ";
         };
         git_status = {
           style = "bold red";
+          format = "([$all_status$ahead_behind]($style) )";
+          conflicted = "= ";
+          ahead = "⇡";
+          behind = "⇣";
+          diverged = "⇕";
+          untracked = "?";
+          stashed = "";
+          modified = "!";
+          staged = "+";
+          renamed = "»";
+          deleted = "✘";
         };
         nix_shell = {
-          symbol = " ";
+          symbol = "  ";
           style = "bold cyan";
-          format = "[$symbol$state]($style) ";
+          format = "via [$symbol$state]($style) ";
         };
         cmd_duration = {
           min_time = 2000;
           style = "bold yellow";
+          format = "took [$duration]($style) ";
         };
       };
     };
