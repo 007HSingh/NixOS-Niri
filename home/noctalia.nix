@@ -49,8 +49,8 @@
     settings = {
       bar = {
         density = "comfortable";
-        position = "left";
-        showCapsule = false;
+        position = "top";
+        showCapsule = true;
         floating = true;
         widgets = {
           left = [

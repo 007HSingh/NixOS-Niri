@@ -41,6 +41,9 @@
     wl-clipboard
     playerctl
 
+    # Animated wallpapers
+    awww # formerly swww
+
     # Languages
     javaPackages.compiler.temurin-bin.jdk-25
     racket
