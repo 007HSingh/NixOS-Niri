@@ -3,10 +3,10 @@
 { config, pkgs, ... }:
 
 {
-  sops.secrets.gemini_api_key = { };
+  sops.secrets.GEMINI_API_KEY = { };
 
   sops.templates."env-secrets".content = ''
-    GEMINI_API_KEY ="${config.sops.placeholder.gemini_api_key}"
+    GEMINI_API_KEY ="${config.sops.placeholder.GEMINI_API_KEY}"
   '';
 
   programs = {
