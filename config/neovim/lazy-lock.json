@@ -7,6 +7,10 @@
     "branch": "master",
     "commit": "a62e1083a3cfe8b6b206e7d3d33a51091df25357"
   },
+  "SmoothCursor.nvim": {
+    "branch": "main",
+    "commit": "12518b284e1e3f7c6c703b346815968e1620bee2"
+  },
   "aerial.nvim": {
     "branch": "master",
     "commit": "645d108a5242ec7b378cbe643eb6d04d4223f034"
@@ -138,6 +142,14 @@
   "mini.ai": {
     "branch": "main",
     "commit": "43eb2074843950a3a25aae56a5f41362ec043bfa"
+  },
+  "mini.animate": {
+    "branch": "main",
+    "commit": "0365de8b69331c25d0d0d7573407a7dc7719e578"
+  },
+  "mini.indentscope": {
+    "branch": "main",
+    "commit": "0308f949f31769e509696af5d5f91cebb2159c69"
   },
   "neogit": {
     "branch": "master",
@@ -303,6 +315,10 @@
     "branch": "main",
     "commit": "bd67efe408d4816e25e8491cc5ad4088e708a69a"
   },
+  "twilight.nvim": {
+    "branch": "main",
+    "commit": "664e752f4a219801265cc3fc18782b457b58c1e1"
+  },
   "undotree": {
     "branch": "master",
     "commit": "6fa6b57cda8459e1e4b2ca34df702f55242f4e4d"
@@ -322,5 +338,9 @@
   "yanky.nvim": {
     "branch": "main",
     "commit": "784188e0a7363e762e53140f39124d786aec0832"
+  },
+  "zen-mode.nvim": {
+    "branch": "main",
+    "commit": "8564ce6d29ec7554eb9df578efa882d33b3c23a7"
   }
 }
