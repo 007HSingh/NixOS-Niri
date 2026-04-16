@@ -39,6 +39,7 @@ in
         inherit pkgs-stable pkgs-unstable;
         stable = pkgs-stable;
         unstable = pkgs-unstable;
+        secretsDir = ../secrets;
       };
     in
     nixpkgs-unstable.lib.nixosSystem {

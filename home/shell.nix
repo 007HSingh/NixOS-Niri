@@ -1,10 +1,15 @@
 # Shell Configuration
 # Zsh, Starship, Zoxide, Direnv, and CLI tool integrations
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  secretsDir,
+  ...
+}:
 
 {
   sops.secrets.GEMINI_API_KEY = {
-    sopsFile = ../../secrets/gemini.yaml;
+    sopsFile = "${secretsDir}/gemini.yaml";
   };
 
   sops.templates."claude-code-router-config" = {
