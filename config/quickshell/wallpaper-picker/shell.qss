@@ -1,89 +1,59 @@
 import Quickshell
-import Quickshell.Io
 import Quickshell.Wayland
+import Quickshell.Io
 import QtQuick
-import QtQuick.Layouts
-import QtQuick.Controls
 
-QuickshellRoot {
-    id: root
-    exclusive: ExclusiveMode.Cooperate
-
-    // Catppuccin Mocha palette
-    readonly property color crust: "#11111b"
-    readonly property color surface0: "#313244"
-    readonly property color surface1: "#45475a"
-    readonly property color lavender: "#b4befe"
-    readonly property color text: "#cdd6f4"
-    readonly property color overlay0: "#6c7086"
-
-    // Wallpaper directory
-    readonly property string wallpaperDir: Qt.home + "/.config/wallpapers"
-
-    // Grid configuration
-    readonly property int columns: 4
-    readonly property int thumbnailWidth: 280
-    readonly property int thumbnailHeight: 180
-    readonly property int spacing: 12
-
-    // State
-    property var wallpapers: []
-    property bool initialized: false
-
-    Component.onCompleted: {
-        loadWallpapers()
-        initialized = true
-    }
-
-    function loadWallpapers() {
-        wallpapers = []
-        const dir = Qt.resolvedUrl(wallpaperDir)
-        const fileUrl = Qt.url(wallpaperDir)
-
-        // Use Process to list files
-        listProcess.start()
-    }
-
-    function selectWallpaper(path) {
-        setWallpaperProcess.arguments = [
-            "img",
-            path,
-            "--transition-type", "wipe",
-            "--transition-duration", "2",
-            "--transition-fps", "60"
-        ]
-        setWallpaperProcess.start()
-        closeWidget()
-    }
-
-    function closeWidget() {
-        Quickshell.exit()
-    }
-
-    // Process to list wallpaper files
-    Process {
-        id: listProcess
-        program: "find"
-        arguments: [wallpaperDir, "-type", "f", "\\(", "-iname", "*.jpg", "-o", "-iname", "*.jpeg", "-o", "-iname", "*.png", "-o", "-iname", "*.webp", "\\)"]
-
-        onExited: {
-            if (exitCode === 0) {
-                const output = stdOut.toString().trim()
-                if (output.length > 0) {
-                    wallpapers = output.split("\n").filter(f => f.length > 0)
-                }
-            }
+// Root shell for the wallpaper picker.
+// Launched via: qs -c ~/.config/quickshell/wallpaper-picker/shell.qss
+// Niri bind: Mod+Shift+W
+ShellRoot {
+    // ── IPC: listen for "close" written to /tmp/qs_widget_state ──────────────
+    // The apply script writes 'close' after firing awww, so the picker dismisses
+    // itself as soon as the wallpaper starts transitioning.
+    IpcHandler {
+        target: "widget_state"
+        function onMessage(msg) {
+            if (msg.trim() === "close") Qt.quit()
         }
     }
 
-    // Process to set wallpaper via awww
-    Process {
-        id: setWallpaperProcess
-        program: "awww"
+    // ── File-based close signal (polling fallback) ────────────────────────────
+    // Watches /tmp/qs_widget_state every 200 ms. If the apply script writes
+    // "close" before IPC fires, this catches it.
+    FileView {
+        id: stateFile
+        path: "/tmp/qs_widget_state"
+        watchChanges: true
+        onTextChanged: {
+            if (text.trim() === "close") Qt.quit()
+        }
     }
 
-    WallpaperPickerWindow {
-        id: wallpaperPicker
-        anchors.fill: parent
+    // ── Fullscreen layer surface ──────────────────────────────────────────────
+    PanelWindow {
+        id: pickerWindow
+        screen: Quickshell.screens[0]
+
+        // Cover the entire screen above all windows
+        exclusionMode: ExclusionMode.Ignore
+        WlrLayershell.layer: WlrLayer.Overlay
+        WlrLayershell.keyboardFocus: WlrKeyboardFocus.Exclusive
+
+        anchors {
+            top: true; bottom: true; left: true; right: true
+        }
+
+        // Transparent background — the picker renders its own frosted glass bar
+        color: "transparent"
+
+        // Close on Escape when not in search mode (search mode uses its own Escape handler)
+        Shortcut {
+            sequence: "Escape"
+            onActivated: Qt.quit()
+        }
+
+        WallpaperPicker {
+            anchors.fill: parent
+        }
     }
 }
