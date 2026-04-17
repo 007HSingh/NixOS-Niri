@@ -368,7 +368,7 @@ binds {
         spawn "wofi"
     }
     Mod+Shift+W hotkey-overlay-title="Select Wallpaper" {
-        spawn-sh "qs -c ~/.config/quickshell/wallpaper-picker/shell.qss"
+        spawn "qs" "-c" "wallpaper-picker"
     }
     Super+Alt+L hotkey-overlay-title="Lock the Screen" {
         spawn-sh "loginctl lock-session"
