@@ -4,6 +4,8 @@
 
 {
   home.packages = [
-    inputs.quickshell.packages.${pkgs.system}.quickshell
+    (inputs.quickshell.packages.${pkgs.system}.quickshell.override {
+      withQtMultimedia = true;
+    })
   ];
 }
