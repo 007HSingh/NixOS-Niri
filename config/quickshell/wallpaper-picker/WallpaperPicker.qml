@@ -94,7 +94,7 @@ Item {
         const dir = Quickshell.env("WALLPAPER_DIR")
         return (dir && dir !== "")
             ? dir
-            : Quickshell.env("HOME") + "/Pictures/Wallpapers"
+            : Quickshell.env("HOME") + "/.config/wallpapers"
     }
 
     // -------------------------------------------------------------------------
