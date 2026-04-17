@@ -15,6 +15,7 @@ let
     wallpapers = "wallpapers";
     eza = "eza";
     nvim = "neovim";
+    quickshell = "quickshell";
   };
 in
 {
