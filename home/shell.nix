@@ -85,7 +85,7 @@
         character = {
           success_symbol = "[❯](bold green)";
           error_symbol = "[❯](bold red)";
-          vim_indicator = "[V](bold yellow)";
+          vicmd_symbol = "[V](bold yellow)";
         };
         directory = {
           style = "bold blue";
