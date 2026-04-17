@@ -7,7 +7,7 @@
 # The wallpaper picker watches both directories via FolderListModel so it
 # will pick up new entries automatically while this script runs.
 
-set -euo pipefail
+set -uo pipefail
 
 WALLPAPER_DIR="${WALLPAPER_DIR:-$HOME/.config/wallpapers}"
 CACHE_DIR="$HOME/.cache/wallpaper_picker"

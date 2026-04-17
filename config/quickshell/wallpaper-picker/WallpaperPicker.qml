@@ -931,15 +931,6 @@ Item {
                     }
                 }
 
-                // Background bleed image (behind border)
-                Image {
-                    anchors.fill: parent
-                    source: fileUrl !== undefined ? fileUrl : ""
-                    sourceSize: Qt.size(1, 1)
-                    fillMode: Image.Stretch
-                    asynchronous: true
-                }
-
                 Item {
                     anchors.fill: parent
                     anchors.margins: window.borderWidth
