@@ -11,6 +11,7 @@
     ./idle.nix
     ./noctalia.nix
     ./packages.nix
+    ./quickshell.nix
     ./shell.nix
     ./spicetify.nix
     ./theming.nix
