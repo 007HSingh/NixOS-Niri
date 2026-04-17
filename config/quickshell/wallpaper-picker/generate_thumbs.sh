@@ -36,7 +36,7 @@ for file in "${files[@]}"; do
 
   # ── Thumbnail ─────────────────────────────────────────────────────────────
   if [ ! -f "$thumb" ]; then
-    if [[ "$filename" =~ \.(mp4|mkv|mov|webm)$ ]]; then
+    if [[ $filename =~ \.(mp4|mkv|mov|webm)$ ]]; then
       # Prefix video thumbs with 000_ so the picker can identify them
       vthumb="$THUMB_DIR/000_$filename"
       if [ ! -f "$vthumb" ]; then
