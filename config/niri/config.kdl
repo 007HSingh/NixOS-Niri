@@ -6,7 +6,6 @@
 // Find the full list of options on the wiki:
 // https://yalter.github.io/niri/Configuration:-Input
 prefer-no-csd
-
 // ── Glassmorphism: Note on blur ─────────────────────────────────────────────
 // window-blur is not yet in this Niri build; frosted glass is achieved via
 // per-window opacity (see window-rule blocks below) + kitty's native
@@ -308,13 +307,11 @@ window-rule {
 window-rule {
     opacity 0.92
 }
-
 // ── Kitty: opt out of global opacity — kitty handles it natively ─────────────
 window-rule {
     match app-id="kitty"
     opacity 1.0
 }
-
 // ── Rounded corners for all windows ──────────────────────────────────────────
 // 20 px radius matches the glassmorphism aesthetic; increase for pill-like UI.
 window-rule {
@@ -371,7 +368,7 @@ binds {
         spawn "wofi"
     }
     Mod+Shift+W hotkey-overlay-title="Select Wallpaper" {
-        spawn "qs" "-c" "~/.config/quickshell/wallpaper-picker/shell.qss"
+        spawn-sh "qs -c ~/.config/quickshell/wallpaper-picker/shell.qss"
     }
     Super+Alt+L hotkey-overlay-title="Lock the Screen" {
         spawn-sh "loginctl lock-session"
