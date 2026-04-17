@@ -18,7 +18,7 @@ mkdir -p "$THUMB_DIR" "$COLOR_DIR"
 
 if command -v magick &>/dev/null; then CMD="magick"; else CMD="convert"; fi
 
-mapfile -t files < <(find "$WALLPAPER_DIR" -maxdepth 1 -type f \
+mapfile -t files < <(find -L "$WALLPAPER_DIR" -maxdepth 1 -type f \
   \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" \
   -o -iname "*.webp" -o -iname "*.gif" \
   -o -iname "*.mp4" -o -iname "*.mkv" \
