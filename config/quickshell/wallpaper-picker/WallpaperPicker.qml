@@ -40,46 +40,15 @@ Item {
     // Filter System
     property string currentFilter: "All"
     property string _lastFilter: "All"
-    property string searchQuery: ""
-    property bool isOnlineSearch: false
-    property bool isSearchPaused: false
-    property bool hasSearched: false
-
-    // Download / status tracking
-    property bool isDownloadingWallpaper: false
-    property string currentDownloadName: ""
-
-    // Strict apply lock — blocks all input while wallpaper is being set
-    property bool isApplying: false
-
-    // Reactive status
-    property bool isStartup: srcFolderModel.status === FolderListModel.Loading
-    property bool isReady: visible && srcFolderModel.status === FolderListModel.Ready
-    property bool isSearchActive: window.currentFilter === "Search" && window.hasSearched &&
-                                  searchFolderModel.status === FolderListModel.Loading
-
-    // Memory for search
-    property string lastSearchName: ""
-    property bool isModelChanging: false
-    property bool searchIndexRestored: false
-
-    property bool isScrollingBlocked: window.currentFilter === "Search" &&
-                                      window.hasSearched &&
-                                      window.isSearchActive &&
-                                      !window.isSearchPaused
-    property bool jumpToLastOnFilterChange: false
-
     readonly property var filterData: [
         { name: "All",    hex: "", label: "All"    },
-        { name: "Video",  hex: "", label: "Vid"    },
-        { name: "Search", hex: "", label: "Search" }
+        { name: "Video",  hex: "", label: "Vid"    }
     ]
 
     // -------------------------------------------------------------------------
     // PATHS
     // -------------------------------------------------------------------------
     readonly property string homeDir: "file://" + Quickshell.env("HOME")
-    readonly property string searchDir: homeDir + "/.cache/wallpaper_picker/search_thumbs"
     readonly property string srcDir: {
         const dir = Quickshell.env("WALLPAPER_DIR")
         return (dir && dir !== "")
@@ -101,93 +70,6 @@ Item {
         let cleanName = window.getCleanName(safeFileName)
         const escapeBash = (str) => String(str).replace(/(["\\$`])/g, '\\$1')
         const randomTransition = window.transitions[Math.floor(Math.random() * window.transitions.length)]
-
-        // ── Online search result ──────────────────────────────────────────────
-        if (window.currentFilter === "Search" && window.hasSearched) {
-            let alreadyExists = window.isDownloaded(safeFileName)
-            let destFile  = window.srcDir + "/" + safeFileName
-            let tempThumb = decodeURIComponent(window.searchDir.replace("file://", "")) + "/" + safeFileName
-            let mapFile   = Quickshell.env("HOME") + "/.cache/wallpaper_picker/search_map.txt"
-
-            if (alreadyExists) {
-                const applyScript = `
-                    (
-                        echo 'close' > /tmp/qs_widget_state
-
-                        # Ensure WAYLAND_DISPLAY and XDG_RUNTIME_DIR are set
-                        export WAYLAND_DISPLAY="\${WAYLAND_DISPLAY:-${Quickshell.env("WAYLAND_DISPLAY") || "wayland-1"}}"
-                        export XDG_RUNTIME_DIR="\${XDG_RUNTIME_DIR:-${Quickshell.env("XDG_RUNTIME_DIR") || "/run/user/1000"}}"
-                        export DEST_FILE="${escapeBash(destFile)}"
-
-                        cp "$DEST_FILE" /tmp/lock_bg.png || true
-                        pkill mpvpaper || true
-
-                        # Sync with Noctalia overview
-                        mkdir -p ~/.cache/noctalia
-                        echo '{"defaultWallpaper":"'$DEST_FILE'","wallpapers":{"eDP-1":"'$DEST_FILE'"}}' > ~/.cache/noctalia/wallpapers.json
-
-                        # Debugging
-                        echo "[$(date)] Setting online wallpaper: $DEST_FILE" >> /tmp/awww-debug.log
-
-                        awww img "$DEST_FILE" \
-                            --transition-type ${randomTransition} \
-                            --transition-fps 144 \
-                            --transition-duration 1 \
-                            >> /tmp/awww-debug.log 2>&1 || true
-
-                    ) </dev/null >/dev/null 2>&1 & disown
-                `
-                Quickshell.execDetached(["bash", "-c", applyScript])
-            } else {
-                window.isDownloadingWallpaper = true
-                window.currentDownloadName = safeFileName
-
-                const downloadScript = `
-                    export SAFE_NAME="${escapeBash(safeFileName)}"
-                    export DEST_FILE="${escapeBash(destFile)}"
-                    export TEMP_THUMB="${escapeBash(tempThumb)}"
-                    export MAP_FILE="${escapeBash(mapFile)}"
-
-                    (
-                        URL=$(awk -F'|' -v fname="$SAFE_NAME" '$1 == fname {print $2; exit}' "$MAP_FILE")
-                        if [ -n "$URL" ]; then
-                            curl -s -L -A "Mozilla/5.0" "$URL" -o "$DEST_FILE.tmp"
-
-                            if file "$DEST_FILE.tmp" | grep -iq "webp"; then
-                                magick "$DEST_FILE.tmp" "$DEST_FILE"
-                                rm -f "$DEST_FILE.tmp"
-                            else
-                                mv "$DEST_FILE.tmp" "$DEST_FILE"
-                            fi
-
-                            echo 'close' > /tmp/qs_widget_state
-
-                            # Ensure WAYLAND_DISPLAY and XDG_RUNTIME_DIR are set
-                            export WAYLAND_DISPLAY="\${WAYLAND_DISPLAY:-${Quickshell.env("WAYLAND_DISPLAY") || "wayland-1"}}"
-                            export XDG_RUNTIME_DIR="\${XDG_RUNTIME_DIR:-${Quickshell.env("XDG_RUNTIME_DIR") || "/run/user/1000"}}"
-
-                            cp "$DEST_FILE" /tmp/lock_bg.png || true
-                            pkill mpvpaper || true
-
-                            # Sync with Noctalia overview
-                            mkdir -p ~/.cache/noctalia
-                            echo '{"defaultWallpaper":"'$DEST_FILE'","wallpapers":{"eDP-1":"'$DEST_FILE'"}}' > ~/.cache/noctalia/wallpapers.json
-
-                            # Debugging
-                            echo "[$(date)] Setting downloaded wallpaper: $DEST_FILE" >> /tmp/awww-debug.log
-
-                            awww img "$DEST_FILE" \
-                                --transition-type ${randomTransition} \
-                                --transition-fps 144 \
-                                --transition-duration 1 \
-                                >> /tmp/awww-debug.log 2>&1 || true
-                        fi
-                    ) </dev/null >/dev/null 2>&1 & disown
-                `
-                Quickshell.execDetached(["bash", "-c", downloadScript])
-            }
-            return
-        }
 
         // ── Local wallpaper ───────────────────────────────────────────────────
         const originalFile = window.srcDir + "/" + safeFileName
@@ -255,42 +137,16 @@ Item {
     }
 
     // -------------------------------------------------------------------------
-    // PERSISTENT SETTINGS (survive widget close/reopen)
-    // -------------------------------------------------------------------------
-    QtObject {
-        id: searchState
-        property string query:    ""
-        property bool   searched: false
-        property string lastName: ""
-    }
-
-    onIsSearchPausedChanged: {
-        Quickshell.execDetached(["bash", "-c",
-            "echo '" + (isSearchPaused ? "pause" : "run") + "' > /tmp/ddg_search_control"])
-    }
-
-    // -------------------------------------------------------------------------
     // VISIBILITY
     // -------------------------------------------------------------------------
     onVisibleChanged: {
         if (!visible) {
             window.initialFocusSet = false
-            window.searchIndexRestored = false
             window.isApplying = false
-
-            if (window.hasSearched) window.isSearchPaused = true
         } else {
             window.isFilterAnimating = true
             filterAnimationTimer.restart()
-
-            if (window.currentFilter !== "Search") {
-                window.applyFilters(true)
-            } else if (window.hasSearched) {
-                window.searchIndexRestored = false
-                window.isSearchPaused = true
-                window.trySearchFocus()
-                window.syncSearchModel()
-            }
+            window.applyFilters(true)
         }
     }
 
@@ -351,94 +207,10 @@ Item {
         }
     }
 
-    function trySearchFocus() {
-        if (window.searchIndexRestored || searchProxyModel.count === 0) return
-        if (window.lastSearchName === "") { window.searchIndexRestored = true; return }
-        for (let i = 0; i < searchProxyModel.count; i++) {
-            let fname = searchProxyModel.get(i).fileName || ""
-            if (fname === window.lastSearchName) {
-                window.executeFocusRestore(i, true, true)
-                return
-            }
-        }
-        if (searchFolderModel.status === FolderListModel.Ready &&
-            searchProxyModel.count === searchFolderModel.count) {
-            window.searchIndexRestored = true
-        }
-    }
-
-    function getModelForFilter(filter) {
-        return filter === "Search" ? searchProxyModel : localProxyModel
-    }
-
-    function updateVisibleCount() {
-        let targetModel = window.getModelForFilter(window.currentFilter)
-        if (!targetModel || targetModel.count === 0) { window.visibleItemCount = 0; return }
-        let count = 0
-        for (let i = 0; i < targetModel.count; i++) {
-            let fname = targetModel.get(i).fileName || ""
-            let isVid = fname.startsWith("000_")
-            if (checkItemMatchesFilter(fname, isVid, window.currentFilter)) count++
-        }
-        window.visibleItemCount = count
-    }
-
-    function triggerOnlineSearch() {
-        if (searchInput.text.trim() === "") return
-
-        window.isModelChanging = true
-        searchProxyModel.clear()
-        window.lastSearchName = ""
-        searchState.lastName = ""
-        if (window.currentFilter === "Search") {
-            view.currentIndex = 0
-            view.positionViewAtIndex(0, ListView.Center)
-        }
-        window.isModelChanging = false
-
-        window.searchIndexRestored = true
-        window.isOnlineSearch = true
-        window.hasSearched = true
-        window.visibleItemCount = 0
-        searchState.searched = true
-        searchState.query = searchInput.text.trim()
-        window.isSearchPaused = false
-        window.searchQuery = searchInput.text.trim()
-
-        let rawSearchDir = decodeURIComponent(window.searchDir.replace(/^file:\/\//, ""))
-        let scriptPath   = decodeURIComponent(
-            Qt.resolvedUrl("ddg_search.sh").toString().replace(/^file:\/\//, ""))
-
-        const cmd = `
-            exec > /tmp/qs_ddg_run.log 2>&1
-            export PATH=$PATH:/run/current-system/sw/bin
-
-            echo 'stop' > /tmp/ddg_search_control
-
-            for p in $(pgrep -f ddg_search.sh); do
-                if [ "$p" != "$$" ] && [ "$p" != "$BASHPID" ]; then
-                    kill -9 $p 2>/dev/null || true
-                fi
-            done
-            pkill -f "[g]et_ddg_links.py" || true
-            sleep 0.2
-
-            rm -rf "${rawSearchDir}"/* || true
-            rm -f "${rawSearchDir}/../search_map.txt" || true
-
-            echo 'run' > /tmp/ddg_search_control
-            bash "${scriptPath}" "${window.searchQuery}" &
-        `
-        Quickshell.execDetached(["bash", "-c", cmd])
-        searchInput.focus = false
-        view.forceActiveFocus()
-    }
-
     // -------------------------------------------------------------------------
     // COLOR FILTERING
     // -------------------------------------------------------------------------
     function checkItemMatchesFilter(fileName, isVid, filter) {
-        if (filter === "Search") return true
         if (filter === "All")   return true
         if (filter === "Video") return isVid
         return false
@@ -448,7 +220,7 @@ Item {
     // NAVIGATION HELPERS
     // -------------------------------------------------------------------------
     function stepToNextValidIndex(direction) {
-        let targetModel = window.getModelForFilter(window.currentFilter)
+        let targetModel = localProxyModel
         if (!targetModel || targetModel.count === 0) return
         let start = view.currentIndex
         let found = -1
@@ -504,9 +276,8 @@ Item {
     }
 
     function applyFilters(forceSnap) {
-        let targetModel = window.getModelForFilter(window.currentFilter)
+        let targetModel = localProxyModel
         if (!targetModel || targetModel.count === 0) { window.updateVisibleCount(); return }
-        if (window.currentFilter === "Search") { window.updateVisibleCount(); return }
 
         let firstValidIndex = -1
         let lastValidIndex  = -1
@@ -536,17 +307,11 @@ Item {
         window.isFilterAnimating = true
         filterAnimationTimer.restart()
         window.isModelChanging = true
-        let returningFromSearch = (window._lastFilter === "Search" && window.currentFilter !== "Search")
         window._lastFilter = window.currentFilter
-        if (returningFromSearch) window.searchIndexRestored = false
 
         Qt.callLater(() => {
             view.forceActiveFocus()
-            if (window.currentFilter === "Search") {
-                if (window.hasSearched) { window.searchIndexRestored = false; window.trySearchFocus() }
-            } else {
-                window.applyFilters(returningFromSearch)
-            }
+            window.applyFilters(false)
             window.isModelChanging = false
         })
     }
@@ -568,7 +333,7 @@ Item {
         sequence: "Return"
         enabled: !searchInput.activeFocus && !window.isScrollingBlocked && !window.isApplying
         onActivated: {
-            let targetModel = window.getModelForFilter(window.currentFilter)
+            let targetModel = localProxyModel
             if (view.currentIndex >= 0 && view.currentIndex < targetModel.count) {
                 let fname = targetModel.get(view.currentIndex).fileName
                 if (fname) window.applyWallpaper(String(fname), String(fname).startsWith("000_"))
@@ -587,9 +352,8 @@ Item {
     // MODELS
     // -------------------------------------------------------------------------
     ListModel { id: localProxyModel  }
-    ListModel { id: searchProxyModel }
 
-    readonly property var activeModel: window.currentFilter === "Search" ? searchProxyModel : localProxyModel
+    readonly property var activeModel: localProxyModel
 
     FolderListModel {
         id: srcFolderModel
@@ -616,45 +380,9 @@ Item {
             let fu = srcFolderModel.get(i, "fileUrl")
             if (fn !== undefined) localProxyModel.append({ "fileName": fn, "fileUrl": String(fu) })
         }
-        if (window.currentFilter !== "Search") window.updateVisibleCount()
-        if (!window.initialFocusSet && window.currentFilter !== "Search" && localProxyModel.count > 0)
+        window.updateVisibleCount()
+        if (!window.initialFocusSet && localProxyModel.count > 0)
             window.tryFocus()
-    }
-
-    FolderListModel {
-        id: searchFolderModel
-        folder: window.searchDir
-        nameFilters: ["*.jpg","*.jpeg","*.png","*.webp","*.gif","*.mp4","*.mkv","*.mov","*.webm"]
-        showDirs: false
-        sortField: FolderListModel.Name
-        onFolderChanged: {
-            window.isModelChanging = true; searchProxyModel.clear(); window.isModelChanging = false
-        }
-        onCountChanged:  window.syncSearchModel()
-        onStatusChanged: { if (status === FolderListModel.Ready) window.syncSearchModel() }
-    }
-
-    function syncSearchModel() {
-        let startIdx = searchProxyModel.count
-        let endIdx   = searchFolderModel.count
-        if (endIdx < startIdx) {
-            window.isModelChanging = true; searchProxyModel.clear(); startIdx = 0; window.isModelChanging = false
-        }
-        for (let i = startIdx; i < endIdx; i++) {
-            let fn = searchFolderModel.get(i, "fileName")
-            let fu = searchFolderModel.get(i, "fileUrl")
-            if (fn !== undefined) searchProxyModel.append({ "fileName": fn, "fileUrl": String(fu) })
-        }
-        if (window.currentFilter === "Search") window.updateVisibleCount()
-        if (window.currentFilter === "Search" && window.hasSearched) {
-            if (!window.searchIndexRestored) window.trySearchFocus()
-            if (window.isScrollingBlocked && startIdx === 0 && searchProxyModel.count > 0 &&
-                window.lastSearchName === "") {
-                view.forceLayout()
-                view.currentIndex = 0
-                view.positionViewAtIndex(0, ListView.Center)
-            }
-        }
     }
 
     // -------------------------------------------------------------------------
@@ -690,7 +418,7 @@ Item {
         spacing: 0
         orientation: ListView.Horizontal
         clip: false
-        interactive: !window.isScrollingBlocked && !window.isApplying
+        interactive: !window.isApplying
         cacheBuffer: 2000
 
         highlightRangeMode:      ListView.StrictlyEnforceRange
@@ -702,16 +430,6 @@ Item {
         onCurrentIndexChanged: {
             window.isItemAnimating = true
             itemAnimationTimer.restart()
-            if (view.model !== searchProxyModel || window.currentFilter !== "Search") return
-            if (!window.isModelChanging && window.hasSearched && window.searchIndexRestored) {
-                if (currentIndex >= 0 && currentIndex < searchProxyModel.count) {
-                    let fname = searchProxyModel.get(currentIndex).fileName
-                    if (fname !== undefined && fname !== "") {
-                        window.lastSearchName = String(fname)
-                        searchState.lastName = String(fname)
-                    }
-                }
-            }
         }
 
         add: Transition {
@@ -736,7 +454,7 @@ Item {
             anchors.fill: parent
             acceptedButtons: Qt.NoButton
             onWheel: (wheel) => {
-                if (window.isScrollingBlocked || window.isApplying) { wheel.accepted = true; return }
+                if (window.isApplying) { wheel.accepted = true; return }
                 if (scrollThrottle.running) { wheel.accepted = true; return }
                 let dx = wheel.angleDelta.x
                 let dy = wheel.angleDelta.y
@@ -756,9 +474,8 @@ Item {
             id: delegateRoot
 
             readonly property string safeFileName: fileName !== undefined ? String(fileName) : ""
-            readonly property bool isCurrent: ListView.isCurrentItem && !window.isScrollingBlocked
-            readonly property bool isFakeSelected: window.isScrollingBlocked && index === 0
-            readonly property bool isVisuallyEnlarged: isCurrent || isFakeSelected
+            readonly property bool isCurrent: ListView.isCurrentItem
+            readonly property bool isVisuallyEnlarged: isCurrent
             readonly property bool isVideo: safeFileName.startsWith("000_")
             readonly property bool matchesFilter: window.checkItemMatchesFilter(
                 safeFileName, isVideo, window.currentFilter)
@@ -772,7 +489,7 @@ Item {
                 id: videoPlayTimer
                 interval: 250
                 running: delegateRoot.isVisuallyEnlarged && delegateRoot.isVideo &&
-                         !window.isScrollingBlocked && !window.isFilterAnimating && !window.isItemAnimating
+                         !window.isFilterAnimating && !window.isItemAnimating
                 onTriggered: {
                     if (delegateRoot.isVisuallyEnlarged && delegateRoot.isVideo) {
                         delegateRoot.isPlayingVideo = true
@@ -815,7 +532,7 @@ Item {
 
                 MouseArea {
                     anchors.fill: parent
-                    enabled: delegateRoot.matchesFilter && !window.isScrollingBlocked && !window.isApplying
+                    enabled: delegateRoot.matchesFilter && !window.isApplying
                     onClicked: {
                         view.currentIndex = index
                         window.applyWallpaper(delegateRoot.safeFileName, delegateRoot.isVideo)
@@ -1003,147 +720,6 @@ Item {
                 }
             }
 
-            // ── Search pause/resume button (visible only during search) ───────
-            Rectangle {
-                id: searchControlBtn
-                visible: window.currentFilter === "Search" && window.hasSearched
-                width: visible ? window.s(44) : 0
-                height: window.s(44); radius: window.s(10); clip: true
-                color: window.isSearchPaused ? _theme.surface2 : "transparent"
-                border.color: window.isSearchPaused
-                    ? _theme.text
-                    : Qt.rgba(_theme.surface1.r, _theme.surface1.g, _theme.surface1.b, 0.6)
-                border.width: window.isSearchPaused ? window.s(2) : 1
-                Behavior on width { NumberAnimation { duration: 500; easing.type: Easing.OutBack; easing.overshoot: 0.5 } }
-                Behavior on color { ColorAnimation { duration: 400; easing.type: Easing.OutQuart } }
-
-                MouseArea {
-                    id: scMouse; anchors.fill: parent; hoverEnabled: true
-                    enabled: !window.isApplying; cursorShape: Qt.PointingHandCursor
-                    onClicked: window.isSearchPaused = !window.isSearchPaused
-                }
-
-                Canvas {
-                    width: window.s(44); height: window.s(44); anchors.centerIn: parent
-                    property bool paused: window.isSearchPaused
-                    property string activeColor: paused ? _theme.text
-                        : (scMouse.containsMouse ? _theme.text
-                        : Qt.rgba(_theme.text.r, _theme.text.g, _theme.text.b, 0.7))
-                    onActiveColorChanged: requestPaint()
-                    onPausedChanged: requestPaint()
-                    property real scaleTrigger: window.s(1); onScaleTriggerChanged: requestPaint()
-                    onPaint: {
-                        var ctx = getContext("2d"); var s = window.s; ctx.reset()
-                        ctx.fillStyle = activeColor
-                        if (!paused) {
-                            ctx.fillRect(s(15), s(14), s(4), s(16))
-                            ctx.fillRect(s(25), s(14), s(4), s(16))
-                        } else {
-                            ctx.beginPath()
-                            ctx.moveTo(s(16), s(12)); ctx.lineTo(s(32), s(22)); ctx.lineTo(s(16), s(32))
-                            ctx.closePath(); ctx.fill()
-                        }
-                    }
-                }
-            }
-
-            // ── Search box ───────────────────────────────────────────────────
-            Rectangle {
-                id: searchBox
-                height: window.s(44)
-                width: window.currentFilter === "Search" ? window.s(360) : window.s(44)
-                radius: window.s(10); clip: true
-                color: window.currentFilter === "Search"
-                    ? Qt.rgba(_theme.surface2.r, _theme.surface2.g, _theme.surface2.b, 0.8)
-                    : "transparent"
-                border.color: window.currentFilter === "Search"
-                    ? Qt.rgba(_theme.text.r, _theme.text.g, _theme.text.b, 0.5)
-                    : Qt.rgba(_theme.surface1.r, _theme.surface1.g, _theme.surface1.b, 0.6)
-                border.width: window.currentFilter === "Search" ? window.s(2) : 1
-                Behavior on width       { NumberAnimation { duration: 600; easing.type: Easing.OutBack; easing.overshoot: 0.5 } }
-                Behavior on color       { ColorAnimation { duration: 400; easing.type: Easing.OutQuart } }
-                Behavior on border.color { ColorAnimation { duration: 400 } }
-
-                MouseArea {
-                    id: searchMouseArea; anchors.fill: parent; hoverEnabled: true
-                    enabled: !window.isApplying; cursorShape: Qt.PointingHandCursor
-                    onClicked: window.currentFilter = (window.currentFilter !== "Search") ? "Search" : "All"
-                }
-
-                Canvas {
-                    id: searchIcon
-                    width: window.s(44); height: window.s(44)
-                    anchors.left: parent.left
-                    anchors.leftMargin: window.currentFilter === "Search" ? window.s(5) : 0
-                    anchors.verticalCenter: parent.verticalCenter
-                    Behavior on anchors.leftMargin { NumberAnimation { duration: 500; easing.type: Easing.OutExpo } }
-                    property string activeColor: window.currentFilter === "Search" ? _theme.text
-                        : (searchMouseArea.containsMouse ? _theme.text
-                        : Qt.rgba(_theme.text.r, _theme.text.g, _theme.text.b, 0.7))
-                    onActiveColorChanged: requestPaint()
-                    property real scaleTrigger: window.s(1); onScaleTriggerChanged: requestPaint()
-                    onPaint: {
-                        var ctx = getContext("2d"); var s = window.s; ctx.reset()
-                        ctx.lineWidth = s(3); ctx.strokeStyle = activeColor
-                        ctx.beginPath(); ctx.arc(s(18), s(18), s(7), 0, Math.PI * 2); ctx.stroke()
-                        ctx.beginPath(); ctx.moveTo(s(23), s(23)); ctx.lineTo(s(31), s(31)); ctx.stroke()
-                    }
-                }
-
-                TextInput {
-                    id: searchInput
-                    anchors.left: searchIcon.right; anchors.right: submitBtn.left
-                    anchors.rightMargin: window.s(8); anchors.verticalCenter: parent.verticalCenter
-                    opacity: window.currentFilter === "Search" ? 1.0 : 0.0
-                    visible: opacity > 0
-                    Behavior on opacity { NumberAnimation { duration: 400; easing.type: Easing.OutQuad } }
-                    color: _theme.text
-                    font.family: "JetBrains Mono"; font.pixelSize: window.s(16); clip: true
-                    onTextEdited: { window.hasSearched = false; searchState.searched = false }
-                    onAccepted: { window.triggerOnlineSearch(); searchInput.focus = false; view.forceActiveFocus() }
-                }
-
-                Rectangle {
-                    id: submitBtn
-                    width: window.s(32); height: window.s(32); radius: window.s(8)
-                    anchors.right: parent.right; anchors.rightMargin: window.s(8)
-                    anchors.verticalCenter: parent.verticalCenter
-                    opacity: window.currentFilter === "Search" ? 1.0 : 0.0
-                    visible: opacity > 0
-                    Behavior on opacity { NumberAnimation { duration: 400; easing.type: Easing.OutQuad } }
-                    color: submitMouseArea.containsMouse
-                        ? Qt.rgba(_theme.text.r, _theme.text.g, _theme.text.b, 0.1)
-                        : "transparent"
-                    border.color: submitMouseArea.containsMouse
-                        ? _theme.text
-                        : Qt.rgba(_theme.text.r, _theme.text.g, _theme.text.b, 0.3)
-                    border.width: 1
-                    Behavior on color { ColorAnimation { duration: 300 } }
-
-                    MouseArea {
-                        id: submitMouseArea; anchors.fill: parent; hoverEnabled: true
-                        enabled: !window.isApplying; cursorShape: Qt.PointingHandCursor
-                        onClicked: window.triggerOnlineSearch()
-                    }
-
-                    Canvas {
-                        width: window.s(16); height: window.s(16); anchors.centerIn: parent
-                        property string activeColor: submitMouseArea.containsMouse ? _theme.text
-                            : Qt.rgba(_theme.text.r, _theme.text.g, _theme.text.b, 0.7)
-                        onActiveColorChanged: requestPaint()
-                        property real scaleTrigger: window.s(1); onScaleTriggerChanged: requestPaint()
-                        onPaint: {
-                            var ctx = getContext("2d"); var s = window.s; ctx.reset()
-                            ctx.lineWidth = s(2); ctx.lineCap = "round"; ctx.lineJoin = "round"
-                            ctx.strokeStyle = activeColor
-                            ctx.beginPath()
-                            ctx.moveTo(s(2), s(8)); ctx.lineTo(s(14), s(8))
-                            ctx.moveTo(s(9), s(3)); ctx.lineTo(s(14), s(8)); ctx.lineTo(s(9), s(13))
-                            ctx.stroke()
-                        }
-                    }
-                }
-            }
         }
     }
 
@@ -1151,35 +727,9 @@ Item {
     // LIFECYCLE
     // -------------------------------------------------------------------------
     Component.onCompleted: {
-        // Ensure search thumb dir exists
-        Quickshell.execDetached(["bash", "-c",
-            "mkdir -p '" + decodeURIComponent(window.searchDir.replace("file://", "")) + "'"])
-
-        // Restore search state from previous session
-        if (searchState.searched) {
-            searchInput.text  = searchState.query
-            window.searchQuery = searchState.query
-            window.hasSearched = true
-            window.lastSearchName = searchState.lastName
-            window.isSearchPaused = true
-        }
-
         view.forceActiveFocus()
     }
 
     Component.onDestruction: {
-        if (window.hasSearched) {
-            searchState.query   = searchInput.text
-            searchState.searched = window.hasSearched
-            searchState.lastName = window.lastSearchName
-            Quickshell.execDetached(["bash", "-c", "echo 'pause' > /tmp/ddg_search_control"])
-        } else {
-            Quickshell.execDetached(["bash", "-c",
-                "echo 'stop' > /tmp/ddg_search_control; " +
-                "for p in $(pgrep -f ddg_search.sh); do " +
-                "  if [ \"$p\" != \"$$\" ] && [ \"$p\" != \"$BASHPID\" ]; then " +
-                "    kill -9 $p 2>/dev/null || true; fi; done; " +
-                "pkill -f '[g]et_ddg_links.py'"])
-        }
     }
 }
