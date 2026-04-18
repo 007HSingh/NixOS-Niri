@@ -12,8 +12,6 @@ let
     nix-index-database
     sops-nix
     zen-browser
-    nix-openclaw
-    claude-code-nix
     antigravity-nix
     ;
 in
