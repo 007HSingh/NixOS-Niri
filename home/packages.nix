@@ -48,9 +48,7 @@
     playerctl
 
     # Animated wallpapers
-    (pkgs.writeShellScriptBin "start-awww" ''
-      exec ${pkgs.awww}/bin/awww-daemon
-    '')
+    awww
 
     # Languages
     javaPackages.compiler.temurin-bin.jdk-25
