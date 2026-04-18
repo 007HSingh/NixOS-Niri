@@ -50,6 +50,7 @@
     # Animated wallpapers
     awww
     mpvpaper
+    ffmpeg
     imagemagick
     (pkgs.writeShellScriptBin "start-awww" ''
       exec ${pkgs.awww}/bin/awww-daemon
