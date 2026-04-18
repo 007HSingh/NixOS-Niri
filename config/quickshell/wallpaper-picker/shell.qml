@@ -7,6 +7,11 @@ import QtQuick
 // Launched via: qs -c wallpaper-picker
 // Niri bind: Mod+Shift+W  →  qs -c wallpaper-picker
 ShellRoot {
+    Component.onCompleted: {
+        Qt.application.name = "WallpaperPicker"
+        Qt.application.organization = "quickshell"
+        Qt.application.domain = "quickshell.local"
+    }
 
     // ── Poll /tmp/qs_widget_state for "close" ─────────────────────────────────
     // The apply script writes 'close' there after firing awww.
