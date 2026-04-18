@@ -4,6 +4,10 @@ import QtQuick
 // Replaces the forked repo's MatugenColors.qml — no matugen dependency needed.
 // All colors are exposed as QtQuick color properties so the picker UI can use them directly.
 QtObject {
+    // Fonts
+    readonly property string sansFamily: "Inter"
+    readonly property string monoFamily: "Maple Mono NF"
+
     // Backgrounds
     readonly property color base:    "#1e1e2e"
     readonly property color mantle:  "#181825"

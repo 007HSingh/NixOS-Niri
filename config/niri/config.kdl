@@ -181,10 +181,10 @@ layout {
     border {
         // The settings are the same as for the focus ring.
         // If you enable the border, you probably want to disable the focus ring.
-        off
-        width 0.5
-        active-color "#ffc87f"
-        inactive-color "#505050"
+        on
+        width 2.0
+        active-gradient from="#cba6f7" to="#89b4fa" angle=45 relative-to="workspace-view"
+        inactive-color "#313244"
         // Color of the border around windows that request your attention.
         urgent-color "#9b0000"
  // Gradients can use a few different interpolation color spaces.
@@ -265,13 +265,11 @@ animations {
         custom-shader "\n            // ═══════════════════════════════════════════════════════════\n            // TUNABLE PARAMETERS — adjust these to taste\n            // ═══════════════════════════════════════════════════════════\n            const float SMOKE_INTENSITY   = 0.6;   // 0.0–1.0, strength of smoke overlay\n            const float NOISE_SCALE       = 3.5;   // higher = finer smoke detail\n            const float DISTORTION_STRENGTH = 0.08; // UV displacement amount\n            const float SMOKE_SPREAD      = 2.0;   // how far smoke extends beyond window\n            const vec3  SMOKE_COLOR       = vec3(0.118, 0.118, 0.180); // #1e1e2e catppuccin crust\n\n            // ── Hash-based 2D noise (fast, no trig) ────────────────\n            float hash(vec2 p) {\n                vec3 p3 = fract(vec3(p.xyx) * 0.1031);\n                p3 += dot(p3, p3.yzx + 33.33);\n                return fract((p3.x + p3.y) * p3.z);\n            }\n\n            float noise(vec2 p) {\n                vec2 i = floor(p);\n                vec2 f = fract(p);\n                f = f * f * (3.0 - 2.0 * f); // smoothstep interpolation\n\n                float a = hash(i);\n                float b = hash(i + vec2(1.0, 0.0));\n                float c = hash(i + vec2(0.0, 1.0));\n                float d = hash(i + vec2(1.0, 1.0));\n\n                return mix(mix(a, b, f.x), mix(c, d, f.x), f.y);\n            }\n\n            // ── FBM: 4 octaves for organic feel ────────────────────\n            float fbm(vec2 p) {\n                float value = 0.0;\n                float amplitude = 0.5;\n                float frequency = 1.0;\n                for (int i = 0; i < 4; i++) {\n                    value += amplitude * noise(p * frequency);\n                    frequency *= 2.0;\n                    amplitude *= 0.5;\n                }\n                return value;\n            }\n\n            vec4 close_color(vec3 coords_geo, vec3 size_geo) {\n                float p = niri_clamped_progress;\n\n                // Ease-in-out for smooth feel\n                float eased = p * p * (3.0 - 2.0 * p);\n\n                // Noise-based UV distortion (increases as window closes)\n                vec2 uv = coords_geo.xy;\n                float seed_offset = niri_random_seed * 42.0;\n                vec2 noise_uv = uv * NOISE_SCALE + vec2(seed_offset, seed_offset * 0.7);\n                float n = fbm(noise_uv + p * 2.0);\n\n                vec2 distorted_uv = uv + (n - 0.5) * DISTORTION_STRENGTH * eased;\n                vec3 distorted_geo = vec3(distorted_uv, 1.0);\n\n                // Sample window texture with distortion\n                vec3 coords_tex = niri_geo_to_tex * distorted_geo;\n                vec4 color = texture2D(niri_tex, coords_tex.st);\n\n                // Window opacity fades out\n                color *= (1.0 - eased);\n\n                // Smoke overlay: dark particles that billow outward\n                float smoke_noise = fbm(noise_uv * 1.3 + vec2(p * 3.0, p * 1.5));\n                float smoke_mask = smoothstep(0.25, 0.75, smoke_noise) * eased;\n\n                // Expand smoke region as animation progresses\n                float bounds = SMOKE_SPREAD * eased;\n                float in_bounds = step(-bounds, coords_geo.x) * step(coords_geo.x, 1.0 + bounds)\n                                * step(-bounds, coords_geo.y) * step(coords_geo.y, 1.0 + bounds);\n\n                // Edge fade for smoke (soft edges, no hard cutoff)\n                float edge_x = smoothstep(-bounds, 0.0, coords_geo.x) * smoothstep(1.0 + bounds, 1.0, coords_geo.x);\n                float edge_y = smoothstep(-bounds, 0.0, coords_geo.y) * smoothstep(1.0 + bounds, 1.0, coords_geo.y);\n                float edge_fade = edge_x * edge_y;\n\n                // Fade smoke out towards the end of the animation\n                float smoke_fade = smoothstep(1.0, 0.7, eased);\n\n                // Compose smoke (premultiplied alpha)\n                float smoke_alpha = smoke_mask * SMOKE_INTENSITY * edge_fade * in_bounds * smoke_fade;\n                vec4 smoke = vec4(SMOKE_COLOR * smoke_alpha, smoke_alpha);\n\n                // Blend: window on top of smoke\n                color = color + smoke * (1.0 - color.a);\n\n                return color;\n            }\n        "
     }
     workspace-switch {
-        duration-ms 250
+        duration-ms 450
         curve "ease-out-expo"
     }
 }
-// Window rules let you adjust behavior for individual windows.
-// Find more information on the wiki:
-// https://yalter.github.io/niri/Configuration:-Window-Rules
+// ── Shaders ──────────────────────────────────────────────────────────────────
 // Work around WezTerm's initial configure bug
 // by setting an empty default-column-width.
 window-rule {
@@ -311,6 +309,14 @@ window-rule {
 window-rule {
     match app-id="kitty"
     opacity 1.0
+    border {
+        off
+    }
+}
+// ── Inactive Window Dimming ──────────────────────────────────────────────────
+window-rule {
+    match is-active=false
+    opacity 0.85
 }
 // ── Rounded corners for all windows ──────────────────────────────────────────
 // 20 px radius matches the glassmorphism aesthetic; increase for pill-like UI.
