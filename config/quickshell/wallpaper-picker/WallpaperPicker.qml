@@ -197,10 +197,28 @@ Item {
         let lockBgCmd    = ""
 
         if (isVideo) {
-            wallpaperCmd = `mpvpaper -o 'loop --no-audio --panscan=1.0 --hwdec=auto --profile=high-quality --video-sync=display-resample --interpolation --tscale=oversample' '*' "$WALL_FILE"`
-            lockBgCmd    = `ffmpeg -ss 1 -i "$WALL_FILE" -frames:v 1 -q:v 3 /tmp/lock_bg.png -y 2>/dev/null || true`
+            wallpaperCmd = `
+                OLD_PIDS=$(pgrep mpvpaper)
+                mpvpaper -o 'loop --no-audio --panscan=1.0 --hwdec=auto --profile=high-quality --video-sync=display-resample --interpolation --tscale=oversample' '*' "$WALL_FILE" \
+                    >>/tmp/awww-debug.log 2>&1 &
+                
+                # Update static background and lockscreen frame in parallel
+                (
+                    ffmpegthumbnailer -i "$WALL_FILE" -o /tmp/wall_frame.png -s 0
+                    cp /tmp/wall_frame.png /tmp/lock_bg.png
+                    awww img /tmp/wall_frame.png --transition-duration 0
+                ) >/dev/null 2>&1 &
+
+                # Wait for the new video to start rendering before killing the old ones
+                sleep 1.5
+                if [ -n "$OLD_PIDS" ]; then
+                    kill $OLD_PIDS 2>/dev/null || true
+                fi
+            `
+            lockBgCmd = `true`
         } else {
             wallpaperCmd = `
+                pkill mpvpaper || true
                 awww img "$WALL_FILE" \
                     --transition-type ${randomTransition} \
                     --transition-fps 144 \
@@ -220,7 +238,6 @@ Item {
                 export WALL_FILE="${escOriginal}"
 
                 ${lockBgCmd} || true
-                pkill mpvpaper || true
 
                 # Sync with Noctalia overview
                 mkdir -p ~/.cache/noctalia
