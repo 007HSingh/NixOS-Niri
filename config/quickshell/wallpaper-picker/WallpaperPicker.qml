@@ -610,6 +610,22 @@ Item {
                             }
                         }
                     }
+                    // Focus Pulse Border
+                    Rectangle {
+                        anchors.fill: parent
+                        color: "transparent"
+                        border.color: delegateRoot.isCurrent ? _theme.mauve : "transparent"
+                        border.width: delegateRoot.isCurrent ? window.s(4) : 0
+                        z: 100
+                        opacity: delegateRoot.isCurrent ? 1.0 : 0.0
+                        
+                        SequentialAnimation on opacity {
+                            running: delegateRoot.isCurrent
+                            loops: Animation.Infinite
+                            NumberAnimation { from: 0.5; to: 1.0; duration: 1000; easing.type: Easing.InOutSine }
+                            NumberAnimation { from: 1.0; to: 0.5; duration: 1000; easing.type: Easing.InOutSine }
+                        }
+                    }
                 }
             }
         }
@@ -672,8 +688,8 @@ Item {
                             color: window.currentFilter === modelData.name
                                 ? _theme.text
                                 : Qt.rgba(_theme.text.r, _theme.text.g, _theme.text.b, 0.7)
-                            font.family: "JetBrains Mono"; font.pixelSize: window.s(14)
-                            font.bold: window.currentFilter === modelData.name
+                            font.family: _theme.monoFamily; font.pixelSize: window.s(14)
+                            font.weight: window.currentFilter === modelData.name ? Font.DemiBold : Font.Normal
                             Behavior on color { ColorAnimation { duration: 400; easing.type: Easing.OutQuart } }
                         }
 
