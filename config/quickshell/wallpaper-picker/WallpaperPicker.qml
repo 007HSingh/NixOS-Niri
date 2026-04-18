@@ -45,10 +45,20 @@ Item {
         { name: "Video",  hex: "", label: "Vid"    }
     ]
 
+    // Local state
+    property bool isApplying: false
+    property bool isModelChanging: false
+    property bool jumpToLastOnFilterChange: false
+
+    // Reactive status
+    property bool isStartup: srcFolderModel.status === FolderListModel.Loading
+    property bool isReady: visible && srcFolderModel.status === FolderListModel.Ready
+
     // -------------------------------------------------------------------------
     // PATHS
     // -------------------------------------------------------------------------
     readonly property string homeDir: "file://" + Quickshell.env("HOME")
+    readonly property string thumbDir: homeDir + "/.cache/wallpaper_picker/thumbs"
     readonly property string srcDir: {
         const dir = Quickshell.env("WALLPAPER_DIR")
         return (dir && dir !== "")
@@ -176,7 +186,7 @@ Item {
     }
 
     function executeFocusRestore(targetIndex, isSearchRestore, requirePositioning) {
-        let targetModel = window.getModelForFilter(window.currentFilter)
+        let targetModel = localProxyModel
         if (targetIndex !== -1 && targetIndex < targetModel.count) {
             window.isModelChanging = true
             if (requirePositioning) {
@@ -277,7 +287,7 @@ Item {
 
     function applyFilters(forceSnap) {
         let targetModel = localProxyModel
-        if (!targetModel || targetModel.count === 0) { window.updateVisibleCount(); return }
+        if (!targetModel || targetModel.count === 0) return
 
         let firstValidIndex = -1
         let lastValidIndex  = -1
@@ -300,7 +310,6 @@ Item {
 
         window.jumpToLastOnFilterChange = false
         if (indexToFocus !== -1) window.executeFocusRestore(indexToFocus, false, forceSnap === true)
-        window.updateVisibleCount()
     }
 
     onCurrentFilterChanged: {
@@ -321,17 +330,17 @@ Item {
     // -------------------------------------------------------------------------
     Shortcut {
         sequence: "Left"
-        enabled: !window.isScrollingBlocked && !window.isApplying
+        enabled: !window.isApplying
         onActivated: window.stepToNextValidIndex(-1)
     }
     Shortcut {
         sequence: "Right"
-        enabled: !window.isScrollingBlocked && !window.isApplying
+        enabled: !window.isApplying
         onActivated: window.stepToNextValidIndex(1)
     }
     Shortcut {
         sequence: "Return"
-        enabled: !searchInput.activeFocus && !window.isScrollingBlocked && !window.isApplying
+        enabled: !window.isApplying
         onActivated: {
             let targetModel = localProxyModel
             if (view.currentIndex >= 0 && view.currentIndex < targetModel.count) {
@@ -363,8 +372,6 @@ Item {
         sortField: FolderListModel.Name
         onCountChanged: {
             window.syncLocalModel()
-            if (window.isDownloadingWallpaper && window.isDownloaded(window.currentDownloadName))
-                window.isDownloadingWallpaper = false
         }
         onStatusChanged: { if (status === FolderListModel.Ready) window.syncLocalModel() }
     }
@@ -380,7 +387,6 @@ Item {
             let fu = srcFolderModel.get(i, "fileUrl")
             if (fn !== undefined) localProxyModel.append({ "fileName": fn, "fileUrl": String(fu) })
         }
-        window.updateVisibleCount()
         if (!window.initialFocusSet && localProxyModel.count > 0)
             window.tryFocus()
     }
@@ -477,6 +483,7 @@ Item {
             readonly property bool isCurrent: ListView.isCurrentItem
             readonly property bool isVisuallyEnlarged: isCurrent
             readonly property bool isVideo: safeFileName.startsWith("000_")
+            readonly property string thumbPath: window.thumbDir + "/" + safeFileName
             readonly property bool matchesFilter: window.checkItemMatchesFilter(
                 safeFileName, isVideo, window.currentFilter)
 
@@ -510,7 +517,8 @@ Item {
             opacity: matchesFilter ? (isVisuallyEnlarged ? 1.0 : 0.6) : 0.0
             scale:   matchesFilter ? 1.0 : 0.5
             height:  matchesFilter ? targetHeight : 0
-            anchors.verticalCenter: parent.verticalCenter
+            anchors.verticalCenter: parent ? parent.verticalCenter : undefined
+
             anchors.verticalCenterOffset: window.s(15)
             z: isVisuallyEnlarged ? 10 : 1
 
@@ -551,7 +559,7 @@ Item {
                         width:  (window.itemWidth * 1.5) + ((window.itemHeight + window.s(30)) * Math.abs(window.skewFactor)) + window.s(50)
                         height: window.itemHeight + window.s(30)
                         fillMode: Image.PreserveAspectCrop
-                        source: fileUrl !== undefined ? fileUrl : ""
+                        source: thumbPath
                         asynchronous: true
                         transform: Matrix4x4 {
                             property real s: -window.skewFactor
@@ -727,6 +735,24 @@ Item {
     // LIFECYCLE
     // -------------------------------------------------------------------------
     Component.onCompleted: {
+        const rawThumbDir = decodeURIComponent(window.thumbDir.replace("file://", ""))
+        const rawSrcDir   = decodeURIComponent(window.srcDir.replace("file://", ""))
+        
+        const thumbScript = `
+            mkdir -p "${rawThumbDir}"
+            find "${rawSrcDir}" -maxdepth 1 -type f | while read -r f; do
+                base=$(basename "$f")
+                thumb="${rawThumbDir}/$base"
+                if [ ! -f "$thumb" ]; then
+                    if [[ "$base" =~ \.(mp4|mkv|mov|webm)$ ]]; then
+                        ffmpegthumbnailer -i "$f" -o "$thumb" -s 400 -q 5 >/dev/null 2>&1 &
+                    else
+                        magick "$f" -thumbnail x400 -quality 75 "$thumb" >/dev/null 2>&1 &
+                    fi
+                fi
+            done
+        `
+        Quickshell.execDetached(["bash", "-c", thumbScript])
         view.forceActiveFocus()
     }
 
