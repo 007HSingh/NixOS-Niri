@@ -181,7 +181,7 @@ layout {
     border {
         // The settings are the same as for the focus ring.
         // If you enable the border, you probably want to disable the focus ring.
-        on
+        off
         width 2.0
         active-gradient from="#cba6f7" to="#89b4fa" angle=45 relative-to="workspace-view"
         inactive-color "#313244"
