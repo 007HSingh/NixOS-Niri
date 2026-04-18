@@ -312,19 +312,6 @@ Item {
         if (indexToFocus !== -1) window.executeFocusRestore(indexToFocus, false, forceSnap === true)
     }
 
-    onCurrentFilterChanged: {
-        window.isFilterAnimating = true
-        filterAnimationTimer.restart()
-        window.isModelChanging = true
-        window._lastFilter = window.currentFilter
-
-        Qt.callLater(() => {
-            view.forceActiveFocus()
-            window.applyFilters(false)
-            window.isModelChanging = false
-        })
-    }
-
     // -------------------------------------------------------------------------
     // KEYBOARD SHORTCUTS
     // -------------------------------------------------------------------------
@@ -491,21 +478,22 @@ Item {
             readonly property real targetHeight: isVisuallyEnlarged ? (window.itemHeight + window.s(30)) : window.itemHeight
 
             property bool isPlayingVideo: false
+            readonly property bool isNearCenter: Math.abs(view.currentIndex - index) <= 3
 
             Timer {
                 id: videoPlayTimer
-                interval: 250
-                running: delegateRoot.isVisuallyEnlarged && delegateRoot.isVideo &&
-                         !window.isFilterAnimating && !window.isItemAnimating
+                interval: 150
+                running: delegateRoot.isNearCenter && delegateRoot.isVideo &&
+                         !window.isFilterAnimating && window.isReady
                 onTriggered: {
-                    if (delegateRoot.isVisuallyEnlarged && delegateRoot.isVideo) {
+                    if (delegateRoot.isNearCenter && delegateRoot.isVideo) {
                         delegateRoot.isPlayingVideo = true
                         previewPlayer.play()
                     }
                 }
             }
-            onIsVisuallyEnlargedChanged: {
-                if (!isVisuallyEnlarged) {
+            onIsNearCenterChanged: {
+                if (!isNearCenter) {
                     isPlayingVideo = false
                     videoPlayTimer.stop()
                     previewPlayer.stop()
@@ -559,7 +547,42 @@ Item {
                         width:  (window.itemWidth * 1.5) + ((window.itemHeight + window.s(30)) * Math.abs(window.skewFactor)) + window.s(50)
                         height: window.itemHeight + window.s(30)
                         fillMode: Image.PreserveAspectCrop
+                        
+                        // Only try thumbnail, and only fallback if it's NOT a video
                         source: thumbPath
+                        onStatusChanged: {
+                            if (status === Image.Error && !delegateRoot.isVideo) {
+                                source = fileUrl
+                            }
+                        }
+                        
+                        // Show a placeholder if it's a video and no thumbnail exists
+                        Rectangle {
+                            anchors.fill: parent
+                            color: _theme.mantle
+                            visible: delegateRoot.isVideo && parent.status !== Image.Ready
+                            
+                            Column {
+                                anchors.centerIn: parent
+                                spacing: window.s(10)
+                                Text {
+                                    text: "󰈫"
+                                    font.family: _theme.monoFamily
+                                    font.pixelSize: window.s(48)
+                                    color: _theme.surface1
+                                    anchors.horizontalCenter: parent.horizontalCenter
+                                }
+                                Text {
+                                    text: "VIDEO"
+                                    font.family: _theme.sansFamily
+                                    font.pixelSize: window.s(14)
+                                    color: _theme.surface1
+                                    anchors.horizontalCenter: parent.horizontalCenter
+                                    font.letterSpacing: 2
+                                }
+                            }
+                        }
+
                         asynchronous: true
                         transform: Matrix4x4 {
                             property real s: -window.skewFactor
@@ -751,24 +774,6 @@ Item {
     // LIFECYCLE
     // -------------------------------------------------------------------------
     Component.onCompleted: {
-        const rawThumbDir = decodeURIComponent(window.thumbDir.replace("file://", ""))
-        const rawSrcDir   = decodeURIComponent(window.srcDir.replace("file://", ""))
-        
-        const thumbScript = `
-            mkdir -p "${rawThumbDir}"
-            find "${rawSrcDir}" -maxdepth 1 -type f | while read -r f; do
-                base=$(basename "$f")
-                thumb="${rawThumbDir}/$base"
-                if [ ! -f "$thumb" ]; then
-                    if [[ "$base" =~ \.(mp4|mkv|mov|webm)$ ]]; then
-                        ffmpegthumbnailer -i "$f" -o "$thumb" -s 400 -q 5 >/dev/null 2>&1 &
-                    else
-                        magick "$f" -thumbnail x400 -quality 75 "$thumb" >/dev/null 2>&1 &
-                    fi
-                fi
-            done
-        `
-        Quickshell.execDetached(["bash", "-c", thumbScript])
         view.forceActiveFocus()
     }
 

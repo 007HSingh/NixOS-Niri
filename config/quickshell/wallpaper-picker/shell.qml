@@ -59,20 +59,19 @@ ShellRoot {
 
         color: "transparent"
 
-        // Fallback: catch Escape at the window level in case Shortcut
-        // doesn't fire (e.g. focus is inside a TextInput child)
-        Keys.onEscapePressed: (event) => {
-            if (!pickerContent.isApplying) {
-                Qt.quit()
-                event.accepted = true
-            }
-        }
-
         WallpaperPicker {
             id: pickerContent
             anchors.fill: parent
             focus: true
             onWindowCloseRequested: Qt.quit()
+
+            // Handle Escape here instead of on PanelWindow to avoid warnings
+            Keys.onEscapePressed: (event) => {
+                if (!pickerContent.isApplying) {
+                    Qt.quit()
+                    event.accepted = true
+                }
+            }
         }
     }
 }
