@@ -5,7 +5,7 @@
 let
   # Override quickshell to include QtMultimedia for video wallpaper preview support
   quickshellWithQtMultimedia =
-    inputs.quickshell.packages.${pkgs.system}.quickshell.overrideAttrs
+    inputs.quickshell.packages.${pkgs.stdenv.hostPlatform.system}.quickshell.overrideAttrs
       (old: {
         nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ pkgs.qt6.qtmultimedia ];
         buildInputs = (old.buildInputs or [ ]) ++ [ pkgs.qt6.qtmultimedia ];
