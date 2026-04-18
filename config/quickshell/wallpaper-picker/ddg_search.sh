@@ -33,15 +33,6 @@ python3 -u "$SCRIPT_DIR/get_ddg_links.py" "$QUERY" | while IFS='|' read -r thumb
 
   [ -z "$thumb_url" ] || [ -z "$full_url" ] && continue
 
-  # Pre-flight: verify the full-size URL actually serves an image
-  target_headers=$(curl -s -I -L -m 3 -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64)" "$full_url")
-  target_type=$(echo "$target_headers" | grep -i "content-type:" | tail -n 1 | tr -d '\r')
-
-  if [[ ! $target_type =~ "image/" ]]; then
-    echo "Skip: Full URL is not an image ($target_type) -> $full_url" >>"$LOG_FILE"
-    continue
-  fi
-
   uuid=$(date +%s%N)
   ext="${full_url##*.}"
   ext="${ext%%\?*}"
@@ -60,7 +51,7 @@ python3 -u "$SCRIPT_DIR/get_ddg_links.py" "$QUERY" | while IFS='|' read -r thumb
 
   echo "Downloading thumb: $thumb_url -> $filename" >>"$LOG_FILE"
 
-  curl -s -L -m 5 -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64)" "$thumb_url" -o "$tmppath"
+  curl -s -L -m 8 -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64)" "$thumb_url" -o "$tmppath"
 
   state=$(cat "$CONTROL_FILE" 2>/dev/null | tr -d '[:space:]')
   if [[ $state == "stop" ]]; then
