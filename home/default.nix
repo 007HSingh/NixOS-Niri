@@ -18,5 +18,6 @@
     ./vscode.nix
     ./wofi.nix
     ./xdg.nix
+    ./termipedia.nix
   ];
 }
