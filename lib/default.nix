@@ -12,6 +12,9 @@ let
     nix-index-database
     sops-nix
     zen-browser
+    nix-openclaw
+    claude-code-nix
+    antigravity-nix
     ;
 in
 {
@@ -35,7 +38,7 @@ in
 
       # Common specialArgs for both NixOS and Home Manager
       specialArgs = {
-        inherit inputs users;
+        inherit inputs users antigravity-nix;
         inherit pkgs-stable pkgs-unstable;
         stable = pkgs-stable;
         unstable = pkgs-unstable;

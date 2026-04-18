@@ -1,8 +1,14 @@
 # User Packages
 # Packages installed via Home Manager
-{ pkgs, stable, ... }:
+{
+  pkgs,
+  inputs,
+  stable,
+  ...
+}:
 
 {
+
   programs.nix-index-database.comma.enable = true;
 
   home.packages = with pkgs; [
@@ -35,7 +41,7 @@
     stable.keepassxc
     discord
     mpv
-    antigravity-fhs
+    inputs.antigravity-nix.packages.${pkgs.stdenv.hostPlatform.system}.default
 
     # Wayland utilities
     wl-clipboard

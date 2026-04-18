@@ -52,7 +52,7 @@
     chafa
     ffmpegthumbnailer
     mediainfo
-    claude-code
+    pkgs.claude-code
 
     # Gaming
     mangohud
