@@ -17,7 +17,6 @@
       source = "${inputs.noctalia-plugins}/catwalk";
     };
 
-
     ".config/noctalia/plugins.json" = {
       text = builtins.toJSON {
         sources = [
@@ -82,8 +81,7 @@
       };
       colorSchemes.predefinedScheme = "Catppuccin";
       wallpaper = {
-        enabled = false;
-        overviewEnabled = false;
+        overviewEnabled = true;
       };
       location = {
         monthBeforeDay = true;

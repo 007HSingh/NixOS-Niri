@@ -122,6 +122,10 @@ Item {
                         cp "$DEST_FILE" /tmp/lock_bg.png || true
                         pkill mpvpaper || true
 
+                        # Sync with Noctalia overview
+                        mkdir -p ~/.cache/noctalia
+                        echo '{"defaultWallpaper":"'$DEST_FILE'","wallpapers":{"eDP-1":"'$DEST_FILE'"}}' > ~/.cache/noctalia/wallpapers.json
+
                         # Debugging
                         echo "[$(date)] Setting online wallpaper: $DEST_FILE" >> /tmp/awww-debug.log
 
@@ -164,6 +168,10 @@ Item {
 
                             cp "$DEST_FILE" /tmp/lock_bg.png || true
                             pkill mpvpaper || true
+
+                            # Sync with Noctalia overview
+                            mkdir -p ~/.cache/noctalia
+                            echo '{"defaultWallpaper":"'$DEST_FILE'","wallpapers":{"eDP-1":"'$DEST_FILE'"}}' > ~/.cache/noctalia/wallpapers.json
 
                             # Debugging
                             echo "[$(date)] Setting downloaded wallpaper: $DEST_FILE" >> /tmp/awww-debug.log
@@ -213,6 +221,10 @@ Item {
 
                 ${lockBgCmd} || true
                 pkill mpvpaper || true
+
+                # Sync with Noctalia overview
+                mkdir -p ~/.cache/noctalia
+                echo '{"defaultWallpaper":"'$WALL_FILE'","wallpapers":{"eDP-1":"'$WALL_FILE'"}}' > ~/.cache/noctalia/wallpapers.json
 
                 # Debugging
                 echo "[$(date)] Setting local wallpaper: $WALL_FILE" >> /tmp/awww-debug.log
