@@ -1,7 +1,6 @@
 # Noctalia Shell Configuration
 # Status bar and desktop shell for Niri
 {
-  config,
   inputs,
   ...
 }:
