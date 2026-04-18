@@ -190,14 +190,14 @@ Item {
         }
 
         // ── Local wallpaper ───────────────────────────────────────────────────
-        const originalFile = window.srcDir + "/" + cleanName
+        const originalFile = window.srcDir + "/" + safeFileName
         const escOriginal = escapeBash(originalFile)
 
         let wallpaperCmd = ""
         let lockBgCmd    = ""
 
         if (isVideo) {
-            wallpaperCmd = `mpvpaper -o 'loop --no-audio --hwdec=auto --profile=high-quality --video-sync=display-resample --interpolation --tscale=oversample' '*' "$WALL_FILE"`
+            wallpaperCmd = `mpvpaper -o 'loop --no-audio --panscan=1.0 --hwdec=auto --profile=high-quality --video-sync=display-resample --interpolation --tscale=oversample' '*' "$WALL_FILE"`
             lockBgCmd    = `ffmpeg -ss 1 -i "$WALL_FILE" -frames:v 1 -q:v 3 /tmp/lock_bg.png -y 2>/dev/null || true`
         } else {
             wallpaperCmd = `
@@ -205,7 +205,7 @@ Item {
                     --transition-type ${randomTransition} \
                     --transition-fps 144 \
                     --transition-duration 1 \
-                    >/dev/null 2>&1 || true
+                    || true
             `
             lockBgCmd = `cp "$WALL_FILE" /tmp/lock_bg.png`
         }
@@ -234,6 +234,7 @@ Item {
               ) </dev/null >>/tmp/awww-debug.log 2>&1 & disown
         `
         Quickshell.execDetached(["bash", "-c", fullScript])
+        Qt.callLater(() => { window.isApplying = false })
     }
 
     // -------------------------------------------------------------------------
