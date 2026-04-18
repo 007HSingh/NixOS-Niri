@@ -49,6 +49,11 @@
 
     # Animated wallpapers
     awww
+    mpvpaper
+    imagemagick
+    (pkgs.writeShellScriptBin "start-awww" ''
+      exec ${pkgs.awww}/bin/awww-daemon
+    '')
 
     # Languages
     javaPackages.compiler.temurin-bin.jdk-25
