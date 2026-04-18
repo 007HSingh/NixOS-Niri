@@ -1,7 +1,6 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Window
-import QtCore
 import Qt.labs.folderlistmodel
 import QtMultimedia
 import Quickshell
@@ -115,6 +114,8 @@ Item {
                     (
                         echo 'close' > /tmp/qs_widget_state
 
+                        export WAYLAND_DISPLAY="${Quickshell.env("WAYLAND_DISPLAY")}"
+                        export XDG_RUNTIME_DIR="${Quickshell.env("XDG_RUNTIME_DIR")}"
                         export DEST_FILE="${escapeBash(destFile)}"
 
                         cp "$DEST_FILE" /tmp/lock_bg.png || true
@@ -194,6 +195,8 @@ Item {
             (
                 echo 'close' > /tmp/qs_widget_state
 
+                export WAYLAND_DISPLAY="${Quickshell.env("WAYLAND_DISPLAY")}"
+                export XDG_RUNTIME_DIR="${Quickshell.env("XDG_RUNTIME_DIR")}"
                 export WALL_FILE="${escOriginal}"
 
                 ${lockBgCmd} || true
@@ -209,9 +212,8 @@ Item {
     // -------------------------------------------------------------------------
     // PERSISTENT SETTINGS (survive widget close/reopen)
     // -------------------------------------------------------------------------
-    Settings {
+    QtObject {
         id: searchState
-        category: "QS_WallpaperPicker"
         property string query:    ""
         property bool   searched: false
         property string lastName: ""
