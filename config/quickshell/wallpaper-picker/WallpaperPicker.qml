@@ -90,7 +90,7 @@ Item {
     // -------------------------------------------------------------------------
     // APPLY WALLPAPER  (awww instead of swww, no matugen)
     // -------------------------------------------------------------------------
-    readonly property var transitions: ["grow", "outer", "any", "wipe", "wave", "pixel", "center"]
+    readonly property var transitions: ["grow", "outer", "any", "wipe", "wave", "fade", "center"]
 
     function applyWallpaper(safeFileName, isVideo) {
         if (!safeFileName || window.isApplying) return
@@ -114,19 +114,22 @@ Item {
                     (
                         echo 'close' > /tmp/qs_widget_state
 
-                        export WAYLAND_DISPLAY="${Quickshell.env("WAYLAND_DISPLAY")}"
-                        export XDG_RUNTIME_DIR="${Quickshell.env("XDG_RUNTIME_DIR")}"
-                        export XDG_RUNTIME_DIR="${Quickshell.env("XDG_RUNTIME_DIR")}"
+                        # Ensure WAYLAND_DISPLAY and XDG_RUNTIME_DIR are set
+                        export WAYLAND_DISPLAY="\${WAYLAND_DISPLAY:-${Quickshell.env("WAYLAND_DISPLAY") || "wayland-1"}}"
+                        export XDG_RUNTIME_DIR="\${XDG_RUNTIME_DIR:-${Quickshell.env("XDG_RUNTIME_DIR") || "/run/user/1000"}}"
                         export DEST_FILE="${escapeBash(destFile)}"
 
                         cp "$DEST_FILE" /tmp/lock_bg.png || true
                         pkill mpvpaper || true
 
+                        # Debugging
+                        echo "[$(date)] Setting online wallpaper: $DEST_FILE" >> /tmp/awww-debug.log
+
                         awww img "$DEST_FILE" \
                             --transition-type ${randomTransition} \
                             --transition-fps 144 \
                             --transition-duration 1 \
-                            >/dev/null 2>&1 || true
+                            >> /tmp/awww-debug.log 2>&1 || true
 
                     ) </dev/null >/dev/null 2>&1 & disown
                 `
@@ -155,14 +158,21 @@ Item {
 
                             echo 'close' > /tmp/qs_widget_state
 
+                            # Ensure WAYLAND_DISPLAY and XDG_RUNTIME_DIR are set
+                            export WAYLAND_DISPLAY="\${WAYLAND_DISPLAY:-${Quickshell.env("WAYLAND_DISPLAY") || "wayland-1"}}"
+                            export XDG_RUNTIME_DIR="\${XDG_RUNTIME_DIR:-${Quickshell.env("XDG_RUNTIME_DIR") || "/run/user/1000"}}"
+
                             cp "$DEST_FILE" /tmp/lock_bg.png || true
                             pkill mpvpaper || true
+
+                            # Debugging
+                            echo "[$(date)] Setting downloaded wallpaper: $DEST_FILE" >> /tmp/awww-debug.log
 
                             awww img "$DEST_FILE" \
                                 --transition-type ${randomTransition} \
                                 --transition-fps 144 \
                                 --transition-duration 1 \
-                                >/dev/null 2>&1 || true
+                                >> /tmp/awww-debug.log 2>&1 || true
                         fi
                     ) </dev/null >/dev/null 2>&1 & disown
                 `
@@ -196,13 +206,16 @@ Item {
             (
                 echo 'close' > /tmp/qs_widget_state
 
-                export WAYLAND_DISPLAY="${Quickshell.env("WAYLAND_DISPLAY")}"
-                export XDG_RUNTIME_DIR="${Quickshell.env("XDG_RUNTIME_DIR")}"
-                export XDG_RUNTIME_DIR="${Quickshell.env("XDG_RUNTIME_DIR")}"
+                # Ensure WAYLAND_DISPLAY and XDG_RUNTIME_DIR are set
+                export WAYLAND_DISPLAY="\${WAYLAND_DISPLAY:-${Quickshell.env("WAYLAND_DISPLAY") || "wayland-1"}}"
+                export XDG_RUNTIME_DIR="\${XDG_RUNTIME_DIR:-${Quickshell.env("XDG_RUNTIME_DIR") || "/run/user/1000"}}"
                 export WALL_FILE="${escOriginal}"
 
                 ${lockBgCmd} || true
                 pkill mpvpaper || true
+
+                # Debugging
+                echo "[$(date)] Setting local wallpaper: $WALL_FILE" >> /tmp/awww-debug.log
 
                 ${wallpaperCmd}
 

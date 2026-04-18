@@ -17,14 +17,6 @@
       source = "${inputs.noctalia-plugins}/catwalk";
     };
 
-    ".cache/noctalia/wallpapers.json" = {
-      text = builtins.toJSON {
-        defaultWallpaper = "${config.xdg.configHome}/wallpapers/wallpaper-25.jpg";
-        wallpapers = {
-          "eDP-1" = "${config.xdg.configHome}/wallpapers/wallpaper-25.jpg";
-        };
-      };
-    };
 
     ".config/noctalia/plugins.json" = {
       text = builtins.toJSON {
@@ -90,7 +82,8 @@
       };
       colorSchemes.predefinedScheme = "Catppuccin";
       wallpaper = {
-        overviewEnabled = true;
+        enabled = false;
+        overviewEnabled = false;
       };
       location = {
         monthBeforeDay = true;
