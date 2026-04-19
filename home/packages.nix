@@ -48,13 +48,9 @@
     playerctl
 
     # Animated wallpapers
-    awww
     mpvpaper
     ffmpeg
     imagemagick
-    (pkgs.writeShellScriptBin "start-awww" ''
-      exec ${pkgs.awww}/bin/awww-daemon
-    '')
 
     # Languages
     javaPackages.compiler.temurin-bin.jdk-25
