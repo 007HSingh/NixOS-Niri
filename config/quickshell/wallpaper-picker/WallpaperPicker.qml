@@ -67,10 +67,8 @@ Item {
     }
 
     // -------------------------------------------------------------------------
-    // APPLY WALLPAPER  (awww instead of swww, no matugen)
+    // APPLY WALLPAPER
     // -------------------------------------------------------------------------
-    readonly property var transitions: ["grow", "outer", "any", "wipe", "wave", "fade", "center"]
-
     function applyWallpaper(safeFileName, isVideo) {
         if (!safeFileName || window.isApplying) return
 
@@ -78,7 +76,6 @@ Item {
         window.targetWallName = safeFileName
 
         const originalFile = window.srcDir + "/" + safeFileName
-
         const noctaliaBin = "/etc/profiles/per-user/harsh/bin/noctalia-shell"
 
         const fullScript = `
@@ -88,15 +85,11 @@ Item {
                 export WAYLAND_DISPLAY="\${WAYLAND_DISPLAY:-${Quickshell.env("WAYLAND_DISPLAY") || "wayland-1"}}"
                 export XDG_RUNTIME_DIR="\${XDG_RUNTIME_DIR:-${Quickshell.env("XDG_RUNTIME_DIR") || "/run/user/1000"}}"
 
-                echo "[$(date)] Applying via Noctalia IPC: $WALL_FILE" >> /tmp/awww-debug.log
-
-                ${noctaliaBin} ipc call wallpaper set "$WALL_FILE" all \
-                    >> /tmp/awww-debug.log 2>&1
+                ${noctaliaBin} ipc call wallpaper set "$WALL_FILE" all 2>/dev/null
 
                 ${isVideo ? `
                     pkill mpvpaper 2>/dev/null || true
-                    mpvpaper -o 'loop --no-audio --panscan=1.0 --hwdec=auto --profile=high-quality --video-sync=display-resample --interpolation --tscale=oversample' '*' "$WALL_FILE" \
-                        >>/tmp/awww-debug.log 2>&1 &
+                    mpvpaper -o 'loop --no-audio --panscan=1.0 --hwdec=auto --profile=high-quality --video-sync=display-resample --interpolation --tscale=oversample' '*' "$WALL_FILE" &
                     ffmpegthumbnailer -i "$WALL_FILE" -o /tmp/lock_bg.png -s 0 2>/dev/null || true
                 ` : `
                     pkill mpvpaper 2>/dev/null || true
@@ -105,10 +98,9 @@ Item {
 
                 echo 'close' > /tmp/qs_widget_state
 
-            ) </dev/null >>/tmp/awww-debug.log 2>&1 & disown
+            ) </dev/null >/dev/null 2>&1 & disown
         `
 
-        // Write path safely then run script
         Quickshell.execDetached(["bash", "-c",
             `printf '%s' ${JSON.stringify(originalFile)} > /tmp/qs_wall_path && ` + fullScript
         ])
