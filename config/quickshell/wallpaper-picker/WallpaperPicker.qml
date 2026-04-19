@@ -77,72 +77,42 @@ Item {
         window.isApplying = true
         window.targetWallName = safeFileName
 
-        let cleanName = window.getCleanName(safeFileName)
-        const escapeBash = (str) => String(str).replace(/(["\\$`])/g, '\\$1')
-        const randomTransition = window.transitions[Math.floor(Math.random() * window.transitions.length)]
-
-        // ── Local wallpaper ───────────────────────────────────────────────────
         const originalFile = window.srcDir + "/" + safeFileName
-        const escOriginal = escapeBash(originalFile)
 
-        let wallpaperCmd = ""
-        let lockBgCmd    = ""
-
-        if (isVideo) {
-            wallpaperCmd = `
-                OLD_PIDS=$(pgrep mpvpaper)
-                mpvpaper -o 'loop --no-audio --panscan=1.0 --hwdec=auto --profile=high-quality --video-sync=display-resample --interpolation --tscale=oversample' '*' "$WALL_FILE" \
-                    >>/tmp/awww-debug.log 2>&1 &
-                
-                # Update static background and lockscreen frame in parallel
-                (
-                    ffmpegthumbnailer -i "$WALL_FILE" -o /tmp/wall_frame.png -s 0
-                    cp /tmp/wall_frame.png /tmp/lock_bg.png
-                    awww img /tmp/wall_frame.png --transition-duration 0
-                ) >/dev/null 2>&1 &
-
-                # Wait for the new video to start rendering before killing the old ones
-                sleep 1.5
-                if [ -n "$OLD_PIDS" ]; then
-                    kill $OLD_PIDS 2>/dev/null || true
-                fi
-            `
-            lockBgCmd = `true`
-        } else {
-            wallpaperCmd = `
-                pkill mpvpaper || true
-                awww img "$WALL_FILE" \
-                    --transition-type ${randomTransition} \
-                    --transition-fps 144 \
-                    --transition-duration 1 \
-                    || true
-            `
-            lockBgCmd = `cp "$WALL_FILE" /tmp/lock_bg.png`
-        }
+        const noctaliaBin = "/etc/profiles/per-user/harsh/bin/noctalia-shell"
 
         const fullScript = `
             (
-                echo 'close' > /tmp/qs_widget_state
+                WALL_FILE=$(cat /tmp/qs_wall_path)
 
-                # Ensure WAYLAND_DISPLAY and XDG_RUNTIME_DIR are set
                 export WAYLAND_DISPLAY="\${WAYLAND_DISPLAY:-${Quickshell.env("WAYLAND_DISPLAY") || "wayland-1"}}"
                 export XDG_RUNTIME_DIR="\${XDG_RUNTIME_DIR:-${Quickshell.env("XDG_RUNTIME_DIR") || "/run/user/1000"}}"
-                export WALL_FILE="${escOriginal}"
 
-                ${lockBgCmd} || true
+                echo "[$(date)] Applying via Noctalia IPC: $WALL_FILE" >> /tmp/awww-debug.log
 
-                # Sync with Noctalia overview
-                mkdir -p ~/.cache/noctalia
-                echo '{"defaultWallpaper":"'$WALL_FILE'","wallpapers":{"eDP-1":"'$WALL_FILE'"}}' > ~/.cache/noctalia/wallpapers.json
+                ${noctaliaBin} ipc call wallpaper set "$WALL_FILE" all \
+                    >> /tmp/awww-debug.log 2>&1
 
-                # Debugging
-                echo "[$(date)] Setting local wallpaper: $WALL_FILE" >> /tmp/awww-debug.log
+                ${isVideo ? `
+                    pkill mpvpaper 2>/dev/null || true
+                    mpvpaper -o 'loop --no-audio --panscan=1.0 --hwdec=auto --profile=high-quality --video-sync=display-resample --interpolation --tscale=oversample' '*' "$WALL_FILE" \
+                        >>/tmp/awww-debug.log 2>&1 &
+                    ffmpegthumbnailer -i "$WALL_FILE" -o /tmp/lock_bg.png -s 0 2>/dev/null || true
+                ` : `
+                    pkill mpvpaper 2>/dev/null || true
+                    cp "$WALL_FILE" /tmp/lock_bg.png 2>/dev/null || true
+                `}
 
-                ${wallpaperCmd}
+                echo 'close' > /tmp/qs_widget_state
 
-              ) </dev/null >>/tmp/awww-debug.log 2>&1 & disown
+            ) </dev/null >>/tmp/awww-debug.log 2>&1 & disown
         `
-        Quickshell.execDetached(["bash", "-c", fullScript])
+
+        // Write path safely then run script
+        Quickshell.execDetached(["bash", "-c",
+            `printf '%s' ${JSON.stringify(originalFile)} > /tmp/qs_wall_path && ` + fullScript
+        ])
+
         Qt.callLater(() => { window.isApplying = false })
     }
 
@@ -547,7 +517,7 @@ Item {
                         width:  (window.itemWidth * 1.5) + ((window.itemHeight + window.s(30)) * Math.abs(window.skewFactor)) + window.s(50)
                         height: window.itemHeight + window.s(30)
                         fillMode: Image.PreserveAspectCrop
-                        
+
                         // Only try thumbnail, and only fallback if it's NOT a video
                         source: thumbPath
                         onStatusChanged: {
@@ -555,13 +525,13 @@ Item {
                                 source = fileUrl
                             }
                         }
-                        
+
                         // Show a placeholder if it's a video and no thumbnail exists
                         Rectangle {
                             anchors.fill: parent
                             color: _theme.mantle
                             visible: delegateRoot.isVideo && parent.status !== Image.Ready
-                            
+
                             Column {
                                 anchors.centerIn: parent
                                 spacing: window.s(10)
@@ -641,7 +611,7 @@ Item {
                         border.width: delegateRoot.isCurrent ? window.s(4) : 0
                         z: 100
                         opacity: delegateRoot.isCurrent ? 1.0 : 0.0
-                        
+
                         SequentialAnimation on opacity {
                             running: delegateRoot.isCurrent
                             loops: Animation.Infinite
