@@ -33,6 +33,7 @@ opt.wrap = false
 opt.splitbelow = true
 opt.splitright = true
 opt.showmode = false
+opt.smoothscroll = true
 
 -- Performance
 opt.updatetime = 250

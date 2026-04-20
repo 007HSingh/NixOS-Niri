@@ -10,14 +10,32 @@ return {
 			typescript = { "eslint_d" },
 			lua = { "luacheck" },
 			bash = { "shellcheck" },
-			markdown = { "markdownlint-cli2" },
+			markdown = { "markdownlint" },
 			nix = { "statix" },
 		}
 
+		lint.linters.luacheck = vim.tbl_deep_extend("force", lint.linters.luacheck, {
+			args = {
+				"--config",
+				vim.fn.stdpath("config") .. "/.luacheckrc",
+				"--formatter",
+				"plain",
+				"--codes",
+				"--ranges",
+				"-",
+			},
+		})
+
+		local lint_timer = nil
 		vim.api.nvim_create_autocmd({ "BufWritePost", "BufReadPost", "InsertLeave" }, {
 			group = vim.api.nvim_create_augroup("NvimLint", { clear = true }),
 			callback = function()
-				lint.try_lint()
+				if lint_timer then
+					lint_timer:stop()
+				end
+				lint_timer = vim.defer_fn(function()
+					lint.try_lint()
+				end, 300)
 			end,
 		})
 	end,
