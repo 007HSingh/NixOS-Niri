@@ -106,6 +106,9 @@ ShellRoot {
         id: mprisWindow
         screen: Quickshell.screens[0]
 
+        // Fix: Only visible when active or animating to avoid blocking input when hidden
+        visible: isActive || widget.opacity > 0
+
         exclusionMode: ExclusionMode.Ignore
         WlrLayershell.layer: WlrLayer.Overlay
         
@@ -121,14 +124,13 @@ ShellRoot {
         }
         
         WlrLayershell.margins {
-            bottom: 0
+            bottom: 35 // Lift the window from the bottom edge
             left: (mprisWindow.screen.width - 600) / 2
             right: (mprisWindow.screen.width - 600) / 2
         }
         
-        // Use implicit size to address deprecation warnings
         implicitWidth: 600
-        implicitHeight: 250
+        implicitHeight: 180 // Exact widget height to minimize input blocking area
         color: "transparent"
 
         MprisWidget {
@@ -136,8 +138,8 @@ ShellRoot {
             width: parent.width
             height: 180
             
-            // Internal sliding animation
-            y: mprisWindow.isActive ? (parent.height - height - 35) : parent.height
+            // Internal sliding animation - slides from bottom of window (y=180) to top (y=0)
+            y: mprisWindow.isActive ? 0 : parent.height
             
             Behavior on y {
                 NumberAnimation { duration: 600; easing.type: Easing.OutBack }
