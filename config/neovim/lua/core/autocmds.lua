@@ -37,6 +37,10 @@ autocmd("BufWritePre", {
 	group = "TrimWhitespace",
 	pattern = "*",
 	callback = function()
+		local ok, conform = pcall(require, "conform")
+		if ok and #conform.list_formatters(0) > 0 then
+			return
+		end
 		local pos = vim.api.nvim_win_get_cursor(0)
 		vim.cmd([[%s/\s\+$//e]])
 		vim.api.nvim_win_set_cursor(0, pos)
@@ -179,5 +183,23 @@ autocmd("BufWritePre", {
 			timeout_ms = 500,
 			lsp_fallback = true,
 		})
+	end,
+})
+
+autocmd("FileType", {
+	pattern = { "gitcommit", "gitrebase" },
+	callback = function()
+		require("persistence").stop()
+	end,
+})
+
+augroup("AutoRoot", { clear = true })
+autocmd("LspAttach", {
+	group = "AutoRoot",
+	callback = function()
+		local root = vim.lsp.buf.list_workspace_folders()[1]
+		if root then
+			vim.fn.chdir(root)
+		end
 	end,
 })

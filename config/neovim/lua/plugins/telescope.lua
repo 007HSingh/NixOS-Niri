@@ -17,6 +17,11 @@ return {
 		{ "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "Buffers" },
 		{ "<leader>fh", "<cmd>Telescope help_tags<cr>", desc = "Help tags" },
 		{ "<leader>fe", "<cmd>Telescope file_browser<cr>", desc = "File browser" },
+		{ "<leader>fr", "<cmd>Telescope oldfiles<cr>", desc = "Recent files" },
+		{ "<leader>fs", "<cmd>Telescope lsp_document_symbols<cr>", desc = "Document symbols" },
+		{ "<leader>fw", "<cmd>Telescope lsp_workspace_symbols<cr>", desc = "Workspace symbols" },
+		{ "<leader>fd", "<cmd>Telescope diagnostics<cr>", desc = "Diagnostics" },
+		{ "<leader>/", "<cmd>Telescope current_buffer_fuzzy_find<cr>", desc = "Search buffer" },
 	},
 	config = function()
 		local telescope = require("telescope")
