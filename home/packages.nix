@@ -47,11 +47,6 @@
     wl-clipboard
     playerctl
 
-    # Animated wallpapers
-    mpvpaper
-    ffmpeg
-    imagemagick
-
     # Languages
     javaPackages.compiler.temurin-bin.jdk-25
     racket
