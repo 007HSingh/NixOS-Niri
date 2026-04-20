@@ -97,7 +97,7 @@
     # ── Neovim: CLI tools (Telescope, DAP, etc.) ────────────────────────────
     ripgrep
     fd
-    (vimPLugins.nvim-treesitter.withPlugins (
+    (vimPlugins.nvim-treesitter.withPlugins (
       p: with p; [
         bash
         c
