@@ -22,6 +22,7 @@ return {
 		-- Supermaven cmp source (loaded separately in ai_completion.lua,
 		-- but we reference it here so cmp finds it after Supermaven inits)
 		"supermaven-inc/supermaven-nvim",
+		"folke/lazydev.nvim",
 	},
 	config = function()
 		local cmp = require("cmp")
@@ -67,6 +68,7 @@ return {
 				{ name = "luasnip", priority = 750 },
 				{ name = "buffer", priority = 500 },
 				{ name = "path", priority = 250 },
+				{ name = "lazydev", priority = 900, group_index = 0 },
 			}),
 			formatting = {
 				format = lspkind.cmp_format({

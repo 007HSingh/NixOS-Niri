@@ -42,6 +42,19 @@ return {
 		event = "VeryLazy",
 		config = function()
 			require("which-key").setup({})
+			require("which-key").add({
+				{ "<leader>f", group = "Find (Telescope)" },
+				{ "<leader>g", group = "Git" },
+				{ "<leader>c", group = "Code / LSP" },
+				{ "<leader>d", group = "Debug (DAP)" },
+				{ "<leader>h", group = "Harpoon" },
+				{ "<leader>o", group = "Obsidian" },
+				{ "<leader>q", group = "Session" },
+				{ "<leader>s", group = "Search & Replace" },
+				{ "<leader>t", group = "Toggle" },
+				{ "<leader>w", group = "Workspace" },
+				{ "<leader>x", group = "Diagnostics (Trouble)" },
+			})
 		end,
 	},
 	-- flash (jump to chars)
@@ -57,6 +70,7 @@ return {
 		"akinsho/toggleterm.nvim",
 		version = "*",
 		cmd = "ToggleTerm",
+		keys = { { [[<C-\>]], desc = "Toggle terminal" } },
 		config = function()
 			require("toggleterm").setup({ open_mapping = [[<c-\>]], direction = "float" })
 		end,

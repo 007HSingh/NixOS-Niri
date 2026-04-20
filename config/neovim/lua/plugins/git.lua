@@ -8,7 +8,14 @@ return {
 		event = "BufReadPre",
 		config = function()
 			require("gitsigns").setup({
-				signs = { add = "│", change = "│", delete = "契", topdelete = "契", changedelete = "│" },
+				signs = {
+					add = { text = "┃" },
+					change = { text = "┃" },
+					delete = { text = "_" },
+					topdelete = { text = "‾" },
+					changedelete = { text = "~" },
+					untracked = { text = "┆" },
+				},
 				on_attach = function(bufnr)
 					local gs = package.loaded.gitsigns
 					local function map(mode, l, r, opts)

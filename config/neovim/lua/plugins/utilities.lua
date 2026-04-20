@@ -31,6 +31,8 @@ return {
 		config = function()
 			require("persistence").setup({
 				dir = vim.fn.expand(vim.fn.stdpath("state") .. "/sessions/"),
+				need = 1,
+				branch = true,
 			})
 		end,
 	},
@@ -72,6 +74,15 @@ return {
 		cmd = "IncRename",
 		config = function()
 			require("inc_rename").setup()
+		end,
+	},
+	{
+		"airblade/vim-rooter",
+		event = "VeryLazy",
+		init = function()
+			vim.g.rooter_patterns = { ".git", "package.json", "Makefile", "Cargo.toml", "pyproject.toml" }
+			vim.g.rooter_silent_chdir = 1
+			vim.g.rooter_resolve_links = 1
 		end,
 	},
 }
