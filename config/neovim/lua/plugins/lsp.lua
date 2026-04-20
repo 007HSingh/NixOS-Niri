@@ -7,8 +7,8 @@ return {
 		dependencies = {
 			"neovim/nvim-lspconfig",
 			"williamboman/mason-lspconfig.nvim",
-      "nvimtools/none-ls.nvim",
-      "nvimtools/none-ls-extras.nvim",
+			"nvimtools/none-ls.nvim",
+			"nvimtools/none-ls-extras.nvim",
 			"jay-babu/mason-null-ls.nvim",
 			"stevearc/conform.nvim",
 			"folke/trouble.nvim",
