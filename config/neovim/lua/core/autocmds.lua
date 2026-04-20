@@ -165,14 +165,19 @@ autocmd("BufWritePre", {
 		if vim.g.disable_format_on_save then
 			return
 		end
-		if vim.bo[args.buf].modifiable and not vim.bo[args.buf].readonly then
-			require("conform").format({
-				bufnr = args.buf,
-				timeout_ms = 500,
-				-- Falls back to LSP formatter if no conform formatter is configured
-				-- (covers rust_analyzer, gopls, jdtls, nil_ls, etc.)
-				lsp_fallback = true,
-			})
+		if not vim.bo[args.buf].modifiable or vim.bo[args.buf].readonly then
+			return
 		end
+		-- Only format if conform actually has a formatter for this filetype
+		local conform = require("conform")
+		local formatters = conform.list_formatters(args.buf)
+		if #formatters == 0 then
+			return
+		end
+		conform.format({
+			bufnr = args.buf,
+			timeout_ms = 500,
+			lsp_fallback = true,
+		})
 	end,
 })

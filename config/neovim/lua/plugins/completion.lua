@@ -1,5 +1,5 @@
 -- ============================================================================
--- COMPLETION — nvim-cmp + LuaSnip + friendly-snippets
+-- COMPLETION — nvim-cmp + LuaSnip + friendly-snippets + Supermaven AI
 -- ============================================================================
 return {
 	"hrsh7th/nvim-cmp",
@@ -19,6 +19,9 @@ return {
 			end,
 		},
 		"onsails/lspkind.nvim",
+		-- Supermaven cmp source (loaded separately in ai_completion.lua,
+		-- but we reference it here so cmp finds it after Supermaven inits)
+		"supermaven-inc/supermaven-nvim",
 	},
 	config = function()
 		local cmp = require("cmp")
@@ -56,7 +59,10 @@ return {
 					end
 				end, { "i", "s" }),
 			}),
+			-- Sources in priority order. Supermaven is first — it shows up as
+			-- "AI" in the menu (see lspkind symbol_map below).
 			sources = cmp.config.sources({
+				{ name = "supermaven", priority = 1200, max_item_count = 3 },
 				{ name = "nvim_lsp", priority = 1000 },
 				{ name = "luasnip", priority = 750 },
 				{ name = "buffer", priority = 500 },
@@ -67,6 +73,18 @@ return {
 					mode = "symbol_text",
 					maxwidth = 50,
 					ellipsis_char = "…",
+					-- Add a custom icon for Supermaven AI suggestions
+					symbol_map = {
+						Supermaven = "󱙺", -- Nerd Font: nf-md-robot
+					},
+					-- Show source name in the menu for clarity
+					before = function(entry, vim_item)
+						if entry.source.name == "supermaven" then
+							vim_item.kind = "󱙺 AI"
+							vim_item.kind_hl_group = "CmpItemKindSupermaven"
+						end
+						return vim_item
+					end,
 				}),
 			},
 			window = {
@@ -75,6 +93,9 @@ return {
 			},
 			experimental = { ghost_text = true },
 		})
+
+		-- Highlight group for the AI kind label (Catppuccin mauve)
+		vim.api.nvim_set_hl(0, "CmpItemKindSupermaven", { fg = "#cba6f7", bold = true })
 
 		-- Cmdline completion
 		cmp.setup.cmdline(":", {
