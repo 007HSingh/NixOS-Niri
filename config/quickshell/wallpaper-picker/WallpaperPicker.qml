@@ -41,8 +41,7 @@ Item {
     property string currentFilter: "All"
     property string _lastFilter: "All"
     readonly property var filterData: [
-        { name: "All",    hex: "", label: "All"    },
-        { name: "Video",  hex: "", label: "Vid"    }
+        { name: "All",    hex: "", label: "All"    }
     ]
 
     // Local state
@@ -69,7 +68,7 @@ Item {
     // -------------------------------------------------------------------------
     // APPLY WALLPAPER
     // -------------------------------------------------------------------------
-    function applyWallpaper(safeFileName, isVideo) {
+    function applyWallpaper(safeFileName) {
         if (!safeFileName || window.isApplying) return
 
         window.isApplying = true
@@ -87,14 +86,8 @@ Item {
 
                 ${noctaliaBin} ipc call wallpaper set "$WALL_FILE" all 2>/dev/null
 
-                ${isVideo ? `
-                    pkill mpvpaper 2>/dev/null || true
-                    mpvpaper -o 'loop --no-audio --panscan=1.0 --hwdec=auto --profile=high-quality --video-sync=display-resample --interpolation --tscale=oversample' '*' "$WALL_FILE" &
-                    ffmpegthumbnailer -i "$WALL_FILE" -o /tmp/lock_bg.png -s 0 2>/dev/null || true
-                ` : `
-                    pkill mpvpaper 2>/dev/null || true
-                    cp "$WALL_FILE" /tmp/lock_bg.png 2>/dev/null || true
-                `}
+                pkill mpvpaper 2>/dev/null || true
+                cp "$WALL_FILE" /tmp/lock_bg.png 2>/dev/null || true
 
                 echo 'close' > /tmp/qs_widget_state
 
@@ -182,9 +175,8 @@ Item {
     // -------------------------------------------------------------------------
     // COLOR FILTERING
     // -------------------------------------------------------------------------
-    function checkItemMatchesFilter(fileName, isVid, filter) {
+    function checkItemMatchesFilter(fileName, filter) {
         if (filter === "All")   return true
-        if (filter === "Video") return isVid
         return false
     }
 
@@ -200,20 +192,18 @@ Item {
         if (direction === 1) {
             for (let i = start + 1; i < targetModel.count; i++) {
                 let fname = targetModel.get(i).fileName || ""
-                if (checkItemMatchesFilter(fname, fname.startsWith("000_"),
-                        window.currentFilter)) { found = i; break }
+                if (checkItemMatchesFilter(fname, window.currentFilter)) { found = i; break }
             }
         } else {
             for (let i = start - 1; i >= 0; i--) {
                 let fname = targetModel.get(i).fileName || ""
-                if (checkItemMatchesFilter(fname, fname.startsWith("000_"),
-                        window.currentFilter)) { found = i; break }
+                if (checkItemMatchesFilter(fname, window.currentFilter)) { found = i; break }
             }
         }
 
         if (found !== -1) { view.currentIndex = found; return }
 
-        const filterOrder = ["All", "Video"]
+        const filterOrder = ["All"]
         let currentFilterIdx = filterOrder.indexOf(window.currentFilter)
 
         if (currentFilterIdx === -1) {
@@ -221,8 +211,7 @@ Item {
             for (let i = 0; i < targetModel.count; i++) {
                 current = (current + direction + targetModel.count) % targetModel.count
                 let fname = targetModel.get(current).fileName || ""
-                if (checkItemMatchesFilter(fname, fname.startsWith("000_"),
-                        window.currentFilter)) {
+                if (checkItemMatchesFilter(fname, window.currentFilter)) {
                     view.currentIndex = current; return
                 }
             }
@@ -258,8 +247,7 @@ Item {
 
         for (let i = 0; i < targetModel.count; i++) {
             let fname = targetModel.get(i).fileName || ""
-            let isVid = fname.startsWith("000_")
-            if (checkItemMatchesFilter(fname, isVid, window.currentFilter)) {
+            if (checkItemMatchesFilter(fname, window.currentFilter)) {
                 if (firstValidIndex === -1) firstValidIndex = i
                 lastValidIndex = i
                 if (cleanTarget !== "" && window.getCleanName(fname) === cleanTarget) targetIndex = i
@@ -294,7 +282,7 @@ Item {
             let targetModel = localProxyModel
             if (view.currentIndex >= 0 && view.currentIndex < targetModel.count) {
                 let fname = targetModel.get(view.currentIndex).fileName
-                if (fname) window.applyWallpaper(String(fname), String(fname).startsWith("000_"))
+                if (fname) window.applyWallpaper(String(fname))
             }
         }
     }
@@ -316,7 +304,7 @@ Item {
     FolderListModel {
         id: srcFolderModel
         folder: "file://" + window.srcDir
-        nameFilters: ["*.jpg","*.jpeg","*.png","*.webp","*.gif","*.mp4","*.mkv","*.mov","*.webm"]
+        nameFilters: ["*.jpg","*.jpeg","*.png","*.webp"]
         showDirs: false
         sortField: FolderListModel.Name
         onCountChanged: {
@@ -431,36 +419,14 @@ Item {
             readonly property string safeFileName: fileName !== undefined ? String(fileName) : ""
             readonly property bool isCurrent: ListView.isCurrentItem
             readonly property bool isVisuallyEnlarged: isCurrent
-            readonly property bool isVideo: safeFileName.startsWith("000_")
             readonly property string thumbPath: window.thumbDir + "/" + safeFileName
             readonly property bool matchesFilter: window.checkItemMatchesFilter(
-                safeFileName, isVideo, window.currentFilter)
+                safeFileName, window.currentFilter)
 
             readonly property real targetWidth:  isVisuallyEnlarged ? (window.itemWidth * 1.5) : (window.itemWidth * 0.5)
             readonly property real targetHeight: isVisuallyEnlarged ? (window.itemHeight + window.s(30)) : window.itemHeight
 
-            property bool isPlayingVideo: false
             readonly property bool isNearCenter: Math.abs(view.currentIndex - index) <= 3
-
-            Timer {
-                id: videoPlayTimer
-                interval: 150
-                running: delegateRoot.isNearCenter && delegateRoot.isVideo &&
-                         !window.isFilterAnimating && window.isReady
-                onTriggered: {
-                    if (delegateRoot.isNearCenter && delegateRoot.isVideo) {
-                        delegateRoot.isPlayingVideo = true
-                        previewPlayer.play()
-                    }
-                }
-            }
-            onIsNearCenterChanged: {
-                if (!isNearCenter) {
-                    isPlayingVideo = false
-                    videoPlayTimer.stop()
-                    previewPlayer.stop()
-                }
-            }
 
             width:   matchesFilter ? (targetWidth + window.spacing) : 0
             visible: width > 0.1 || opacity > 0.01
@@ -493,7 +459,7 @@ Item {
                     enabled: delegateRoot.matchesFilter && !window.isApplying
                     onClicked: {
                         view.currentIndex = index
-                        window.applyWallpaper(delegateRoot.safeFileName, delegateRoot.isVideo)
+                        window.applyWallpaper(delegateRoot.safeFileName)
                     }
                 }
 
@@ -513,37 +479,11 @@ Item {
                         // Only try thumbnail, and only fallback if it's NOT a video
                         source: thumbPath
                         onStatusChanged: {
-                            if (status === Image.Error && !delegateRoot.isVideo) {
+                            if (status === Image.Error) {
                                 source = fileUrl
                             }
                         }
 
-                        // Show a placeholder if it's a video and no thumbnail exists
-                        Rectangle {
-                            anchors.fill: parent
-                            color: _theme.mantle
-                            visible: delegateRoot.isVideo && parent.status !== Image.Ready
-
-                            Column {
-                                anchors.centerIn: parent
-                                spacing: window.s(10)
-                                Text {
-                                    text: "󰈫"
-                                    font.family: _theme.monoFamily
-                                    font.pixelSize: window.s(48)
-                                    color: _theme.surface1
-                                    anchors.horizontalCenter: parent.horizontalCenter
-                                }
-                                Text {
-                                    text: "VIDEO"
-                                    font.family: _theme.sansFamily
-                                    font.pixelSize: window.s(14)
-                                    color: _theme.surface1
-                                    anchors.horizontalCenter: parent.horizontalCenter
-                                    font.letterSpacing: 2
-                                }
-                            }
-                        }
 
                         asynchronous: true
                         transform: Matrix4x4 {
@@ -552,49 +492,6 @@ Item {
                         }
                     }
 
-                    MediaPlayer {
-                        id: previewPlayer
-                        source: delegateRoot.isPlayingVideo && fileUrl !== undefined ? fileUrl : ""
-                        audioOutput: AudioOutput { muted: true }
-                        videoOutput: previewOutput
-                        loops: MediaPlayer.Infinite
-                    }
-                    VideoOutput {
-                        id: previewOutput
-                        anchors.centerIn: parent
-                        anchors.horizontalCenterOffset: window.s(-50)
-                        width:  (window.itemWidth * 1.5) + ((window.itemHeight + window.s(30)) * Math.abs(window.skewFactor)) + window.s(50)
-                        height: window.itemHeight + window.s(30)
-                        fillMode: VideoOutput.PreserveAspectCrop
-                        visible: delegateRoot.isPlayingVideo && previewPlayer.playbackState === MediaPlayer.PlayingState
-                        transform: Matrix4x4 {
-                            property real s: -window.skewFactor
-                            matrix: Qt.matrix4x4(1, s, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)
-                        }
-                    }
-
-                    // Video icon badge
-                    Rectangle {
-                        visible: delegateRoot.isVideo &&
-                                 (!delegateRoot.isPlayingVideo || previewPlayer.playbackState !== MediaPlayer.PlayingState)
-                        anchors.top: parent.top; anchors.right: parent.right; anchors.margins: window.s(10)
-                        width: window.s(32); height: window.s(32); radius: window.s(6); color: "#60000000"
-                        transform: Matrix4x4 {
-                            property real s: -window.skewFactor
-                            matrix: Qt.matrix4x4(1, s, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)
-                        }
-                        Canvas {
-                            anchors.fill: parent; anchors.margins: window.s(8)
-                            property real scaleTrigger: window.s(1)
-                            onScaleTriggerChanged: requestPaint()
-                            onPaint: {
-                                var ctx = getContext("2d"); var s = window.s
-                                ctx.reset(); ctx.fillStyle = "#EEFFFFFF"; ctx.beginPath()
-                                ctx.moveTo(s(4), 0); ctx.lineTo(s(14), s(8)); ctx.lineTo(s(4), s(16))
-                                ctx.closePath(); ctx.fill()
-                            }
-                        }
-                    }
                     // Focus Pulse Border
                     Rectangle {
                         anchors.fill: parent
@@ -645,9 +542,7 @@ Item {
                 model: window.filterData
                 delegate: Item {
                     visible: modelData.name !== "Search"
-                    width: !visible ? 0 : ((modelData.name === "Video" || modelData.name === "All")
-                        ? window.s(44)
-                        : (modelData.hex === "" ? filterText.contentWidth + window.s(24) : window.s(36)))
+                    width: !visible ? 0 : (modelData.hex === "" ? filterText.contentWidth + window.s(24) : window.s(36))
                     height: !visible ? 0 : window.s(36)
                     anchors.verticalCenter: parent.verticalCenter
 
@@ -678,24 +573,6 @@ Item {
                             Behavior on color { ColorAnimation { duration: 400; easing.type: Easing.OutQuart } }
                         }
 
-                        // Play triangle for "Video" filter
-                        Canvas {
-                            visible: modelData.name === "Video"
-                            width: window.s(14); height: window.s(16)
-                            anchors.centerIn: parent
-                            anchors.horizontalCenterOffset: window.s(2)
-                            property string activeColor: window.currentFilter === modelData.name
-                                ? _theme.text
-                                : Qt.rgba(_theme.text.r, _theme.text.g, _theme.text.b, 0.7)
-                            onActiveColorChanged: requestPaint()
-                            property real scaleTrigger: window.s(1); onScaleTriggerChanged: requestPaint()
-                            onPaint: {
-                                var ctx = getContext("2d"); var s = window.s; ctx.reset()
-                                ctx.fillStyle = activeColor; ctx.beginPath()
-                                ctx.moveTo(0, 0); ctx.lineTo(s(14), s(8)); ctx.lineTo(0, s(16))
-                                ctx.closePath(); ctx.fill()
-                            }
-                        }
 
                         // Four-squares for "All" filter
                         Canvas {
