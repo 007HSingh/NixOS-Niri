@@ -9,7 +9,7 @@
     displayManager.ly = {
       enable = true;
       settings = {
-        animation = "fire";
+        animation = "matrix";
         clock = "%c";
       };
     };
