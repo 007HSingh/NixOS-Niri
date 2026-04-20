@@ -3,6 +3,7 @@
 -- ============================================================================
 return {
 	"nvim-treesitter/nvim-treesitter",
+	enabled = false,
 	branch = "master",
 	build = ":TSUpdate",
 	event = "VeryLazy",
