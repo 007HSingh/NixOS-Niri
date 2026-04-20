@@ -97,8 +97,29 @@
     # ── Neovim: CLI tools (Telescope, DAP, etc.) ────────────────────────────
     ripgrep
     fd
-    tree-sitter
-    nodejs # required by markdown-preview.nvim
+    (vimPLugins.nvim-treesitter.withPlugins (
+      p: with p; [
+        bash
+        c
+        cpp
+        go
+        lua
+        python
+        javascript
+        typescript
+        html
+        css
+        json
+        yaml
+        markdown
+        vim
+        vimdoc
+        rust
+        java
+        nix
+      ]
+    ))
+    nodejs
   ];
 
   home.sessionVariables = {
