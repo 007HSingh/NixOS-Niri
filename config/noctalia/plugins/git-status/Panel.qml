@@ -85,7 +85,7 @@ Item {
                         font.family: "JetBrainsMono Nerd Font"
                         font.pixelSize: Style.fontSizeXXS
                         color: Color.mOnSurfaceVariant
-                        letterSpacing: 1.5
+                        font.letterSpacing: 1.5
                     }
 
                     RowLayout {
