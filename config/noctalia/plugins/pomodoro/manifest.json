@@ -1,0 +1,17 @@
+{
+  "id": "pomodoro",
+  "name": "Pomodoro Timer",
+  "version": "1.0.0",
+  "minNoctaliaVersion": "3.6.0",
+  "author": "harsh",
+  "license": "MIT",
+  "description": "Pomodoro timer with work/break cycles and desktop notifications.",
+  "tags": ["Bar", "Panel", "Productivity"],
+  "entryPoints": {
+    "main": "Main.qml",
+    "barWidget": "BarWidget.qml",
+    "panel": "Panel.qml"
+  },
+  "dependencies": { "plugins": [] },
+  "metadata": { "defaultSettings": {} }
+}

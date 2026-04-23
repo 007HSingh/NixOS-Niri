@@ -31,6 +31,21 @@ in
         source = ../../../config/noctalia/plugins/spotify-widget;
       };
 
+      ".config/noctalia/plugins/pomodoro" = {
+        recursive = true;
+        source = ../../../config/noctalia/plugins/pomodoro;
+      };
+
+      ".config/noctalia/plugins/git-status" = {
+        recursive = true;
+        source = ../../../config/noctalia/plugins/git-status;
+      };
+
+      ".config/noctalia/plugins/nix-gc" = {
+        recursive = true;
+        source = ../../../config/noctalia/plugins/nix-gc;
+      };
+
       ".config/noctalia/plugins.json" = {
         text = builtins.toJSON {
           sources = [
@@ -41,12 +56,11 @@ in
             }
           ];
           states = {
-            catwalk = {
-              enabled = true;
-            };
-            spotify-widget = {
-              enabled = true;
-            };
+            catwalk = { enabled = true; };
+            spotify-widget = { enabled = true; };
+            pomodoro = { enabled = true; };
+            git-status = { enabled = true; };
+            nix-gc = { enabled = true; };
           };
         };
       };
@@ -85,6 +99,9 @@ in
               }
               { id = "Volume"; }
               { id = "plugin:spotify-widget"; }
+              { id = "plugin:pomodoro"; }
+              { id = "plugin:git-status"; }
+              { id = "plugin:nix-gc"; }
               { id = "plugin:catwalk"; }
               {
                 formatHorizontal = "HH:mm";

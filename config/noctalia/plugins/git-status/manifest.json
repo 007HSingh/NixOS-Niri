@@ -1,0 +1,17 @@
+{
+  "id": "git-status",
+  "name": "Git Status",
+  "version": "1.0.0",
+  "minNoctaliaVersion": "3.6.0",
+  "author": "harsh",
+  "license": "MIT",
+  "description": "Shows git branch and status for nixos-config in the bar.",
+  "tags": ["Bar", "Panel", "Development"],
+  "entryPoints": {
+    "main": "Main.qml",
+    "barWidget": "BarWidget.qml",
+    "panel": "Panel.qml"
+  },
+  "dependencies": { "plugins": [] },
+  "metadata": { "defaultSettings": {} }
+}
