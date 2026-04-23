@@ -22,6 +22,7 @@ in
       noto-fonts
       noto-fonts-cjk-sans
       noto-fonts-color-emoji
+      comfortaa # funky rounded display font for MPRIS widget
       font-awesome
       material-design-icons
     ];
