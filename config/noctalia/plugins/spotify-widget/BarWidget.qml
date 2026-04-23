@@ -4,8 +4,9 @@ import qs.Commons
 import qs.Modules.Bar.Extras
 import qs.Services.Media
 import qs.Services.UI
+import qs.Widgets.AudioSpectrum
 
-// Bar capsule with cute bouncing equalizer bars animation.
+// Bar capsule with real-time audio spectrum visualizer.
 Item {
     id: root
 
@@ -47,6 +48,11 @@ Item {
         }
     }
 
+    // Register with SpectrumService for real-time audio data
+    readonly property string spectrumId: "plugin:spotify-widget:" + screenName
+    Component.onCompleted: SpectrumService.registerComponent(spectrumId)
+    Component.onDestruction: SpectrumService.unregisterComponent(spectrumId)
+
     // ── Capsule ──────────────────────────────────────────────────────────────
     Rectangle {
         id: visualCapsule
@@ -63,61 +69,16 @@ Item {
             ColorAnimation { duration: Style.animationNormal; easing.type: Easing.InOutQuad }
         }
 
-        // ── Equalizer Bars Animation ─────────────────────────────────────
-        Row {
-            anchors.centerIn: parent
-            spacing: 2
-            height: parent.height * 0.6
-
-            Repeater {
-                model: 4
-
-                Rectangle {
-                    id: bar
-                    required property int index
-
-                    width: 3
-                    anchors.bottom: parent.bottom
-                    radius: 1.5
-                    color: mouseArea.containsMouse ? Color.mOnHover : Color.mPrimary
-
-                    Behavior on color {
-                        ColorAnimation { duration: Style.animationNormal }
-                    }
-
-                    // Always-on equalizer animation
-                    readonly property real baseHeight: parent.height * 0.2
-                    readonly property real maxHeight: parent.height
-
-                    property real targetHeight: baseHeight
-
-                    height: targetHeight
-
-                    Behavior on height {
-                        NumberAnimation {
-                            duration: isPlaying ? 160 : 600
-                            easing.type: Easing.InOutQuad
-                        }
-                    }
-
-                    Timer {
-                        interval: isPlaying ? (140 + bar.index * 25) : (500 + bar.index * 80)
-                        running: true
-                        repeat: true
-                        triggeredOnStart: true
-                        onTriggered: {
-                            if (isPlaying) {
-                                bar.targetHeight = bar.baseHeight + Math.random() * (bar.maxHeight - bar.baseHeight);
-                            } else {
-                                // Gentle idle pulse — small range
-                                var idleMin = bar.baseHeight;
-                                var idleMax = bar.baseHeight + (bar.maxHeight - bar.baseHeight) * 0.35;
-                                bar.targetHeight = idleMin + Math.random() * (idleMax - idleMin);
-                            }
-                        }
-                    }
-                }
-            }
+        // ── Real-time Audio Spectrum ─────────────────────────────────────
+        NLinearSpectrum {
+            anchors.fill: parent
+            anchors.margins: Style.marginS
+            values: SpectrumService.values
+            fillColor: mouseArea.containsMouse ? Color.mOnHover : Color.mPrimary
+            showMinimumSignal: true
+            vertical: root.barIsVertical
+            barPosition: root.barPosition
+            mirrored: false
         }
     }
 

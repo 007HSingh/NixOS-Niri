@@ -3,6 +3,7 @@ import QtQuick.Layouts
 import qs.Commons
 import qs.Services.Media
 import qs.Widgets
+import qs.Widgets.AudioSpectrum
 
 // Popup panel with Spotify controls, cute equalizer animation, and track info.
 Item {
@@ -18,6 +19,10 @@ Item {
 
     readonly property bool isSpotify: root.pluginApi?.mainInstance?.isSpotify ?? false
     readonly property bool isPlaying: root.pluginApi?.mainInstance?.isPlaying ?? false
+
+    readonly property string spectrumId: "plugin:spotify-widget:panel"
+    Component.onCompleted: SpectrumService.registerComponent(spectrumId)
+    Component.onDestruction: SpectrumService.unregisterComponent(spectrumId)
 
     Rectangle {
         id: panelContainer
@@ -37,58 +42,19 @@ Item {
                 anchors.margins: Style.marginXL
                 spacing: Style.marginL
 
-                // ── Cute Equalizer Animation (big version) ───────────────
+                // ── Real-time Audio Spectrum (mirrored) ──────────────────
                 Item {
-                    Layout.preferredWidth: 80 * Style.uiScaleRatio
+                    Layout.preferredWidth: parent.width
                     Layout.preferredHeight: 50 * Style.uiScaleRatio
                     Layout.alignment: Qt.AlignHCenter
 
-                    Row {
-                        anchors.centerIn: parent
-                        spacing: 4 * Style.uiScaleRatio
-                        height: parent.height
-
-                        Repeater {
-                            model: 5
-
-                            Rectangle {
-                                id: panelBar
-                                required property int index
-
-                                width: 8 * Style.uiScaleRatio
-                                anchors.bottom: parent.bottom
-                                radius: 4 * Style.uiScaleRatio
-                                color: Color.mPrimary
-
-                                readonly property real baseH: parent.height * 0.2
-                                readonly property real maxH: parent.height
-
-                                property real randomH: baseH
-                                height: randomH
-
-                                Behavior on height {
-                                    NumberAnimation {
-                                        duration: isPlaying ? 180 : 600
-                                        easing.type: Easing.InOutQuad
-                                    }
-                                }
-
-                                Timer {
-                                    interval: isPlaying ? (160 + panelBar.index * 35) : (500 + panelBar.index * 80)
-                                    running: true
-                                    repeat: true
-                                    triggeredOnStart: true
-                                    onTriggered: {
-                                        if (isPlaying) {
-                                            panelBar.randomH = panelBar.baseH + Math.random() * (panelBar.maxH - panelBar.baseH);
-                                        } else {
-                                            var idleMax = panelBar.baseH + (panelBar.maxH - panelBar.baseH) * 0.35;
-                                            panelBar.randomH = panelBar.baseH + Math.random() * (idleMax - panelBar.baseH);
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                    NMirroredSpectrum {
+                        anchors.fill: parent
+                        values: SpectrumService.values
+                        fillColor: Color.mPrimary
+                        showMinimumSignal: true
+                        vertical: false
+                        mirrored: true
                     }
                 }
 
