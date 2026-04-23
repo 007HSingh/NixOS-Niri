@@ -1,4 +1,0 @@
-[global]
-# W10: { ... }: is idiomatic in NixOS modules even with no args accessed
-# W20: programs.foo = ...; programs.bar = ...; is standard NixOS module style
-disabled = ["empty_pattern", "repeated_keys"]
