@@ -96,7 +96,7 @@ Item {
                                 font.family: "JetBrainsMono Nerd Font"
                                 font.pixelSize: Style.fontSizeXXS
                                 color: Color.mOnSurfaceVariant
-                                letterSpacing: 1.2
+                                font.letterSpacing: 1.2
                             }
                             Text {
                                 text: modelData.value
