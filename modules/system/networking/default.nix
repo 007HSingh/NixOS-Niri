@@ -2,7 +2,6 @@
 {
   lib,
   config,
-  stable,
   ...
 }:
 
@@ -16,9 +15,6 @@ in
   config = lib.mkIf cfg.enable {
     networking.networkmanager = {
       enable = true;
-      plugins = [
-        stable.networkmanager-openvpn
-      ];
     };
 
     networking.firewall = {
