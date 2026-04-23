@@ -7,7 +7,6 @@
   config,
   pkgs,
   inputs,
-  stable,
   ...
 }:
 
@@ -44,7 +43,7 @@ in
       cargo
 
       # Applications
-      stable.keepassxc
+      keepassxc
       discord
       mpv
       inputs.antigravity-nix.packages.${pkgs.stdenv.hostPlatform.system}.default
