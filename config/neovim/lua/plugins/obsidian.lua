@@ -2,7 +2,7 @@
 -- OBSIDIAN — Note-taking integration
 -- ============================================================================
 return {
-	"epwalsh/obsidian.nvim",
+	"obsidian-nvim/obsidian.nvim",
 	version = "*",
 	ft = "markdown",
 	dependencies = { "nvim-lua/plenary.nvim" },
@@ -24,14 +24,28 @@ return {
 			ui = {
 				enable = true,
 				checkboxes = {
-					[" "] = { char = "󰄱", hl_group = "ObsidianTodo" },
-					["x"] = { char = "", hl_group = "ObsidianDone" },
-					[">"] = { char = "", hl_group = "ObsidianRightArrow" },
-					["~"] = { char = "󰰱", hl_group = "ObsidianTilde" },
+					[" "] = { order = 1, char = "󰄱", hl_group = "ObsidianTodo" },
+					["x"] = { order = 2, char = "", hl_group = "ObsidianDone" },
+					[">"] = { order = 3, char = "", hl_group = "ObsidianRightArrow" },
+					["~"] = { order = 4, char = "󰰱", hl_group = "ObsidianTilde" },
 				},
-				bullets = { char = "•" },
+				bullets = { char = "•", hl_group = "ObsidianBullet" },
 			},
-			attachments = { img_folder = "assets/imgs" },
+			attachments = {
+				img_folder = "assets/imgs",
+				img_text_func = function(client, path)
+					local link_path
+					local vault_relative = client:vault_relative_path(path)
+					if vault_relative ~= nil then
+						link_path = tostring(vault_relative)
+					else
+						link_path = tostring(path)
+					end
+					local display_name = vim.fs.basename(tostring(path))
+					return string.format("![%s](%s)", display_name, link_path)
+				end,
+				confirm_img_paste = true,
+			},
 		})
 	end,
 }
