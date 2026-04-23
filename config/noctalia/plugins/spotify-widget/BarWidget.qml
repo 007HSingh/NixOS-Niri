@@ -85,48 +85,34 @@ Item {
                         ColorAnimation { duration: Style.animationNormal }
                     }
 
-                    // Each bar has a different phase/speed for organic feel
-                    readonly property real baseHeight: parent.height * 0.25
+                    // Always-on equalizer animation
+                    readonly property real baseHeight: parent.height * 0.2
                     readonly property real maxHeight: parent.height
 
-                    height: isPlaying ? _animatedHeight : baseHeight
+                    property real targetHeight: baseHeight
 
-                    property real _animatedHeight: baseHeight
+                    height: targetHeight
 
                     Behavior on height {
-                        NumberAnimation { duration: 300; easing.type: Easing.OutQuad }
+                        NumberAnimation {
+                            duration: isPlaying ? 160 : 600
+                            easing.type: Easing.InOutQuad
+                        }
                     }
 
-                    // Staggered bounce animation when playing
-                    SequentialAnimation on _animatedHeight {
-                        running: isPlaying
-                        loops: Animation.Infinite
-
-                        // Offset start based on bar index
-                        PauseAnimation { duration: bar.index * 120 }
-
-                        SequentialAnimation {
-                            loops: Animation.Infinite
-                            NumberAnimation {
-                                from: bar.baseHeight
-                                to: bar.maxHeight * (0.6 + Math.random() * 0.4)
-                                duration: 300 + bar.index * 80
-                                easing.type: Easing.OutQuad
-                            }
-                            NumberAnimation {
-                                to: bar.baseHeight * (1.0 + Math.random() * 0.5)
-                                duration: 250 + bar.index * 60
-                                easing.type: Easing.InQuad
-                            }
-                            NumberAnimation {
-                                to: bar.maxHeight * (0.4 + Math.random() * 0.5)
-                                duration: 280 + bar.index * 70
-                                easing.type: Easing.OutQuad
-                            }
-                            NumberAnimation {
-                                to: bar.baseHeight
-                                duration: 200 + bar.index * 50
-                                easing.type: Easing.InQuad
+                    Timer {
+                        interval: isPlaying ? (140 + bar.index * 25) : (500 + bar.index * 80)
+                        running: true
+                        repeat: true
+                        triggeredOnStart: true
+                        onTriggered: {
+                            if (isPlaying) {
+                                bar.targetHeight = bar.baseHeight + Math.random() * (bar.maxHeight - bar.baseHeight);
+                            } else {
+                                // Gentle idle pulse — small range
+                                var idleMin = bar.baseHeight;
+                                var idleMax = bar.baseHeight + (bar.maxHeight - bar.baseHeight) * 0.35;
+                                bar.targetHeight = idleMin + Math.random() * (idleMax - idleMin);
                             }
                         }
                     }
