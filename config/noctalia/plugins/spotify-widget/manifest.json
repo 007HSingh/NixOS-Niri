@@ -1,0 +1,26 @@
+{
+  "id": "spotify-widget",
+  "name": "Spotify Widget",
+  "version": "1.0.0",
+  "minNoctaliaVersion": "3.6.0",
+  "author": "harsh",
+  "license": "MIT",
+  "description": "Cute animated Spotify controller for the bar with a pop-up panel.",
+  "tags": [
+    "Bar",
+    "Panel",
+    "Media",
+    "Spotify"
+  ],
+  "entryPoints": {
+    "main": "Main.qml",
+    "barWidget": "BarWidget.qml",
+    "panel": "Panel.qml"
+  },
+  "dependencies": {
+    "plugins": []
+  },
+  "metadata": {
+    "defaultSettings": {}
+  }
+}
