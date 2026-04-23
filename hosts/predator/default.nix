@@ -8,7 +8,6 @@
 {
   imports = [
     ./hardware.nix
-    ../../system/nvidia.nix # NVIDIA is specific to this machine
     inputs.self.nixosModules.profile-predator
   ];
 
