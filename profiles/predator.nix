@@ -11,6 +11,7 @@
     hardware.enable = true;
     networking.enable = true;
     nix.enable = true;
+    nvidia.enable = true;
     packages.enable = true;
     programs.enable = true;
     security.enable = true;
