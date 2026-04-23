@@ -21,9 +21,14 @@ in
 
   config = lib.mkIf cfg.enable {
     home.file = {
-      ".config/noctalia/plugins" = {
+      ".config/noctalia/plugins/catwalk" = {
         recursive = true;
         source = "${inputs.noctalia-plugins}/catwalk";
+      };
+
+      ".config/noctalia/plugins/spotify-widget" = {
+        recursive = true;
+        source = ../../../config/noctalia/plugins/spotify-widget;
       };
 
       ".config/noctalia/plugins.json" = {
@@ -37,6 +42,9 @@ in
           ];
           states = {
             catwalk = {
+              enabled = true;
+            };
+            spotify-widget = {
               enabled = true;
             };
           };
@@ -76,6 +84,7 @@ in
                 warningThreshold = 30;
               }
               { id = "Volume"; }
+              { id = "plugin:spotify-widget"; }
               { id = "plugin:catwalk"; }
               {
                 formatHorizontal = "HH:mm";
