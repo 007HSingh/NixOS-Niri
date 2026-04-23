@@ -62,6 +62,7 @@ in
         inputs.self.nixosModules.stylix
         inputs.self.nixosModules.users
         inputs.self.nixosModules.vm
+        inputs.self.nixosModules.nvidia
 
         # Stylix NixOS integration
         inputs.stylix.nixosModules.stylix

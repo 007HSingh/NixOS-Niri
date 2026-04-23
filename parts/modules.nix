@@ -21,6 +21,7 @@
       stylix = import ../modules/system/stylix;
       users = import ../modules/system/users;
       vm = import ../modules/system/vm;
+      nvidia = import ../modules/system/nvidia;
 
       # ── Host profiles ───────────────────────────────────────────────────────
       profile-predator = import ../profiles/predator.nix;
