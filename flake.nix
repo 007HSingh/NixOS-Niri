@@ -113,6 +113,7 @@
       # Import flake-parts modules
       imports = [
         ./parts/nixos.nix
+        ./parts/modules.nix
         ./parts/dev.nix
         ./parts/treefmt.nix
         treefmt-nix.flakeModule
