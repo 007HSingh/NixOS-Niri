@@ -1,0 +1,17 @@
+{
+  "id": "nix-gc",
+  "name": "Nix Garbage Collector",
+  "version": "1.0.0",
+  "minNoctaliaVersion": "3.6.0",
+  "author": "harsh",
+  "license": "MIT",
+  "description": "Shows nix store size and provides garbage collection controls.",
+  "tags": ["Bar", "Panel", "System"],
+  "entryPoints": {
+    "main": "Main.qml",
+    "barWidget": "BarWidget.qml",
+    "panel": "Panel.qml"
+  },
+  "dependencies": { "plugins": [] },
+  "metadata": { "defaultSettings": {} }
+}
