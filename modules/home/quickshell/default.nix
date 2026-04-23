@@ -12,8 +12,7 @@ let
   cfg = config.modules.home.quickshell;
 in
 {
-  options.modules.home.quickshell.enable =
-    lib.mkEnableOption "quickshell (wallpaper picker)";
+  options.modules.home.quickshell.enable = lib.mkEnableOption "quickshell (wallpaper picker)";
 
   config = lib.mkIf cfg.enable {
     home.packages = [
