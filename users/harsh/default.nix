@@ -1,11 +1,11 @@
 # User: harsh
 # Primary user configuration combining all home modules
-{ config, ... }:
+{ config, inputs, ... }:
 
 {
   # Import all home modules
   imports = [
-    ../../home
+    inputs.self.homeManagerModules.profile-harsh
   ];
 
   sops = {

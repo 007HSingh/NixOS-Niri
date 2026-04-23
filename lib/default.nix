@@ -48,10 +48,22 @@ in
         # Host-specific configuration
         ../hosts/${hostname}
 
-        # System-wide modules
-        ../system
+        # ── System dendritic modules (options declared; profile enables them) ──
+        inputs.self.nixosModules.boot
+        inputs.self.nixosModules.desktop
+        inputs.self.nixosModules.fonts
+        inputs.self.nixosModules.hardware
+        inputs.self.nixosModules.networking
+        inputs.self.nixosModules.nix
+        inputs.self.nixosModules.packages
+        inputs.self.nixosModules.programs
+        inputs.self.nixosModules.security
+        inputs.self.nixosModules.services
+        inputs.self.nixosModules.stylix
+        inputs.self.nixosModules.users
+        inputs.self.nixosModules.vm
 
-        # Stylix System-wide Theming
+        # Stylix NixOS integration
         inputs.stylix.nixosModules.stylix
 
         # Secrets management (sops-nix)
@@ -72,7 +84,29 @@ in
                 name = username;
                 value = {
                   imports = [
+                    # ── Home dendritic modules (options declared; profile enables them) ──
+                    inputs.self.homeManagerModules.audio
+                    inputs.self.homeManagerModules.bar
+                    inputs.self.homeManagerModules.browser
+                    inputs.self.homeManagerModules.clipboard
+                    inputs.self.homeManagerModules.editor
+                    inputs.self.homeManagerModules.git
+                    inputs.self.homeManagerModules.idle
+                    inputs.self.homeManagerModules.media
+                    inputs.self.homeManagerModules.notes
+                    inputs.self.homeManagerModules.packages
+                    inputs.self.homeManagerModules.quickshell
+                    inputs.self.homeManagerModules.shell
+                    inputs.self.homeManagerModules.termipedia
+                    inputs.self.homeManagerModules.theming
+                    inputs.self.homeManagerModules.vscode
+                    inputs.self.homeManagerModules.wofi
+                    inputs.self.homeManagerModules.xdg
+
+                    # ── User-specific config (identity, sops, profile) ──────────
                     ../users/${username}
+
+                    # ── External Home Manager modules ───────────────────────────
                     spicetify.homeManagerModules.default
                     catppuccin.homeModules.catppuccin
                     nix-index-database.homeModules.nix-index
