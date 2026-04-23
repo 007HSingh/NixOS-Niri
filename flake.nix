@@ -2,13 +2,17 @@
   description = "NixOS Configuration with flake-parts";
 
   inputs = {
-    # Nixpkgs channels
-    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-25.11";
+    # Nixpkgs
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     # Flake-parts for modular flake structure
     flake-parts = {
       url = "github:hercules-ci/flake-parts";
+    };
+
+    # Import-tree for automatic module discovery
+    import-tree = {
+      url = "github:vic/import-tree";
     };
 
     # Home Manager for user environment management
@@ -26,18 +30,16 @@
     # Quickshell for Wayland shell components
     quickshell = {
       url = "github:outfoxxed/quickshell";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     # Noctalia shell (status bar)
     noctalia = {
       url = "github:noctalia-dev/noctalia-shell";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     # Noctalia plugins
     noctalia-plugins = {
-      url = "github:noctalia-dev/noctalia-plugins/00c554207b77aaa3a899bd8c2c8a0fdc327d6d85";
+      url = "github:noctalia-dev/noctalia-plugins/9efe2665c410b25d42b1bca3c913ae280dcd84b0";
       flake = false;
     };
 
@@ -74,10 +76,6 @@
     # Zen Browser (Firefox-based, with declarative HM module)
     zen-browser = {
       url = "github:0xc000022070/zen-browser-flake";
-      inputs = {
-        nixpkgs.follows = "nixpkgs-unstable";
-        home-manager.follows = "home-manager";
-      };
     };
 
     # Secrets management
@@ -89,13 +87,11 @@
     # ClaudeCode
     claude-code-nix = {
       url = "github:sadjow/claude-code-nix";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     # Antigravity
     antigravity-nix = {
       url = "github:jacopone/antigravity-nix";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
   };
 

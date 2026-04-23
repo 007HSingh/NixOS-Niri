@@ -4,7 +4,6 @@
 
 let
   inherit (inputs)
-    nixpkgs-stable
     nixpkgs-unstable
     home-manager
     catppuccin
@@ -25,10 +24,6 @@ in
       users ? [ ],
     }:
     let
-      pkgs-stable = import nixpkgs-stable {
-        inherit system;
-        config.allowUnfree = true;
-      };
       pkgs-unstable = import nixpkgs-unstable {
         inherit system;
         config.allowUnfree = true;
@@ -37,8 +32,7 @@ in
       # Common specialArgs for both NixOS and Home Manager
       specialArgs = {
         inherit inputs users antigravity-nix;
-        inherit pkgs-stable pkgs-unstable;
-        stable = pkgs-stable;
+        inherit pkgs-unstable;
         unstable = pkgs-unstable;
       };
     in
@@ -48,21 +42,8 @@ in
         # Host-specific configuration
         ../hosts/${hostname}
 
-        # ── System dendritic modules (options declared; profile enables them) ──
-        inputs.self.nixosModules.boot
-        inputs.self.nixosModules.desktop
-        inputs.self.nixosModules.fonts
-        inputs.self.nixosModules.hardware
-        inputs.self.nixosModules.networking
-        inputs.self.nixosModules.nix
-        inputs.self.nixosModules.packages
-        inputs.self.nixosModules.programs
-        inputs.self.nixosModules.security
-        inputs.self.nixosModules.services
-        inputs.self.nixosModules.stylix
-        inputs.self.nixosModules.users
-        inputs.self.nixosModules.vm
-        inputs.self.nixosModules.nvidia
+        # ── System dendritic modules (auto-imported) ──
+        inputs.self.nixosModules.all
 
         # Stylix NixOS integration
         inputs.stylix.nixosModules.stylix
@@ -85,24 +66,8 @@ in
                 name = username;
                 value = {
                   imports = [
-                    # ── Home dendritic modules (options declared; profile enables them) ──
-                    inputs.self.homeManagerModules.audio
-                    inputs.self.homeManagerModules.bar
-                    inputs.self.homeManagerModules.browser
-                    inputs.self.homeManagerModules.clipboard
-                    inputs.self.homeManagerModules.editor
-                    inputs.self.homeManagerModules.git
-                    inputs.self.homeManagerModules.idle
-                    inputs.self.homeManagerModules.media
-                    inputs.self.homeManagerModules.notes
-                    inputs.self.homeManagerModules.packages
-                    inputs.self.homeManagerModules.quickshell
-                    inputs.self.homeManagerModules.shell
-                    inputs.self.homeManagerModules.termipedia
-                    inputs.self.homeManagerModules.theming
-                    inputs.self.homeManagerModules.vscode
-                    inputs.self.homeManagerModules.wofi
-                    inputs.self.homeManagerModules.xdg
+                    # ── Home dendritic modules (auto-imported) ──
+                    inputs.self.homeManagerModules.all
 
                     # ── User-specific config (identity, sops, profile) ──────────
                     ../users/${username}
