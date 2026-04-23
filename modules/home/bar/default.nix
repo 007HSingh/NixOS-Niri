@@ -56,11 +56,21 @@ in
             }
           ];
           states = {
-            catwalk = { enabled = true; };
-            spotify-widget = { enabled = true; };
-            pomodoro = { enabled = true; };
-            git-status = { enabled = true; };
-            nix-gc = { enabled = true; };
+            catwalk = {
+              enabled = true;
+            };
+            spotify-widget = {
+              enabled = true;
+            };
+            pomodoro = {
+              enabled = true;
+            };
+            git-status = {
+              enabled = true;
+            };
+            nix-gc = {
+              enabled = true;
+            };
           };
         };
       };

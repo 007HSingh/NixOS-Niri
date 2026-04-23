@@ -6,12 +6,7 @@
   "author": "harsh",
   "license": "MIT",
   "description": "Cute animated Spotify controller for the bar with a pop-up panel.",
-  "tags": [
-    "Bar",
-    "Panel",
-    "Media",
-    "Spotify"
-  ],
+  "tags": ["Bar", "Panel", "Media", "Spotify"],
   "entryPoints": {
     "main": "Main.qml",
     "barWidget": "BarWidget.qml",
