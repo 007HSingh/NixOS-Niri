@@ -2,7 +2,7 @@
 # Exposes all dendritic NixOS and Home Manager modules as named flake outputs.
 # Consumed in lib/default.nix via inputs.self.nixosModules.* and
 # inputs.self.homeManagerModules.* so the module system remains path-agnostic.
-{ ... }:
+_:
 
 {
   flake = {
