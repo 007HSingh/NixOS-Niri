@@ -63,41 +63,27 @@ Item {
                                 readonly property real baseH: parent.height * 0.2
                                 readonly property real maxH: parent.height
 
-                                height: isPlaying ? _animH : baseH
-                                property real _animH: baseH
+                                property real randomH: baseH
+                                height: randomH
 
                                 Behavior on height {
-                                    NumberAnimation { duration: 300; easing.type: Easing.OutQuad }
+                                    NumberAnimation {
+                                        duration: isPlaying ? 180 : 600
+                                        easing.type: Easing.InOutQuad
+                                    }
                                 }
 
-                                SequentialAnimation on _animH {
-                                    running: isPlaying
-                                    loops: Animation.Infinite
-
-                                    PauseAnimation { duration: panelBar.index * 100 }
-
-                                    SequentialAnimation {
-                                        loops: Animation.Infinite
-                                        NumberAnimation {
-                                            from: panelBar.baseH
-                                            to: panelBar.maxH * (0.5 + Math.random() * 0.5)
-                                            duration: 350 + panelBar.index * 60
-                                            easing.type: Easing.OutQuad
-                                        }
-                                        NumberAnimation {
-                                            to: panelBar.baseH * (1.0 + Math.random() * 0.8)
-                                            duration: 280 + panelBar.index * 50
-                                            easing.type: Easing.InQuad
-                                        }
-                                        NumberAnimation {
-                                            to: panelBar.maxH * (0.3 + Math.random() * 0.6)
-                                            duration: 320 + panelBar.index * 70
-                                            easing.type: Easing.OutQuad
-                                        }
-                                        NumberAnimation {
-                                            to: panelBar.baseH
-                                            duration: 250 + panelBar.index * 40
-                                            easing.type: Easing.InQuad
+                                Timer {
+                                    interval: isPlaying ? (160 + panelBar.index * 35) : (500 + panelBar.index * 80)
+                                    running: true
+                                    repeat: true
+                                    triggeredOnStart: true
+                                    onTriggered: {
+                                        if (isPlaying) {
+                                            panelBar.randomH = panelBar.baseH + Math.random() * (panelBar.maxH - panelBar.baseH);
+                                        } else {
+                                            var idleMax = panelBar.baseH + (panelBar.maxH - panelBar.baseH) * 0.35;
+                                            panelBar.randomH = panelBar.baseH + Math.random() * (idleMax - panelBar.baseH);
                                         }
                                     }
                                 }
