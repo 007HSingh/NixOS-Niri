@@ -30,6 +30,7 @@
     # Quickshell for Wayland shell components
     quickshell = {
       url = "github:outfoxxed/quickshell";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     # Noctalia shell (status bar)
