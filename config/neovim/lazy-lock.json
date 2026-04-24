@@ -119,10 +119,6 @@
     "branch": "master",
     "commit": "a905eeebc4e63fdc48b5135d3bf8aea5618fb21c"
   },
-  "markdown-preview.nvim": {
-    "branch": "master",
-    "commit": "a923f5fc5ba36a3b17e289dc35dc17f66d0548ee"
-  },
   "marks.nvim": {
     "branch": "master",
     "commit": "f353e8c08c50f39e99a9ed474172df7eddd89b72"
@@ -270,6 +266,10 @@
   "rainbow-delimiters.nvim": {
     "branch": "master",
     "commit": "08783ec022e7ddefe0f12a16f1ac4968f55478b0"
+  },
+  "render-markdown.nvim": {
+    "branch": "main",
+    "commit": "d67113f11384c0dad96fced2f7b91f1fc811e97f"
   },
   "supermaven-nvim": {
     "branch": "main",

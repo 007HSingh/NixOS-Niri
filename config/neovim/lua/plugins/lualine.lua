@@ -51,8 +51,6 @@ return {
 			return "󰑋 @" .. reg
 		end
 
-
-
 		local function search_count()
 			if vim.v.hlsearch == 0 then
 				return ""
