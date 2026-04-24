@@ -7,30 +7,24 @@ return {
 	dependencies = {
 		"nvim-tree/nvim-web-devicons",
 		"catppuccin",
-		"SmiteshP/nvim-navic",
 	},
 	config = function()
-		local lualine = require("lualine")
-		local navic = require("nvim-navic")
-
-		-- ── Helpers ───────────────────────────────────────────────────────────
-
 		local function mode_icon()
 			local icons = {
-				n = "󰋜 NORMAL",
-				i = "󰏫 INSERT",
-				v = "󰒉 VISUAL",
-				V = "󰒉 V-LINE",
-				["\22"] = "󰒉 V-BLOCK",
-				c = "󰞷 COMMAND",
-				s = "󰒅 SELECT",
-				S = "󰒅 S-LINE",
-				R = "󰊄 REPLACE",
-				r = "󰊄 REPLACE",
-				["!"] = " SHELL",
-				t = " TERMINAL",
+				n = "󰋜",
+				i = "󰏫",
+				v = "󰒉",
+				V = "󰒉",
+				["\22"] = "󰒉",
+				c = "󰞷",
+				s = "󰒅",
+				S = "󰒅",
+				R = "󰊄",
+				r = "󰊄",
+				["!"] = "󰆍",
+				t = "",
 			}
-			return icons[vim.fn.mode()] or "󰋜 NORMAL"
+			return icons[vim.fn.mode()] or "󰋜"
 		end
 
 		local function diff_source()
@@ -46,19 +40,7 @@ return {
 
 		local function lsp_clients()
 			local clients = vim.lsp.get_clients({ bufnr = 0 })
-			if #clients == 0 then
-				return ""
-			end
-			local names = {}
-			for _, c in ipairs(clients) do
-				if c.name ~= "null-ls" and c.name ~= "copilot" then
-					table.insert(names, c.name)
-				end
-			end
-			if #names == 0 then
-				return ""
-			end
-			return "󰒋 " .. table.concat(names, ", ")
+			return #clients > 0 and "󰒋" or ""
 		end
 
 		local function macro_recording()
@@ -69,23 +51,7 @@ return {
 			return "󰑋 @" .. reg
 		end
 
-		local function file_info()
-			local enc = vim.opt.fileencoding:get()
-			if enc == "" then
-				enc = vim.opt.encoding:get()
-			end
-			local ff = vim.opt.fileformat:get()
-			local ff_icons = { unix = "󰌽 LF", dos = " CRLF", mac = "󰀶 CR" }
-			return (enc ~= "utf-8" and enc .. " · " or "") .. (ff_icons[ff] or ff)
-		end
 
-		local function indent_info()
-			if vim.opt.expandtab:get() then
-				return "Spaces: " .. vim.opt.shiftwidth:get()
-			else
-				return "Tab: " .. vim.opt.tabstop:get()
-			end
-		end
 
 		local function search_count()
 			if vim.v.hlsearch == 0 then
@@ -187,166 +153,82 @@ return {
 		end
 
 		-- ── Setup ─────────────────────────────────────────────────────────────
+		local lualine = require("lualine")
+
+		-- ── Setup ─────────────────────────────────────────────────────────────
 		lualine.setup({
 			options = {
 				theme = build_theme(),
 				section_separators = { left = "", right = "" },
-				component_separators = { left = "│", right = "│" },
+				component_separators = { left = "", right = "" },
 				globalstatus = true,
 				refresh = { statusline = 100 },
 			},
 
 			sections = {
-				-- ── LEFT ──────────────────────────────────────────────────────
 				lualine_a = {
 					{
 						mode_icon,
-						separator = { left = "", right = "" },
 						padding = { left = 1, right = 1 },
 					},
 				},
 
 				lualine_b = {
-					-- Git branch
 					{
 						"branch",
-						icon = "",
-						color = { fg = palette.mauve, bg = palette.surface1, gui = "bold" },
-						padding = { left = 1, right = 0 },
+						icon = "",
+						color = { fg = palette.mauve, gui = "bold" },
 					},
-					-- Git diff
 					{
 						"diff",
 						source = diff_source,
-						symbols = { added = " ", modified = " ", removed = " " },
-						diff_color = {
-							added = { fg = palette.green },
-							modified = { fg = palette.yellow },
-							removed = { fg = palette.red },
-						},
-						padding = { left = 1, right = 1 },
-					},
-					-- Macro recording (shows when active)
-					{
-						macro_recording,
-						color = { fg = palette.peach, gui = "bold,italic" },
+						symbols = { added = " ", modified = " ", removed = " " },
 						padding = { left = 1, right = 1 },
 					},
 				},
 
 				lualine_c = {
-					-- File icon + name + modified + readonly
-					{
-						"filetype",
-						icon_only = true,
-						padding = { left = 2, right = 0 },
-						color = { bg = palette.base },
-					},
 					{
 						"filename",
-						path = 1, -- relative path
+						path = 1,
 						symbols = {
-							modified = " ●",
-							readonly = " 󰌾",
+							modified = "●",
+							readonly = "󰌾",
 							unnamed = "[No Name]",
 							newfile = "[New]",
 						},
-						color = { fg = palette.text, bg = palette.base, gui = "bold" },
-						padding = { left = 0, right = 1 },
+						color = { fg = palette.text, gui = "bold" },
+						padding = { left = 1, right = 1 },
 					},
-					-- Navic breadcrumbs
 					{
-						function()
-							if navic.is_available() then
-								local loc = navic.get_location()
-								if loc and loc ~= "" then
-									return "  " .. loc
-								end
-							end
-							return ""
-						end,
-						color = { fg = palette.overlay0, bg = palette.base },
-						padding = { left = 0, right = 1 },
+						macro_recording,
+						color = { fg = palette.peach, gui = "bold,italic" },
 					},
 				},
 
-				-- ── RIGHT ─────────────────────────────────────────────────────
 				lualine_x = {
-					-- Search count
 					{
 						search_count,
 						color = { fg = palette.yellow, gui = "bold" },
-						padding = { left = 1, right = 1 },
 					},
-					-- Diagnostics
 					{
 						"diagnostics",
-						sources = { "nvim_lsp", "nvim_diagnostic" },
-						sections = { "error", "warn", "info", "hint" },
-						symbols = { error = " ", warn = " ", info = " ", hint = "󰌵 " },
-						diagnostics_color = {
-							error = { fg = palette.red },
-							warn = { fg = palette.yellow },
-							info = { fg = palette.sky },
-							hint = { fg = palette.teal },
-						},
-						padding = { left = 1, right = 1 },
+						symbols = { error = " ", warn = " ", info = " ", hint = "󰌵 " },
 					},
-					-- Active LSP clients
 					{
 						lsp_clients,
-						color = { fg = palette.green, gui = "italic" },
-						padding = { left = 1, right = 1 },
+						color = { fg = palette.green },
 					},
 				},
 
-				lualine_y = {
-					-- Indent style
-					{
-						indent_info,
-						color = { fg = palette.subtext0, bg = palette.surface1 },
-						padding = { left = 1, right = 1 },
-					},
-					-- File encoding / line ending
-					{
-						file_info,
-						color = { fg = palette.subtext0, bg = palette.surface1 },
-						padding = { left = 1, right = 1 },
-					},
-					-- File size
-					{
-						"filesize",
-						color = { fg = palette.subtext0, bg = palette.surface1 },
-						padding = { left = 1, right = 1 },
-					},
-				},
+				lualine_y = {},
 
 				lualine_z = {
-					-- Line:Col + progress
 					{
 						"location",
-						separator = { left = "", right = "" },
 						color = function()
 							return { fg = palette.base, bg = mode_color(), gui = "bold" }
 						end,
-						padding = { left = 1, right = 0 },
-					},
-					{
-						"progress",
-						separator = { left = "", right = "" },
-						color = function()
-							return { fg = palette.base, bg = mode_color(), gui = "bold" }
-						end,
-						padding = { left = 0, right = 1 },
-					},
-					{
-						function()
-							return os.date("󰥔 %H:%M")
-						end,
-						color = function()
-							return { fg = palette.base, bg = mode_color(), gui = "bold" }
-						end,
-						padding = { left = 1, right = 1 },
 					},
 				},
 			},
@@ -354,67 +236,10 @@ return {
 			inactive_sections = {
 				lualine_a = {},
 				lualine_b = {},
-				lualine_c = {
-					{
-						"filename",
-						path = 1,
-						color = { fg = palette.overlay0 },
-					},
-				},
+				lualine_c = { { "filename", path = 1 } },
 				lualine_x = { "location" },
 				lualine_y = {},
 				lualine_z = {},
-			},
-
-			-- ── Winbar: breadcrumbs on each split ─────────────────────────────
-			winbar = {
-				lualine_c = {
-					{
-						"filetype",
-						icon_only = true,
-						padding = { left = 2, right = 0 },
-						color = { bg = "NONE" },
-					},
-					{
-						"filename",
-						path = 1,
-						symbols = { modified = " ●", readonly = " 󰌾" },
-						color = { fg = palette.text, bg = "NONE", gui = "bold" },
-						padding = { left = 0, right = 1 },
-					},
-					{
-						function()
-							if navic.is_available() then
-								local loc = navic.get_location()
-								if loc and loc ~= "" then
-									return "  " .. loc
-								end
-							end
-							return ""
-						end,
-						color = { fg = palette.overlay0, bg = "NONE" },
-					},
-				},
-				lualine_x = {
-					{
-						"lsp_status",
-						icon = "",
-						color = { fg = palette.overlay0, bg = "NONE" },
-						symbols = { done = "", separator = " " },
-						padding = { right = 2 },
-					},
-				},
-			},
-
-			inactive_winbar = {
-				lualine_c = {
-					{
-						"filename",
-						path = 1,
-						color = { fg = palette.overlay0, bg = "NONE" },
-						padding = { left = 2 },
-					},
-				},
 			},
 		})
 

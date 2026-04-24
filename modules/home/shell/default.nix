@@ -103,7 +103,7 @@ in
             read_only = " ";
           };
           git_branch = {
-            symbol = "  ";
+            symbol = " ";
             style = "bold purple";
             format = "on [$symbol$branch]($style) ";
           };
@@ -122,7 +122,7 @@ in
             deleted = "✘";
           };
           nix_shell = {
-            symbol = "  ";
+            symbol = " ";
             style = "bold cyan";
             format = "via [$symbol$state]($style) ";
           };
