@@ -78,18 +78,27 @@ Item {
 
         const fullScript = `
             (
+                echo "--- Setting Wallpaper: $(date) ---" >> /tmp/wallpaper_picker.log
                 WALL_FILE=$(cat /tmp/qs_wall_path)
+                echo "File: $WALL_FILE" >> /tmp/wallpaper_picker.log
 
                 export WAYLAND_DISPLAY="\${WAYLAND_DISPLAY:-${Quickshell.env("WAYLAND_DISPLAY") || "wayland-1"}}"
                 export XDG_RUNTIME_DIR="\${XDG_RUNTIME_DIR:-${Quickshell.env("XDG_RUNTIME_DIR") || "/run/user/1000"}}"
+                
+                echo "Env: WAYLAND_DISPLAY=$WAYLAND_DISPLAY, XDG_RUNTIME_DIR=$XDG_RUNTIME_DIR" >> /tmp/wallpaper_picker.log
 
-                ${noctaliaBin} ipc call wallpaper set "$WALL_FILE" all 2>/dev/null
+                # Try to set the wallpaper
+                if ${noctaliaBin} ipc call wallpaper set "$WALL_FILE" all >> /tmp/wallpaper_picker.log 2>&1; then
+                    echo "Success: Wallpaper set via IPC" >> /tmp/wallpaper_picker.log
+                else
+                    echo "Error: IPC call failed with exit code $?" >> /tmp/wallpaper_picker.log
+                fi
 
                 pkill mpvpaper 2>/dev/null || true
                 cp "$WALL_FILE" /tmp/lock_bg.png 2>/dev/null || true
 
                 echo 'close' > /tmp/qs_widget_state
-
+                echo "Done." >> /tmp/wallpaper_picker.log
             ) </dev/null >/dev/null 2>&1 & disown
         `
 

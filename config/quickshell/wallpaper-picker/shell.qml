@@ -11,6 +11,9 @@ ShellRoot {
         Qt.application.name = "WallpaperPicker"
         Qt.application.organization = "quickshell"
         Qt.application.domain = "quickshell.local"
+        
+        // Clear the state file on startup so we don't immediately close
+        closeWriter.running = true
     }
 
     // ── Poll /tmp/qs_widget_state for "close" ─────────────────────────────────
