@@ -11,28 +11,37 @@ return {
 			workspaces = {
 				{ name = "personal", path = "~/Notes" },
 			},
-			notes_subdir = "inbox",
+			notes_subdir = "fleeting",
+			new_notes_location = "notes_subdir",
 			daily_notes = {
 				folder = "dailies",
 				date_format = "%Y-%m-%d",
+				template = "daily.md",
 			},
+			templates = {
+				folder = "templates",
+				date_format = "%Y-%m-%d",
+				time_format = "%H:%M",
+			},
+			-- Zettelkasten ID generation: YYYYMMDDHHMM-title
+			note_id_func = function(title)
+				local suffix = ""
+				if title ~= nil then
+					suffix = title:gsub(" ", "-"):gsub("[^A-Za-z0-9-]", ""):lower()
+				else
+					for _ = 1, 4 do
+						suffix = suffix .. string.char(math.random(65, 90))
+					end
+				end
+				return tostring(os.date("%Y%m%d%H%M")) .. "-" .. suffix
+			end,
 			completion = {
 				nvim_cmp = true,
 				min_chars = 2,
 			},
-			mappings = {}, -- keymaps are in core/keymaps.lua
-			ui = {
-				enable = true,
-				checkboxes = {
-					[" "] = { order = 1, char = "󰄱", hl_group = "ObsidianTodo" },
-					["x"] = { order = 2, char = "", hl_group = "ObsidianDone" },
-					[">"] = { order = 3, char = "", hl_group = "ObsidianRightArrow" },
-					["~"] = { order = 4, char = "󰰱", hl_group = "ObsidianTilde" },
-				},
-				bullets = { char = "•", hl_group = "ObsidianBullet" },
-			},
+			-- Specify how to handle attachments
 			attachments = {
-				img_folder = "assets/imgs",
+				folder = "assets/imgs",
 				img_text_func = function(client, path)
 					local link_path
 					local vault_relative = client:vault_relative_path(path)
@@ -46,6 +55,10 @@ return {
 				end,
 				confirm_img_paste = true,
 			},
+			-- Disable UI features as we use render-markdown.nvim
+			ui = { enable = false },
+			-- Disable legacy commands to remove warnings
+			legacy_commands = false,
 		})
 	end,
 }

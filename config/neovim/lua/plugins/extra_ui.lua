@@ -29,16 +29,15 @@ return {
 		end,
 	},
 
-	-- ── Markdown Preview ──────────────────────────────────────────────────────
+	-- ── Render Markdown (In-editor rendering) ──────────────────────────────
 	{
-		"iamcco/markdown-preview.nvim",
-		cmd = { "MarkdownPreview", "MarkdownPreviewStop" },
-		ft = "markdown",
-		build = "cd app && npm install",
-		config = function()
-			vim.g.mkdp_auto_close = 1
-			vim.g.mkdp_theme = "dark"
-		end,
+		"MeanderingProgrammer/render-markdown.nvim",
+		event = "VeryLazy",
+		opts = {
+			heading = { icons = { "󰲡 ", "󰲣 ", "󰲥 ", "󰲧 ", "󰲩 ", "󰲫 " } },
+			code = { sign = false, width = "block", right_pad = 1 },
+			checkbox = { enabled = true },
+		},
 	},
 
 	-- ── Trouble ───────────────────────────────────────────────────────────────
