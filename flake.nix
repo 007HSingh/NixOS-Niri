@@ -68,15 +68,16 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
-    # Nix User Repository (for Firefox/Zen addons)
+    # Nix User Repository
     nur = {
       url = "github:nix-community/NUR";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
-    # Zen Browser (Firefox-based, with declarative HM module)
+    # Zen Browser
     zen-browser = {
       url = "github:0xc000022070/zen-browser-flake";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     # Secrets management
@@ -88,11 +89,13 @@
     # ClaudeCode
     claude-code-nix = {
       url = "github:sadjow/claude-code-nix";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     # Antigravity
     antigravity-nix = {
       url = "github:jacopone/antigravity-nix";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
   };
 

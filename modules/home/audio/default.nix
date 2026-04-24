@@ -1,5 +1,5 @@
 # Audio tweaks
-# Systemd user service that boosts the default sink volume to 150% on login
+# Systemd user service that boosts the default sink volume to 200% on login
 {
   lib,
   config,
@@ -17,7 +17,7 @@ in
   config = lib.mkIf cfg.enable {
     systemd.user.services.audio-volume-boost = {
       Unit = {
-        Description = "Boost default audio sink volume to 150%";
+        Description = "Boost default audio sink volume to 200%";
         After = [ "wireplumber.service" ];
         Wants = [ "wireplumber.service" ];
       };
