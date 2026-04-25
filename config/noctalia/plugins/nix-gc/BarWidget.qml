@@ -72,7 +72,7 @@ Item {
             Text {
                 anchors.verticalCenter: parent.verticalCenter
                 text: isCollecting ? "gc..." : storeSize
-                font.family: "JetBrainsMono Nerd Font"
+                font.family: "Maple Mono NF"
                 font.pixelSize: Style.fontSizeS
                 color: mouseArea.containsMouse ? Color.mOnHover : Color.mOnSurface
             }

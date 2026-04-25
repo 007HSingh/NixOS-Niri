@@ -60,7 +60,7 @@ Item {
             Text {
                 anchors.verticalCenter: parent.verticalCenter
                 text: ""
-                font.family: "JetBrainsMono Nerd Font"
+                font.family: "Maple Mono NF"
                 font.pixelSize: Style.fontSizeM
                 color: mouseArea.containsMouse ? Color.mOnHover : Color.mOnSurfaceVariant
             }
@@ -69,7 +69,7 @@ Item {
             Text {
                 anchors.verticalCenter: parent.verticalCenter
                 text: branch
-                font.family: "JetBrainsMono Nerd Font"
+                font.family: "Maple Mono NF"
                 font.pixelSize: Style.fontSizeS
                 color: mouseArea.containsMouse ? Color.mOnHover : Color.mOnSurface
                 elide: Text.ElideRight

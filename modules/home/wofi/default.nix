@@ -45,7 +45,7 @@ in
           border: 1px solid rgba(180, 190, 254, 0.35);
           border-radius: 20px;
           margin: 0px;
-          font-family: "JetBrainsMono Nerd Font";
+          font-family: "Maple Mono NF";
           box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
         }
 
