@@ -26,7 +26,7 @@ A modular, state-of-the-art NixOS configuration built with **flake-parts**, feat
 
 - **Foundation:** [Stylix](https://github.com/danth/stylix) — The single source of truth for system-wide colors, fonts, and wallpapers.
 - **Palette:** [Catppuccin Mocha](https://github.com/catppuccin/catppuccin) — A soothing, high-contrast dark theme applied to everything.
-- **Fonts:** [Maple Mono NF](https://github.com/subframe7k/maple-font) for terminal, [Inter](https://rsms.me/inter/) for UI.
+- **Fonts:** [Maple Mono NF](https://github.com/subframe7k/maple-font) for terminal, [Nunito](https://github.com/googlefonts/nunito) for UI.
 - **Music:** [Spicetify](https://github.com/Gerg-L/spicetify-nix) — Declarative Spotify theming.
 
 ### 🛠️ Development & Tools

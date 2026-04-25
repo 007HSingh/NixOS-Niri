@@ -5,7 +5,7 @@ import QtQuick
 // All colors are exposed as QtQuick color properties so the picker UI can use them directly.
 QtObject {
     // Fonts
-    readonly property string sansFamily: "Inter"
+    readonly property string sansFamily: "Nunito"
     readonly property string monoFamily: "Maple Mono NF"
 
     // Backgrounds
