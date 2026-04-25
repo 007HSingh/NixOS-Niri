@@ -150,7 +150,7 @@ Item {
                         Text {
                             anchors.centerIn: parent
                             text: "↻  refresh"
-                            font.family: "Inter"
+                            font.family: "Nunito"
                             font.pixelSize: Style.fontSizeS
                             color: Color.mOnSurfaceVariant
                         }
@@ -174,7 +174,7 @@ Item {
                         Text {
                             anchors.centerIn: parent
                             text: isCollecting ? "collecting..." : "❄  collect"
-                            font.family: "Inter"
+                            font.family: "Nunito"
                             font.pixelSize: Style.fontSizeS
                             color: isCollecting ? Color.mOnSurfaceVariant : Color.mOnError
                         }
