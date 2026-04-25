@@ -10,19 +10,16 @@ let
   cfg = config.modules.system.fonts;
 in
 {
-  options.modules.system.fonts.enable = lib.mkEnableOption "system fonts (Nerd Fonts, Noto, Inter)";
+  options.modules.system.fonts.enable = lib.mkEnableOption "system fonts (Maple Mono, Nunito, Noto)";
 
   config = lib.mkIf cfg.enable {
     fonts.packages = with pkgs; [
-      nerd-fonts.jetbrains-mono
-      nerd-fonts.fira-code
-      nerd-fonts.hack
-      nerd-fonts.meslo-lg
-      inter # clean UI typeface, replaces Noto Sans for app chrome
+      maple-mono.NF
+      nunito
       noto-fonts
       noto-fonts-cjk-sans
       noto-fonts-color-emoji
-      comfortaa # funky rounded display font for MPRIS widget
+      comfortaa
       font-awesome
       material-design-icons
     ];
@@ -30,11 +27,11 @@ in
     fonts.fontconfig = {
       enable = true;
       defaultFonts = {
-        monospace = [ "JetBrainsMono Nerd Font" ];
+        monospace = [ "Maple Mono NF" ];
         sansSerif = [
-          "Inter"
+          "Nunito"
           "Noto Sans"
-        ]; # Inter first for UI; Noto Sans fallback
+        ];
         serif = [ "Noto Serif" ];
       };
       antialias = true;
