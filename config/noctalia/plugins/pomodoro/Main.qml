@@ -15,7 +15,7 @@ Item {
     property int sessionsCompleted: 0  // work sessions done
     property bool running: false
 
-    readonly property int workDuration: 25 * 60
+    readonly property int workDuration: 60 * 60
     readonly property int shortBreakDuration: 5 * 60
     readonly property int longBreakDuration: 15 * 60
     readonly property int sessionsBeforeLongBreak: 4
@@ -77,7 +77,7 @@ Item {
         totalSeconds = workDuration;
         remainingSeconds = workDuration;
         running = true;
-        notify("🍅 Focus Time", "25 minutes of deep work. Let's go!");
+        notify("🍅 Focus Time", "60 minutes of deep work. Let's go!");
     }
 
     function startShortBreak() {
