@@ -87,7 +87,7 @@ Item {
                 Text {
                     Layout.alignment: Qt.AlignHCenter
                     text: timeString
-                    font.family: "JetBrainsMono Nerd Font"
+                    font.family: "Maple Mono NF"
                     font.pixelSize: 52 * Style.uiScaleRatio
                     font.bold: true
                     color: Color.mOnSurface
