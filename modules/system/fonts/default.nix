@@ -16,6 +16,7 @@ in
     fonts.packages = with pkgs; [
       maple-mono.NF
       nunito
+      inter
       noto-fonts
       noto-fonts-cjk-sans
       noto-fonts-color-emoji
@@ -30,6 +31,7 @@ in
         monospace = [ "Maple Mono NF" ];
         sansSerif = [
           "Nunito"
+          "Inter"
           "Noto Sans"
         ];
         serif = [ "Noto Serif" ];
