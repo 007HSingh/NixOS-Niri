@@ -90,7 +90,7 @@ in
         settings = {
           format = "$directory$git_branch$git_status$nix_shell$cmd_duration$line_break$character";
           add_newline = false;
-          palette = "catppuccin_mocha";
+          palette = lib.mkForce "catppuccin_mocha";
 
           character = {
             success_symbol = "[❯](bold green)";
