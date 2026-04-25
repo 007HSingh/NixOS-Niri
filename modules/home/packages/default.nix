@@ -35,6 +35,7 @@ in
       tokei
       gnumake
       nix-output-monitor
+      nix-tree
 
       # Build tools
       gcc
