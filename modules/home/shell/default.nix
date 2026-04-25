@@ -90,46 +90,83 @@ in
         settings = {
           format = "$directory$git_branch$git_status$nix_shell$cmd_duration$line_break$character";
           add_newline = false;
+          palette = "catppuccin_mocha";
+
           character = {
             success_symbol = "[❯](bold green)";
             error_symbol = "[❯](bold red)";
             vicmd_symbol = "[V](bold yellow)";
           };
+
           directory = {
-            style = "bold blue";
+            style = "bold lavender";
             truncation_length = 3;
             fish_style_pwd_dir_length = 1;
             truncate_to_repo = true;
-            read_only = " ";
+            read_only = " 󰌾";
+            format = " [$path]($style)[$read_only]($read_only_style) ";
           };
+
           git_branch = {
             symbol = " ";
-            style = "bold purple";
-            format = "on [$symbol$branch]($style) ";
+            style = "bold mauve";
+            format = "[$symbol$branch]($style) ";
           };
+
           git_status = {
             style = "bold red";
             format = "([$all_status$ahead_behind]($style) )";
-            conflicted = "= ";
-            ahead = "⇡";
-            behind = "⇣";
-            diverged = "⇕";
-            untracked = "?";
-            stashed = "";
-            modified = "!";
-            staged = "+";
-            renamed = "»";
-            deleted = "✘";
+            conflicted = "󰞇 ";
+            ahead = "󰶣";
+            behind = "󰶡";
+            diverged = "󰶤";
+            untracked = "󰋗 ";
+            stashed = "󰏗 ";
+            modified = "󰏫 ";
+            staged = "󰐖 ";
+            renamed = "󰑕 ";
+            deleted = "󰆴 ";
           };
+
           nix_shell = {
-            symbol = " ";
-            style = "bold cyan";
-            format = "via [$symbol$state]($style) ";
+            symbol = "󱄅 ";
+            style = "bold sky";
+            format = "[$symbol$state]($style) ";
           };
+
           cmd_duration = {
             min_time = 2000;
             style = "bold yellow";
-            format = "took [$duration]($style) ";
+            format = "󱎫 [$duration]($style) ";
+          };
+
+          palettes.catppuccin_mocha = {
+            rosewater = "#f5e0dc";
+            flamingo = "#f2cdcd";
+            pink = "#f5c2e7";
+            mauve = "#cba6f7";
+            red = "#f38ba8";
+            maroon = "#eba0ac";
+            peach = "#fab387";
+            yellow = "#f9e2af";
+            green = "#a6e3a1";
+            teal = "#94e2d5";
+            sky = "#89dceb";
+            sapphire = "#74c7ec";
+            blue = "#89b4fa";
+            lavender = "#b4befe";
+            text = "#cdd6f4";
+            subtext1 = "#bac2de";
+            subtext0 = "#a6adc8";
+            overlay2 = "#9399b2";
+            overlay1 = "#7f849d";
+            overlay0 = "#6c7086";
+            surface2 = "#585b70";
+            surface1 = "#45475a";
+            surface0 = "#313244";
+            base = "#1e1e2e";
+            mantle = "#181825";
+            crust = "#11111b";
           };
         };
       };
