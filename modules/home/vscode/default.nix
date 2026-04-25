@@ -12,7 +12,10 @@ let
   cfg = config.modules.home.vscode;
 in
 {
-  options.modules.home.vscode.enable = lib.mkEnableOption "VSCode with extensions and settings";
+  options.modules.home.vscode = {
+    enable = lib.mkEnableOption "VSCode with extensions and settings";
+    minimal = lib.mkEnableOption "ultra-minimalist UI" // { default = true; };
+  };
 
   config = lib.mkIf cfg.enable {
     programs.vscode = {
@@ -55,30 +58,45 @@ in
             }
           ];
 
-        userSettings = lib.mapAttrs (_: lib.mkForce) {
-          "editor.fontFamily" = "'JetBrainsMono Nerd Font Mono', 'JetBrainsMono Nerd Font', monospace";
-          "editor.fontSize" = 13;
-          "editor.fontLigatures" = true;
-          "editor.lineHeight" = 1.6;
-          "editor.tabSize" = 2;
-          "editor.formatOnSave" = true;
-          "editor.cursorBlinking" = "smooth";
-          "editor.cursorSmoothCaretAnimation" = "on";
-          "editor.smoothScrolling" = true;
-          "editor.minimap.enabled" = false;
-          "workbench.colorTheme" = "Catppuccin Mocha";
-          "workbench.iconTheme" = "catppuccin-mocha";
-          "workbench.startupEditor" = "none";
-          "workbench.tree.indent" = 16;
-          "window.titleBarStyle" = "custom";
-          "window.menuBarVisibility" = "toggle";
-          "terminal.integrated.fontFamily" = "'JetBrainsMono Nerd Font Mono'";
-          "terminal.integrated.fontSize" = 13;
-          "nix.enableLanguageServer" = true;
-          "nix.serverPath" = "nixd";
-          "files.autoSave" = "onFocusChange";
-          "[nix]"."editor.defaultFormatter" = "jnoortheen.nix-ide";
-        };
+        userSettings = lib.mapAttrs (_: lib.mkForce) (
+          (lib.recursiveUpdate {
+            "editor.fontFamily" = "'Maple Mono NF', monospace";
+            "editor.fontSize" = 13;
+            "editor.fontLigatures" = true;
+            "editor.lineHeight" = 1.6;
+            "editor.tabSize" = 2;
+            "editor.formatOnSave" = true;
+            "editor.cursorBlinking" = "smooth";
+            "editor.cursorSmoothCaretAnimation" = "on";
+            "editor.smoothScrolling" = true;
+            "editor.minimap.enabled" = false;
+            "workbench.colorTheme" = "Catppuccin Mocha";
+            "workbench.iconTheme" = "catppuccin-mocha";
+            "workbench.startupEditor" = "none";
+            "workbench.tree.indent" = 16;
+            "window.titleBarStyle" = "custom";
+            "window.menuBarVisibility" = "toggle";
+            "terminal.integrated.fontFamily" = "'Maple Mono NF'";
+            "terminal.integrated.fontSize" = 13;
+            "nix.enableLanguageServer" = true;
+            "nix.serverPath" = "nixd";
+            "files.autoSave" = "onFocusChange";
+            "[nix]"."editor.defaultFormatter" = "jnoortheen.nix-ide";
+          } (lib.optionalAttrs cfg.minimal {
+            "workbench.activityBar.location" = "hidden";
+            "workbench.statusBar.visible" = false;
+            "workbench.editor.showTabs" = "none";
+            "editor.lineNumbers" = "off";
+            "editor.glyphMargin" = false;
+            "editor.folding" = false;
+            "editor.scrollbar.vertical" = "hidden";
+            "editor.scrollbar.horizontal" = "hidden";
+            "breadcrumbs.enabled" = false;
+            "workbench.layoutControl.enabled" = false;
+            "editor.renderLineHighlight" = "none";
+            "editor.occurrencesHighlight" = "off";
+          }))
+        );
       };
     };
   };
