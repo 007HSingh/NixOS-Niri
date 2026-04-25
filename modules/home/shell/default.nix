@@ -81,6 +81,10 @@ in
             name = "zsh-you-should-use";
             src = pkgs.zsh-you-should-use;
           }
+          {
+            name = "fzf-tab";
+            src = pkgs.zsh-fzf-tab;
+          }
         ];
       };
 
@@ -213,6 +217,16 @@ in
 
       cava = {
         enable = true;
+        settings = {
+          general.framerate = 60;
+          smoothing.monstercat = 1;
+          # Visualizer color matches Catppuccin Teal
+          color.foreground = "'#94e2d5'";
+        };
+      };
+
+      fastfetch = {
+        enable = true;
       };
 
       pay-respects = {
@@ -259,12 +273,23 @@ in
         enable = true;
         enableZshIntegration = true;
         shellWrapperName = "y";
+        initLua = ''
+          require("full-border"):setup()
+        '';
         settings = {
           manager = {
             show_hidden = true;
             sort_by = "natural";
             sort_dir_first = true;
           };
+        };
+        plugins = {
+          full-border = pkgs.fetchFromGitHub {
+            owner = "yazi-rs";
+            repo = "plugins";
+            rev = "7867207";
+            hash = lib.fakeHash;
+          } + "/full-border.yazi";
         };
       };
 
