@@ -49,7 +49,7 @@ Item {
 
                     Text {
                         text: ""
-                        font.family: "JetBrainsMono Nerd Font"
+                        font.family: "Maple Mono NF"
                         font.pixelSize: Style.fontSizeXXL
                         color: isDirty ? Color.mError : Color.mTertiary
                         Behavior on color { ColorAnimation { duration: 300 } }
@@ -82,7 +82,7 @@ Item {
 
                     Text {
                         text: "LAST COMMIT"
-                        font.family: "JetBrainsMono Nerd Font"
+                        font.family: "Maple Mono NF"
                         font.pixelSize: Style.fontSizeXXS
                         color: Color.mOnSurfaceVariant
                         font.letterSpacing: 1.5
@@ -94,7 +94,7 @@ Item {
 
                         Text {
                             text: lastCommitHash || "—"
-                            font.family: "JetBrainsMono Nerd Font"
+                            font.family: "Maple Mono NF"
                             font.pixelSize: Style.fontSizeS
                             color: Color.mPrimary
                         }
@@ -140,7 +140,7 @@ Item {
                             Rectangle { width: 8; height: 8; radius: 4; color: modelData.color }
                             Text {
                                 text: modelData.count + " " + modelData.label
-                                font.family: "JetBrainsMono Nerd Font"
+                                font.family: "Maple Mono NF"
                                 font.pixelSize: Style.fontSizeXS
                                 color: Color.mOnSurfaceVariant
                             }

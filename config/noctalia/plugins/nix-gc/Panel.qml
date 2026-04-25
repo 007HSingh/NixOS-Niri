@@ -93,14 +93,14 @@ Item {
 
                             Text {
                                 text: modelData.label.toUpperCase()
-                                font.family: "JetBrainsMono Nerd Font"
+                                font.family: "Maple Mono NF"
                                 font.pixelSize: Style.fontSizeXXS
                                 color: Color.mOnSurfaceVariant
                                 font.letterSpacing: 1.2
                             }
                             Text {
                                 text: modelData.value
-                                font.family: "JetBrainsMono Nerd Font"
+                                font.family: "Maple Mono NF"
                                 font.pixelSize: Style.fontSizeL
                                 font.bold: true
                                 color: Color.mOnSurface
@@ -121,7 +121,7 @@ Item {
                         anchors.fill: parent
                         anchors.margins: Style.marginS
                         text: gcOutput
-                        font.family: "JetBrainsMono Nerd Font"
+                        font.family: "Maple Mono NF"
                         font.pixelSize: Style.fontSizeXS
                         color: Color.mOnSurfaceVariant
                         wrapMode: Text.WordWrap

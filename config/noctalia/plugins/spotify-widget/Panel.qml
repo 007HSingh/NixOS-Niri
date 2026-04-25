@@ -168,7 +168,7 @@ Item {
 
                         Text {
                             text: MediaService.positionString
-                            font.family: "JetBrainsMono Nerd Font"
+                            font.family: "Maple Mono NF"
                             font.pixelSize: Style.fontSizeXS
                             color: Color.mOnSurfaceVariant
                         }
@@ -177,7 +177,7 @@ Item {
 
                         Text {
                             text: MediaService.lengthString
-                            font.family: "JetBrainsMono Nerd Font"
+                            font.family: "Maple Mono NF"
                             font.pixelSize: Style.fontSizeXS
                             color: Color.mOnSurfaceVariant
                         }
@@ -196,7 +196,7 @@ Item {
                         Text {
                             anchors.centerIn: parent
                             text: "󰒮"
-                            font.family: "JetBrainsMono Nerd Font"
+                            font.family: "Maple Mono NF"
                             font.pixelSize: 22
                             color: prevMouse.containsMouse ? Color.mOnSurface : Color.mOnSurfaceVariant
                             Behavior on color { ColorAnimation { duration: 150 } }
@@ -224,7 +224,7 @@ Item {
                         Text {
                             anchors.centerIn: parent
                             text: MediaService.isPlaying ? "󰏤" : "󰐊"
-                            font.family: "JetBrainsMono Nerd Font"
+                            font.family: "Maple Mono NF"
                             font.pixelSize: 22
                             color: Color.mOnPrimary
                             anchors.horizontalCenterOffset: MediaService.isPlaying ? 0 : 1
@@ -249,7 +249,7 @@ Item {
                         Text {
                             anchors.centerIn: parent
                             text: "󰒭"
-                            font.family: "JetBrainsMono Nerd Font"
+                            font.family: "Maple Mono NF"
                             font.pixelSize: 22
                             color: nextMouse.containsMouse ? Color.mOnSurface : Color.mOnSurfaceVariant
                             Behavior on color { ColorAnimation { duration: 150 } }

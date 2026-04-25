@@ -109,7 +109,7 @@ Item {
             Text {
                 anchors.verticalCenter: parent.verticalCenter
                 text: phase === "idle" ? "start" : timeString
-                font.family: "JetBrainsMono Nerd Font"
+                font.family: "Maple Mono NF"
                 font.pixelSize: Style.fontSizeS
                 font.bold: phase !== "idle"
                 color: {
