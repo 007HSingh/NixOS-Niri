@@ -284,12 +284,14 @@ in
           };
         };
         plugins = {
-          full-border = pkgs.fetchFromGitHub {
-            owner = "yazi-rs";
-            repo = "plugins";
-            rev = "7867207";
-            hash = lib.fakeHash;
-          } + "/full-border.yazi";
+          full-border =
+            pkgs.fetchFromGitHub {
+              owner = "yazi-rs";
+              repo = "plugins";
+              rev = "7867207";
+              hash = lib.fakeHash;
+            }
+            + "/full-border.yazi";
         };
       };
 
