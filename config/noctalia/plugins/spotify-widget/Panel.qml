@@ -128,7 +128,7 @@ Item {
                     Text {
                         Layout.fillWidth: true
                         text: isSpotify ? MediaService.trackArtist : ""
-                        font.family: "Inter"
+                        font.family: "Nunito"
                         font.pixelSize: Style.fontSizeL
                         font.italic: true
                         color: Color.mSecondary

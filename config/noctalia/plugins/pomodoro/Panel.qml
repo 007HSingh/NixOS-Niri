@@ -210,7 +210,7 @@ Item {
                 Text {
                     Layout.alignment: Qt.AlignHCenter
                     text: sessions + " session" + (sessions !== 1 ? "s" : "") + " completed"
-                    font.family: "Inter"
+                    font.family: "Nunito"
                     font.pixelSize: Style.fontSizeXS
                     color: Color.mOnSurfaceVariant
                     opacity: 0.7

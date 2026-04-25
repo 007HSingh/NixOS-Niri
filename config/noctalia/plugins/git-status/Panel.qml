@@ -101,7 +101,7 @@ Item {
 
                         Text {
                             text: lastCommitMsg || "—"
-                            font.family: "Inter"
+                            font.family: "Nunito"
                             font.pixelSize: Style.fontSizeS
                             color: Color.mOnSurface
                             elide: Text.ElideRight
@@ -111,7 +111,7 @@ Item {
 
                     Text {
                         text: lastCommitTime || ""
-                        font.family: "Inter"
+                        font.family: "Nunito"
                         font.pixelSize: Style.fontSizeXS
                         color: Color.mOnSurfaceVariant
                         opacity: 0.7
@@ -167,7 +167,7 @@ Item {
                         Text { text: "↻"; font.pixelSize: 14; color: Color.mOnSurfaceVariant }
                         Text {
                             text: "refresh"
-                            font.family: "Inter"
+                            font.family: "Nunito"
                             font.pixelSize: Style.fontSizeXS
                             color: Color.mOnSurfaceVariant
                         }
