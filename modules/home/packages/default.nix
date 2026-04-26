@@ -45,7 +45,7 @@ in
 
       # Applications
       keepassxc
-      vencord
+      vesktop
       mpv
       inputs.antigravity-nix.packages.${pkgs.stdenv.hostPlatform.system}.default
 
