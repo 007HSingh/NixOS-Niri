@@ -60,7 +60,8 @@ in
             }
           ];
 
-        userSettings = lib.mapAttrs (_: lib.mkForce) (lib.recursiveUpdate
+        userSettings = lib.mapAttrs (_: lib.mkForce) (
+          lib.recursiveUpdate
             {
               "editor.fontFamily" = "'Maple Mono NF', monospace";
               "editor.fontSize" = 13;
