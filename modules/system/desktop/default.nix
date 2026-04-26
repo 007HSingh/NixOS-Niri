@@ -48,13 +48,20 @@ in
 
     # XDG portals for Wayland integration
     # Note: wlr portal NOT used — Niri is Smithay-based, not Wlroots.
-    # GTK portal handles file pickers; Niri provides its own screencast support.
+    # GTK portal handles file pickers; GNOME portal provides the screencast UI.
     xdg.portal = {
       enable = true;
       extraPortals = with pkgs; [
+        xdg-desktop-portal-gnome
         xdg-desktop-portal-gtk
       ];
-      config.common.default = "gtk";
+      config = {
+        common.default = [ "gtk" ];
+        niri.default = [
+          "gnome"
+          "gtk"
+        ];
+      };
     };
 
     # Wayland session variables
