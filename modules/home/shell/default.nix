@@ -288,8 +288,8 @@ in
             pkgs.fetchFromGitHub {
               owner = "yazi-rs";
               repo = "plugins";
-              rev = "7867207";
-              hash = lib.fakeHash;
+              rev = "ac82af3";
+              hash = "sha256-svc7I2E+tVMEUWUvIS6i3oTGfLq13eaI61T0c1MQ8qQ=";
             }
             + "/full-border.yazi";
         };
