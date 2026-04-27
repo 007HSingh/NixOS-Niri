@@ -29,17 +29,6 @@ in
         createDirectories = true;
         setSessionVariables = true; # keep legacy behavior (stateVersion < 26.05)
       };
-
-      portal = {
-        enable = true;
-        config = {
-          common.default = [ "gtk" ];
-          niri.default = [
-            "gnome"
-            "gtk"
-          ];
-        };
-      };
     };
 
     # Symlink config directories
