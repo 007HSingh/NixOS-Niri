@@ -15,5 +15,7 @@ in
     # Silence GTK4 theme warning: keep legacy behavior until stateVersion >= 26.05
     gtk.gtk4.theme = config.gtk.theme;
 
+    # Remove close, minimize, maximize buttons from GTK apps
+    gtk.extraConfig.gtk-decoration-layout = ":";
   };
 }
