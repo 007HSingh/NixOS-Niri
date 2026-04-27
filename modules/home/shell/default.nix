@@ -35,9 +35,7 @@ in
           zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
           (( $+commands[docker] )) && eval "$(docker completion zsh)"
 
-          autoload -Uz add-zsh-hook
-          _fastfetch_dash() { fastfetch }
-          add-zsh-hook precmd _fastfetch_dash
+          fastfetch
         '';
 
         shellAliases = {
