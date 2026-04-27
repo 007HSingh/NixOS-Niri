@@ -18,9 +18,14 @@ get_bar() {
     echo "$res"
 }
 
-# Stats
-cpu_usage=$(top -bn1 | grep "Cpu(s)" | sed "s/.*, *\([0-9.]*\)%* id.*/\1/" | awk '{print 100 - $1}' | cut -d. -f1)
-ram_usage=$(free | grep Mem | awk '{printf "%d", $3/$2 * 100}')
+# Stats (Optimized for speed)
+# CPU: Use load average / cores for instant result
+cpu_usage=$(awk '{print $1}' /proc/loadavg | awk -v cores="$(nproc)" '{usage=$1*100/cores; if(usage>100) usage=100; printf "%d", usage}')
+
+# RAM: Read /proc/meminfo directly
+ram_usage=$(awk '/MemTotal/{t=$2} /MemAvailable/{a=$2} END{printf "%d", (t-a)/t*100}' /proc/meminfo)
+
+# Disk: df is usually fast enough
 disk_usage=$(df / --output=pcent | tail -1 | tr -dc '0-9')
 
 # Dashboard lines
