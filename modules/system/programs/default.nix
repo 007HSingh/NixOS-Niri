@@ -1,7 +1,6 @@
 # System Programs
 # Programs enabled via NixOS programs.* options
 {
-  inputs,
   lib,
   config,
   pkgs,
