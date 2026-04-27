@@ -14,5 +14,9 @@ in
 
     # Silence GTK4 theme warning: keep legacy behavior until stateVersion >= 26.05
     gtk.gtk4.theme = config.gtk.theme;
+
+    # Discord theming via Vencord
+    catppuccin.vencord.enable = true;
+    catppuccin.vencord.flavor = "mocha";
   };
 }
