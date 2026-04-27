@@ -12,6 +12,7 @@ let
     sops-nix
     zen-browser
     antigravity-nix
+    hyprland
     ;
 in
 {
