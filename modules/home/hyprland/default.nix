@@ -41,6 +41,8 @@ in
           gaps_in = 5;
           gaps_out = 10;
           border_size = 2;
+          "col.active_border" = lib.mkForce "rgba(a7c080ee) rgba(83c092ee) 45deg"; # Everforest Green to Aqua
+          "col.inactive_border" = lib.mkForce "rgba(374145aa)"; # Everforest Selection BG
           layout = "dwindle";
         };
 
@@ -54,6 +56,7 @@ in
           drop_shadow = true;
           shadow_range = 4;
           shadow_render_power = 3;
+          "col.shadow" = lib.mkForce "rgba(272e33ee)"; # Everforest BG
         };
 
         animations = {
