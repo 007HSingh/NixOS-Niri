@@ -76,6 +76,9 @@ in
 
           # Vertical tabs sidebar (native feature in Zen)
           "sidebar.verticalTabs" = true;
+
+          # Hide title bar buttons (Zen/Firefox)
+          "browser.tabs.drawInTitlebar" = true;
         };
       };
     };
