@@ -16,6 +16,7 @@ in
     gtk.gtk4.theme = config.gtk.theme;
 
     # Remove close, minimize, maximize buttons from GTK apps
-    gtk.extraConfig.gtk-decoration-layout = ":";
+    gtk.gtk3.extraConfig.gtk-decoration-layout = ":";
+    gtk.gtk4.extraConfig.gtk-decoration-layout = ":";
   };
 }
