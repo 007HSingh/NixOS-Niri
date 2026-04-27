@@ -15,8 +15,15 @@ in
     # Silence GTK4 theme warning: keep legacy behavior until stateVersion >= 26.05
     gtk.gtk4.theme = config.gtk.theme;
 
-    # Discord theming via Vencord
-    catppuccin.vencord.enable = true;
-    catppuccin.vencord.flavor = "mocha";
+    # Discord theming via Vencord (manual CSS injection since catppuccin.vencord is missing)
+    xdg.configFile."Vencord/themes/catppuccin-mocha.css".text = ''
+      /**
+       * @name Catppuccin Mocha
+       * @author Catppuccin Org
+       * @version 1.0.0
+       * @description Catppuccin Mocha theme for Discord
+       */
+      @import url("https://catppuccin.github.io/discord/dist/catppuccin-mocha.theme.css");
+    '';
   };
 }
