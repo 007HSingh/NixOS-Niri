@@ -57,6 +57,10 @@ in
       ];
       config = {
         common.default = [ "gtk" ];
+        hyprland.default = [
+          "hyprland"
+          "gtk"
+        ];
         niri.default = [
           "gnome"
           "gtk"

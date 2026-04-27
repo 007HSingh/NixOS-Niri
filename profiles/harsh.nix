@@ -11,6 +11,7 @@ _:
     clipboard.enable = true;
     editor.enable = true;
     git.enable = true;
+    hyprland.enable = true;
     idle.enable = true;
     media.enable = true;
     notes.enable = true;
