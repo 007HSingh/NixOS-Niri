@@ -36,6 +36,7 @@ in
       gnumake
       nix-output-monitor
       nix-tree
+      lolcat
 
       # Build tools
       gcc
