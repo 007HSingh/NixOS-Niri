@@ -45,7 +45,7 @@ in
 
       # Applications
       keepassxc
-      (discord.override { withVencord = true; })
+      (discord.override { withVencord = true; withOpenASAR = true; })
       mpv
       inputs.antigravity-nix.packages.${pkgs.stdenv.hostPlatform.system}.default
 
