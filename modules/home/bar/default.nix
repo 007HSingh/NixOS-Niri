@@ -33,7 +33,7 @@ in
 
       ".config/noctalia/plugins/pomodoro" = {
         recursive = true;
-        source = ../../../config/noctalia/plugins/pomodoro;
+        source = "${inputs.noctalia-plugins}/pomodoro";
       };
 
       ".config/noctalia/plugins/git-status" = {
