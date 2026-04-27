@@ -36,7 +36,8 @@ in
           (( $+commands[docker] )) && eval "$(docker completion zsh)"
 
           autoload -Uz add-zsh-hook
-          add-zsh-hook precmd fastfetch
+          _fastfetch_dash() { fastfetch }
+          add-zsh-hook precmd _fastfetch_dash
         '';
 
         shellAliases = {
