@@ -283,7 +283,7 @@ animations {
     // ── Window Close: Smooth Slide Down ─────────────────────────────
     // Applications slide down and fade away.
     window-close {
-        duration-ms 500
+        duration-ms 800
         curve "ease-out-quad"
         custom-shader "
             vec4 close_color(vec3 coords_geo, vec3 size_geo) {
