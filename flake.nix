@@ -36,6 +36,7 @@
     # Noctalia shell (status bar)
     noctalia = {
       url = "github:noctalia-dev/noctalia-shell";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     # Noctalia plugins
@@ -95,6 +96,12 @@
     # Antigravity
     antigravity-nix = {
       url = "github:jacopone/antigravity-nix";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
+    # Hyprland
+    hyprland = {
+      url = "github:hyprwm/Hyprland";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
   };
