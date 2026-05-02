@@ -113,7 +113,7 @@ window-rule {
 }
 window-rule {
     match app-id="zen-beta"
-    opacity 0.92
+    opacity 1.0
 }
 window-rule {
     match app-id="spotify"
