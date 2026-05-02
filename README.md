@@ -41,28 +41,71 @@ A modular, state-of-the-art NixOS configuration built with **flake-parts**, feat
 
 ## 🏗️ Architecture
 
-This repository follows a modular structure using `flake-parts` for a clean separation of concerns.
+This repository follows a modular structure using `flake-parts` for a clean separation of concerns. All NixOS and Home Manager modules live under `modules/` and are **automatically discovered** via [`import-tree`](https://github.com/vic/import-tree) — no manual import lists to maintain.
 
 ```bash
 nixos-config/
 ├── ❄️ flake.nix             # Entrypoint & inputs management
 ├── 🧱 parts/                # Flake outputs (host definitions, dev shells)
-│   ├── nixos.nix            # Host registration logic
-│   └── treefmt.nix          # Unified code formatting
+│   ├── nixos.nix            # Host registration logic (lib.mkHost)
+│   ├── modules.nix          # Module discovery via import-tree
+│   ├── dev.nix              # Development shell (statix, deadnix, nh, sops…)
+│   └── treefmt.nix          # Unified code formatting (nixfmt, stylua, prettier)
 ├── 🖥️ hosts/                # Per-machine configurations
-│   └── predator/            # Configuration for the Acer Predator laptop
-├── ⚙️ system/               # System-wide NixOS modules
-│   ├── desktop.nix          # Niri, SDDM, audio, and Wayland config
-│   ├── stylix.nix           # Centralized theming (Colors, Fonts)
-│   └── ...                  # Boot, Hardware, Networking, Security
-├── 🏠 home/                 # User-level Home Manager modules
-│   ├── noctalia.nix         # Status bar configuration
-│   ├── vscode.nix           # VS Code extensions and settings
-│   ├── shell.nix            # Zsh, Starship, and Aliases
-│   └── ...                  # App configs (Firefox, Git, Obsidian)
-├── 👤 users/                # User definitions & profiles
-├── 📚 lib/                  # Custom helper functions (mkHost)
-└── 🔐 secrets/              # Encrypted secrets via SOPS
+│   └── predator/            # Acer Predator laptop (Intel i7 + NVIDIA RTX 4050)
+│       ├── default.nix      # Machine identity & host-specific packages
+│       └── hardware.nix     # Generated hardware configuration
+├── ⚙️ modules/              # All reusable NixOS & Home Manager modules
+│   ├── system/              # System-level NixOS modules (auto-discovered)
+│   │   ├── boot/            # GRUB, Plymouth, zram swap
+│   │   ├── desktop/         # Niri compositor, ly DM, PipeWire, XDG portals
+│   │   ├── fonts/           # System font packages
+│   │   ├── hardware/        # Hardware enablement
+│   │   ├── networking/      # Network configuration
+│   │   ├── nix/             # Nix daemon & store settings
+│   │   ├── nvidia/          # NVIDIA drivers + Prime sync
+│   │   ├── packages/        # System-wide packages
+│   │   ├── programs/        # System programs
+│   │   ├── security/        # Security & PAM configuration
+│   │   ├── services/        # System services
+│   │   ├── stylix/          # Catppuccin Mocha theme (colors, fonts, wallpaper)
+│   │   ├── users/           # User account definitions
+│   │   └── vm/              # Virtualisation support
+│   └── home/                # Home Manager modules (auto-discovered)
+│       ├── audio/           # Audio tools (EasyEffects, etc.)
+│       ├── bar/             # Noctalia status bar & plugins
+│       ├── browser/         # Zen Browser configuration
+│       ├── clipboard/       # Clipboard manager
+│       ├── editor/          # Neovim + Treesitter grammars
+│       ├── git/             # Git identity & settings
+│       ├── idle/            # Idle inhibitor (hypridle)
+│       ├── media/           # Media players
+│       ├── notes/           # Obsidian
+│       ├── packages/        # CLI tools, LSP servers, formatters, linters
+│       ├── quickshell/      # Quickshell (wallpaper picker & shell widgets)
+│       ├── shell/           # Zsh, Starship, Atuin, Zoxide, Yazi, etc.
+│       ├── termipedia/      # Terminal encyclopaedia tool
+│       ├── theming/         # GTK/QT theming compatibility shim
+│       ├── vscode/          # VS Code extensions & settings
+│       ├── wofi/            # Application launcher
+│       └── xdg/             # XDG dirs & dotfile symlinks
+├── 🗂️ profiles/             # Module enablement profiles (what each host/user uses)
+│   ├── predator.nix         # Enables all system modules for the predator host
+│   └── harsh.nix            # Enables all home modules for the harsh user
+├── 👤 users/                # User entry points (identity, SOPS, stateVersion)
+│   └── harsh/
+├── 📂 config/               # Dotfiles — symlinked into ~/.config/, edit here directly
+│   ├── niri/                # Niri compositor config (KDL format)
+│   ├── kitty/               # Kitty terminal
+│   ├── neovim/              # Neovim (vanilla lazy.nvim, NOT nixvim)
+│   ├── btop/                # btop system monitor
+│   ├── fastfetch/           # fastfetch
+│   ├── eza/                 # eza file listing
+│   ├── noctalia/            # Noctalia custom plugins
+│   └── quickshell/          # Quickshell components (wallpaper picker)
+├── 📚 lib/                  # Custom helper functions
+│   └── default.nix          # mkHost builder
+└── 🔐 secrets/              # Encrypted secrets via SOPS + age
 ```
 
 ---
@@ -88,9 +131,9 @@ sudo nixos-rebuild switch --flake .#predator
 
 The config includes several handy aliases for system maintenance:
 
-- `update`: Syncs system with the flake.
-- `clean`: Collects garbage and cleans up old generations.
-- `edit`: Opens the config directory in your editor.
+- `update`: Runs `nh os switch` to rebuild and switch the system.
+- `home-update`: Runs `nh home switch` to rebuild the Home Manager environment.
+- `y`: Opens Yazi (TUI file manager) and `cd`s into the last directory on exit.
 
 ---
 
@@ -98,13 +141,28 @@ The config includes several handy aliases for system maintenance:
 
 ### Adding a New Machine
 
-1. Create a new directory in `hosts/` and import your `hardware-configuration.nix`.
-2. Add a host entry in `parts/nixos.nix` using the `lib.mkHost` helper.
+1. Create `hosts/<name>/default.nix` with machine identity and `hosts/<name>/hardware.nix`.
+2. Create `profiles/<name>.nix` enabling the desired system modules via `modules.system.<module>.enable = true`.
+3. Register the host in `parts/nixos.nix` using `lib.mkHost`.
 
-### Adding a Module
+### Adding a System Module
 
-1. Create the module in `system/` (for system-wide) or `home/` (for user-level).
-2. Import it in the respective `default.nix` entrypoint.
+1. Create a directory under `modules/system/<name>/default.nix` following the existing pattern:
+   - Declare `options.modules.system.<name>.enable = lib.mkEnableOption "…";`
+   - Guard everything with `config = lib.mkIf cfg.enable { … };`
+2. **No import needed** — `import-tree` discovers it automatically.
+3. Enable it in `profiles/predator.nix` (or the relevant host profile).
+
+### Adding a Home Module
+
+1. Create a directory under `modules/home/<name>/default.nix` following the same pattern:
+   - Declare `options.modules.home.<name>.enable = lib.mkEnableOption "…";`
+2. **No import needed** — `import-tree` discovers it automatically.
+3. Enable it in `profiles/harsh.nix` (or the relevant user profile).
+
+### Editing Dotfiles
+
+Edit files under `config/` directly — they are symlinked from `~/.config/` via `modules/home/xdg/`. Changes take effect immediately without a rebuild.
 
 ---
 

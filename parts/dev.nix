@@ -11,6 +11,8 @@ _:
 
         # Tools for Nix development
         packages = with pkgs; [
+          # Formatting
+          nixfmt
           # Linters
           statix
           deadnix

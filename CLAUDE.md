@@ -10,13 +10,15 @@
 ## Directory Layout
 
 - flake.nix — inputs and entrypoint
-- parts/ — flake outputs (nixos.nix, dev.nix, treefmt.nix)
-- system/ — NixOS system modules shared across hosts
-- home/ — Home Manager modules shared across users
-- users/harsh/ — user entry point, imports ../../home
+- parts/ — flake outputs (nixos.nix, modules.nix, dev.nix, treefmt.nix)
+- modules/system/ — NixOS system modules (auto-discovered via import-tree)
+- modules/home/ — Home Manager modules (auto-discovered via import-tree)
+- profiles/predator.nix — enables all system modules for the predator host
+- profiles/harsh.nix — enables all home modules for the harsh user
+- users/harsh/ — user entry point (identity, SOPS, stateVersion)
 - hosts/predator/ — machine-specific config + hardware.nix
 - lib/default.nix — mkHost helper function
-- config/ — dotfiles symlinked via home/xdg.nix (edit here directly)
+- config/ — dotfiles symlinked via modules/home/xdg/ (edit here directly)
 - secrets/ — sops-nix + age encrypted secrets
 
 ## Config Symlinks (edit files in config/, not ~/.config/)
@@ -63,10 +65,11 @@
 
 ## Adding New Packages
 
-- User CLI tools → home/packages.nix
-- System-wide apps → system/packages.nix
-- New HM modules → home/ + add import to home/default.nix
-- New system modules → system/ + add import to system/default.nix
+- User CLI tools → modules/home/packages/default.nix
+- System-wide apps → modules/system/packages/default.nix
+- New HM modules → create modules/home/<name>/default.nix (import-tree auto-discovers)
+- New system modules → create modules/system/<name>/default.nix (import-tree auto-discovers)
+- Enable a new module in profiles/harsh.nix (home) or profiles/predator.nix (system)
 
 ## Adding a New Host
 
