@@ -9,7 +9,8 @@ _:
     bar.enable = true;
     browser.enable = true;
     clipboard.enable = true;
-    editor.enable = true;
+    neovim.enable = true;
+    zed.enable = true;
     git.enable = true;
     idle.enable = true;
     media.enable = true;
@@ -19,7 +20,6 @@ _:
     shell.enable = true;
     termipedia.enable = true;
     theming.enable = true;
-    vscode.enable = true;
     wofi.enable = true;
     xdg.enable = true;
   };
