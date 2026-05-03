@@ -231,8 +231,5 @@ in
       dark = "Catppuccin Mocha";
       light = "Catppuccin Mocha";
     };
-
-    xdg.configFile."zed/settings.json".text =
-      builtins.toJSON config.programs.zed-editor.userSettings;
   };
 }
