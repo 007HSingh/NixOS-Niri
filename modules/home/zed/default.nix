@@ -72,7 +72,7 @@ in
         languages = {
           "Nix" = {
             language_servers = [ "nixd" ];
-            format_on_save = {
+            formatter = {
               external = {
                 command = "nixfmt";
                 arguments = [ "{buffer_path}" ];
@@ -81,7 +81,7 @@ in
           };
           "Lua" = {
             language_servers = [ "lua-language-server" ];
-            format_on_save = {
+            formatter = {
               external = {
                 command = "stylua";
                 arguments = [ "-" ];
@@ -90,7 +90,7 @@ in
           };
           "Python" = {
             language_servers = [ "pyright" ];
-            format_on_save = {
+            formatter = {
               external = {
                 command = "black";
                 arguments = [ "-" ];
@@ -99,7 +99,7 @@ in
           };
           "TypeScript" = {
             language_servers = [ "typescript-language-server" ];
-            format_on_save = {
+            formatter = {
               external = {
                 command = "prettier";
                 arguments = [
@@ -111,7 +111,7 @@ in
           };
           "JavaScript" = {
             language_servers = [ "typescript-language-server" ];
-            format_on_save = {
+            formatter = {
               external = {
                 command = "prettier";
                 arguments = [
@@ -123,7 +123,7 @@ in
           };
           "Rust" = {
             language_servers = [ "rust-analyzer" ];
-            format_on_save = {
+            formatter = {
               external = {
                 command = "rustfmt";
                 arguments = [
@@ -135,16 +135,16 @@ in
           };
           "Java" = {
             language_servers = [ "jdtls" ];
-            format_on_save = {
+            formatter = {
               external = {
                 command = "google-java-format";
                 arguments = [ "-" ];
               };
             };
           };
-          "Bash" = {
+          "Shell Script" = {
             language_servers = [ "bash-language-server" ];
-            format_on_save = {
+            formatter = {
               external = {
                 command = "shfmt";
                 arguments = [ "-" ];
@@ -153,7 +153,7 @@ in
           };
           "HTML" = {
             language_servers = [ "vscode-html-language-server" ];
-            format_on_save = {
+            formatter = {
               external = {
                 command = "prettier";
                 arguments = [
@@ -165,7 +165,7 @@ in
           };
           "CSS" = {
             language_servers = [ "vscode-css-language-server" ];
-            format_on_save = {
+            formatter = {
               external = {
                 command = "prettier";
                 arguments = [
@@ -177,7 +177,7 @@ in
           };
           "JSON" = {
             language_servers = [ "vscode-json-language-server" ];
-            format_on_save = {
+            formatter = {
               external = {
                 command = "prettier";
                 arguments = [
@@ -189,7 +189,7 @@ in
           };
           "YAML" = {
             language_servers = [ "yaml-language-server" ];
-            format_on_save = {
+            formatter = {
               external = {
                 command = "prettier";
                 arguments = [
@@ -201,19 +201,6 @@ in
           };
         };
 
-        lsp = {
-          nixd.binary.path_lookup = true;
-          lua-language-server.binary.path_lookup = true;
-          pyright.binary.path_lookup = true;
-          typescript-language-server.binary.path_lookup = true;
-          rust-analyzer.binary.path_lookup = true;
-          jdtls.binary.path_lookup = true;
-          bash-language-server.binary.path_lookup = true;
-          vscode-html-language-server.binary.path_lookup = true;
-          vscode-css-language-server.binary.path_lookup = true;
-          vscode-json-language-server.binary.path_lookup = true;
-          yaml-language-server.binary.path_lookup = true;
-        };
       };
     };
 
