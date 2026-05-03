@@ -85,7 +85,7 @@ in
             formatter = {
               external = {
                 command = "nixfmt";
-                arguments = [ "{buffer_path}" ];
+                arguments = [ ];
               };
             };
           };
