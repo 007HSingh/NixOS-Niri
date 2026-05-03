@@ -5,7 +5,6 @@ _:
 
 {
   modules.home = {
-    audio.enable = true;
     bar.enable = true;
     browser.enable = true;
     clipboard.enable = true;
