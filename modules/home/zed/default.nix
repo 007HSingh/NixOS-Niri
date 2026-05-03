@@ -1,8 +1,4 @@
 # Zed Editor
-# Uses programs.zed-editor (Home Manager module) with catppuccin/nix integration
-# Package sourced from the official Zed flake (github:zed-industries/zed)
-# Catppuccin Mocha theme + icons applied via catppuccin.zed options
-# All LSP binaries are already on PATH via modules/home/packages/default.nix
 {
   lib,
   config,
@@ -21,8 +17,6 @@ in
       enable = true;
 
       extensions = [
-        "catppuccin"
-        "catppuccin-icons"
         "TOML"
         "HTML"
         "Java"
@@ -220,6 +214,17 @@ in
           vscode-json-language-server.binary.path_lookup = true;
           yaml-language-server.binary.path_lookup = true;
         };
+      };
+    };
+
+    catppuccin.zed = {
+      enable = true;
+      flavor = "mocha";
+      accent = "mauve";
+      italics = true;
+      icons = {
+        enable = true;
+        flavor = "mocha";
       };
     };
   };
