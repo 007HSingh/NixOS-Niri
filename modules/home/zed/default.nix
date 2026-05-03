@@ -50,7 +50,7 @@ in
         terminal = {
           alternate_scroll = "off";
           blinking = "off";
-          copy_on_select = "off";
+          copy_on_select = false;
           dock = "bottom";
           font_family = "Maple Mono NF";
           line_height = "comfortable";
