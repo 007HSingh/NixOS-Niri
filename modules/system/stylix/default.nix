@@ -65,8 +65,8 @@ in
         };
 
         sansSerif = {
-          package = pkgs.nunito;
-          name = "Nunito";
+          package = pkgs.inter;
+          name = "Inter";
         };
 
         serif = {
