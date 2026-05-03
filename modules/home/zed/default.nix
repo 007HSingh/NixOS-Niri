@@ -68,7 +68,7 @@ in
         vim_mode = false;
 
         buffer_font_family = "Maple Mono NF";
-        buffer_font_size = 16;
+        buffer_font_size = 16.0;
         buffer_font_features = {
           calt = true;
         };
