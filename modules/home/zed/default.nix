@@ -6,8 +6,6 @@
 {
   lib,
   config,
-  pkgs,
-  inputs,
   ...
 }:
 
@@ -21,7 +19,6 @@ in
   config = lib.mkIf cfg.enable {
     programs.zed-editor = {
       enable = true;
-      package = inputs.zed-editor.packages.${pkgs.stdenv.hostPlatform.system}.default;
 
       extensions = [
         "catppuccin"

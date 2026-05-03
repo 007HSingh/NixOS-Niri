@@ -99,11 +99,6 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
-    # Zed-editor
-    zed-editor = {
-      url = "github:zed-industries/zed";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
   };
 
   outputs =
