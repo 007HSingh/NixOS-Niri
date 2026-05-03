@@ -1,6 +1,7 @@
 # Zed Editor
 # Uses programs.zed-editor (Home Manager module) with catppuccin/nix integration
-# Catppuccin Mocha theme + icons are applied via catppuccin.zed options
+# Package sourced from the official Zed flake (github:zed-industries/zed)
+# Catppuccin Mocha theme + icons applied via catppuccin.zed options
 # All LSP binaries are already on PATH via modules/home/packages/default.nix
 {
   lib,
@@ -31,10 +32,9 @@ in
     programs.zed-editor = {
       enable = true;
 
-      # ── Extra extensions (catppuccin-icons added automatically by catppuccin.zed) ──
-      extensions = [
-        "nix"
-      ];
+      # ── Extensions ──────────────────────────────────────────────────────────
+      # catppuccin-icons is added automatically by catppuccin.zed.icons.enable
+      extensions = [ "nix" ];
 
       userSettings = {
         # ── AI / telemetry ──────────────────────────────────────────────────
@@ -110,17 +110,17 @@ in
 
         # ── LSP binary paths (all on PATH, referenced by name) ───────────────
         lsp = {
-          nixd.binary.path = "nixd";
-          lua-language-server.binary.path = "lua-language-server";
-          pyright.binary.path = "pyright";
-          typescript-language-server.binary.path = "typescript-language-server";
-          rust-analyzer.binary.path = "rust-analyzer";
+          nixd.binary.path_lookup = true;
+          lua-language-server.binary.path_lookup = true;
+          pyright.binary.path_lookup = true;
+          typescript-language-server.binary.path_lookup = true;
+          rust-analyzer.binary.path_lookup = true;
           jdt.binary.path = "jdt-language-server";
-          bash-language-server.binary.path = "bash-language-server";
-          vscode-html-language-server.binary.path = "vscode-html-language-server";
-          vscode-css-language-server.binary.path = "vscode-css-language-server";
-          vscode-json-language-server.binary.path = "vscode-json-language-server";
-          yaml-language-server.binary.path = "yaml-language-server";
+          bash-language-server.binary.path_lookup = true;
+          vscode-html-language-server.binary.path_lookup = true;
+          vscode-css-language-server.binary.path_lookup = true;
+          vscode-json-language-server.binary.path_lookup = true;
+          yaml-language-server.binary.path_lookup = true;
         };
       };
     };
