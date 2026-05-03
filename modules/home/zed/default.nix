@@ -72,9 +72,9 @@ in
 
         buffer_font_family = "Maple Mono NF";
         buffer_font_size = 16.0;
-        buffer_font_features = {
-          calt = true;
-        };
+        buffer_font_features.calt = true;
+        ui_font_family = "Inter";
+        ui_font_size = 14.667;
 
         format_on_save = "on";
 

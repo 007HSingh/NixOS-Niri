@@ -97,11 +97,10 @@ in
 
       # Target-specific Overrides
       targets = {
-        # We will let Stylix handle most things automatically
-        # Explicitly enable/disable as needed
         nixvim.enable = false;
         gnome.enable = false;
         gtk.enable = true;
+        zed.enable = false;
       };
     };
   };
