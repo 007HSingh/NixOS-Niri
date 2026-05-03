@@ -100,7 +100,6 @@ in
         nixvim.enable = false;
         gnome.enable = false;
         gtk.enable = true;
-        zed.enable = false;
       };
     };
   };
