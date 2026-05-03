@@ -27,6 +27,18 @@ in
       ];
 
       userSettings = {
+        auto_install_extensions = {
+          "catppuccin" = true;
+          "catppuccin-icons" = true;
+          "TOML" = true;
+          "HTML" = true;
+          "Java" = true;
+          "Lua" = true;
+          "Dockerfile" = true;
+          "LaTeX" = true;
+          "Nix" = true;
+        };
+
         assistant = {
           enabled = false;
           version = "2";
@@ -219,5 +231,8 @@ in
       dark = "Catppuccin Mocha";
       light = "Catppuccin Mocha";
     };
+
+    xdg.configFile."zed/settings.json".text =
+      builtins.toJSON config.programs.zed-editor.userSettings;
   };
 }
