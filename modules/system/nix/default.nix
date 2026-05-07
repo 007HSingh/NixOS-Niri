@@ -29,12 +29,16 @@ in
           "https://nix-community.cachix.org"
           "https://claude-code.cachix.org"
           "https://zed.cachix.org"
+          "https://cache.nixos-cuda.org"
+          "https://quickshell.cachix.org"
         ];
         trusted-public-keys = [
           "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
           "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
           "claude-code.cachix.org-1:YeXf2aNu7UTX8Vwrze0za1WEDS+4DuI2kVeWEE4fsRk="
           "zed.cachix.org-1:QQ4XGMsy4wG0+LwBq6QGj5PEgNFbTAqK6HNoF7DAfFI="
+          "cache.nixos-cuda.org:74DUi4Ye579gUqzH4ziL9IyiJBlDpMRn9MBN8oNan9M="
+          "quickshell.cachix.org-1:SrePAnJ9XVS7AnYv7vAtp5ZzYJ3B8oYyYxO6Y8cT48I="
         ];
       };
       gc = {
