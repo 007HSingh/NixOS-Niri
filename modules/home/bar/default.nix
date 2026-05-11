@@ -21,19 +21,9 @@ in
 
   config = lib.mkIf cfg.enable {
     home.file = {
-      ".config/noctalia/plugins/catwalk" = {
-        recursive = true;
-        source = "${inputs.noctalia-plugins}/catwalk";
-      };
-
       ".config/noctalia/plugins/spotify-control" = {
         recursive = true;
         source = ../../../config/noctalia/plugins/spotify-control;
-      };
-
-      ".config/noctalia/plugins/pomodoro" = {
-        recursive = true;
-        source = "${inputs.noctalia-plugins}/pomodoro";
       };
 
       ".config/noctalia/plugins/git-status" = {
