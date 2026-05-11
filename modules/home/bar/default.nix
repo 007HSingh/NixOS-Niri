@@ -99,7 +99,6 @@ in
                 id = "Workspace";
                 labelMode = "none";
               }
-              { id = "AudioVisualizer"; }
             ];
             right = [
               {
