@@ -64,6 +64,10 @@ in
             };
             pomodoro = {
               enabled = true;
+              workDuration = 25;
+              shortBreakDuration = 5;
+              longBreakDuration = 15;
+              sessionsBeforeLongBreak = 4;
             };
             git-status = {
               enabled = true;
