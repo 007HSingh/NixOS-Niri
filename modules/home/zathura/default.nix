@@ -1,6 +1,6 @@
 # Zathura — PDF/EPUB viewer
-# Colors: managed by Stylix (Catppuccin Mocha, matches system theme)
-# This module adds: Vim-style keybinds, UX polish, performance tuning, MIME defaults
+# Colors: explicit Catppuccin Mocha tokens (independent of Stylix base16 mapping)
+# This module adds: Vim-style keybinds, full colour theming, UX polish, MIME defaults
 {
   lib,
   config,
@@ -18,37 +18,79 @@ in
       enable = true;
 
       options = {
-        # ── Status bar ────────────────────────────────────────────────────────
-        statusbar-h-padding = 8;
-        statusbar-v-padding = 4;
-        statusbar-basename = true; # show filename only, not full path
+        # ── Catppuccin Mocha colour palette ───────────────────────────────────
+        # Page / viewer
+        default-bg = "#1e1e2e"; # base
+        default-fg = "#cdd6f4"; # text
+
+        # Status bar
+        statusbar-bg = "#181825"; # mantle
+        statusbar-fg = "#a6adc8"; # subtext0
+
+        # Input bar (command / search entry)
+        inputbar-bg = "#313244"; # surface0
+        inputbar-fg = "#cdd6f4"; # text
+
+        # Notifications
+        notification-bg         = "#45475a"; # surface1
+        notification-fg         = "#cdd6f4"; # text
+        notification-error-bg   = "#f38ba8"; # red
+        notification-error-fg   = "#1e1e2e"; # base
+        notification-warning-bg = "#f9e2af"; # yellow
+        notification-warning-fg = "#1e1e2e"; # base
+
+        # Completion menu
+        completion-bg            = "#313244"; # surface0
+        completion-fg            = "#89b4fa"; # blue
+        completion-highlight-bg  = "#45475a"; # surface1
+        completion-highlight-fg  = "#cdd6f4"; # text
+        completion-group-bg      = "#181825"; # mantle
+        completion-group-fg      = "#7f849d"; # overlay1
+
+        # Search highlights
+        highlight-color         = "rgba(249,226,175,0.5)"; # yellow @50%
+        highlight-active-color  = "rgba(250,179,135,0.8)"; # peach  @80%
+
+        # Recolour (dark-mode PDF inversion) — toggle with <A-r>
+        recolor            = false;
+        recolor-keephue    = true;           # preserve hue when inverting
+        recolor-lightcolor = "#1e1e2e";      # base  → page background
+        recolor-darkcolor  = "#cdd6f4";      # text  → page text
+
+        # Loading indicator
+        render-loading    = true;
+        render-loading-bg = "#1e1e2e"; # base
+        render-loading-fg = "#89b4fa"; # blue
+
+        # ── Status bar layout ─────────────────────────────────────────────────
+        statusbar-h-padding   = 10;
+        statusbar-v-padding   = 5;
+        statusbar-basename    = true;  # filename only, not full path
         statusbar-page-percent = true;
         window-title-basename = true;
-        window-title-page = true;
+        window-title-page     = true;
 
         # ── Page / layout ─────────────────────────────────────────────────────
-        pages-per-row = 1;
+        pages-per-row    = 1;
         first-page-column = "1:1";
-        adjust-open = "best-fit";
+        adjust-open      = "best-fit";
 
         # ── Scroll & zoom ─────────────────────────────────────────────────────
-        scroll-step = 50;
+        scroll-step       = 60;
         scroll-page-aware = true;
         scroll-full-overlap = "0.1";
         zoom-step = 10;
-        zoom-min = 10;
-        zoom-max = 1000;
-
-        # ── Recolour (dark-mode PDF inversion) ────────────────────────────────
-        # Colors sourced from Stylix; toggle with <A-r>
-        recolor = false;
-        recolor-keephue = true; # preserve colour hue when inverting
+        zoom-min  = 10;
+        zoom-max  = 1000;
 
         # ── UX ────────────────────────────────────────────────────────────────
-        font = "Maple Mono NF 11"; # matches Stylix monospace font
-        guioptions = ""; # hide all GUI chrome (menu, scrollbars, toolbar)
-        incremental-search = true; # search while typing
-        selection-clipboard = "clipboard"; # yank to system clipboard
+        font               = "Maple Mono NF 11"; # matches system monospace font
+        guioptions         = "";                  # hide all GUI chrome
+        incremental-search = true;                # search while typing
+        selection-clipboard = "clipboard";         # yank to system clipboard
+
+        # ── History / persistence ─────────────────────────────────────────────
+        database = "sqlite"; # persistent jump-list, bookmarks & page history
 
         # ── Sandbox ───────────────────────────────────────────────────────────
         sandbox = "normal";

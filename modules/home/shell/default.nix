@@ -33,7 +33,30 @@ in
         initContent = ''
           zstyle ':completion:*' menu select
           zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
-          (( $+commands[docker] )) && eval "$(docker completion zsh)"
+
+          # ── compinit caching ──────────────────────────────────────────────
+          # Re-run full compinit (with compaudit) at most once every 20 hours;
+          # all other starts use -C (skip audit) for a ~75ms startup saving.
+          autoload -Uz compinit
+          local _zcompdump="''${ZDOTDIR}/.zcompdump"
+          if [[ -n "''${_zcompdump}"(#qN.mh+20) ]]; then
+            compinit -d "''${_zcompdump}"
+          else
+            compinit -C -d "''${_zcompdump}"
+          fi
+          unset _zcompdump
+
+          # ── Lazy docker completion ────────────────────────────────────────
+          # Only eval docker completion on first <Tab> after 'docker',
+          # not on every shell start.
+          if (( $+commands[docker] )); then
+            function _lazy_docker() {
+              unfunction _lazy_docker
+              eval "$(docker completion zsh)"
+              _docker "$@"
+            }
+            compdef _lazy_docker docker
+          fi
         '';
 
         shellAliases = {
@@ -93,6 +116,8 @@ in
         enableZshIntegration = true;
         settings = {
           format = "$directory$git_branch$git_status$nix_shell$cmd_duration$line_break$character";
+          scan_timeout = 10;      # ms — give up on slow filesystem scans
+          command_timeout = 500;  # ms — cap any single module evaluation
           add_newline = false;
           palette = lib.mkForce "catppuccin_mocha";
 
@@ -120,6 +145,7 @@ in
           git_status = {
             style = "bold red";
             format = "([$all_status$ahead_behind]($style) )";
+            ignore_submodules = true; # skip submodule scan — big repos stay fast
             conflicted = "󰞇 ";
             ahead = "󰶣";
             behind = "󰶡";
