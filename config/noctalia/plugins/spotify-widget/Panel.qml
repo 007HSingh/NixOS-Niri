@@ -37,74 +37,18 @@ Item {
                 anchors.margins: Style.marginXL
                 spacing: Style.marginL
 
-                // ── Bouncing Music Notes ─────────────────────────────────
+                // ── Spotify Logo ─────────────────────────────────────────────
                 Item {
-                    Layout.preferredWidth: 120 * Style.uiScaleRatio
-                    Layout.preferredHeight: 40 * Style.uiScaleRatio
+                    Layout.preferredWidth: 60 * Style.uiScaleRatio
+                    Layout.preferredHeight: 60 * Style.uiScaleRatio
                     Layout.alignment: Qt.AlignHCenter
 
                     Text {
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        anchors.horizontalCenterOffset: -20
-                        text: "♪"
-                        font.pixelSize: 24
-                        font.bold: true
+                        anchors.centerIn: parent
+                        text: "󰓇"
+                        font.family: "Maple Mono NF"
+                        font.pixelSize: 48
                         color: Color.mPrimary
-                        property real bounce: 0
-                        y: parent.height * 0.3 + bounce
-
-                        SequentialAnimation on bounce {
-                            running: true; loops: Animation.Infinite
-                            NumberAnimation { to: -8; duration: 500; easing.type: Easing.OutQuad }
-                            NumberAnimation { to: 3; duration: 500; easing.type: Easing.InQuad }
-                        }
-                        property real wobble: 1.0
-                        SequentialAnimation on wobble {
-                            running: true; loops: Animation.Infinite
-                            NumberAnimation { to: 1.2; duration: 600; easing.type: Easing.OutQuad }
-                            NumberAnimation { to: 0.9; duration: 600; easing.type: Easing.InQuad }
-                        }
-                        scale: wobble
-                    }
-
-                    Text {
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        text: "♫"
-                        font.pixelSize: 28
-                        font.bold: true
-                        color: Color.mSecondary
-                        property real bounce: 0
-                        y: parent.height * 0.1 + bounce
-
-                        SequentialAnimation on bounce {
-                            running: true; loops: Animation.Infinite
-                            NumberAnimation { to: 4; duration: 450; easing.type: Easing.InQuad }
-                            NumberAnimation { to: -6; duration: 450; easing.type: Easing.OutQuad }
-                        }
-                        property real spin: 0
-                        SequentialAnimation on spin {
-                            running: true; loops: Animation.Infinite
-                            NumberAnimation { to: 12; duration: 700; easing.type: Easing.OutQuad }
-                            NumberAnimation { to: -12; duration: 700; easing.type: Easing.InQuad }
-                        }
-                        rotation: spin
-                    }
-
-                    Text {
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        anchors.horizontalCenterOffset: 20
-                        text: "♪"
-                        font.pixelSize: 20
-                        color: Color.mTertiary
-                        opacity: 0.7
-                        property real bounce: 0
-                        y: parent.height * 0.25 + bounce
-
-                        SequentialAnimation on bounce {
-                            running: true; loops: Animation.Infinite
-                            NumberAnimation { to: -6; duration: 550; easing.type: Easing.OutQuad }
-                            NumberAnimation { to: 2; duration: 550; easing.type: Easing.InQuad }
-                        }
                     }
                 }
 

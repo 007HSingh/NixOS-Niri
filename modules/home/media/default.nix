@@ -21,20 +21,47 @@ in
       {
         enable = true;
 
+        # Catppuccin Mocha — matches the rest of the system
+        theme = spicePkgs.themes.catppuccin;
+        colorScheme = "mocha";
+
         enabledExtensions = with spicePkgs.extensions; [
-          adblock
-          hidePodcasts
-          shuffle
-          playlistIcons
-          beautifulLyrics
+          adblock          # Block ads & promoted content
+          hidePodcasts     # Remove podcast clutter
+          shuffle          # True shuffle (no repeat bias)
+          playlistIcons    # Folder/playlist icons
+          spicyLyrics      # Animated synced lyrics (replaces beautifulLyrics)
+          fullAppDisplay   # Immersive full-screen now playing
+          volumePercentage # Show volume % on scroll
+          seekSong         # Seek with arrow keys
+          keyboardShortcut # Extra keyboard shortcuts
+          skipStats        # Skip count overlay
         ];
+
         enabledCustomApps = with spicePkgs.apps; [
-          newReleases
-          ncsVisualizer
+          newReleases    # New releases feed
+          ncsVisualizer  # Audio visualizer
         ];
+
         enabledSnippets = with spicePkgs.snippets; [
-          rotatingCoverart
-          pointer
+          # Visual polish
+          rotatingCoverart      # Album art rotates while playing
+          circularAlbumArt      # Round album art in now playing bar
+          smoothProgressBar     # Eased progress bar animation
+          roundedImages         # Rounded corners on cards/images
+          modernScrollbar       # Thin styled scrollbar
+          hoverPanels           # Reveal panels on hover
+
+          # Layout cleanup
+          declutterNowPlayingBar  # Hide excess icons in player bar
+          removeTopSpacing        # Remove wasted top padding
+          removeUnusedSpace       # Tighten sidebar padding
+          centeredLyrics          # Centre-align lyrics view
+          hideSidebarScrollbar    # Hide sidebar scrollbar (cleaner)
+          removeGradient          # Remove the header gradient blob
+
+          # Pointer
+          pointer                 # Custom cursor in Spotify
         ];
       };
   };
