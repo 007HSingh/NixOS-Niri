@@ -62,6 +62,7 @@ in
         shellAliases = {
           update = "nh os switch";
           home-update = "nh home switch";
+          zathura = "zathura --fork";
 
           nom-build = "nom build";
           nom-shell = "nom shell";

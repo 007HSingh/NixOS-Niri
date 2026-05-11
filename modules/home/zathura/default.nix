@@ -55,7 +55,7 @@ in
         highlight-active-color = lib.mkForce "rgba(250,179,135,0.8)"; # peach  @80%
 
         # Recolour (dark-mode PDF inversion) — toggle with <A-r>
-        recolor            = false;
+        recolor            = true;
         recolor-keephue    = true;
         recolor-lightcolor = lib.mkForce "#1e1e2e"; # base  → page background
         recolor-darkcolor  = lib.mkForce "#cdd6f4"; # text  → page text
@@ -95,8 +95,6 @@ in
         # ── History / persistence ─────────────────────────────────────────────
         database = "sqlite"; # persistent jump-list, bookmarks & page history
 
-        # ── Sandbox ───────────────────────────────────────────────────────────
-        sandbox = "normal";
       };
 
       mappings = {

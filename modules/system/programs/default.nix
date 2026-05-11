@@ -47,8 +47,6 @@ in
       };
 
       dconf.enable = true;
-
-      evince.enable = true;
     };
   };
 }
