@@ -21,5 +21,6 @@ _:
     theming.enable = true;
     wofi.enable = true;
     xdg.enable = true;
+    zathura.enable = true;
   };
 }
