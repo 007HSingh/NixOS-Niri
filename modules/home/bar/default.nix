@@ -21,6 +21,16 @@ in
 
   config = lib.mkIf cfg.enable {
     home.file = {
+      ".config/noctalia/plugins/catwalk" = {
+        recursive = true;
+        source = "${inputs.noctalia-plugins}/catwalk";
+      };
+
+      ".config/noctalia/plugins/pomodoro" = {
+        recursive = true;
+        source = "${inputs.noctalia-plugins}/pomodoro";
+      };
+
       ".config/noctalia/plugins/spotify-control" = {
         recursive = true;
         source = ../../../config/noctalia/plugins/spotify-control;
@@ -54,10 +64,6 @@ in
             };
             pomodoro = {
               enabled = true;
-              workDuration = 25;
-              shortBreakDuration = 5;
-              longBreakDuration = 15;
-              sessionsBeforeLongBreak = 4;
             };
             git-status = {
               enabled = true;
