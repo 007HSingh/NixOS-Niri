@@ -24,19 +24,15 @@ jobs:
         uses: cachix/cachix-action@v17
         with:
           name: nix-community
-          # No auth token needed for read-only pull from nix-community
 
-      # ── Formatting (treefmt via nix fmt) ──────────────────────────────────
       - name: Check formatting
         run: nix fmt -- --fail-on-change
 
-      # ── Static analysis ───────────────────────────────────────────────────
       - name: statix (lint)
         run: nix run nixpkgs#statix -- check .
 
       - name: deadnix (dead code)
         run: nix run nixpkgs#deadnix -- --no-lambda-arg --fail .
 
-      # ── Flake evaluation (no build — just verify modules evaluate cleanly) ─
       - name: nix flake check
         run: nix flake check --no-build
