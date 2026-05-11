@@ -22,8 +22,8 @@ in
         enable = true;
 
         # Catppuccin Mocha — matches the rest of the system
-        theme = spicePkgs.themes.catppuccin;
-        colorScheme = "mocha";
+        theme = lib.mkForce spicePkgs.themes.catppuccin;
+        colorScheme = lib.mkForce "mocha";
 
         enabledExtensions = with spicePkgs.extensions; [
           adblock          # Block ads & promoted content
