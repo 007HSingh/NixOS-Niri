@@ -116,8 +116,8 @@ in
         enableZshIntegration = true;
         settings = {
           format = "$directory$git_branch$git_status$nix_shell$cmd_duration$line_break$character";
-          scan_timeout = 10;      # ms — give up on slow filesystem scans
-          command_timeout = 500;  # ms — cap any single module evaluation
+          scan_timeout = 10; # ms — give up on slow filesystem scans
+          command_timeout = 500; # ms — cap any single module evaluation
           add_newline = false;
           palette = lib.mkForce "catppuccin_mocha";
 
