@@ -12,7 +12,9 @@ in
     # X server with NVIDIA driver
     services.xserver = {
       enable = true;
-      videoDrivers = [ "nvidia" ];
+      videoDrivers = [
+        "nvidia"
+      ];
     };
 
     hardware.nvidia = {
@@ -22,6 +24,17 @@ in
       open = true;
       package = config.boot.kernelPackages.nvidiaPackages.stable;
       nvidiaSettings = true;
+    };
+
+    specialisation.on-the-go.configuration = {
+      system.nixos.tags = [ "on-the-go" ];
+      hardware.nvidia.prime = {
+        offload = {
+          enable = lib.mkForce true;
+          enableOffloadCmd = lib.mkForce true;
+        };
+        sync.enable = lib.mkForce false;
+      };
     };
   };
 }
