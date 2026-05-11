@@ -26,9 +26,9 @@ in
         source = "${inputs.noctalia-plugins}/catwalk";
       };
 
-      ".config/noctalia/plugins/spotify-widget" = {
+      ".config/noctalia/plugins/spotify-control" = {
         recursive = true;
-        source = ../../../config/noctalia/plugins/spotify-widget;
+        source = ../../../config/noctalia/plugins/spotify-control;
       };
 
       ".config/noctalia/plugins/pomodoro" = {
@@ -59,7 +59,7 @@ in
             catwalk = {
               enabled = true;
             };
-            spotify-widget = {
+            "spotify-control" = {
               enabled = true;
             };
             pomodoro = {
@@ -107,7 +107,7 @@ in
                 warningThreshold = 30;
               }
               { id = "Volume"; }
-              { id = "plugin:spotify-widget"; }
+              { id = "plugin:spotify-control"; }
               { id = "plugin:pomodoro"; }
               { id = "plugin:git-status"; }
               { id = "plugin:nix-gc"; }
