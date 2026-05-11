@@ -55,7 +55,7 @@ layout {
 }
 spawn-at-startup "noctalia-shell"
 blur {
-    passes 3
+    passes 2
     offset 3.0
     noise 0.02
     saturation 1.1
@@ -66,7 +66,7 @@ hotkey-overlay {
 screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
 animations {
     window-open {
-        duration-ms 1200
+        duration-ms 350
         curve "ease-out-expo"
         custom-shader "\n            vec4 open_color(vec3 coords_geo, vec3 size_geo) {\n                float p = niri_clamped_progress;\n                float eased = 1.0 - pow(1.0 - p, 4.0);\n                vec2 uv = coords_geo.xy;\n                uv.y += (1.0 - eased) * 0.25; \n                vec3 coords_tex = niri_geo_to_tex * vec3(uv, 1.0);\n                vec4 color = texture2D(niri_tex, coords_tex.st);\n                color *= eased;\n                if (uv.y > 1.0 || uv.y < 0.0) color = vec4(0.0);\n                return color;\n            }\n        "
     }

@@ -1,11 +1,12 @@
 {
   "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
   "logo": {
-    "type": "command-raw",
-    "source": "~/.config/fastfetch/dashboard.sh",
+    "type": "builtin",
+    "source": "NixOS_small",
     "padding": {
       "top": 1,
-      "left": 2
+      "left": 2,
+      "right": 2
     }
   },
   "display": {
@@ -18,7 +19,7 @@
     "break",
     {
       "type": "title",
-      "key": "",
+      "key": "",
       "format": "{user-name}@{host-name}"
     },
     {
@@ -28,7 +29,7 @@
     },
     {
       "type": "kernel",
-      "key": ""
+      "key": ""
     },
     {
       "type": "uptime",
@@ -40,11 +41,11 @@
     },
     {
       "type": "wm",
-      "key": ""
+      "key": ""
     },
     {
       "type": "terminal",
-      "key": ""
+      "key": ""
     },
     {
       "type": "memory",

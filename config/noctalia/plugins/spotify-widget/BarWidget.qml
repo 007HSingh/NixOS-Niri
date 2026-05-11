@@ -63,70 +63,16 @@ Item {
             ColorAnimation { duration: Style.animationNormal; easing.type: Easing.InOutQuad }
         }
 
-        // ── Bouncing Music Notes ─────────────────────────────────────────
-        Item {
+        // ── Spotify Logo ─────────────────────────────────────────────────
+        Text {
             anchors.centerIn: parent
-            width: parent.width * 0.6
-            height: parent.height * 0.5
+            text: "󰓇"
+            font.family: "Maple Mono NF"
+            font.pixelSize: Math.round(parent.height * 0.5)
+            color: mouseArea.containsMouse ? Color.mOnHover : Color.mPrimary
 
-            // Note 1 — left, bounces up
-            Text {
-                id: note1
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.horizontalCenterOffset: -7
-                text: "♪"
-                font.pixelSize: 14
-                font.bold: true
-                color: mouseArea.containsMouse ? Color.mOnHover : Color.mPrimary
-
-                property real bounce: 0
-                y: parent.height * 0.3 + bounce
-
-                SequentialAnimation on bounce {
-                    running: true
-                    loops: Animation.Infinite
-                    NumberAnimation { to: -5; duration: 500; easing.type: Easing.OutQuad }
-                    NumberAnimation { to: 2; duration: 500; easing.type: Easing.InQuad }
-                }
-
-                property real wobble: 1.0
-                SequentialAnimation on wobble {
-                    running: true
-                    loops: Animation.Infinite
-                    NumberAnimation { to: 1.15; duration: 600; easing.type: Easing.OutQuad }
-                    NumberAnimation { to: 0.95; duration: 600; easing.type: Easing.InQuad }
-                }
-                scale: wobble
-            }
-
-            // Note 2 — right, offset phase
-            Text {
-                id: note2
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.horizontalCenterOffset: 7
-                text: "♫"
-                font.pixelSize: 12
-                color: mouseArea.containsMouse ? Color.mOnHover : Color.mSecondary
-                opacity: 0.8
-
-                property real bounce: 0
-                y: parent.height * 0.15 + bounce
-
-                SequentialAnimation on bounce {
-                    running: true
-                    loops: Animation.Infinite
-                    NumberAnimation { to: 3; duration: 450; easing.type: Easing.InQuad }
-                    NumberAnimation { to: -4; duration: 450; easing.type: Easing.OutQuad }
-                }
-
-                property real spin: 0
-                SequentialAnimation on spin {
-                    running: true
-                    loops: Animation.Infinite
-                    NumberAnimation { to: 10; duration: 700; easing.type: Easing.OutQuad }
-                    NumberAnimation { to: -10; duration: 700; easing.type: Easing.InQuad }
-                }
-                rotation: spin
+            Behavior on color {
+                ColorAnimation { duration: Style.animationNormal; easing.type: Easing.InOutQuad }
             }
         }
     }
