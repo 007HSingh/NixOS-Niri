@@ -41,7 +41,7 @@
 
     # Noctalia plugins
     noctalia-plugins = {
-      url = "github:noctalia-dev/noctalia-plugins/9efe2665c410b25d42b1bca3c913ae280dcd84b0";
+      url = "github:noctalia-dev/noctalia-plugins";
       flake = false;
     };
 
