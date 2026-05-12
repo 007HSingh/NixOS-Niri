@@ -142,7 +142,7 @@ in
         };
         templates = {
           kitty = true;
-          niri = false;
+          niri = lib.mkForce false;
           discord = true;
         };
       };
