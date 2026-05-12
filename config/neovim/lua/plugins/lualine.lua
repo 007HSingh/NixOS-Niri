@@ -219,7 +219,14 @@ return {
 					},
 				},
 
-				lualine_y = {},
+				lualine_y = {
+					{
+						"filetype",
+						colored = true,
+						icon_only = false,
+						padding = { left = 1, right = 1 },
+					},
+				},
 
 				lualine_z = {
 					{

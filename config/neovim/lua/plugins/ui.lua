@@ -148,7 +148,21 @@ return {
 		"petertriho/nvim-scrollbar",
 		event = "BufReadPost",
 		config = function()
-			require("scrollbar").setup()
+			local ok, cp = pcall(require, "catppuccin.palettes")
+			local p = ok and cp.get_palette("mocha") or {}
+			require("scrollbar").setup({
+				handle = { color = p.surface2 or "#585b70" },
+				marks = {
+					Error = { color = p.red or "#f38ba8" },
+					Warn = { color = p.yellow or "#f9e2af" },
+					Info = { color = p.blue or "#89b4fa" },
+					Hint = { color = p.teal or "#94e2d5" },
+					Search = { color = p.peach or "#fab387" },
+					GitAdd = { color = p.green or "#a6e3a1" },
+					GitChange = { color = p.yellow or "#f9e2af" },
+					GitDelete = { color = p.red or "#f38ba8" },
+				},
+			})
 		end,
 	},
 
@@ -161,15 +175,18 @@ return {
 			local alpha = require("alpha")
 			local dashboard = require("alpha.themes.dashboard")
 			dashboard.section.header.val = {
-				"                                                     ",
-				"  ███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗ ",
-				"  ████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║ ",
-				"  ██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║ ",
-				"  ██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║ ",
-				"  ██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║ ",
-				"  ╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝ ",
-				"                                                     ",
+				[[                                                                       ]],
+				[[                                                                     ]],
+				[[       ████ ██████           █████      ██                     ]],
+				[[      ███████████             █████                             ]],
+				[[      █████████ ███████████████████ ███   ███████████   ]],
+				[[     █████████  ███    █████████████ █████ ██████████████   ]],
+				[[    █████████ ██████████ █████████ █████ █████ ████ █████   ]],
+				[[  ███████████ ███    ███ █████████ █████ █████ ████ █████  ]],
+				[[ ██████  █████████████████████ ████ █████ █████ ████ ██████ ]],
+				[[                                                                       ]],
 			}
+			dashboard.section.header.opts.hl = "@markup.heading"
 			dashboard.section.buttons.val = {
 				dashboard.button("f", "  Find file", ":Telescope find_files<CR>"),
 				dashboard.button("r", "  Recent", ":Telescope oldfiles<CR>"),
@@ -177,6 +194,14 @@ return {
 				dashboard.button("s", "  Restore session", ":lua require('persistence').load()<CR>"),
 				dashboard.button("q", "  Quit", ":qa<CR>"),
 			}
+			local function footer()
+				local ok, lazy = pcall(require, "lazy")
+				if not ok then return "" end
+				local stats = lazy.stats()
+				return string.format("⚡ %d plugins  •  %dms", stats.count, math.floor(stats.startuptime))
+			end
+			dashboard.section.footer.val = footer()
+			dashboard.section.footer.opts.hl = "Comment"
 			alpha.setup(dashboard.config)
 		end,
 	},
