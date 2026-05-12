@@ -116,7 +116,7 @@ in
         enable = true;
         enableZshIntegration = true;
         settings = {
-          format = "$directory$git_branch$git_status$nix_shell$cmd_duration$line_break$character";
+          format = "$directory$git_branch$git_status$nix_shell$python$rust$docker_context$battery$cmd_duration$line_break$character";
           scan_timeout = 10; # ms — give up on slow filesystem scans
           command_timeout = 500; # ms — cap any single module evaluation
           add_newline = false;
@@ -169,6 +169,37 @@ in
             min_time = 2000;
             style = "bold yellow";
             format = "󱎫 [$duration]($style) ";
+          };
+
+          python = {
+            symbol = " ";
+            style = "bold yellow";
+            format = "[$symbol$version]($style) ";
+            detect_files = [ "requirements.txt" ".python-version" "pyproject.toml" "Pipfile" ];
+          };
+
+          rust = {
+            symbol = " ";
+            style = "bold peach";
+            format = "[$symbol$version]($style) ";
+          };
+
+          docker_context = {
+            symbol = " ";
+            style = "bold blue";
+            format = "[$symbol$context]($style) ";
+            only_with_files = true;
+          };
+
+          battery = {
+            display = [
+              {
+                threshold = 30;
+                style = "bold red";
+                charging_symbol = "󰂄 ";
+                discharging_symbol = "󰂃 ";
+              }
+            ];
           };
 
           palettes.catppuccin_mocha = {
@@ -245,10 +276,18 @@ in
       cava = {
         enable = true;
         settings = {
-          general.framerate = 60;
+          general = {
+            framerate = 60;
+            bar_width = 2;
+            bar_spacing = 1;
+          };
           smoothing.monstercat = 1;
-          # Visualizer color matches Catppuccin Teal
-          color.foreground = "'#94e2d5'";
+          color = {
+            gradient = 1;
+            gradient_count = 2;
+            "gradient_color_1" = "'#cba6f7'";
+            "gradient_color_2" = "'#94e2d5'";
+          };
         };
       };
 
@@ -302,6 +341,7 @@ in
         shellWrapperName = "y";
         initLua = ''
           require("full-border"):setup()
+          require("git"):setup()
         '';
         settings = {
           manager = {
@@ -319,6 +359,14 @@ in
               hash = "sha256-svc7I2E+tVMEUWUvIS6i3oTGfLq13eaI61T0c1MQ8qQ=";
             }
             + "/full-border.yazi";
+          git =
+            pkgs.fetchFromGitHub {
+              owner = "yazi-rs";
+              repo = "plugins";
+              rev = "ac82af3";
+              hash = "sha256-svc7I2E+tVMEUWUvIS6i3oTGfLq13eaI61T0c1MQ8qQ=";
+            }
+            + "/git.yazi";
         };
       };
 
