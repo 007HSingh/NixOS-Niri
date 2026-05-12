@@ -55,8 +55,8 @@ layout {
 }
 spawn-at-startup "noctalia-shell"
 blur {
-    passes 2
-    offset 3.0
+    passes 3
+    offset 2.5
     noise 0.02
     saturation 1.1
 }
@@ -96,7 +96,7 @@ window-rule {
     block-out-from "screen-capture"
 }
 window-rule {
-    opacity 0.92
+    opacity 0.94
     background-effect {
         blur true
         xray false
@@ -111,7 +111,7 @@ window-rule {
 }
 window-rule {
     match is-active=false
-    opacity 0.85
+    opacity 0.80
     background-effect {
         blur true
         xray false
