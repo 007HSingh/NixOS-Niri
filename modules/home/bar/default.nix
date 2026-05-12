@@ -142,7 +142,7 @@ in
         };
         templates = {
           kitty = true;
-          niri = true;
+          niri = false;
           discord = true;
         };
       };
