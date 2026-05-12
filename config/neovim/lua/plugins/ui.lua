@@ -196,7 +196,9 @@ return {
 			}
 			local function footer()
 				local ok, lazy = pcall(require, "lazy")
-				if not ok then return "" end
+				if not ok then
+					return ""
+				end
 				local stats = lazy.stats()
 				return string.format("⚡ %d plugins  •  %dms", stats.count, math.floor(stats.startuptime))
 			end
