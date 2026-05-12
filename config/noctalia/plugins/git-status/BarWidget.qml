@@ -41,7 +41,7 @@ Item {
     signal exited
     signal clicked
 
-    function openPanel() { if (pluginApi) pluginApi.openPanel(root.screen); }
+    function openPanel() { if (pluginApi) pluginApi.openPanel(root.screen, root); }
 
     Rectangle {
         anchors.fill: parent
