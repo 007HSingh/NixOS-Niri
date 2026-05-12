@@ -175,7 +175,12 @@ in
             symbol = " ";
             style = "bold yellow";
             format = "[$symbol$version]($style) ";
-            detect_files = [ "requirements.txt" ".python-version" "pyproject.toml" "Pipfile" ];
+            detect_files = [
+              "requirements.txt"
+              ".python-version"
+              "pyproject.toml"
+              "Pipfile"
+            ];
           };
 
           rust = {
