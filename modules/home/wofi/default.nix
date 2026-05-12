@@ -12,7 +12,7 @@ in
       enable = true;
       settings = {
         width = 500;
-        height = 300;
+        height = 360;
         location = "center";
         show = "drun";
         prompt = "Search...";
@@ -96,11 +96,16 @@ in
         }
 
         #entry:selected {
-          /* Pill highlight — surface1 at 80% + lavender left accent strip */
           background-color: rgba(69, 71, 90, 0.80);
           border-radius: 12px;
-          border-left: 3px solid rgba(180, 190, 254, 0.85);
+          border-left: 5px solid rgba(180, 190, 254, 0.90);
           outline: none;
+        }
+
+        #img {
+          margin-right: 6px;
+          min-width: 24px;
+          min-height: 24px;
         }
 
         #text {
