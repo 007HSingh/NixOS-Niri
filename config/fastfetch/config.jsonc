@@ -23,6 +23,10 @@
       "format": "{user-name}@{host-name}"
     },
     {
+      "type": "separator",
+      "string": "──────────────────────"
+    },
+    {
       "type": "os",
       "key": "󱄅",
       "format": "{3} {12}"
@@ -32,12 +36,8 @@
       "key": ""
     },
     {
-      "type": "uptime",
-      "key": "󱎫"
-    },
-    {
-      "type": "packages",
-      "key": "󰏖"
+      "type": "shell",
+      "key": ""
     },
     {
       "type": "wm",
@@ -48,8 +48,46 @@
       "key": ""
     },
     {
+      "type": "font",
+      "key": "󰛖"
+    },
+    {
+      "type": "separator",
+      "string": "──────────────────────"
+    },
+    {
+      "type": "cpu",
+      "key": ""
+    },
+    {
+      "type": "gpu",
+      "key": "󰍺"
+    },
+    {
       "type": "memory",
       "key": "󰍛"
+    },
+    {
+      "type": "disk",
+      "key": "󰋊",
+      "folders": "/"
+    },
+    {
+      "type": "separator",
+      "string": "──────────────────────"
+    },
+    {
+      "type": "uptime",
+      "key": "󱎫"
+    },
+    {
+      "type": "packages",
+      "key": "󰏖"
+    },
+    "break",
+    {
+      "type": "colors",
+      "symbol": "circle"
     }
   ]
 }
