@@ -1,23 +1,24 @@
-# GTK, QT, and Cursor Theming
-# Managed by Stylix — this module silences the GTK4 theme warning only
+# GTK decoration button removal and gtk4 theme compatibility shim.
 { lib, config, ... }:
 
 let
   cfg = config.modules.home.theming;
 in
 {
-  options.modules.home.theming.enable = lib.mkEnableOption "GTK/QT theming compatibility shim";
+  options.modules.home.theming.enable = lib.mkEnableOption "GTK window button removal and gtk4 theme compatibility";
 
   config = lib.mkIf cfg.enable {
-    # Stylix handles all GTK, QT, and cursor theming automatically.
-    # Do not add manual theme overrides here unless you want to bypass Stylix.
-
-    # Silence GTK4 theme warning: keep legacy behavior until stateVersion >= 26.05
     gtk = {
+      # Propagates the Stylix-managed theme into the gtk4 slot to silence the
+      # stateVersion >= 26.05 deprecation warning emitted by home-manager.
       gtk4.theme = config.gtk.theme;
-      # Remove close, minimize, maximize buttons from GTK apps
+
       gtk3.extraConfig.gtk-decoration-layout = ":";
       gtk4.extraConfig.gtk-decoration-layout = ":";
     };
+
+    # Libadwaita apps ignore gtk4 settings.ini and read the button layout
+    # exclusively from dconf; this entry is required to affect those apps.
+    dconf.settings."org/gnome/desktop/wm/preferences".button-layout = ":";
   };
 }
