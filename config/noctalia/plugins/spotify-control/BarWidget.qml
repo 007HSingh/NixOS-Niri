@@ -43,7 +43,7 @@ Item {
 
     function openPanel() {
         if (pluginApi) {
-            pluginApi.openPanel(root.screen);
+            pluginApi.openPanel(root.screen, root);
         }
     }
 
