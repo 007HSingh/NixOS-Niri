@@ -131,21 +131,7 @@ window-rule {
 }
 window-rule {
     match app-id="spotify"
-    opacity 0.8
-    background-effect {
-        blur true
-        xray false
-    }
-}
-window-rule {
     match app-id="discord"
-    opacity 0.8
-    background-effect {
-        blur true
-        xray false
-    }
-}
-window-rule {
     match app-id="code"
     opacity 0.8
     background-effect {
