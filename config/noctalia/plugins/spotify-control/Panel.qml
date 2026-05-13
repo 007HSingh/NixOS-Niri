@@ -47,7 +47,7 @@ Item {
                         anchors.centerIn: parent
                         text: "󰓇"
                         font.family: "Maple Mono NF"
-                        font.pixelSize: 48
+                        font.pixelSize: Math.round(48 * Style.uiScaleRatio)
                         color: Color.mPrimary
                     }
                 }
@@ -95,7 +95,7 @@ Item {
 
                         Rectangle {
                             width: (MediaService.trackLength > 0)
-                                   ? Math.min(1.0, MediaService.currentPosition / MediaService.trackLength) * parent.width
+                                   ? Math.max(0, Math.min(1.0, MediaService.currentPosition / MediaService.trackLength)) * parent.width
                                    : 0
                             height: parent.height
                             radius: parent.radius
@@ -135,13 +135,13 @@ Item {
 
                     // Previous
                     Item {
-                        width: 32; height: 32
+                        width: Math.round(32 * Style.uiScaleRatio); height: Math.round(32 * Style.uiScaleRatio)
 
                         Text {
                             anchors.centerIn: parent
                             text: "󰒮"
                             font.family: "Maple Mono NF"
-                            font.pixelSize: 22
+                            font.pixelSize: Math.round(22 * Style.uiScaleRatio)
                             color: prevMouse.containsMouse ? Color.mOnSurface : Color.mOnSurfaceVariant
                             Behavior on color { ColorAnimation { duration: 150 } }
                         }
@@ -160,16 +160,16 @@ Item {
 
                     // Play/Pause pill
                     Rectangle {
-                        width: 50
-                        height: 36
-                        radius: 18
+                        width: Math.round(50 * Style.uiScaleRatio)
+                        height: Math.round(36 * Style.uiScaleRatio)
+                        radius: Math.round(18 * Style.uiScaleRatio)
                         color: Color.mPrimary
 
                         Text {
                             anchors.centerIn: parent
                             text: MediaService.isPlaying ? "󰏤" : "󰐊"
                             font.family: "Maple Mono NF"
-                            font.pixelSize: 22
+                            font.pixelSize: Math.round(22 * Style.uiScaleRatio)
                             color: Color.mOnPrimary
                             anchors.horizontalCenterOffset: MediaService.isPlaying ? 0 : 1
                         }
@@ -188,13 +188,13 @@ Item {
 
                     // Next
                     Item {
-                        width: 32; height: 32
+                        width: Math.round(32 * Style.uiScaleRatio); height: Math.round(32 * Style.uiScaleRatio)
 
                         Text {
                             anchors.centerIn: parent
                             text: "󰒭"
                             font.family: "Maple Mono NF"
-                            font.pixelSize: 22
+                            font.pixelSize: Math.round(22 * Style.uiScaleRatio)
                             color: nextMouse.containsMouse ? Color.mOnSurface : Color.mOnSurfaceVariant
                             Behavior on color { ColorAnimation { duration: 150 } }
                         }
