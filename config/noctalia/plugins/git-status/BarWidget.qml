@@ -54,7 +54,7 @@ Item {
 
         Row {
             anchors.centerIn: parent
-            spacing: 5
+            spacing: Style.marginXS
 
             // Git branch icon
             Text {
