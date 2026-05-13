@@ -73,6 +73,14 @@
       "folders": "/"
     },
     {
+      "type": "display",
+      "key": "󰍹"
+    },
+    {
+      "type": "battery",
+      "key": "󰁹"
+    },
+    {
       "type": "separator",
       "string": "──────────────────────"
     },

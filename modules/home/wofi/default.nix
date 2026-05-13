@@ -91,13 +91,13 @@ in
 
         #entry {
           padding: 6px 10px;
-          border-radius: 12px;
+          border-radius: 16px;
           transition: background-color 80ms ease;
         }
 
         #entry:selected {
           background-color: rgba(69, 71, 90, 0.80);
-          border-radius: 12px;
+          border-radius: 16px;
           border-left: 5px solid rgba(180, 190, 254, 0.90);
           outline: none;
         }
