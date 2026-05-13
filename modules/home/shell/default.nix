@@ -117,6 +117,7 @@ in
         enableZshIntegration = true;
         settings = {
           format = "$directory$git_branch$git_status$nix_shell$python$rust$docker_context$battery$cmd_duration$line_break$character";
+          right_format = "$time";
           scan_timeout = 10; # ms — give up on slow filesystem scans
           command_timeout = 500; # ms — cap any single module evaluation
           add_newline = false;
@@ -207,6 +208,13 @@ in
             ];
           };
 
+          time = {
+            disabled = false;
+            format = "[$time]($style)";
+            style = "dimmed text";
+            time_format = "%H:%M";
+          };
+
           palettes.catppuccin_mocha = {
             rosewater = "#f5e0dc";
             flamingo = "#f2cdcd";
@@ -289,9 +297,11 @@ in
           smoothing.monstercat = 1;
           color = {
             gradient = 1;
-            gradient_count = 2;
-            "gradient_color_1" = "'#cba6f7'";
-            "gradient_color_2" = "'#94e2d5'";
+            gradient_count = 4;
+            "gradient_color_1" = "'#f38ba8'"; # red
+            "gradient_color_2" = "'#cba6f7'"; # mauve
+            "gradient_color_3" = "'#89b4fa'"; # blue
+            "gradient_color_4" = "'#94e2d5'"; # teal
           };
         };
       };
