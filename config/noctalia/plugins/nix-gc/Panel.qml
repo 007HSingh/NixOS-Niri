@@ -10,7 +10,7 @@ Item {
     readonly property var geometryPlaceholder: panelBg
     readonly property bool allowAttach: true
     property real contentPreferredWidth: 300 * Style.uiScaleRatio
-    property real contentPreferredHeight: 280 * Style.uiScaleRatio
+    property real contentPreferredHeight: 300 * Style.uiScaleRatio
 
     anchors.fill: parent
 
@@ -19,8 +19,10 @@ Item {
     readonly property string storePathCount: m?.storePathCount ?? "..."
     readonly property string generationCount: m?.generationCount ?? "..."
     readonly property bool isCollecting: m?.isCollecting ?? false
+    readonly property bool gcConfirmPending: m?.gcConfirmPending ?? false
     readonly property string lastCollected: m?.lastCollected ?? "never"
     readonly property string gcOutput: m?.gcOutput ?? ""
+    readonly property string errorMsg: m?.errorMsg ?? ""
 
     Rectangle {
         id: panelBg
@@ -45,7 +47,8 @@ Item {
                     Layout.fillWidth: true
 
                     Text {
-                        text: "❄"
+                        text: "󱄅"
+                        font.family: "Maple Mono NF"
                         font.pixelSize: 28
                         color: Color.mPrimary
 
@@ -109,21 +112,21 @@ Item {
                     }
                 }
 
-                // ── GC Output ─────────────────────────────────────────────
+                // ── GC Output / Error ─────────────────────────────────────
                 Rectangle {
                     Layout.fillWidth: true
                     Layout.preferredHeight: 40 * Style.uiScaleRatio
-                    visible: gcOutput !== ""
-                    color: Color.mSurfaceVariant
+                    visible: gcOutput !== "" || errorMsg !== ""
+                    color: errorMsg !== "" ? Qt.rgba(Color.mError.r, Color.mError.g, Color.mError.b, 0.15) : Color.mSurfaceVariant
                     radius: Style.radiusS
 
                     Text {
                         anchors.fill: parent
                         anchors.margins: Style.marginS
-                        text: gcOutput
+                        text: errorMsg !== "" ? errorMsg : gcOutput
                         font.family: "Maple Mono NF"
                         font.pixelSize: Style.fontSizeXS
-                        color: Color.mOnSurfaceVariant
+                        color: errorMsg !== "" ? Color.mError : Color.mOnSurfaceVariant
                         wrapMode: Text.WordWrap
                         elide: Text.ElideRight
                         maximumLineCount: 2
@@ -163,27 +166,39 @@ Item {
                         }
                     }
 
-                    // Collect Garbage
+                    // Collect Garbage (with confirmation)
                     Rectangle {
                         Layout.fillWidth: true
                         height: 36 * Style.uiScaleRatio
                         radius: 18 * Style.uiScaleRatio
-                        color: isCollecting ? Color.mSurfaceVariant : (gcMouse.containsMouse ? Qt.darker(Color.mError, 1.1) : Color.mError)
+                        color: {
+                            if (isCollecting) return Color.mSurfaceVariant;
+                            if (gcConfirmPending) return gcMouse.containsMouse ? Qt.darker(Color.mError, 1.1) : Color.mError;
+                            return gcMouse.containsMouse ? Qt.darker(Color.mTertiary, 1.1) : Color.mTertiary;
+                        }
                         Behavior on color { ColorAnimation { duration: 200 } }
 
                         Text {
                             anchors.centerIn: parent
-                            text: isCollecting ? "collecting..." : "❄  collect"
+                            text: {
+                                if (isCollecting) return "collecting...";
+                                if (gcConfirmPending) return "sure?  confirm";
+                                return "󱄅  collect";
+                            }
                             font.family: "Nunito"
                             font.pixelSize: Style.fontSizeS
-                            color: isCollecting ? Color.mOnSurfaceVariant : Color.mOnError
+                            color: {
+                                if (isCollecting) return Color.mOnSurfaceVariant;
+                                if (gcConfirmPending) return Color.mOnError;
+                                return Color.mOnTertiary;
+                            }
                         }
                         MouseArea {
                             id: gcMouse
                             anchors.fill: parent
                             hoverEnabled: true
                             cursorShape: isCollecting ? Qt.ArrowCursor : Qt.PointingHandCursor
-                            onClicked: if (m && !isCollecting) m.collectGarbage()
+                            onClicked: if (m && !isCollecting) m.requestGC()
                         }
                         scale: gcMouse.pressed ? 0.97 : 1.0
                         Behavior on scale { NumberAnimation { duration: 100 } }

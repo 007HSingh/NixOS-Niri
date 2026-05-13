@@ -52,10 +52,11 @@ Item {
             anchors.centerIn: parent
             spacing: 4
 
-            // Nix snowflake icon
+            // Nix logo icon
             Text {
                 anchors.verticalCenter: parent.verticalCenter
-                text: "❄"
+                text: "󱄅"
+                font.family: "Maple Mono NF"
                 font.pixelSize: Style.fontSizeM
                 color: mouseArea.containsMouse ? Color.mOnHover : Color.mPrimary
 
