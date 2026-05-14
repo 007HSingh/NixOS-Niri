@@ -4,7 +4,7 @@ input {
         repeat-rate 35
         repeat-delay 200
         xkb {
-            options "caps:super,shift:both_capslock"
+
         }
         numlock
     }
