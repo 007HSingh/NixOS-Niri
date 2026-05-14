@@ -43,6 +43,7 @@ in
       pkg-config
       pcre
       cargo
+      quickshell
 
       # Applications
       keepassxc

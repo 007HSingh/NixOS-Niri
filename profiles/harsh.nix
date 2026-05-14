@@ -15,7 +15,6 @@ _:
     media.enable = true;
     notes.enable = true;
     packages.enable = true;
-    quickshell.enable = true;
     shell.enable = true;
     termipedia.enable = true;
     theming.enable = true;
