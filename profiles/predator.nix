@@ -18,6 +18,5 @@ _:
     services.enable = true;
     stylix.enable = true;
     users.enable = true;
-    vm.enable = true;
   };
 }
