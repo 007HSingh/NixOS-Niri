@@ -4,7 +4,7 @@ input {
         repeat-rate 35
         repeat-delay 200
         xkb {
-
+            options "caps:super,shift:both_capslock"
         }
         numlock
     }
@@ -18,7 +18,7 @@ input {
 
     }
     focus-follows-mouse max-scroll-amount="0%"
-    mod-key "Alt"
+    mod-key "Super"
 }
 output "eDP-1" {
     mode "1920x1200@165.002"
@@ -141,22 +141,22 @@ window-rule {
     }
 }
 binds {
-    Alt+Shift+Slash {
+    Mod+Shift+Slash {
         show-hotkey-overlay
     }
-    Alt+Return {
+    Mod+Return {
         spawn "kitty"
     }
-    Alt+D {
+    Mod+D {
         spawn "wofi"
     }
-    Alt+Shift+W {
+    Mod+Shift+W {
         spawn "qs" "-c" "wallpaper-picker"
     }
-    Ctrl+Alt+L {
+    Ctrl+Mod+L {
         spawn-sh "loginctl lock-session"
     }
-    Ctrl+Alt+S allow-when-locked=true {
+    Ctrl+Mod+S allow-when-locked=true {
         spawn-sh "pkill orca || exec orca"
     }
     XF86AudioRaiseVolume allow-when-locked=true {
@@ -189,295 +189,295 @@ binds {
     XF86MonBrightnessDown allow-when-locked=true {
         spawn "brightnessctl" "set" "10%-"
     }
-    Alt+O {
+    Mod+O {
         toggle-overview
     }
-    Alt+Q {
+    Mod+Q {
         close-window
     }
-    Alt+Left {
+    Mod+Left {
         focus-column-left
     }
-    Alt+Down {
+    Mod+Down {
         focus-window-down
     }
-    Alt+Up {
+    Mod+Up {
         focus-window-up
     }
-    Alt+Right {
+    Mod+Right {
         focus-column-right
     }
-    Alt+H {
+    Mod+H {
         focus-column-left
     }
-    Alt+J {
+    Mod+J {
         focus-window-down
     }
-    Alt+K {
+    Mod+K {
         focus-window-up
     }
-    Alt+L {
+    Mod+L {
         focus-column-right
     }
-    Alt+Ctrl+Left {
+    Mod+Ctrl+Left {
         move-column-left
     }
-    Alt+Ctrl+Down {
+    Mod+Ctrl+Down {
         move-window-down
     }
-    Alt+Ctrl+Up {
+    Mod+Ctrl+Up {
         move-window-up
     }
-    Alt+Ctrl+Right {
+    Mod+Ctrl+Right {
         move-column-right
     }
-    Alt+Ctrl+H {
+    Mod+Ctrl+H {
         move-column-left
     }
-    Alt+Ctrl+J {
+    Mod+Ctrl+J {
         move-window-down
     }
-    Alt+Ctrl+K {
+    Mod+Ctrl+K {
         move-window-up
     }
-    Alt+Home {
+    Mod+Home {
         focus-column-first
     }
-    Alt+End {
+    Mod+End {
         focus-column-last
     }
-    Alt+Ctrl+Home {
+    Mod+Ctrl+Home {
         move-column-to-first
     }
-    Alt+Ctrl+End {
+    Mod+Ctrl+End {
         move-column-to-last
     }
-    Alt+Shift+Left {
+    Mod+Shift+Left {
         focus-monitor-left
     }
-    Alt+Shift+Down {
+    Mod+Shift+Down {
         focus-monitor-down
     }
-    Alt+Shift+Up {
+    Mod+Shift+Up {
         focus-monitor-up
     }
-    Alt+Shift+Right {
+    Mod+Shift+Right {
         focus-monitor-right
     }
-    Alt+Shift+H {
+    Mod+Shift+H {
         focus-monitor-left
     }
-    Alt+Shift+J {
+    Mod+Shift+J {
         focus-monitor-down
     }
-    Alt+Shift+K {
+    Mod+Shift+K {
         focus-monitor-up
     }
-    Alt+Shift+L {
+    Mod+Shift+L {
         focus-monitor-right
     }
-    Alt+Shift+Ctrl+Left {
+    Mod+Shift+Ctrl+Left {
         move-column-to-monitor-left
     }
-    Alt+Shift+Ctrl+Down {
+    Mod+Shift+Ctrl+Down {
         move-column-to-monitor-down
     }
-    Alt+Shift+Ctrl+Up {
+    Mod+Shift+Ctrl+Up {
         move-column-to-monitor-up
     }
-    Alt+Shift+Ctrl+Right {
+    Mod+Shift+Ctrl+Right {
         move-column-to-monitor-right
     }
-    Alt+Shift+Ctrl+H {
+    Mod+Shift+Ctrl+H {
         move-column-to-monitor-left
     }
-    Alt+Shift+Ctrl+J {
+    Mod+Shift+Ctrl+J {
         move-column-to-monitor-down
     }
-    Alt+Shift+Ctrl+K {
+    Mod+Shift+Ctrl+K {
         move-column-to-monitor-up
     }
-    Alt+Shift+Ctrl+L {
+    Mod+Shift+Ctrl+L {
         move-column-to-monitor-right
     }
-    Alt+Page_Down {
+    Mod+Page_Down {
         focus-workspace-down
     }
-    Alt+Page_Up {
+    Mod+Page_Up {
         focus-workspace-up
     }
-    Alt+U {
+    Mod+U {
         focus-workspace-down
     }
-    Alt+I {
+    Mod+I {
         focus-workspace-up
     }
-    Alt+Ctrl+Page_Down {
+    Mod+Ctrl+Page_Down {
         move-column-to-workspace-down
     }
-    Alt+Ctrl+Page_Up {
+    Mod+Ctrl+Page_Up {
         move-column-to-workspace-up
     }
-    Alt+Ctrl+U {
+    Mod+Ctrl+U {
         move-column-to-workspace-down
     }
-    Alt+Ctrl+I {
+    Mod+Ctrl+I {
         move-column-to-workspace-up
     }
-    Alt+Shift+Page_Down {
+    Mod+Shift+Page_Down {
         move-workspace-down
     }
-    Alt+Shift+Page_Up {
+    Mod+Shift+Page_Up {
         move-workspace-up
     }
-    Alt+Shift+U {
+    Mod+Shift+U {
         move-workspace-down
     }
-    Alt+Shift+I {
+    Mod+Shift+I {
         move-workspace-up
     }
-    Alt+WheelScrollDown cooldown-ms=150 {
+    Mod+WheelScrollDown cooldown-ms=150 {
         focus-workspace-down
     }
-    Alt+WheelScrollUp cooldown-ms=150 {
+    Mod+WheelScrollUp cooldown-ms=150 {
         focus-workspace-up
     }
-    Alt+Ctrl+WheelScrollDown cooldown-ms=150 {
+    Mod+Ctrl+WheelScrollDown cooldown-ms=150 {
         move-column-to-workspace-down
     }
-    Alt+Ctrl+WheelScrollUp cooldown-ms=150 {
+    Mod+Ctrl+WheelScrollUp cooldown-ms=150 {
         move-column-to-workspace-up
     }
-    Alt+WheelScrollRight {
+    Mod+WheelScrollRight {
         focus-column-right
     }
-    Alt+WheelScrollLeft {
+    Mod+WheelScrollLeft {
         focus-column-left
     }
-    Alt+Ctrl+WheelScrollRight {
+    Mod+Ctrl+WheelScrollRight {
         move-column-right
     }
-    Alt+Ctrl+WheelScrollLeft {
+    Mod+Ctrl+WheelScrollLeft {
         move-column-left
     }
-    Alt+Shift+WheelScrollDown {
+    Mod+Shift+WheelScrollDown {
         focus-column-right
     }
-    Alt+Shift+WheelScrollUp {
+    Mod+Shift+WheelScrollUp {
         focus-column-left
     }
-    Alt+Ctrl+Shift+WheelScrollDown {
+    Mod+Ctrl+Shift+WheelScrollDown {
         move-column-right
     }
-    Alt+Ctrl+Shift+WheelScrollUp {
+    Mod+Ctrl+Shift+WheelScrollUp {
         move-column-left
     }
-    Alt+1 {
+    Mod+1 {
         focus-workspace 1
     }
-    Alt+2 {
+    Mod+2 {
         focus-workspace 2
     }
-    Alt+3 {
+    Mod+3 {
         focus-workspace 3
     }
-    Alt+4 {
+    Mod+4 {
         focus-workspace 4
     }
-    Alt+5 {
+    Mod+5 {
         focus-workspace 5
     }
-    Alt+6 {
+    Mod+6 {
         focus-workspace 6
     }
-    Alt+7 {
+    Mod+7 {
         focus-workspace 7
     }
-    Alt+8 {
+    Mod+8 {
         focus-workspace 8
     }
-    Alt+9 {
+    Mod+9 {
         focus-workspace 9
     }
-    Alt+Shift+1 {
+    Mod+Shift+1 {
         move-column-to-workspace 1
     }
-    Alt+Shift+2 {
+    Mod+Shift+2 {
         move-column-to-workspace 2
     }
-    Alt+Shift+3 {
+    Mod+Shift+3 {
         move-column-to-workspace 3
     }
-    Alt+Shift+4 {
+    Mod+Shift+4 {
         move-column-to-workspace 4
     }
-    Alt+Shift+5 {
+    Mod+Shift+5 {
         move-column-to-workspace 5
     }
-    Alt+Shift+6 {
+    Mod+Shift+6 {
         move-column-to-workspace 6
     }
-    Alt+Shift+7 {
+    Mod+Shift+7 {
         move-column-to-workspace 7
     }
-    Alt+Shift+8 {
+    Mod+Shift+8 {
         move-column-to-workspace 8
     }
-    Alt+Shift+9 {
+    Mod+Shift+9 {
         move-column-to-workspace 9
     }
-    Alt+BracketLeft {
+    Mod+BracketLeft {
         consume-or-expel-window-left
     }
-    Alt+BracketRight {
+    Mod+BracketRight {
         consume-or-expel-window-right
     }
-    Alt+Comma {
+    Mod+Comma {
         consume-window-into-column
     }
-    Alt+Period {
+    Mod+Period {
         expel-window-from-column
     }
-    Alt+R {
+    Mod+R {
         switch-preset-column-width
     }
-    Alt+Shift+R {
+    Mod+Shift+R {
         switch-preset-window-height
     }
-    Alt+Ctrl+R {
+    Mod+Ctrl+R {
         reset-window-height
     }
-    Alt+F {
+    Mod+F {
         maximize-column
     }
-    Alt+Shift+F {
+    Mod+Shift+F {
         fullscreen-window
     }
-    Alt+Ctrl+F {
+    Mod+Ctrl+F {
         expand-column-to-available-width
     }
-    Alt+C {
+    Mod+C {
         center-column
     }
-    Alt+Ctrl+C {
+    Mod+Ctrl+C {
         center-visible-columns
     }
-    Alt+Minus {
+    Mod+Minus {
         set-column-width "-10%"
     }
-    Alt+Equal {
+    Mod+Equal {
         set-column-width "+10%"
     }
-    Alt+Shift+Minus {
+    Mod+Shift+Minus {
         set-window-height "-10%"
     }
-    Alt+Shift+Equal {
+    Mod+Shift+Equal {
         set-window-height "+10%"
     }
-    Alt+V {
+    Mod+V {
         toggle-window-floating
     }
-    Alt+Shift+V {
+    Mod+Shift+V {
         switch-focus-between-floating-and-tiling
     }
     Print {
@@ -486,31 +486,31 @@ binds {
     Ctrl+Print {
         screenshot-screen
     }
-    Alt+Print {
+    Mod+Print {
         screenshot-window
     }
-    Alt+Shift+Print {
+    Mod+Shift+Print {
         spawn-sh "grim -g \"$(slurp)\" - | wl-copy"
     }
-    Ctrl+Alt+Print {
+    Ctrl+Mod+Print {
         spawn-sh "grim -g \"$(slurp)\" /tmp/ss-annotate.png && satty -f /tmp/ss-annotate.png"
     }
-    Alt+Ctrl+V {
+    Mod+Ctrl+V {
         spawn-sh "cliphist list | wofi --dmenu --prompt 'Clipboard' | cliphist decode | wl-copy"
     }
-    Alt+E {
+    Mod+E {
         spawn "thunar"
     }
-    Alt+Escape allow-inhibiting=false {
+    Mod+Escape allow-inhibiting=false {
         toggle-keyboard-shortcuts-inhibit
     }
-    Alt+Shift+E {
+    Mod+Shift+E {
         quit
     }
-    Ctrl+Alt+Delete {
+    Ctrl+Mod+Delete {
         quit
     }
-    Alt+Shift+P {
+    Mod+Shift+P {
         power-off-monitors
     }
 }
