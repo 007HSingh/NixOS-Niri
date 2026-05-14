@@ -46,9 +46,7 @@ in
       quickshell
 
       # Applications
-      keepassxc
       (discord.override { withOpenASAR = true; })
-      mpv
       inputs.antigravity-nix.packages.${pkgs.stdenv.hostPlatform.system}.default
 
       # Wayland utilities

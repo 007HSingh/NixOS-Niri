@@ -34,7 +34,6 @@ in
           ublock-origin
           darkreader
           stylus
-          keepassxc-browser
         ];
 
         # Declarative search engine
