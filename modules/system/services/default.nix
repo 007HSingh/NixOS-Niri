@@ -32,6 +32,7 @@ in
         enable = true;
         package = pkgs.ollama-cuda;
       };
+      gnome.gnome-keyring.enable = true;
     };
 
     # Memory-management
