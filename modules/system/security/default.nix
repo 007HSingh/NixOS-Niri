@@ -20,6 +20,7 @@ in
       polkit.enable = true;
       sudo.wheelNeedsPassword = true;
       apparmor.enable = true;
+      pam.services.ly.enableGnomeKeyring = false;
 
       doas = {
         enable = true;

@@ -54,12 +54,6 @@ in
       extraPortals = with pkgs; [
         xdg-desktop-portal-gtk
       ];
-      config = {
-        common.default = [ "gtk" ];
-        niri.default = [
-          "gtk"
-        ];
-      };
     };
 
     # Wayland session variables
