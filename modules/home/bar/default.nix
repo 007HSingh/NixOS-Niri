@@ -80,10 +80,10 @@ in
       enable = true;
       settings = {
         bar = {
-          density = "comfortable";
+          density = "default";
           position = "top";
-          showCapsule = true;
-          floating = true;
+          showCapsule = false;
+          framed = true;
           widgets = {
             left = [
               { id = "ControlCenter"; }
