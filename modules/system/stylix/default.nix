@@ -4,7 +4,6 @@
   lib,
   config,
   pkgs,
-  inputs,
   ...
 }:
 
@@ -21,9 +20,7 @@ in
       autoEnable = true;
 
       # Color scheme: Catppuccin Mocha (defined inline)
-      base16Scheme = "${
-        inputs.catppuccin.packages.${pkgs.stdenv.hostPlatform.system}.catppuccin-base16
-      }/base16/mocha.yaml";
+      base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
 
       # Polarity must be set to either "dark" or "light"
       polarity = "dark";
