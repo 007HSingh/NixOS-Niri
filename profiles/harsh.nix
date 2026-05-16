@@ -11,7 +11,6 @@ _:
     neovim.enable = true;
     zed.enable = true;
     git.enable = true;
-    idle.enable = true;
     media.enable = true;
     notes.enable = true;
     packages.enable = true;
