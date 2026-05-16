@@ -18,52 +18,12 @@ in
       enable = true;
 
       options = {
-        # ── Catppuccin Mocha colour palette ───────────────────────────────────
-        # lib.mkForce required: Stylix sets these via its base16 zathura target.
-        # We take full ownership of all colour values.
-
-        # Page / viewer
-        default-bg = lib.mkForce "#1e1e2e"; # base
-        default-fg = lib.mkForce "#cdd6f4"; # text
-
-        # Status bar
-        statusbar-bg = lib.mkForce "#181825"; # mantle
-        statusbar-fg = lib.mkForce "#a6adc8"; # subtext0
-
-        # Input bar (command / search entry)
-        inputbar-bg = lib.mkForce "#313244"; # surface0
-        inputbar-fg = lib.mkForce "#cdd6f4"; # text
-
-        # Notifications
-        notification-bg = lib.mkForce "#45475a"; # surface1
-        notification-fg = lib.mkForce "#cdd6f4"; # text
-        notification-error-bg = lib.mkForce "#f38ba8"; # red
-        notification-error-fg = lib.mkForce "#1e1e2e"; # base
-        notification-warning-bg = lib.mkForce "#f9e2af"; # yellow
-        notification-warning-fg = lib.mkForce "#1e1e2e"; # base
-
-        # Completion menu
-        completion-bg = lib.mkForce "#313244"; # surface0
-        completion-fg = lib.mkForce "#89b4fa"; # blue
-        completion-highlight-bg = lib.mkForce "#45475a"; # surface1
-        completion-highlight-fg = lib.mkForce "#cdd6f4"; # text
-        completion-group-bg = lib.mkForce "#181825"; # mantle
-        completion-group-fg = lib.mkForce "#7f849d"; # overlay1
-
-        # Search highlights
-        highlight-color = lib.mkForce "rgba(249,226,175,0.5)"; # yellow @50%
-        highlight-active-color = lib.mkForce "rgba(250,179,135,0.8)"; # peach  @80%
-
         # Recolour (dark-mode PDF inversion) — toggle with <A-r>
         recolor = true;
         recolor-keephue = true;
-        recolor-lightcolor = lib.mkForce "#1e1e2e"; # base  → page background
-        recolor-darkcolor = lib.mkForce "#cdd6f4"; # text  → page text
 
         # Loading indicator
         render-loading = true;
-        render-loading-bg = lib.mkForce "#1e1e2e"; # base
-        render-loading-fg = lib.mkForce "#89b4fa"; # blue
 
         # ── Status bar layout ─────────────────────────────────────────────────
         statusbar-h-padding = 10;
