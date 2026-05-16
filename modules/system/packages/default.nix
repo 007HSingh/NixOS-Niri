@@ -3,6 +3,7 @@
   lib,
   config,
   pkgs,
+  inputs,
   ...
 }:
 
@@ -24,9 +25,8 @@ in
       # Terminal
       kitty
 
-      # Wayland/Niri
-      niri
-      xwayland-satellite
+      # Wayland
+      inputs.niri-flake.packages.${pkgs.stdenv.hostPlatform.system}.xwayland-satellite-unstable
       wayclip
       brightnessctl
       cliphist

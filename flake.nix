@@ -93,6 +93,11 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
+    # Niri
+    niri-flake = {
+      url = "github:sodiboo/niri-flake";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
   };
 
   outputs =
