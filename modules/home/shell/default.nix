@@ -426,12 +426,10 @@ in
         enable = true;
         font = {
           name = "Maple Mono NF";
-          size = 11.5;
         };
         settings = {
           modify_font = "cell_height 125%";
           enable_ligatures = "always";
-          background_opacity = "0.88";
           background_blur = 20;
           window_padding_width = 16;
           window_margin_width = 2;
