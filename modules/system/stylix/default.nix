@@ -78,13 +78,6 @@ in
         desktop = 1.0;
         popups = 0.92;
       };
-
-      # Target-specific Overrides
-      targets = {
-        nixvim.enable = false;
-        gnome.enable = false;
-        gtk.enable = true;
-      };
     };
   };
 }

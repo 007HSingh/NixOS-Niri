@@ -140,10 +140,11 @@ in
           nightTemp = "3000";
           dayTemp = "6500";
         };
+        idle.enabled = true;
         templates = {
-          kitty = true;
+          kitty = false;
           niri = lib.mkForce false;
-          discord = true;
+          discord = false;
         };
       };
     };
