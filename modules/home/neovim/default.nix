@@ -37,6 +37,8 @@ in
           json
           yaml
           markdown
+          markdown_inline
+          regex
           vim
           vimdoc
           rust
