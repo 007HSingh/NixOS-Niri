@@ -21,6 +21,11 @@ in
 
   config = lib.mkIf cfg.enable {
     home.file = {
+      ".config/noctalia/plugins/weather-indicator" = {
+        recursive = true;
+        source = "${inputs.noctalia-plugins}/weather-indicator";
+      };
+
       ".config/noctalia/plugins/catwalk" = {
         recursive = true;
         source = "${inputs.noctalia-plugins}/catwalk";
@@ -60,6 +65,9 @@ in
               enabled = true;
             };
             "spotify-control" = {
+              enabled = true;
+            };
+            "weather-indicator" = {
               enabled = true;
             };
             pomodoro = {
@@ -112,6 +120,7 @@ in
               { id = "plugin:git-status"; }
               { id = "plugin:nix-gc"; }
               { id = "plugin:catwalk"; }
+              { id = "plugin:weather-indicator"; }
               {
                 formatHorizontal = "HH:mm";
                 formatVertical = "HH mm";
