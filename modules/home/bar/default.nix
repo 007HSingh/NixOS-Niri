@@ -143,7 +143,7 @@ in
         idle.enabled = true;
         templates = {
           kitty = false;
-          niri = lib.mkForce false;
+          niri = true;
           discord = false;
         };
       };
