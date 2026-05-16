@@ -1,32 +1,44 @@
+-- ============================================================================
+-- TREESITTER — Syntax highlighting and incremental selection
+-- ============================================================================
 return {
-	{
-		"nvim-treesitter/nvim-treesitter",
-		version = false, -- last release is way too old
-		build = ":TSUpdate",
-		event = { "BufReadPost", "BufNewFile" },
-		cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" },
-		keys = {
-			{ "<c-space>", desc = "Increment Selection" },
-			{ "<bs>", desc = "Decrement Selection", mode = "x" },
+	"nvim-treesitter/nvim-treesitter",
+	enabled = false,
+	branch = "master",
+	build = ":TSUpdate",
+	event = "VeryLazy",
+	main = "nvim-treesitter.configs",
+	opts = {
+		ensure_installed = {
+			"bash",
+			"c",
+			"cpp",
+			"go",
+			"lua",
+			"python",
+			"javascript",
+			"typescript",
+			"html",
+			"css",
+			"json",
+			"yaml",
+			"markdown",
+			"vim",
+			"vimdoc",
+			"rust",
+			"java",
+			"nix",
 		},
-		opts = {
-			highlight = { enable = true },
-			indent = { enable = true },
-			-- Grammars are managed by Nix, so we don't use ensure_installed here.
-			-- However, we still need to setup the plugin for highlighting to work.
-			ensure_installed = {},
-			incremental_selection = {
-				enable = true,
-				keymaps = {
-					init_selection = "<c-space>",
-					node_incremental = "<c-space>",
-					scope_incremental = false,
-					node_decremental = "<bs>",
-				},
+		highlight = { enable = true, additional_vim_regex_highlighting = false },
+		incremental_selection = {
+			enable = true,
+			keymaps = {
+				init_selection = "gnn",
+				node_incremental = "grn",
+				scope_incremental = "grc",
+				node_decremental = "grm",
 			},
 		},
-		config = function(_, opts)
-			require("nvim-treesitter.configs").setup(opts)
-		end,
+		indent = { enable = true },
 	},
 }

@@ -42,6 +42,7 @@ return {
 		event = "BufReadPost",
 		dependencies = {
 			"kevinhwang91/promise-async",
+			"nvim-treesitter/nvim-treesitter",
 		},
 		config = function()
 			local ufo = require("ufo")
