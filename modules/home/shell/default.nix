@@ -421,6 +421,66 @@ in
           };
         };
       };
+
+      kitty = {
+        enable = true;
+        font = {
+          name = "Maple Mono NF";
+          size = 11.5;
+        };
+        settings = {
+          modify_font = "cell_height 125%";
+          enable_ligatures = "always";
+          background_opacity = "0.88";
+          background_blur = 20;
+          window_padding_width = 16;
+          window_margin_width = 2;
+          hide_window_decorations = "yes";
+          inactive_text_alpha = "0.8";
+          placement_strategy = "center";
+          cursor_shape = "beam";
+          cursor_blink_interval = "0.5";
+          cursor_stop_blinking_after = 0;
+          cursor_trail = 3;
+          cursor_trail_decay = "0.15 0.5";
+          url_style = "single";
+          tab_bar_style = "powerline";
+          tab_powerline_style = "slanted";
+          tab_title_template = "{index}: {title}";
+          shell_integration = "enabled";
+          scrollback_lines = 10000;
+          enable_audio_bell = "no";
+          repaint_delay = 10;
+          input_delay = 3;
+          allow_remote_control = "yes";
+          confirm_os_window_close = 0;
+          allow_hyperlinks = "yes";
+          detect_urls = "yes";
+          copy_on_select = "no";
+          clipboard_control = "write-clipboard write-primary";
+          shell = "/run/current-system/sw/bin/zsh";
+          working_directory = "home";
+          vsync = "yes";
+        };
+        keybindings = {
+          "ctrl+shift+t" = "new_tab";
+          "ctrl+shift+w" = "close_tab";
+          "ctrl+tab" = "next_tab";
+          "ctrl+shift+tab" = "previous_tab";
+          "ctrl+shift+d" = "launch --location=hsplit";
+          "ctrl+shift+D" = "launch --location=vsplit";
+          "ctrl+shift+h" = "neighboring_window left";
+          "ctrl+shift+l" = "neighboring_window right";
+          "ctrl+shift+k" = "neighboring_window up";
+          "ctrl+shift+j" = "neighboring_window down";
+          "ctrl+equal" = "increase_font_size";
+          "ctrl+minus" = "decrease_font_size";
+          "ctrl+0" = "reset_font_size";
+          "ctrl+shift+c" = "copy_to_clipboard";
+          "ctrl+shift+v" = "paste_from_clipboard";
+          "ctrl+shift+f" = "search";
+        };
+      };
     };
   };
 }

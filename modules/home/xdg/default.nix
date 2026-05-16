@@ -9,7 +9,6 @@ let
 
   # Config directories to symlink (nvim handled by modules/home/editor)
   configs = {
-    kitty = "kitty";
     niri = "niri";
     fastfetch = "fastfetch";
     btop = "btop";
