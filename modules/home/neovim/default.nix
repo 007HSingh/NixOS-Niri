@@ -35,6 +35,7 @@ in
       jdt-language-server
       clang-tools
       marksman
+      qt6.qtdeclarative
 
       # Formatters
       nixfmt
