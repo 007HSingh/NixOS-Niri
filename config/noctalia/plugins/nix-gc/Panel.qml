@@ -55,8 +55,16 @@ Item {
                         SequentialAnimation on opacity {
                             running: isCollecting
                             loops: Animation.Infinite
-                            NumberAnimation { to: 0.2; duration: 600; easing.type: Easing.InOutQuad }
-                            NumberAnimation { to: 1.0; duration: 600; easing.type: Easing.InOutQuad }
+                            NumberAnimation {
+                                to: 0.2
+                                duration: 600
+                                easing.type: Easing.InOutQuad
+                            }
+                            NumberAnimation {
+                                to: 1.0
+                                duration: 600
+                                easing.type: Easing.InOutQuad
+                            }
                         }
                         opacity: 1.0
                     }
@@ -73,7 +81,12 @@ Item {
                 }
 
                 // ── Divider ───────────────────────────────────────────────
-                Rectangle { Layout.fillWidth: true; height: 1; color: Color.mOutline; opacity: 0.5 }
+                Rectangle {
+                    Layout.fillWidth: true
+                    height: 1
+                    color: Color.mOutline
+                    opacity: 0.5
+                }
 
                 // ── Stats Grid ────────────────────────────────────────────
                 GridLayout {
@@ -84,10 +97,22 @@ Item {
 
                     Repeater {
                         model: [
-                            { label: "Store Size",   value: storeSize },
-                            { label: "Store Paths",  value: storePathCount },
-                            { label: "Generations",  value: generationCount },
-                            { label: "Last GC",      value: lastCollected }
+                            {
+                                label: "Store Size",
+                                value: storeSize
+                            },
+                            {
+                                label: "Store Paths",
+                                value: storePathCount
+                            },
+                            {
+                                label: "Generations",
+                                value: generationCount
+                            },
+                            {
+                                label: "Last GC",
+                                value: lastCollected
+                            }
                         ]
 
                         ColumnLayout {
@@ -133,7 +158,9 @@ Item {
                     }
                 }
 
-                Item { Layout.fillHeight: true }
+                Item {
+                    Layout.fillHeight: true
+                }
 
                 // ── Buttons ───────────────────────────────────────────────
                 RowLayout {
@@ -148,7 +175,11 @@ Item {
                         color: refreshMouse.containsMouse ? Color.mSurfaceVariant : "transparent"
                         border.color: Color.mOutline
                         border.width: 1
-                        Behavior on color { ColorAnimation { duration: 150 } }
+                        Behavior on color {
+                            ColorAnimation {
+                                duration: 150
+                            }
+                        }
 
                         Text {
                             anchors.centerIn: parent
@@ -162,7 +193,8 @@ Item {
                             anchors.fill: parent
                             hoverEnabled: true
                             cursorShape: Qt.PointingHandCursor
-                            onClicked: if (m) m.refresh()
+                            onClicked: if (m)
+                                m.refresh()
                         }
                     }
 
@@ -172,24 +204,34 @@ Item {
                         height: 36 * Style.uiScaleRatio
                         radius: 18 * Style.uiScaleRatio
                         color: {
-                            if (isCollecting) return Color.mSurfaceVariant;
-                            if (gcConfirmPending) return gcMouse.containsMouse ? Qt.darker(Color.mError, 1.1) : Color.mError;
+                            if (isCollecting)
+                                return Color.mSurfaceVariant;
+                            if (gcConfirmPending)
+                                return gcMouse.containsMouse ? Qt.darker(Color.mError, 1.1) : Color.mError;
                             return gcMouse.containsMouse ? Qt.darker(Color.mTertiary, 1.1) : Color.mTertiary;
                         }
-                        Behavior on color { ColorAnimation { duration: 200 } }
+                        Behavior on color {
+                            ColorAnimation {
+                                duration: 200
+                            }
+                        }
 
                         Text {
                             anchors.centerIn: parent
                             text: {
-                                if (isCollecting) return "collecting...";
-                                if (gcConfirmPending) return "sure?  confirm";
+                                if (isCollecting)
+                                    return "collecting...";
+                                if (gcConfirmPending)
+                                    return "sure?  confirm";
                                 return "󱄅  collect";
                             }
                             font.family: "Nunito"
                             font.pixelSize: Style.fontSizeS
                             color: {
-                                if (isCollecting) return Color.mOnSurfaceVariant;
-                                if (gcConfirmPending) return Color.mOnError;
+                                if (isCollecting)
+                                    return Color.mOnSurfaceVariant;
+                                if (gcConfirmPending)
+                                    return Color.mOnError;
                                 return Color.mOnTertiary;
                             }
                         }
@@ -198,10 +240,15 @@ Item {
                             anchors.fill: parent
                             hoverEnabled: true
                             cursorShape: isCollecting ? Qt.ArrowCursor : Qt.PointingHandCursor
-                            onClicked: if (m && !isCollecting) m.requestGC()
+                            onClicked: if (m && !isCollecting)
+                                m.requestGC()
                         }
                         scale: gcMouse.pressed ? 0.97 : 1.0
-                        Behavior on scale { NumberAnimation { duration: 100 } }
+                        Behavior on scale {
+                            NumberAnimation {
+                                duration: 100
+                            }
+                        }
                     }
                 }
             }

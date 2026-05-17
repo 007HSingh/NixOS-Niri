@@ -9,7 +9,8 @@ Item {
     property var pluginApi: null
 
     readonly property bool isSpotify: {
-        if (!MediaService.currentPlayer) return false;
+        if (!MediaService.currentPlayer)
+            return false;
         let identity = (MediaService.playerIdentity || "").toLowerCase();
         return identity.includes("spotify");
     }

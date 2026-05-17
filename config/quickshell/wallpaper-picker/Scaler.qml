@@ -8,6 +8,6 @@ QtObject {
     readonly property real ratio: currentWidth / baseWidth
 
     function s(val) {
-        return val * ratio
+        return val * ratio;
     }
 }

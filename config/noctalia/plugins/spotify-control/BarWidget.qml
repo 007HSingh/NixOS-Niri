@@ -25,17 +25,14 @@ Item {
     readonly property bool isPlaying: root.pluginApi?.mainInstance?.isPlaying ?? false
 
     property string tooltipText: {
-        if (!isSpotify) return "Spotify";
+        if (!isSpotify)
+            return "Spotify";
         return MediaService.trackTitle + " — " + MediaService.trackArtist;
     }
     property string tooltipDirection: BarService.getTooltipDirection()
     property bool enabled: true
 
-    readonly property real contentWidth: barIsVertical
-        ? capsuleHeight
-        : (isPlaying
-            ? Math.round(capsuleHeight + Style.marginXS * 2 + Style.fontSizeS * 8)
-            : Math.round(capsuleHeight + Style.marginXS * 2))
+    readonly property real contentWidth: barIsVertical ? capsuleHeight : (isPlaying ? Math.round(capsuleHeight + Style.marginXS * 2 + Style.fontSizeS * 8) : Math.round(capsuleHeight + Style.marginXS * 2))
     readonly property real contentHeight: capsuleHeight
 
     implicitWidth: contentWidth
@@ -64,7 +61,10 @@ Item {
         border.width: Style.capsuleBorderWidth
 
         Behavior on color {
-            ColorAnimation { duration: Style.animationNormal; easing.type: Easing.InOutQuad }
+            ColorAnimation {
+                duration: Style.animationNormal
+                easing.type: Easing.InOutQuad
+            }
         }
 
         // ── Spotify Logo ─────────────────────────────────────────────────
@@ -80,7 +80,10 @@ Item {
                 color: mouseArea.containsMouse ? Color.mOnHover : Color.mPrimary
 
                 Behavior on color {
-                    ColorAnimation { duration: Style.animationNormal; easing.type: Easing.InOutQuad }
+                    ColorAnimation {
+                        duration: Style.animationNormal
+                        easing.type: Easing.InOutQuad
+                    }
                 }
             }
 
@@ -95,7 +98,11 @@ Item {
                 font.pixelSize: Style.fontSizeS
                 color: mouseArea.containsMouse ? Color.mOnHover : Color.mOnSurface
                 width: visible ? implicitWidth : 0
-                Behavior on width { NumberAnimation { duration: Style.animationNormal } }
+                Behavior on width {
+                    NumberAnimation {
+                        duration: Style.animationNormal
+                    }
+                }
             }
         }
     }
@@ -108,7 +115,7 @@ Item {
         hoverEnabled: true
         acceptedButtons: Qt.LeftButton | Qt.RightButton
 
-        onClicked: function(mouse) {
+        onClicked: function (mouse) {
             TooltipService.hide();
             if (mouse.button === Qt.LeftButton) {
                 root.openPanel();

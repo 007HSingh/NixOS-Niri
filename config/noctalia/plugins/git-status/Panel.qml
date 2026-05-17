@@ -52,7 +52,11 @@ Item {
                         font.family: "Maple Mono NF"
                         font.pixelSize: Style.fontSizeXXL
                         color: isDirty ? Color.mError : Color.mTertiary
-                        Behavior on color { ColorAnimation { duration: 300 } }
+                        Behavior on color {
+                            ColorAnimation {
+                                duration: 300
+                            }
+                        }
                     }
 
                     Text {
@@ -66,14 +70,25 @@ Item {
                     }
 
                     Rectangle {
-                        width: 10; height: 10; radius: 5
+                        width: 10
+                        height: 10
+                        radius: 5
                         color: isDirty ? Color.mError : Color.mTertiary
-                        Behavior on color { ColorAnimation { duration: 300 } }
+                        Behavior on color {
+                            ColorAnimation {
+                                duration: 300
+                            }
+                        }
                     }
                 }
 
                 // ── Divider ───────────────────────────────────────────────
-                Rectangle { Layout.fillWidth: true; height: 1; color: Color.mOutline; opacity: 0.5 }
+                Rectangle {
+                    Layout.fillWidth: true
+                    height: 1
+                    color: Color.mOutline
+                    opacity: 0.5
+                }
 
                 // ── Last Commit ───────────────────────────────────────────
                 ColumnLayout {
@@ -127,9 +142,24 @@ Item {
 
                     Repeater {
                         model: [
-                            { icon: "●", label: "staged",    count: stagedCount,    color: Color.mTertiary },
-                            { icon: "●", label: "modified",  count: modifiedCount,  color: Color.mError },
-                            { icon: "●", label: "untracked", count: untrackedCount, color: Color.mOnSurfaceVariant }
+                            {
+                                icon: "●",
+                                label: "staged",
+                                count: stagedCount,
+                                color: Color.mTertiary
+                            },
+                            {
+                                icon: "●",
+                                label: "modified",
+                                count: modifiedCount,
+                                color: Color.mError
+                            },
+                            {
+                                icon: "●",
+                                label: "untracked",
+                                count: untrackedCount,
+                                color: Color.mOnSurfaceVariant
+                            }
                         ]
 
                         RowLayout {
@@ -137,7 +167,12 @@ Item {
                             spacing: 4
                             visible: modelData.count > 0
 
-                            Rectangle { width: 8; height: 8; radius: 4; color: modelData.color }
+                            Rectangle {
+                                width: 8
+                                height: 8
+                                radius: 4
+                                color: modelData.color
+                            }
                             Text {
                                 text: modelData.count + " " + modelData.label
                                 font.family: "Maple Mono NF"
@@ -148,7 +183,9 @@ Item {
                     }
                 }
 
-                Item { Layout.fillHeight: true }
+                Item {
+                    Layout.fillHeight: true
+                }
 
                 // ── Refresh Button ────────────────────────────────────────
                 Rectangle {
@@ -159,12 +196,20 @@ Item {
                     color: refreshMouse.containsMouse ? Color.mSurfaceVariant : "transparent"
                     border.color: Color.mOutline
                     border.width: 1
-                    Behavior on color { ColorAnimation { duration: 150 } }
+                    Behavior on color {
+                        ColorAnimation {
+                            duration: 150
+                        }
+                    }
 
                     RowLayout {
                         anchors.centerIn: parent
                         spacing: 6
-                        Text { text: "↻"; font.pixelSize: 14; color: Color.mOnSurfaceVariant }
+                        Text {
+                            text: "↻"
+                            font.pixelSize: 14
+                            color: Color.mOnSurfaceVariant
+                        }
                         Text {
                             text: "refresh"
                             font.family: "Nunito"
@@ -178,7 +223,8 @@ Item {
                         anchors.fill: parent
                         hoverEnabled: true
                         cursorShape: Qt.PointingHandCursor
-                        onClicked: if (m) m.refresh()
+                        onClicked: if (m)
+                            m.refresh()
                     }
                 }
             }

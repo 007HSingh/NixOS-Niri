@@ -30,7 +30,8 @@ Item {
     }
 
     function refresh() {
-        if (root.isRefreshing) return;
+        if (root.isRefreshing)
+            return;
         root.isRefreshing = true;
         branchProc.running = true;
     }
@@ -42,10 +43,15 @@ Item {
         running: false
         property var lines: []
         stdout: SplitParser {
-            onRead: line => { branchProc.lines.push(line.trim()); }
+            onRead: line => {
+                branchProc.lines.push(line.trim());
+            }
         }
         onRunningChanged: {
-            if (running) { lines = []; return; }
+            if (running) {
+                lines = [];
+                return;
+            }
             var b = lines.filter(l => l.length > 0).join("");
             root.branch = b.length > 0 ? b : "—";
             lines = [];
@@ -60,16 +66,25 @@ Item {
         running: false
         property var lines: []
         stdout: SplitParser {
-            onRead: line => { if (line.length > 0) statusProc.lines.push(line); }
+            onRead: line => {
+                if (line.length > 0)
+                    statusProc.lines.push(line);
+            }
         }
         onRunningChanged: {
-            if (running) { lines = []; return; }
+            if (running) {
+                lines = [];
+                return;
+            }
             var m = 0, u = 0, s = 0;
             for (var i = 0; i < lines.length; i++) {
                 var xy = lines[i].substring(0, 2);
-                if (xy === "??") u++;
-                else if (xy[0] !== " " && xy[0] !== "?") s++;
-                else m++;
+                if (xy === "??")
+                    u++;
+                else if (xy[0] !== " " && xy[0] !== "?")
+                    s++;
+                else
+                    m++;
             }
             root.modifiedCount = m;
             root.untrackedCount = u;
@@ -86,14 +101,20 @@ Item {
         running: false
         property var lines: []
         stdout: SplitParser {
-            onRead: line => { if (line.trim().length > 0) commitProc.lines.push(line.trim()); }
+            onRead: line => {
+                if (line.trim().length > 0)
+                    commitProc.lines.push(line.trim());
+            }
         }
         onRunningChanged: {
-            if (running) { lines = []; return; }
+            if (running) {
+                lines = [];
+                return;
+            }
             if (lines.length > 0) {
                 var parts = lines[0].split("\x1f");
                 root.lastCommitHash = parts.length > 0 ? parts[0] : "";
-                root.lastCommitMsg  = parts.length > 1 ? parts[1] : "";
+                root.lastCommitMsg = parts.length > 1 ? parts[1] : "";
                 root.lastCommitTime = parts.length > 2 ? parts[2] : "";
             }
             lines = [];
