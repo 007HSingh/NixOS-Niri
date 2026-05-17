@@ -59,7 +59,7 @@ return {
 		"smjonas/inc-rename.nvim",
 		cmd = "IncRename",
 		config = function()
-			require("inc_rename").setup()
+			require("inc_rename").setup({})
 		end,
 	},
 	{
@@ -70,5 +70,52 @@ return {
 			vim.g.rooter_silent_chdir = 1
 			vim.g.rooter_resolve_links = 1
 		end,
+	},
+
+	-- Cord
+	{
+		"vyfor/cord.nvim",
+		build = "cargo build --release",
+		event = "VeryLazy",
+		opts = {
+			display = {
+				theme = "catppuccin",
+				flavor = "dark",
+			},
+		},
+	},
+
+	{
+		"luukvbaal/statuscol.nvim",
+		event = "BufReadPost",
+		config = function()
+			local builtin = require("statuscol.builtin")
+			require("statuscol").setup({
+				relculright = true,
+				segments = {
+					{ text = { builtin.foldfunc }, click = "v:lua.ScFa" },
+					{ text = { "%s" }, click = "v:lua.ScSa" },
+					{ text = { builtin.lnumfunc, " " }, click = "v:lua.ScLa" },
+				},
+			})
+		end,
+	},
+
+	{
+		"eandrju/cellular-automaton.nvim",
+		cmd = "CellularAutomaton",
+		keys = {
+			{
+				"<leader>fml",
+				function()
+					if vim.bo.filetype == "" then
+						vim.notify("No filetype — open a file first", vim.log.levels.WARN)
+						return
+					end
+					vim.cmd("CellularAutomaton make_it_rain")
+				end,
+				desc = "Make it rain",
+			},
+		},
 	},
 }

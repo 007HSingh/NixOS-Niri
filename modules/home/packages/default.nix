@@ -18,6 +18,8 @@ in
     lib.mkEnableOption "user packages (CLI tools, LSPs, formatters, linters)";
 
   config = lib.mkIf cfg.enable {
+    services.wluma.enable = true;
+
     programs.nix-index-database.comma.enable = true;
 
     home.packages = with pkgs; [

@@ -27,6 +27,10 @@
     "branch": "main",
     "commit": "426dbebe06b5c69fd846ceb17b42e12f890aedf1"
   },
+  "cellular-automaton.nvim": {
+    "branch": "main",
+    "commit": "1606e9d5d04ff254023c3f3c62842d065708d6d3"
+  },
   "cmp-buffer": {
     "branch": "main",
     "commit": "b74fab3656eea9de20a9b8116afa3cfc4ec09657"
@@ -50,6 +54,10 @@
   "conform.nvim": {
     "branch": "master",
     "commit": "18aeab3d63d350dcf44d64c462cc489a3412af40"
+  },
+  "cord.nvim": {
+    "branch": "master",
+    "commit": "0be090969e978f7442870ef227e09eff7bf3480d"
   },
   "diffview.nvim": {
     "branch": "main",
@@ -270,6 +278,10 @@
   "render-markdown.nvim": {
     "branch": "main",
     "commit": "629eb9533ec989d9d5c6cab8f3ad5372422c24e0"
+  },
+  "statuscol.nvim": {
+    "branch": "main",
+    "commit": "c46172d0911aa5d49ba5f39f4351d1bb7aa289cc"
   },
   "telescope-dap.nvim": {
     "branch": "master",
