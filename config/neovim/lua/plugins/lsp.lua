@@ -218,6 +218,9 @@ return {
 						},
 					},
 				},
+				qmlls = {
+					cmd = { "qmlls" },
+				},
 				pyright = {
 					settings = {
 						python = {
@@ -353,6 +356,7 @@ return {
 					},
 				},
 				formatters_by_ft = {
+					qml = { "qmlformat" },
 					lua = { "stylua" },
 					python = { "black" },
 					javascript = { "prettier" },

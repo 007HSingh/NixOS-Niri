@@ -228,8 +228,8 @@
     "commit": "07f541fcaa4a5ae019598240362449ab7e9812b3"
   },
   "nvim-treesitter": {
-    "branch": "main",
-    "commit": "4916d6592ede8c07973490d9322f187e07dfefac"
+    "branch": "master",
+    "commit": "cf12346a3414fa1b06af75c79faebe7f76df080a"
   },
   "nvim-ufo": {
     "branch": "main",
