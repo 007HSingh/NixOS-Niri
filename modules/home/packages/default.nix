@@ -61,44 +61,6 @@ in
 
       # Git tools
       git-absorb
-
-      # LSP servers
-      nixd
-      lua-language-server
-      typescript-language-server
-      vscode-langservers-extracted # html, css, json, eslint
-      yaml-language-server
-      dockerfile-language-server
-      docker-compose-language-service
-      pyright
-      rust-analyzer
-      bash-language-server
-      jdt-language-server
-      clang-tools
-      marksman
-
-      # Formatters
-      nixfmt
-      stylua
-      prettier
-      black
-      rustfmt
-      shfmt
-      kdlfmt
-      google-java-format
-
-      # Linters
-      luajitPackages.luacheck
-      shellcheck
-      python314Packages.flake8
-      eslint_d
-      markdownlint-cli2
-      statix
-
-      # ── Neovim: CLI tools (Telescope, DAP, etc.) ─────────────────────────────
-      ripgrep
-      fd
-      nodejs
     ];
 
     home.sessionVariables = {
