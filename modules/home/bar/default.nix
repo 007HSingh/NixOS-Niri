@@ -152,7 +152,7 @@ in
         idle.enabled = true;
         templates = {
           kitty = false;
-          niri = true;
+          niri = false;
           discord = false;
         };
       };

@@ -43,7 +43,7 @@ layout {
         off
     }
     border {
-        off
+        width 1.5
     }
     shadow {
         on
@@ -55,13 +55,19 @@ layout {
     struts {
 
     }
+    tab-indicator {
+        width 3.0
+        gap 4.0
+        corner-radius 2.0
+        place-within-column true
+    }
 }
 spawn-at-startup "noctalia-shell"
 blur {
-    passes 3
-    offset 2.5
-    noise 0.02
-    saturation 1.1
+    passes 4
+    offset 2.0
+    noise 0.015
+    saturation 1.15
 }
 hotkey-overlay {
     skip-at-startup
@@ -81,6 +87,26 @@ animations {
     workspace-switch {
         duration-ms 450
         curve "ease-out-expo"
+    }
+    window-movement {
+        duration-ms 300
+        curve "ease-out-expo"
+    }
+    window-resize {
+        duration-ms 300
+        curve "ease-out-expo"
+    }
+    horizontal-view-movement {
+        duration-ms 350
+        curve "ease-out-expo"
+    }
+    config-notification-open-close {
+        duration-ms 300
+        curve "ease-out-expo"
+    }
+    screenshot-ui-open {
+        duration-ms 250
+        curve "ease-out-quad"
     }
 }
 window-rule {
@@ -108,6 +134,16 @@ window-rule {
 window-rule {
     match app-id="kitty"
     opacity 1.0
+    border {
+        off
+    }
+    background-effect {
+        blur true
+        xray true
+    }
+}
+window-rule {
+    match app-id="^discord$"
     border {
         off
     }
@@ -141,6 +177,34 @@ window-rule {
         blur true
         xray false
     }
+}
+window-rule {
+    match is-floating=true
+    default-column-width {
+        fixed 800
+    }
+    opacity 0.96
+}
+window-rule {
+    match app-id="^jetbrains-"
+    match app-id="^android-studio"
+    open-maximized true
+}
+window-rule {
+    match app-id="^wofi$"
+    open-floating true
+    opacity 1.0
+}
+window-rule {
+    match title="^Picture.in.Picture$"
+    open-floating true
+    default-column-width {
+        fixed 480
+    }
+}
+overview {
+    zoom 0.45
+    backdrop-color "#11111b"
 }
 binds {
     Mod+Shift+Slash {
