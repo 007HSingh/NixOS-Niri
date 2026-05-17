@@ -58,7 +58,6 @@ in
       ripgrep
       fd
       nodejs
-      vimPlugins.treesitter-modules-nvim
     ];
 
     # Symlink ~/.config/nvim → nixos-config/config/neovim (out-of-store, mutable)
