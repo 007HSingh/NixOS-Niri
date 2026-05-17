@@ -39,8 +39,6 @@ in
           markdown
           markdown_inline
           regex
-          vim
-          vimdoc
           rust
           java
           nix
