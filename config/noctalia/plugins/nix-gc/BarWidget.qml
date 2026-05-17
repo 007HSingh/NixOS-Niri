@@ -37,7 +37,10 @@ Item {
     signal exited
     signal clicked
 
-    function openPanel() { if (pluginApi) pluginApi.openPanel(root.screen, root); }
+    function openPanel() {
+        if (pluginApi)
+            pluginApi.openPanel(root.screen, root);
+    }
 
     Rectangle {
         anchors.fill: parent
@@ -46,7 +49,11 @@ Item {
         border.color: Style.capsuleBorderColor
         border.width: Style.capsuleBorderWidth
 
-        Behavior on color { ColorAnimation { duration: Style.animationNormal } }
+        Behavior on color {
+            ColorAnimation {
+                duration: Style.animationNormal
+            }
+        }
 
         Row {
             anchors.centerIn: parent
@@ -63,8 +70,16 @@ Item {
                 SequentialAnimation on opacity {
                     running: isCollecting
                     loops: Animation.Infinite
-                    NumberAnimation { to: 0.3; duration: 600; easing.type: Easing.InOutQuad }
-                    NumberAnimation { to: 1.0; duration: 600; easing.type: Easing.InOutQuad }
+                    NumberAnimation {
+                        to: 0.3
+                        duration: 600
+                        easing.type: Easing.InOutQuad
+                    }
+                    NumberAnimation {
+                        to: 1.0
+                        duration: 600
+                        easing.type: Easing.InOutQuad
+                    }
                 }
                 opacity: 1.0
             }

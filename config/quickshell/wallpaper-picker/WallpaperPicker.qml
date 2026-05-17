@@ -10,7 +10,7 @@ Item {
     width: Screen.width
 
     // Signal to request window close
-    signal windowCloseRequested()
+    signal windowCloseRequested
 
     // -------------------------------------------------------------------------
     // RESPONSIVE SCALING
@@ -21,10 +21,12 @@ Item {
     }
 
     function s(val) {
-        return scaler.s(val)
+        return scaler.s(val);
     }
 
-    CatppuccinColors { id: _theme }
+    CatppuccinColors {
+        id: _theme
+    }
 
     // -------------------------------------------------------------------------
     // PROPERTIES
@@ -40,7 +42,11 @@ Item {
     property string currentFilter: "All"
     property string _lastFilter: "All"
     readonly property var filterData: [
-        { name: "All",    hex: "", label: "All"    }
+        {
+            name: "All",
+            hex: "",
+            label: "All"
+        }
     ]
 
     // Local state
@@ -58,23 +64,21 @@ Item {
     readonly property string homeDir: "file://" + Quickshell.env("HOME")
     readonly property string thumbDir: homeDir + "/.cache/wallpaper_picker/thumbs"
     readonly property string srcDir: {
-        const dir = Quickshell.env("WALLPAPER_DIR")
-        return (dir && dir !== "")
-            ? dir
-            : Quickshell.env("HOME") + "/.config/wallpapers"
+        const dir = Quickshell.env("WALLPAPER_DIR");
+        return (dir && dir !== "") ? dir : Quickshell.env("HOME") + "/.config/wallpapers";
     }
 
     // -------------------------------------------------------------------------
     // APPLY WALLPAPER
     // -------------------------------------------------------------------------
     function applyWallpaper(safeFileName) {
-        if (!safeFileName || window.isApplying) return
+        if (!safeFileName || window.isApplying)
+            return;
+        window.isApplying = true;
+        window.targetWallName = safeFileName;
 
-        window.isApplying = true
-        window.targetWallName = safeFileName
-
-        const originalFile = window.srcDir + "/" + safeFileName
-        const noctaliaBin = "/etc/profiles/per-user/harsh/bin/noctalia-shell"
+        const originalFile = window.srcDir + "/" + safeFileName;
+        const noctaliaBin = "/etc/profiles/per-user/harsh/bin/noctalia-shell";
 
         const fullScript = `
             (
@@ -84,7 +88,7 @@ Item {
 
                 export WAYLAND_DISPLAY="\${WAYLAND_DISPLAY:-${Quickshell.env("WAYLAND_DISPLAY") || "wayland-1"}}"
                 export XDG_RUNTIME_DIR="\${XDG_RUNTIME_DIR:-${Quickshell.env("XDG_RUNTIME_DIR") || "/run/user/1000"}}"
-                
+
                 echo "Env: WAYLAND_DISPLAY=$WAYLAND_DISPLAY, XDG_RUNTIME_DIR=$XDG_RUNTIME_DIR" >> /tmp/wallpaper_picker.log
 
                 # Try to set the wallpaper
@@ -100,13 +104,13 @@ Item {
                 echo 'close' > /tmp/qs_widget_state
                 echo "Done." >> /tmp/wallpaper_picker.log
             ) </dev/null >/dev/null 2>&1 & disown
-        `
+        `;
 
-        Quickshell.execDetached(["bash", "-c",
-            `printf '%s' ${JSON.stringify(originalFile)} > /tmp/qs_wall_path && ` + fullScript
-        ])
+        Quickshell.execDetached(["bash", "-c", `printf '%s' ${JSON.stringify(originalFile)} > /tmp/qs_wall_path && ` + fullScript]);
 
-        Qt.callLater(() => { window.isApplying = false })
+        Qt.callLater(() => {
+            window.isApplying = false;
+        });
     }
 
     // -------------------------------------------------------------------------
@@ -114,12 +118,12 @@ Item {
     // -------------------------------------------------------------------------
     onVisibleChanged: {
         if (!visible) {
-            window.initialFocusSet = false
-            window.isApplying = false
+            window.initialFocusSet = false;
+            window.isApplying = false;
         } else {
-            window.isFilterAnimating = true
-            filterAnimationTimer.restart()
-            window.applyFilters(true)
+            window.isFilterAnimating = true;
+            filterAnimationTimer.restart();
+            window.applyFilters(true);
         }
     }
 
@@ -127,56 +131,64 @@ Item {
     // HELPERS
     // -------------------------------------------------------------------------
     function getCleanName(name) {
-        if (!name) return ""
-        let clean = String(name)
-        return clean.startsWith("000_") ? clean.substring(4) : clean
+        if (!name)
+            return "";
+        let clean = String(name);
+        return clean.startsWith("000_") ? clean.substring(4) : clean;
     }
 
     function isDownloaded(name) {
-        if (!name) return false
+        if (!name)
+            return false;
         for (let i = 0; i < srcFolderModel.count; i++) {
-            if (srcFolderModel.get(i, "fileName") === name) return true
+            if (srcFolderModel.get(i, "fileName") === name)
+                return true;
         }
-        return false
+        return false;
     }
 
     onWidgetArgChanged: {
         if (widgetArg !== "") {
-            targetWallName = widgetArg
-            initialFocusSet = false
-            tryFocus()
+            targetWallName = widgetArg;
+            initialFocusSet = false;
+            tryFocus();
         }
     }
 
     function executeFocusRestore(targetIndex, isSearchRestore, requirePositioning) {
-        let targetModel = localProxyModel
+        let targetModel = localProxyModel;
         if (targetIndex !== -1 && targetIndex < targetModel.count) {
-            window.isModelChanging = true
+            window.isModelChanging = true;
             if (requirePositioning) {
-                view.forceLayout()
-                view.positionViewAtIndex(targetIndex, ListView.Center)
+                view.forceLayout();
+                view.positionViewAtIndex(targetIndex, ListView.Center);
             }
-            view.currentIndex = targetIndex
-            if (isSearchRestore) window.searchIndexRestored = true
-            window.isModelChanging = false
-            window.initialFocusSet = true
+            view.currentIndex = targetIndex;
+            if (isSearchRestore)
+                window.searchIndexRestored = true;
+            window.isModelChanging = false;
+            window.initialFocusSet = true;
         } else if (isSearchRestore) {
-            window.searchIndexRestored = true
+            window.searchIndexRestored = true;
         }
     }
 
     function tryFocus() {
-        if (initialFocusSet) return
+        if (initialFocusSet)
+            return;
         if (localProxyModel.count > 0) {
-            let foundIndex = -1
-            let cleanTarget = window.getCleanName(targetWallName)
+            let foundIndex = -1;
+            let cleanTarget = window.getCleanName(targetWallName);
             if (cleanTarget !== "") {
                 for (let i = 0; i < localProxyModel.count; i++) {
-                    let fname = localProxyModel.get(i).fileName || ""
-                    if (window.getCleanName(fname) === cleanTarget) { foundIndex = i; break }
+                    let fname = localProxyModel.get(i).fileName || "";
+                    if (window.getCleanName(fname) === cleanTarget) {
+                        foundIndex = i;
+                        break;
+                    }
                 }
             }
-            window.executeFocusRestore(foundIndex !== -1 ? foundIndex : 0, false, true)
+            window.executeFocusRestore(foundIndex !== -1 ? foundIndex : 0, false, true);
         }
     }
 
@@ -184,90 +196,106 @@ Item {
     // COLOR FILTERING
     // -------------------------------------------------------------------------
     function checkItemMatchesFilter(fileName, filter) {
-        if (filter === "All")   return true
-        return false
+        if (filter === "All")
+            return true;
+        return false;
     }
 
     // -------------------------------------------------------------------------
     // NAVIGATION HELPERS
     // -------------------------------------------------------------------------
     function stepToNextValidIndex(direction) {
-        let targetModel = localProxyModel
-        if (!targetModel || targetModel.count === 0) return
-        let start = view.currentIndex
-        let found = -1
+        let targetModel = localProxyModel;
+        if (!targetModel || targetModel.count === 0)
+            return;
+        let start = view.currentIndex;
+        let found = -1;
 
         if (direction === 1) {
             for (let i = start + 1; i < targetModel.count; i++) {
-                let fname = targetModel.get(i).fileName || ""
-                if (checkItemMatchesFilter(fname, window.currentFilter)) { found = i; break }
+                let fname = targetModel.get(i).fileName || "";
+                if (checkItemMatchesFilter(fname, window.currentFilter)) {
+                    found = i;
+                    break;
+                }
             }
         } else {
             for (let i = start - 1; i >= 0; i--) {
-                let fname = targetModel.get(i).fileName || ""
-                if (checkItemMatchesFilter(fname, window.currentFilter)) { found = i; break }
-            }
-        }
-
-        if (found !== -1) { view.currentIndex = found; return }
-
-        const filterOrder = ["All"]
-        let currentFilterIdx = filterOrder.indexOf(window.currentFilter)
-
-        if (currentFilterIdx === -1) {
-            let current = start
-            for (let i = 0; i < targetModel.count; i++) {
-                current = (current + direction + targetModel.count) % targetModel.count
-                let fname = targetModel.get(current).fileName || ""
+                let fname = targetModel.get(i).fileName || "";
                 if (checkItemMatchesFilter(fname, window.currentFilter)) {
-                    view.currentIndex = current; return
+                    found = i;
+                    break;
                 }
             }
-            return
         }
 
-        let nextFilterIdx = currentFilterIdx + direction
+        if (found !== -1) {
+            view.currentIndex = found;
+            return;
+        }
+
+        const filterOrder = ["All"];
+        let currentFilterIdx = filterOrder.indexOf(window.currentFilter);
+
+        if (currentFilterIdx === -1) {
+            let current = start;
+            for (let i = 0; i < targetModel.count; i++) {
+                current = (current + direction + targetModel.count) % targetModel.count;
+                let fname = targetModel.get(current).fileName || "";
+                if (checkItemMatchesFilter(fname, window.currentFilter)) {
+                    view.currentIndex = current;
+                    return;
+                }
+            }
+            return;
+        }
+
+        let nextFilterIdx = currentFilterIdx + direction;
         if (nextFilterIdx >= 0 && nextFilterIdx < filterOrder.length) {
-            window.jumpToLastOnFilterChange = (direction === -1)
-            window.currentFilter = filterOrder[nextFilterIdx]
+            window.jumpToLastOnFilterChange = (direction === -1);
+            window.currentFilter = filterOrder[nextFilterIdx];
         }
     }
 
     function cycleFilter(direction) {
-        let currentIdx = -1
+        let currentIdx = -1;
         for (let i = 0; i < window.filterData.length; i++) {
-            if (window.filterData[i].name === window.currentFilter) { currentIdx = i; break }
+            if (window.filterData[i].name === window.currentFilter) {
+                currentIdx = i;
+                break;
+            }
         }
         if (currentIdx !== -1) {
-            let nextIdx = (currentIdx + direction + window.filterData.length) % window.filterData.length
-            window.currentFilter = window.filterData[nextIdx].name
+            let nextIdx = (currentIdx + direction + window.filterData.length) % window.filterData.length;
+            window.currentFilter = window.filterData[nextIdx].name;
         }
     }
 
     function applyFilters(forceSnap) {
-        let targetModel = localProxyModel
-        if (!targetModel || targetModel.count === 0) return
-
-        let firstValidIndex = -1
-        let lastValidIndex  = -1
-        let cleanTarget  = window.getCleanName(window.targetWallName)
-        let targetIndex  = -1
+        let targetModel = localProxyModel;
+        if (!targetModel || targetModel.count === 0)
+            return;
+        let firstValidIndex = -1;
+        let lastValidIndex = -1;
+        let cleanTarget = window.getCleanName(window.targetWallName);
+        let targetIndex = -1;
 
         for (let i = 0; i < targetModel.count; i++) {
-            let fname = targetModel.get(i).fileName || ""
+            let fname = targetModel.get(i).fileName || "";
             if (checkItemMatchesFilter(fname, window.currentFilter)) {
-                if (firstValidIndex === -1) firstValidIndex = i
-                lastValidIndex = i
-                if (cleanTarget !== "" && window.getCleanName(fname) === cleanTarget) targetIndex = i
+                if (firstValidIndex === -1)
+                    firstValidIndex = i;
+                lastValidIndex = i;
+                if (cleanTarget !== "" && window.getCleanName(fname) === cleanTarget)
+                    targetIndex = i;
             }
         }
 
-        let indexToFocus = targetIndex !== -1 ? targetIndex
-                         : window.jumpToLastOnFilterChange && lastValidIndex !== -1 ? lastValidIndex
-                         : firstValidIndex
+        let indexToFocus = targetIndex !== -1 ? targetIndex : window.jumpToLastOnFilterChange && lastValidIndex !== -1 ? lastValidIndex : firstValidIndex;
 
-        window.jumpToLastOnFilterChange = false
-        if (indexToFocus !== -1) window.executeFocusRestore(indexToFocus, false, forceSnap === true)
+        window.jumpToLastOnFilterChange = false;
+        if (indexToFocus !== -1)
+            window.executeFocusRestore(indexToFocus, false, forceSnap === true);
     }
 
     // -------------------------------------------------------------------------
@@ -287,10 +315,11 @@ Item {
         sequence: "Return"
         enabled: !window.isApplying
         onActivated: {
-            let targetModel = localProxyModel
+            let targetModel = localProxyModel;
             if (view.currentIndex >= 0 && view.currentIndex < targetModel.count) {
-                let fname = targetModel.get(view.currentIndex).fileName
-                if (fname) window.applyWallpaper(String(fname))
+                let fname = targetModel.get(view.currentIndex).fileName;
+                if (fname)
+                    window.applyWallpaper(String(fname));
             }
         }
     }
@@ -299,62 +328,93 @@ Item {
         enabled: !window.isApplying
         onActivated: window.windowCloseRequested()
     }
-    Shortcut { sequence: "Tab";    enabled: !window.isApplying; onActivated: window.cycleFilter(1)  }
-    Shortcut { sequence: "Backtab"; enabled: !window.isApplying; onActivated: window.cycleFilter(-1) }
+    Shortcut {
+        sequence: "Tab"
+        enabled: !window.isApplying
+        onActivated: window.cycleFilter(1)
+    }
+    Shortcut {
+        sequence: "Backtab"
+        enabled: !window.isApplying
+        onActivated: window.cycleFilter(-1)
+    }
 
     // -------------------------------------------------------------------------
     // MODELS
     // -------------------------------------------------------------------------
-    ListModel { id: localProxyModel  }
+    ListModel {
+        id: localProxyModel
+    }
 
     readonly property var activeModel: localProxyModel
 
     FolderListModel {
         id: srcFolderModel
         folder: "file://" + window.srcDir
-        nameFilters: ["*.jpg","*.jpeg","*.png","*.webp"]
+        nameFilters: ["*.jpg", "*.jpeg", "*.png", "*.webp"]
         showDirs: false
         sortField: FolderListModel.Name
         onCountChanged: {
-            window.syncLocalModel()
+            window.syncLocalModel();
         }
-        onStatusChanged: { if (status === FolderListModel.Ready) window.syncLocalModel() }
+        onStatusChanged: {
+            if (status === FolderListModel.Ready)
+                window.syncLocalModel();
+        }
     }
 
     function syncLocalModel() {
-        let startIdx = localProxyModel.count
-        let endIdx   = srcFolderModel.count
+        let startIdx = localProxyModel.count;
+        let endIdx = srcFolderModel.count;
         if (endIdx < startIdx) {
-            window.isModelChanging = true; localProxyModel.clear(); startIdx = 0; window.isModelChanging = false
+            window.isModelChanging = true;
+            localProxyModel.clear();
+            startIdx = 0;
+            window.isModelChanging = false;
         }
         for (let i = startIdx; i < endIdx; i++) {
-            let fn = srcFolderModel.get(i, "fileName")
-            let fu = srcFolderModel.get(i, "fileUrl")
-            if (fn !== undefined) localProxyModel.append({ "fileName": fn, "fileUrl": String(fu) })
+            let fn = srcFolderModel.get(i, "fileName");
+            let fu = srcFolderModel.get(i, "fileUrl");
+            if (fn !== undefined)
+                localProxyModel.append({
+                    "fileName": fn,
+                    "fileUrl": String(fu)
+                });
         }
         if (!window.initialFocusSet && localProxyModel.count > 0)
-            window.tryFocus()
+            window.tryFocus();
     }
 
     // -------------------------------------------------------------------------
     // TIMERS
     // -------------------------------------------------------------------------
-    Timer { id: scrollThrottle; interval: 150 }
+    Timer {
+        id: scrollThrottle
+        interval: 150
+    }
 
     property bool isFilterAnimating: false
-    Timer { id: filterAnimationTimer; interval: 800; onTriggered: window.isFilterAnimating = false }
+    Timer {
+        id: filterAnimationTimer
+        interval: 800
+        onTriggered: window.isFilterAnimating = false
+    }
 
     property bool isItemAnimating: false
-    Timer { id: itemAnimationTimer; interval: 500; onTriggered: window.isItemAnimating = false }
+    Timer {
+        id: itemAnimationTimer
+        interval: 500
+        onTriggered: window.isItemAnimating = false
+    }
 
     // -------------------------------------------------------------------------
     // CAROUSEL LIST VIEW
     // -------------------------------------------------------------------------
-    readonly property real itemWidth:   window.s(400)
-    readonly property real itemHeight:  window.s(420)
+    readonly property real itemWidth: window.s(400)
+    readonly property real itemHeight: window.s(420)
     readonly property real borderWidth: window.s(3)
-    readonly property real spacing:     window.s(10)
-    readonly property real skewFactor:  -0.35
+    readonly property real spacing: window.s(10)
+    readonly property real skewFactor: -0.35
 
     ListView {
         id: view
@@ -363,8 +423,18 @@ Item {
         opacity: window.isReady ? 1.0 : 0.0
         anchors.margins: window.isReady ? 0 : window.s(40)
 
-        Behavior on opacity        { NumberAnimation { duration: 600; easing.type: Easing.OutQuart } }
-        Behavior on anchors.margins { NumberAnimation { duration: 700; easing.type: Easing.OutExpo  } }
+        Behavior on opacity {
+            NumberAnimation {
+                duration: 600
+                easing.type: Easing.OutQuart
+            }
+        }
+        Behavior on anchors.margins {
+            NumberAnimation {
+                duration: 700
+                easing.type: Easing.OutExpo
+            }
+        }
 
         spacing: 0
         orientation: ListView.Horizontal
@@ -372,31 +442,51 @@ Item {
         interactive: !window.isApplying
         cacheBuffer: 2000
 
-        highlightRangeMode:      ListView.StrictlyEnforceRange
+        highlightRangeMode: ListView.StrictlyEnforceRange
         preferredHighlightBegin: (width / 2) - ((window.itemWidth * 1.5 + window.spacing) / 2)
-        preferredHighlightEnd:   (width / 2) + ((window.itemWidth * 1.5 + window.spacing) / 2)
-        highlightMoveDuration:   window.initialFocusSet ? 500 : 0
+        preferredHighlightEnd: (width / 2) + ((window.itemWidth * 1.5 + window.spacing) / 2)
+        highlightMoveDuration: window.initialFocusSet ? 500 : 0
         focus: true
 
         onCurrentIndexChanged: {
-            window.isItemAnimating = true
-            itemAnimationTimer.restart()
+            window.isItemAnimating = true;
+            itemAnimationTimer.restart();
         }
 
         add: Transition {
             enabled: window.initialFocusSet
             ParallelAnimation {
-                NumberAnimation { property: "opacity"; from: 0; to: 1; duration: 400; easing.type: Easing.OutCubic }
-                NumberAnimation { property: "scale";   from: 0.5; to: 1; duration: 400; easing.type: Easing.OutBack }
+                NumberAnimation {
+                    property: "opacity"
+                    from: 0
+                    to: 1
+                    duration: 400
+                    easing.type: Easing.OutCubic
+                }
+                NumberAnimation {
+                    property: "scale"
+                    from: 0.5
+                    to: 1
+                    duration: 400
+                    easing.type: Easing.OutBack
+                }
             }
         }
         addDisplaced: Transition {
             enabled: window.initialFocusSet
-            NumberAnimation { property: "x"; duration: 400; easing.type: Easing.OutCubic }
+            NumberAnimation {
+                property: "x"
+                duration: 400
+                easing.type: Easing.OutCubic
+            }
         }
 
-        header: Item { width: Math.max(0, (view.width / 2) - ((window.itemWidth * 1.5) / 2)) }
-        footer: Item { width: Math.max(0, (view.width / 2) - ((window.itemWidth * 1.5) / 2)) }
+        header: Item {
+            width: Math.max(0, (view.width / 2) - ((window.itemWidth * 1.5) / 2))
+        }
+        footer: Item {
+            width: Math.max(0, (view.width / 2) - ((window.itemWidth * 1.5) / 2))
+        }
 
         model: window.activeModel
 
@@ -404,19 +494,25 @@ Item {
         MouseArea {
             anchors.fill: parent
             acceptedButtons: Qt.NoButton
-            onWheel: (wheel) => {
-                if (window.isApplying) { wheel.accepted = true; return }
-                if (scrollThrottle.running) { wheel.accepted = true; return }
-                let dx = wheel.angleDelta.x
-                let dy = wheel.angleDelta.y
-                let delta = Math.abs(dx) > Math.abs(dy) ? dx : dy
-                scrollAccum += delta
-                if (Math.abs(scrollAccum) >= scrollThreshold) {
-                    window.stepToNextValidIndex(scrollAccum > 0 ? -1 : 1)
-                    scrollAccum = 0
-                    scrollThrottle.start()
+            onWheel: wheel => {
+                if (window.isApplying) {
+                    wheel.accepted = true;
+                    return;
                 }
-                wheel.accepted = true
+                if (scrollThrottle.running) {
+                    wheel.accepted = true;
+                    return;
+                }
+                let dx = wheel.angleDelta.x;
+                let dy = wheel.angleDelta.y;
+                let delta = Math.abs(dx) > Math.abs(dy) ? dx : dy;
+                scrollAccum += delta;
+                if (Math.abs(scrollAccum) >= scrollThreshold) {
+                    window.stepToNextValidIndex(scrollAccum > 0 ? -1 : 1);
+                    scrollAccum = 0;
+                    scrollThrottle.start();
+                }
+                wheel.accepted = true;
             }
         }
 
@@ -428,33 +524,56 @@ Item {
             readonly property bool isCurrent: ListView.isCurrentItem
             readonly property bool isVisuallyEnlarged: isCurrent
             readonly property string thumbPath: window.thumbDir + "/" + safeFileName
-            readonly property bool matchesFilter: window.checkItemMatchesFilter(
-                safeFileName, window.currentFilter)
+            readonly property bool matchesFilter: window.checkItemMatchesFilter(safeFileName, window.currentFilter)
 
-            readonly property real targetWidth:  isVisuallyEnlarged ? (window.itemWidth * 1.5) : (window.itemWidth * 0.5)
+            readonly property real targetWidth: isVisuallyEnlarged ? (window.itemWidth * 1.5) : (window.itemWidth * 0.5)
             readonly property real targetHeight: isVisuallyEnlarged ? (window.itemHeight + window.s(30)) : window.itemHeight
 
             readonly property bool isNearCenter: Math.abs(view.currentIndex - index) <= 3
 
-            width:   matchesFilter ? (targetWidth + window.spacing) : 0
+            width: matchesFilter ? (targetWidth + window.spacing) : 0
             visible: width > 0.1 || opacity > 0.01
             opacity: matchesFilter ? (isVisuallyEnlarged ? 1.0 : 0.6) : 0.0
-            scale:   matchesFilter ? 1.0 : 0.5
-            height:  matchesFilter ? targetHeight : 0
+            scale: matchesFilter ? 1.0 : 0.5
+            height: matchesFilter ? targetHeight : 0
             anchors.verticalCenter: parent ? parent.verticalCenter : undefined
 
             anchors.verticalCenterOffset: window.s(15)
             z: isVisuallyEnlarged ? 10 : 1
 
-            Behavior on scale   { enabled: window.initialFocusSet; NumberAnimation { duration: 500; easing.type: Easing.InOutQuad } }
-            Behavior on width   { enabled: window.initialFocusSet; NumberAnimation { duration: 500; easing.type: Easing.InOutQuad } }
-            Behavior on height  { enabled: window.initialFocusSet; NumberAnimation { duration: 500; easing.type: Easing.InOutQuad } }
-            Behavior on opacity { enabled: window.initialFocusSet; NumberAnimation { duration: 500; easing.type: Easing.InOutQuad } }
+            Behavior on scale {
+                enabled: window.initialFocusSet
+                NumberAnimation {
+                    duration: 500
+                    easing.type: Easing.InOutQuad
+                }
+            }
+            Behavior on width {
+                enabled: window.initialFocusSet
+                NumberAnimation {
+                    duration: 500
+                    easing.type: Easing.InOutQuad
+                }
+            }
+            Behavior on height {
+                enabled: window.initialFocusSet
+                NumberAnimation {
+                    duration: 500
+                    easing.type: Easing.InOutQuad
+                }
+            }
+            Behavior on opacity {
+                enabled: window.initialFocusSet
+                NumberAnimation {
+                    duration: 500
+                    easing.type: Easing.InOutQuad
+                }
+            }
 
             Item {
                 anchors.centerIn: parent
                 anchors.horizontalCenterOffset: ((window.itemHeight - height) / 2) * window.skewFactor
-                width:  parent.width > 0 ? parent.width * (targetWidth / (targetWidth + window.spacing)) : 0
+                width: parent.width > 0 ? parent.width * (targetWidth / (targetWidth + window.spacing)) : 0
                 height: parent.height
 
                 transform: Matrix4x4 {
@@ -466,21 +585,24 @@ Item {
                     anchors.fill: parent
                     enabled: delegateRoot.matchesFilter && !window.isApplying
                     onClicked: {
-                        view.currentIndex = index
-                        window.applyWallpaper(delegateRoot.safeFileName)
+                        view.currentIndex = index;
+                        window.applyWallpaper(delegateRoot.safeFileName);
                     }
                 }
 
                 Item {
                     anchors.fill: parent
                     anchors.margins: window.borderWidth
-                    Rectangle { anchors.fill: parent; color: "black" }
+                    Rectangle {
+                        anchors.fill: parent
+                        color: "black"
+                    }
                     clip: true
 
                     Image {
                         anchors.centerIn: parent
                         anchors.horizontalCenterOffset: window.s(-50)
-                        width:  (window.itemWidth * 1.5) + ((window.itemHeight + window.s(30)) * Math.abs(window.skewFactor)) + window.s(50)
+                        width: (window.itemWidth * 1.5) + ((window.itemHeight + window.s(30)) * Math.abs(window.skewFactor)) + window.s(50)
                         height: window.itemHeight + window.s(30)
                         fillMode: Image.PreserveAspectCrop
 
@@ -488,10 +610,9 @@ Item {
                         source: thumbPath
                         onStatusChanged: {
                             if (status === Image.Error) {
-                                source = fileUrl
+                                source = fileUrl;
                             }
                         }
-
 
                         asynchronous: true
                         transform: Matrix4x4 {
@@ -512,8 +633,18 @@ Item {
                         SequentialAnimation on opacity {
                             running: delegateRoot.isCurrent
                             loops: Animation.Infinite
-                            NumberAnimation { from: 0.5; to: 1.0; duration: 1000; easing.type: Easing.InOutSine }
-                            NumberAnimation { from: 1.0; to: 0.5; duration: 1000; easing.type: Easing.InOutSine }
+                            NumberAnimation {
+                                from: 0.5
+                                to: 1.0
+                                duration: 1000
+                                easing.type: Easing.InOutSine
+                            }
+                            NumberAnimation {
+                                from: 1.0
+                                to: 0.5
+                                duration: 1000
+                                easing.type: Easing.InOutSine
+                            }
                         }
                     }
                 }
@@ -529,8 +660,18 @@ Item {
         anchors.top: parent.top
         anchors.topMargin: window.isReady ? window.s(40) : window.s(-100)
         opacity: window.isReady ? 1.0 : 0.0
-        Behavior on anchors.topMargin { NumberAnimation { duration: 600; easing.type: Easing.OutExpo } }
-        Behavior on opacity           { NumberAnimation { duration: 500; easing.type: Easing.OutCubic } }
+        Behavior on anchors.topMargin {
+            NumberAnimation {
+                duration: 600
+                easing.type: Easing.OutExpo
+            }
+        }
+        Behavior on opacity {
+            NumberAnimation {
+                duration: 500
+                easing.type: Easing.OutCubic
+            }
+        }
         anchors.horizontalCenter: parent.horizontalCenter
         z: 20
         height: window.s(56)
@@ -557,48 +698,59 @@ Item {
                     Rectangle {
                         anchors.fill: parent
                         radius: window.s(10)
-                        color: modelData.hex === ""
-                            ? (window.currentFilter === modelData.name ? _theme.surface2 : "transparent")
-                            : modelData.hex
-                        border.color: window.currentFilter === modelData.name
-                            ? _theme.text
-                            : Qt.rgba(_theme.surface1.r, _theme.surface1.g, _theme.surface1.b, 0.6)
+                        color: modelData.hex === "" ? (window.currentFilter === modelData.name ? _theme.surface2 : "transparent") : modelData.hex
+                        border.color: window.currentFilter === modelData.name ? _theme.text : Qt.rgba(_theme.surface1.r, _theme.surface1.g, _theme.surface1.b, 0.6)
                         border.width: window.currentFilter === modelData.name ? window.s(2) : 1
                         scale: window.currentFilter === modelData.name ? 1.15 : (filterMouse.containsMouse ? 1.08 : 1.0)
-                        Behavior on scale       { NumberAnimation { duration: 400; easing.type: Easing.OutBack; easing.overshoot: 1.2 } }
-                        Behavior on border.color { ColorAnimation { duration: 300 } }
+                        Behavior on scale {
+                            NumberAnimation {
+                                duration: 400
+                                easing.type: Easing.OutBack
+                                easing.overshoot: 1.2
+                            }
+                        }
+                        Behavior on border.color {
+                            ColorAnimation {
+                                duration: 300
+                            }
+                        }
 
                         Text {
                             id: filterText
                             visible: modelData.hex === "" && modelData.name !== "Video" && modelData.name !== "All"
                             text: modelData.label
                             anchors.centerIn: parent
-                            color: window.currentFilter === modelData.name
-                                ? _theme.text
-                                : Qt.rgba(_theme.text.r, _theme.text.g, _theme.text.b, 0.7)
-                            font.family: _theme.monoFamily; font.pixelSize: window.s(14)
+                            color: window.currentFilter === modelData.name ? _theme.text : Qt.rgba(_theme.text.r, _theme.text.g, _theme.text.b, 0.7)
+                            font.family: _theme.monoFamily
+                            font.pixelSize: window.s(14)
                             font.weight: window.currentFilter === modelData.name ? Font.DemiBold : Font.Normal
-                            Behavior on color { ColorAnimation { duration: 400; easing.type: Easing.OutQuart } }
+                            Behavior on color {
+                                ColorAnimation {
+                                    duration: 400
+                                    easing.type: Easing.OutQuart
+                                }
+                            }
                         }
-
 
                         // Four-squares for "All" filter
                         Canvas {
                             visible: modelData.name === "All"
-                            width: window.s(14); height: window.s(14)
+                            width: window.s(14)
+                            height: window.s(14)
                             anchors.centerIn: parent
-                            property string activeColor: window.currentFilter === modelData.name
-                                ? _theme.text
-                                : Qt.rgba(_theme.text.r, _theme.text.g, _theme.text.b, 0.7)
+                            property string activeColor: window.currentFilter === modelData.name ? _theme.text : Qt.rgba(_theme.text.r, _theme.text.g, _theme.text.b, 0.7)
                             onActiveColorChanged: requestPaint()
-                            property real scaleTrigger: window.s(1); onScaleTriggerChanged: requestPaint()
+                            property real scaleTrigger: window.s(1)
+                            onScaleTriggerChanged: requestPaint()
                             onPaint: {
-                                var ctx = getContext("2d"); var s = window.s; ctx.reset()
-                                ctx.fillStyle = activeColor
-                                ctx.fillRect(0,    0,    s(6), s(6))
-                                ctx.fillRect(s(8), 0,    s(6), s(6))
-                                ctx.fillRect(0,    s(8), s(6), s(6))
-                                ctx.fillRect(s(8), s(8), s(6), s(6))
+                                var ctx = getContext("2d");
+                                var s = window.s;
+                                ctx.reset();
+                                ctx.fillStyle = activeColor;
+                                ctx.fillRect(0, 0, s(6), s(6));
+                                ctx.fillRect(s(8), 0, s(6), s(6));
+                                ctx.fillRect(0, s(8), s(6), s(6));
+                                ctx.fillRect(s(8), s(8), s(6), s(6));
                             }
                         }
                     }
@@ -613,7 +765,6 @@ Item {
                     }
                 }
             }
-
         }
     }
 
@@ -621,9 +772,8 @@ Item {
     // LIFECYCLE
     // -------------------------------------------------------------------------
     Component.onCompleted: {
-        view.forceActiveFocus()
+        view.forceActiveFocus();
     }
 
-    Component.onDestruction: {
-    }
+    Component.onDestruction: {}
 }

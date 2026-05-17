@@ -94,15 +94,16 @@ Item {
                         color: Color.mSurfaceVariant
 
                         Rectangle {
-                            width: (MediaService.trackLength > 0)
-                                   ? Math.max(0, Math.min(1.0, MediaService.currentPosition / MediaService.trackLength)) * parent.width
-                                   : 0
+                            width: (MediaService.trackLength > 0) ? Math.max(0, Math.min(1.0, MediaService.currentPosition / MediaService.trackLength)) * parent.width : 0
                             height: parent.height
                             radius: parent.radius
                             color: Color.mPrimary
 
                             Behavior on width {
-                                NumberAnimation { duration: 800; easing.type: Easing.OutQuad }
+                                NumberAnimation {
+                                    duration: 800
+                                    easing.type: Easing.OutQuad
+                                }
                             }
                         }
                     }
@@ -117,7 +118,9 @@ Item {
                             color: Color.mOnSurfaceVariant
                         }
 
-                        Item { Layout.fillWidth: true }
+                        Item {
+                            Layout.fillWidth: true
+                        }
 
                         Text {
                             text: MediaService.lengthString
@@ -135,7 +138,8 @@ Item {
 
                     // Previous
                     Item {
-                        width: Math.round(32 * Style.uiScaleRatio); height: Math.round(32 * Style.uiScaleRatio)
+                        width: Math.round(32 * Style.uiScaleRatio)
+                        height: Math.round(32 * Style.uiScaleRatio)
 
                         Text {
                             anchors.centerIn: parent
@@ -143,7 +147,11 @@ Item {
                             font.family: "Maple Mono NF"
                             font.pixelSize: Math.round(22 * Style.uiScaleRatio)
                             color: prevMouse.containsMouse ? Color.mOnSurface : Color.mOnSurfaceVariant
-                            Behavior on color { ColorAnimation { duration: 150 } }
+                            Behavior on color {
+                                ColorAnimation {
+                                    duration: 150
+                                }
+                            }
                         }
 
                         MouseArea {
@@ -155,7 +163,12 @@ Item {
                         }
 
                         scale: prevMouse.pressed ? 0.85 : (prevMouse.containsMouse ? 1.1 : 1.0)
-                        Behavior on scale { NumberAnimation { duration: 120; easing.type: Easing.OutBack } }
+                        Behavior on scale {
+                            NumberAnimation {
+                                duration: 120
+                                easing.type: Easing.OutBack
+                            }
+                        }
                     }
 
                     // Play/Pause pill
@@ -175,7 +188,12 @@ Item {
                         }
 
                         scale: playMouse.containsMouse ? 1.08 : 1.0
-                        Behavior on scale { NumberAnimation { duration: 150; easing.type: Easing.OutBack } }
+                        Behavior on scale {
+                            NumberAnimation {
+                                duration: 150
+                                easing.type: Easing.OutBack
+                            }
+                        }
 
                         MouseArea {
                             id: playMouse
@@ -188,7 +206,8 @@ Item {
 
                     // Next
                     Item {
-                        width: Math.round(32 * Style.uiScaleRatio); height: Math.round(32 * Style.uiScaleRatio)
+                        width: Math.round(32 * Style.uiScaleRatio)
+                        height: Math.round(32 * Style.uiScaleRatio)
 
                         Text {
                             anchors.centerIn: parent
@@ -196,7 +215,11 @@ Item {
                             font.family: "Maple Mono NF"
                             font.pixelSize: Math.round(22 * Style.uiScaleRatio)
                             color: nextMouse.containsMouse ? Color.mOnSurface : Color.mOnSurfaceVariant
-                            Behavior on color { ColorAnimation { duration: 150 } }
+                            Behavior on color {
+                                ColorAnimation {
+                                    duration: 150
+                                }
+                            }
                         }
 
                         MouseArea {
@@ -208,7 +231,12 @@ Item {
                         }
 
                         scale: nextMouse.pressed ? 0.85 : (nextMouse.containsMouse ? 1.1 : 1.0)
-                        Behavior on scale { NumberAnimation { duration: 120; easing.type: Easing.OutBack } }
+                        Behavior on scale {
+                            NumberAnimation {
+                                duration: 120
+                                easing.type: Easing.OutBack
+                            }
+                        }
                     }
                 }
             }

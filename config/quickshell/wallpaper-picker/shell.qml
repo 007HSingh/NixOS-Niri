@@ -8,12 +8,12 @@ import QtQuick
 // Niri bind: Mod+Shift+W  →  qs -c wallpaper-picker
 ShellRoot {
     Component.onCompleted: {
-        Qt.application.name = "WallpaperPicker"
-        Qt.application.organization = "quickshell"
-        Qt.application.domain = "quickshell.local"
-        
+        Qt.application.name = "WallpaperPicker";
+        Qt.application.organization = "quickshell";
+        Qt.application.domain = "quickshell.local";
+
         // Clear the state file on startup so we don't immediately close
-        closeWriter.running = true
+        closeWriter.running = true;
     }
 
     // ── Poll /tmp/qs_widget_state for "close" ─────────────────────────────────
@@ -32,11 +32,11 @@ ShellRoot {
         id: closeReader
         command: ["bash", "-c", "cat /tmp/qs_widget_state 2>/dev/null || true"]
         stdout: SplitParser {
-            onRead: (line) => {
+            onRead: line => {
                 if (line.trim() === "close") {
                     // Clear the file so we don't re-trigger
-                    closeWriter.running = true
-                    Qt.quit()
+                    closeWriter.running = true;
+                    Qt.quit();
                 }
             }
         }
@@ -57,7 +57,10 @@ ShellRoot {
         WlrLayershell.keyboardFocus: WlrKeyboardFocus.Exclusive
 
         anchors {
-            top: true; bottom: true; left: true; right: true
+            top: true
+            bottom: true
+            left: true
+            right: true
         }
 
         color: "transparent"
@@ -69,10 +72,10 @@ ShellRoot {
             onWindowCloseRequested: Qt.quit()
 
             // Handle Escape here instead of on PanelWindow to avoid warnings
-            Keys.onEscapePressed: (event) => {
+            Keys.onEscapePressed: event => {
                 if (!pickerContent.isApplying) {
-                    Qt.quit()
-                    event.accepted = true
+                    Qt.quit();
+                    event.accepted = true;
                 }
             }
         }

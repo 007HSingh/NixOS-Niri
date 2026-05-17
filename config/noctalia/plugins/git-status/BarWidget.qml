@@ -29,7 +29,8 @@ Item {
     }
 
     property string tooltipText: {
-        if (!hasData) return repoName;
+        if (!hasData)
+            return repoName;
         return " " + branch + (isDirty ? "  dirty" : "  clean");
     }
     property string tooltipDirection: BarService.getTooltipDirection()
@@ -45,7 +46,10 @@ Item {
     signal exited
     signal clicked
 
-    function openPanel() { if (pluginApi) pluginApi.openPanel(root.screen, root); }
+    function openPanel() {
+        if (pluginApi)
+            pluginApi.openPanel(root.screen, root);
+    }
 
     Rectangle {
         anchors.fill: parent
@@ -54,7 +58,11 @@ Item {
         border.color: Style.capsuleBorderColor
         border.width: Style.capsuleBorderWidth
 
-        Behavior on color { ColorAnimation { duration: Style.animationNormal } }
+        Behavior on color {
+            ColorAnimation {
+                duration: Style.animationNormal
+            }
+        }
 
         Row {
             anchors.centerIn: parent
@@ -69,10 +77,11 @@ Item {
                 color: mouseArea.containsMouse ? Color.mOnHover : Color.mOnSurfaceVariant
 
                 RotationAnimation on rotation {
-                  running: root.m?.isRefreshing ?? false
-                  from: 0; to: 360
-                  duration: 1000
-                  loops: Animation.Infinite
+                    running: root.m?.isRefreshing ?? false
+                    from: 0
+                    to: 360
+                    duration: 1000
+                    loops: Animation.Infinite
                 }
                 rotation: 0
                 visible: root.m?.isRefreshing ?? false
@@ -92,10 +101,16 @@ Item {
             // Dirty indicator dot
             Rectangle {
                 anchors.verticalCenter: parent.verticalCenter
-                width: 6; height: 6; radius: 3
+                width: 6
+                height: 6
+                radius: 3
                 visible: hasData
                 color: isDirty ? Color.mError : Color.mTertiary
-                Behavior on color { ColorAnimation { duration: 400 } }
+                Behavior on color {
+                    ColorAnimation {
+                        duration: 400
+                    }
+                }
             }
         }
     }
