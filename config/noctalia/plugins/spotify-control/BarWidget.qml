@@ -31,7 +31,11 @@ Item {
     property string tooltipDirection: BarService.getTooltipDirection()
     property bool enabled: true
 
-    readonly property real contentWidth: barIsVertical ? capsuleHeight : Math.round(capsuleHeight + Style.marginXS * 2)
+    readonly property real contentWidth: barIsVertical
+        ? capsuleHeight
+        : (isPlaying
+            ? Math.round(capsuleHeight + Style.marginXS * 2 + Style.fontSizeS * 8)
+            : Math.round(capsuleHeight + Style.marginXS * 2))
     readonly property real contentHeight: capsuleHeight
 
     implicitWidth: contentWidth
@@ -64,15 +68,34 @@ Item {
         }
 
         // ── Spotify Logo ─────────────────────────────────────────────────
-        Text {
+        Row {
             anchors.centerIn: parent
-            text: "󰓇"
-            font.family: "Maple Mono NF"
-            font.pixelSize: Math.round(parent.height * 0.5)
-            color: mouseArea.containsMouse ? Color.mOnHover : Color.mPrimary
+            spacing: 4
 
-            Behavior on color {
-                ColorAnimation { duration: Style.animationNormal; easing.type: Easing.InOutQuad }
+            Text {
+                anchors.verticalCenter: parent.verticalCenter
+                text: "󰓇"
+                font.family: "Maple Mono NF"
+                font.pixelSize: Math.round(parent.parent.height * 0.5)
+                color: mouseArea.containsMouse ? Color.mOnHover : Color.mPrimary
+
+                Behavior on color {
+                    ColorAnimation { duration: Style.animationNormal; easing.type: Easing.InOutQuad }
+                }
+            }
+
+            Text {
+                visible: root.isPlaying && !barIsVertical
+                anchors.verticalCenter: parent.verticalCenter
+                text: {
+                    var t = MediaService.trackTitle ?? "";
+                    return t.length > 14 ? t.substring(0, 14) + "…" : t;
+                }
+                font.family: "Maple Mono NF"
+                font.pixelSize: Style.fontSizeS
+                color: mouseArea.containsMouse ? Color.mOnHover : Color.mOnSurface
+                width: visible ? implicitWidth : 0
+                Behavior on width { NumberAnimation { duration: Style.animationNormal } }
             }
         }
     }

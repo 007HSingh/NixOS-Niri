@@ -10,10 +10,7 @@ let
   # Config directories to symlink (nvim handled by modules/home/editor)
   configs = {
     niri = "niri";
-    fastfetch = "fastfetch";
-    btop = "btop";
     wallpapers = "wallpapers";
-    eza = "eza";
     quickshell = "quickshell";
   };
 in
