@@ -20,10 +20,6 @@ in
         enable = true;
         flavor = "mocha";
       };
-      fastfetch = {
-        enable = true;
-        flavor = "mocha";
-      };
     };
 
     programs.btop = {

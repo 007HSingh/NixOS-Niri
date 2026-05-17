@@ -17,7 +17,7 @@ _:
     shell.enable = true;
     termipedia.enable = true;
     theming.enable = true;
-    utilties.enable = true;
+    utilities.enable = true;
     wofi.enable = true;
     xdg.enable = true;
     zathura.enable = true;
