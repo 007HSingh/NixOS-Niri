@@ -23,9 +23,13 @@ Item {
     readonly property string branch: m?.branch ?? "—"
     readonly property bool isDirty: m?.isDirty ?? false
     readonly property bool hasData: m?.hasData ?? false
+    readonly property string repoName: {
+        var p = m?.repoPath ?? "";
+        return p.length > 0 ? p.split("/").pop() : "nixos-config";
+    }
 
     property string tooltipText: {
-        if (!hasData) return "nixos-config";
+        if (!hasData) return repoName;
         return " " + branch + (isDirty ? "  dirty" : "  clean");
     }
     property string tooltipDirection: BarService.getTooltipDirection()
@@ -63,6 +67,15 @@ Item {
                 font.family: "Maple Mono NF"
                 font.pixelSize: Style.fontSizeM
                 color: mouseArea.containsMouse ? Color.mOnHover : Color.mOnSurfaceVariant
+
+                RotationAnimation on rotation {
+                  running: root.m?.isRefreshing ?? false
+                  from: 0; to: 360
+                  duration: 1000
+                  loops: Animation.Infinite
+                }
+                rotation: 0
+                visible: root.m?.isRefreshing ?? false
             }
 
             // Branch name
