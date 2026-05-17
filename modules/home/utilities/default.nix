@@ -11,6 +11,8 @@ in
   options.modules.home.utilities.enable = lib.mkEnableOption "home utilities";
 
   config = lib.mkIf cfg.enable {
+    stylix.targets.btop.enable = false;
+
     catppuccin = {
       eza = {
         enable = true;
