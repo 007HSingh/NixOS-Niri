@@ -1,4 +1,3 @@
-# Git Configuration
 { lib, config, ... }:
 
 let

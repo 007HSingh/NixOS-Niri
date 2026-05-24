@@ -28,8 +28,7 @@ in
         gtk_dark = true;
       };
 
-      # Custom CSS — Glassmorphism style (Catppuccin Mocha palette, no hardcoded greys)
-      # All RGBA values are derived from Catppuccin Mocha constants:
+      # RGBA values derived from Catppuccin Mocha:
       #   crust    #11111b  →  rgba(17,  17,  27,  α)
       #   surface0 #313244  →  rgba(49,  50,  68,  α)
       #   surface1 #45475a  →  rgba(69,  71,  90,  α)
