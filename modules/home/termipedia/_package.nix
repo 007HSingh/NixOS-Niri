@@ -18,7 +18,7 @@ stdenv.mkDerivation {
     owner = "kantiankant";
     repo = "Termipedia";
     rev = "main";
-    hash = "sha256-r9zZaCjTFAzcIVWpPFHx9eO+Ui1Mld/XGexPyWXj754=";
+    hash = "sha256-EJjkN9kJp6Af6CSyonkcBdsNWbzRfax88WdHdrWYChk=";
   };
 
   nativeBuildInputs = [ makeBinaryWrapper ];
