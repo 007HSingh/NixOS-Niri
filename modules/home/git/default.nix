@@ -20,16 +20,6 @@ in
         { inherit (config.sops.templates."git-credentials") path; }
       ];
 
-      delta = {
-        enable = true;
-        options = {
-          side-by-side = true;
-          line-numbers = true;
-          navigate = true; # n/N to jump between diff sections
-          hyperlinks = true;
-        };
-      };
-
       settings = {
         user.name = "Harsh Singh";
         init.defaultBranch = "main";
@@ -43,6 +33,17 @@ in
           ci = "commit";
           lg = "log --oneline --graph --decorate";
         };
+      };
+    };
+
+    programs.delta = {
+      enable = true;
+      enableGitIntegration = true;
+      options = {
+        side-by-side = true;
+        line-numbers = true;
+        navigate = true; # n/N to jump between diff sections
+        hyperlinks = true;
       };
     };
 
