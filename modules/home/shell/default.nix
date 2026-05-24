@@ -18,6 +18,7 @@ in
     stylix.targets.bat.enable = false;
     stylix.targets.lazygit.enable = false;
     stylix.targets.yazi.enable = false;
+    stylix.targets.starship.enable = false;
 
     programs = {
       zsh = {
