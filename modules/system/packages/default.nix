@@ -22,8 +22,6 @@ in
       xdg-utils
       file-roller
 
-      # Terminal
-      kitty
 
       # Wayland
       inputs.niri-flake.packages.${pkgs.stdenv.hostPlatform.system}.xwayland-satellite-unstable
@@ -42,13 +40,8 @@ in
       spotify
       vlc
 
-      # System monitoring
-      btop
-      fastfetch
 
       # Development
-      gh
-      delta
       docker-compose
       cachix
       devenv

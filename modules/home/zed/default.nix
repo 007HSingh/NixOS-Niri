@@ -224,10 +224,5 @@ in
         flavor = "mocha";
       };
     };
-
-    programs.zed-editor.userSettings.theme = lib.mkForce {
-      dark = "Catppuccin Mocha";
-      light = "Catppuccin Mocha";
-    };
   };
 }

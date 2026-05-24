@@ -1,6 +1,4 @@
-# Zathura — PDF/EPUB viewer
-# Colors: explicit Catppuccin Mocha tokens (independent of Stylix base16 mapping)
-# This module adds: Vim-style keybinds, full colour theming, UX polish, MIME defaults
+# Zathura — PDF/EPUB viewer with vim keybinds, UX polish, and MIME defaults
 {
   lib,
   config,

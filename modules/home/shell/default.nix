@@ -1,5 +1,4 @@
 # Shell Configuration
-# Zsh, Starship, Zoxide, Direnv, and CLI tool integrations
 {
   lib,
   config,
@@ -15,6 +14,11 @@ in
     lib.mkEnableOption "shell environment (zsh, starship, atuin, zoxide, etc.)";
 
   config = lib.mkIf cfg.enable {
+    stylix.targets.kitty.enable = false;
+    stylix.targets.bat.enable = false;
+    stylix.targets.lazygit.enable = false;
+    stylix.targets.yazi.enable = false;
+
     programs = {
       zsh = {
         enable = true;
@@ -69,11 +73,9 @@ in
           nom-develop = "nom develop";
           nom-run = "nom run";
 
-          # Modern replacements
           ls = "eza -la --icons";
           cat = "bat";
 
-          # Git
           gs = "git status";
           ga = "git add";
           gc = "git commit";
@@ -81,7 +83,6 @@ in
           gl = "git pull";
           gd = "git diff";
 
-          # Navigation
           ".." = "cd ..";
           "..." = "cd ../..";
           "...." = "cd ../../..";
@@ -121,7 +122,6 @@ in
           scan_timeout = 10; # ms — give up on slow filesystem scans
           command_timeout = 500; # ms — cap any single module evaluation
           add_newline = false;
-          palette = lib.mkForce "catppuccin_mocha";
 
           character = {
             success_symbol = "[❯](bold green)";
@@ -215,34 +215,6 @@ in
             time_format = "%H:%M";
           };
 
-          palettes.catppuccin_mocha = {
-            rosewater = "#f5e0dc";
-            flamingo = "#f2cdcd";
-            pink = "#f5c2e7";
-            mauve = "#cba6f7";
-            red = "#f38ba8";
-            maroon = "#eba0ac";
-            peach = "#fab387";
-            yellow = "#f9e2af";
-            green = "#a6e3a1";
-            teal = "#94e2d5";
-            sky = "#89dceb";
-            sapphire = "#74c7ec";
-            blue = "#89b4fa";
-            lavender = "#b4befe";
-            text = "#cdd6f4";
-            subtext1 = "#bac2de";
-            subtext0 = "#a6adc8";
-            overlay2 = "#9399b2";
-            overlay1 = "#7f849d";
-            overlay0 = "#6c7086";
-            surface2 = "#585b70";
-            surface1 = "#45475a";
-            surface0 = "#313244";
-            base = "#1e1e2e";
-            mantle = "#181825";
-            crust = "#11111b";
-          };
         };
       };
 
@@ -295,14 +267,7 @@ in
             bar_spacing = 1;
           };
           smoothing.monstercat = 1;
-          color = {
-            gradient = 1;
-            gradient_count = 4;
-            "gradient_color_1" = "'#f38ba8'"; # red
-            "gradient_color_2" = "'#cba6f7'"; # mauve
-            "gradient_color_3" = "'#89b4fa'"; # blue
-            "gradient_color_4" = "'#94e2d5'"; # teal
-          };
+
         };
       };
 
@@ -315,27 +280,20 @@ in
         enableZshIntegration = true;
       };
 
-      # -------------------------------------------------------------------------
-      # ATUIN - Magical shell history with fuzzy search
-      # Replaces Ctrl+R with a powerful TUI backed by SQLite
-      # -------------------------------------------------------------------------
       atuin = {
         enable = true;
         enableZshIntegration = true;
         settings = {
-          # Local-only, no sync
+          # local-only, no sync
           auto_sync = false;
           update_check = false;
-          # Search behaviour
           search_mode = "fuzzy";
           filter_mode = "global";
           filter_mode_shell_up_key_binding = "session";
-          # Style
           style = "compact";
           show_preview = true;
           max_preview_height = 4;
           show_help = false;
-          # Avoid duplication
           history_filter = [
             "^ls$"
             "^cd$"
@@ -346,14 +304,10 @@ in
         };
       };
 
-      # -------------------------------------------------------------------------
-      # YAZI - Blazing-fast TUI file manager with preview
-      # Use 'y' instead of 'yazi' to have it cd into the last directory on exit
-      # -------------------------------------------------------------------------
       yazi = {
         enable = true;
         enableZshIntegration = true;
-        shellWrapperName = "y";
+        shellWrapperName = "y"; # cds into last visited dir on exit
         initLua = ''
           require("full-border"):setup()
           require("git"):setup()
@@ -385,17 +339,12 @@ in
         };
       };
 
-      # -------------------------------------------------------------------------
-      # NIX-YOUR-SHELL - Stay in zsh when entering nix shell / nix develop
-      # -------------------------------------------------------------------------
+      # keeps zsh when entering nix shell / nix develop
       nix-your-shell = {
         enable = true;
         enableZshIntegration = true;
       };
 
-      # -------------------------------------------------------------------------
-      # GH - GitHub CLI with declarative config & credential helper
-      # -------------------------------------------------------------------------
       gh = {
         enable = true;
         gitCredentialHelper.enable = true;
@@ -405,9 +354,6 @@ in
         };
       };
 
-      # -------------------------------------------------------------------------
-      # TEALDEER - Fast tldr client with auto-update
-      # -------------------------------------------------------------------------
       tealdeer = {
         enable = true;
         settings = {
@@ -479,6 +425,17 @@ in
           "ctrl+shift+f" = "search";
         };
       };
+    };
+
+    catppuccin = {
+      flavor = "mocha";
+
+      starship.enable = true;
+      cava.enable = true;
+      kitty.enable = true;
+      bat.enable = true;
+      lazygit.enable = true;
+      yazi.enable = true;
     };
   };
 }
