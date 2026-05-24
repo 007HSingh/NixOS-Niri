@@ -13,6 +13,8 @@ in
     lib.mkEnableOption "Zed editor with LSP, Catppuccin theme, and settings";
 
   config = lib.mkIf cfg.enable {
+    stylix.targets.zed.enable = false;
+
     programs.zed-editor = {
       enable = true;
 
