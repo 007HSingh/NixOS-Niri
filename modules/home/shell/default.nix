@@ -373,6 +373,7 @@ in
         enable = true;
         font = {
           name = "Maple Mono NF";
+          size = 12;
         };
         settings = {
           modify_font = "cell_height 125%";
@@ -406,6 +407,7 @@ in
           shell = "/run/current-system/sw/bin/zsh";
           working_directory = "home";
           vsync = "yes";
+          background_opacity = "0.85";
         };
         keybindings = {
           "ctrl+shift+t" = "new_tab";
