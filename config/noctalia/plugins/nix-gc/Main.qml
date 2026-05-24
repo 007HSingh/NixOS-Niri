@@ -59,10 +59,10 @@ Item {
         gcConfirmPending = false;
     }
 
-    // Store size (with 15s timeout fallback)
+    // Bug 3 fix: use `du` instead of `nix path-info --all` (instant vs. 30s+)
     Process {
         id: sizeProc
-        command: ["bash", "-c", "timeout 15 nix path-info -S --all 2>/dev/null | " + "awk '{s+=$2}END{if(s>1073741824)printf \"%.1fG\",s/1073741824; " + "else if(s>1048576)printf \"%.0fM\",s/1048576; else printf \"%.0fK\",s/1024}'"]
+        command: ["bash", "-c", "du -sh /nix/store 2>/dev/null | cut -f1"]
         running: false
         property var lines: []
         stdout: SplitParser {
@@ -77,8 +77,6 @@ Item {
             }
             var out = lines.filter(l => l.length > 0).join("");
             root.storeSize = out.length > 0 ? out : "?";
-            if (out.length === 0)
-                root.errorMsg = "Store query timed out";
             lines = [];
             pathCountProc.running = true;
         }
@@ -125,10 +123,10 @@ Item {
         }
     }
 
-    // GC — collect stdout, extract the "freed X bytes" summary line
+    // Bug 2 fix: use pkexec so GC actually has permission to delete store paths
     Process {
         id: gcProc
-        command: ["nix-collect-garbage", "-d"]
+        command: ["pkexec", "nix-collect-garbage", "-d"]
         running: false
         property var outLines: []
         property var errLines: []
@@ -151,7 +149,6 @@ Item {
             if (errLines.length > 0) {
                 root.errorMsg = errLines[errLines.length - 1].trim();
             }
-            // Extract the "freed X MiB" line nix-collect-garbage always emits
             var freed = outLines.filter(l => l.indexOf("freed") !== -1 || l.indexOf("MiB") !== -1 || l.indexOf("GiB") !== -1);
             root.gcSummary = freed.length > 0 ? freed[freed.length - 1].trim() : (outLines.length > 0 ? outLines[outLines.length - 1].trim() : "Done");
             outLines = [];

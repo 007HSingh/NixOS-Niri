@@ -21,7 +21,7 @@ Item {
     readonly property bool isCollecting: m?.isCollecting ?? false
     readonly property bool gcConfirmPending: m?.gcConfirmPending ?? false
     readonly property string lastCollected: m?.lastCollected ?? "never"
-    readonly property string gcOutput: m?.gcOutput ?? ""
+    readonly property string gcOutput: m?.gcSummary ?? ""
     readonly property string errorMsg: m?.errorMsg ?? ""
 
     Rectangle {
