@@ -1,7 +1,4 @@
 # User Packages
-# CLI tools, build tools, applications, LSP servers, formatters, linters
-# Note: neovim + treesitter live in modules/home/editor/
-#       obsidian lives in modules/home/notes/
 {
   lib,
   config,

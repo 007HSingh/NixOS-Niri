@@ -1,7 +1,4 @@
-# Zen Browser Configuration
-# Declarative Zen (Firefox-based) setup via Home Manager
-# CSS fully managed here — Stylix zen-browser target disabled in favour of hand-crafted
-# Catppuccin Mocha theming with animations, blur, and sidebar polish.
+# Zen Browser — Stylix disabled, CSS theming managed inline
 {
   lib,
   config,
@@ -16,7 +13,6 @@ in
   options.modules.home.browser.enable = lib.mkEnableOption "Zen browser (Firefox-based)";
 
   config = lib.mkIf cfg.enable {
-    # Disable Stylix's auto-generated CSS — we own userChrome/userContent fully
     stylix.targets.firefox.enable = false;
     stylix.targets.zen-browser.enable = false;
 
@@ -29,63 +25,51 @@ in
         name = "default";
         isDefault = true;
 
-        # Extensions — sourced from NUR rycee's Firefox addon set
+        # NUR rycee addons
         extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
           ublock-origin
           darkreader
           stylus
         ];
 
-        # Declarative search engine
         search = {
           force = true;
           default = "ddg";
         };
 
-        # Privacy, UX, and performance settings
         settings = {
-          # Extensions: prevent Zen auto-disabling Nix-installed extensions
+          # prevent Zen auto-disabling Nix-installed extensions
           "extensions.autoDisableScopes" = 0;
           "extensions.enabledScopes" = 5;
 
-          # New tab — no sponsored/algorithmic content
           "browser.newtabpage.activity-stream.feeds.section.topstories" = false;
           "browser.newtabpage.activity-stream.feeds.topsites" = false;
           "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
           "browser.newtabpage.activity-stream.showSponsored" = false;
 
-          # Privacy / network hardening
           "network.dns.disablePrefetch" = true;
           "network.http.speculative-parallel-limit" = 0;
           "network.prefetch-next" = false;
           "media.peerconnection.ice.default_address_only" = true;
 
-          # DRM (Widevine) — needed for Netflix etc.
+          # Widevine — needed for Netflix etc.
           "media.eme.enabled" = true;
 
-          # Clear form data on shutdown
           "privacy.clearOnShutdown_v2.formdata" = true;
 
-          # Telemetry opt-outs
           "toolkit.telemetry.reportingpolicy.firstRun" = false;
           "datareporting.policy.dataSubmissionPolicyAcceptedVersion" = 2;
           "datareporting.healthreport.uploadEnabled" = false;
           "app.shield.optoutstudies.enabled" = false;
           "browser.discovery.enabled" = false;
 
-          # Enable userChrome.css
+          # required for userChrome.css to load
           "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
 
-          # Vertical tabs sidebar (native feature in Zen)
           "sidebar.verticalTabs" = true;
-
-          # Hide title bar buttons (Zen/Firefox)
           "browser.tabs.drawInTitlebar" = true;
         };
 
-        # ── userChrome.css ───────────────────────────────────────────────────
-        # Full Catppuccin Mocha theming with animations, sidebar transitions,
-        # pill tabs, blur effects, scrollbar polish, and compact URL bar.
         userChrome = ''
           /* ═══════════════════════════════════════════════════════════════
              Zen Browser — Catppuccin Mocha userChrome

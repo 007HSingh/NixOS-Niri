@@ -1,6 +1,4 @@
-# Neovim Editor
-# Package, Treesitter grammars, and config/ symlink wiring
-# Lua config lives in config/neovim/ — do not move it; only the symlink is managed here
+# Neovim
 {
   lib,
   config,
@@ -54,14 +52,12 @@ in
       eslint_d
       markdownlint-cli2
       statix
-
-      # ── Neovim: CLI tools (Telescope, DAP, etc.) ─────────────────────────────
       ripgrep
       fd
       nodejs
     ];
 
-    # Symlink ~/.config/nvim → nixos-config/config/neovim (out-of-store, mutable)
+    # out-of-store symlink so Lua config stays mutable
     xdg.configFile.nvim = {
       source = create_symlink "${dotfiles}/neovim";
       recursive = true;

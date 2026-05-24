@@ -1,7 +1,4 @@
-# Noctalia Shell Configuration
-# Status bar and desktop shell for Niri
-# Note: noctalia.homeModules.default is imported at the top level (not inside mkIf)
-# so the option is always declared; only the config is conditional.
+# Noctalia Shell
 {
   lib,
   config,
