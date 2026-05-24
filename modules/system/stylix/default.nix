@@ -1,5 +1,4 @@
-# Stylix System-wide Theming
-# Single source of truth for colors, fonts, and wallpapers
+# Stylix — system-wide base16 theming
 {
   lib,
   config,
@@ -19,13 +18,10 @@ in
       enable = true;
       autoEnable = true;
 
-      # Color scheme: Catppuccin Mocha (defined inline)
       base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
 
-      # Polarity must be set to either "dark" or "light"
       polarity = "dark";
 
-      # Icon Theme
       icons = {
         enable = true;
         package = pkgs.catppuccin-papirus-folders;
@@ -33,14 +29,12 @@ in
         light = "Papirus-Light";
       };
 
-      # Cursor Theme
       cursor = {
         package = pkgs.bibata-cursors;
         name = "Bibata-Modern-Classic";
         size = 32;
       };
 
-      # Font Configuration
       fonts = {
         monospace = {
           package = pkgs.maple-mono.NF;

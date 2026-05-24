@@ -21,7 +21,6 @@ in
       {
         enable = true;
 
-        # Catppuccin Mocha — matches the rest of the system
         theme = lib.mkForce spicePkgs.themes.catppuccin;
         colorScheme = lib.mkForce "mocha";
 
