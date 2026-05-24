@@ -46,11 +46,6 @@ in
         source = ../../../config/noctalia/plugins/git-status;
       };
 
-      ".config/noctalia/plugins/nix-gc" = {
-        recursive = true;
-        source = ../../../config/noctalia/plugins/nix-gc;
-      };
-
       ".config/noctalia/plugins.json" = {
         text = builtins.toJSON {
           sources = [
@@ -74,9 +69,6 @@ in
               enabled = true;
             };
             git-status = {
-              enabled = true;
-            };
-            nix-gc = {
               enabled = true;
             };
           };
@@ -118,7 +110,6 @@ in
               { id = "plugin:spotify-control"; }
               { id = "plugin:pomodoro"; }
               { id = "plugin:git-status"; }
-              { id = "plugin:nix-gc"; }
               { id = "plugin:catwalk"; }
               { id = "plugin:weather-indicator"; }
               {
