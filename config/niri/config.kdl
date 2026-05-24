@@ -217,7 +217,7 @@ binds {
         spawn "qs" "-c" "wallpaper-picker"
     }
     Ctrl+Mod+L {
-        spawn-sh "loginctl lock-session"
+        spawn "noctalia-shell" "ipc" "call" "lockScreen" "lock"
     }
     Ctrl+Mod+S allow-when-locked=true {
         spawn-sh "pkill orca || exec orca"
