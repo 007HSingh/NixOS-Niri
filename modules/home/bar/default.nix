@@ -78,9 +78,12 @@ in
       settings = {
         bar = {
           density = "default";
-          position = "top";
+          position = "left";
           showCapsule = false;
-          framed = true;
+          framed = false;
+          floating = true;
+          useSeparateOpacity = true;
+          backgroundOpacity = 0.15;
           widgets = {
             left = [
               { id = "ControlCenter"; }
