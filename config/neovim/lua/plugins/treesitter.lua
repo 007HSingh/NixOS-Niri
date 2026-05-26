@@ -1,42 +1,38 @@
 return {
 	"nvim-treesitter/nvim-treesitter",
-	branch = "master",
+	branch = "main",
 	build = ":TSUpdate",
-	event = "VeryLazy",
-	main = "nvim-treesitter.configs",
-	opts = {
-		ensure_installed = {
-			"bash",
-			"c",
-			"cpp",
-			"go",
-			"lua",
-			"python",
-			"javascript",
-			"typescript",
-			"html",
-			"css",
-			"json",
-			"yaml",
-			"markdown",
-			"markdown_inline",
-			"vim",
-			"vimdoc",
-			"rust",
-			"java",
-			"nix",
-			"qmljs",
-		},
-		highlight = { enable = true, additional_vim_regex_highlighting = false },
-		indent = { enable = true },
-		incremental_selection = {
-			enable = true,
-			keymaps = {
-				init_selection = "gnn",
-				node_incremental = "grn",
-				scope_incremental = "grc",
-				node_decremental = "grm",
-			},
-		},
-	},
+	lazy = false,
+	config = function()
+		require("nvim-treesitter").setup({})
+
+		vim.api.nvim_create_autocmd("User", {
+			pattern = "LazyDone",
+			once = true,
+			callback = function()
+				require("nvim-treesitter.install").install({
+					"bash",
+					"c",
+					"cpp",
+					"go",
+					"lua",
+					"python",
+					"javascript",
+					"typescript",
+					"html",
+					"css",
+					"json",
+					"yaml",
+					"markdown",
+					"markdown_inline",
+					"vim",
+					"vimdoc",
+					"rust",
+					"java",
+					"nix",
+					"qmljs",
+				})
+			end,
+		})
+	end,
 }
