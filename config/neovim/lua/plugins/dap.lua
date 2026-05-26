@@ -4,6 +4,7 @@
 return {
 	"mfussenegger/nvim-dap",
 	event = "VeryLazy",
+	ft = { "java" },
 	keys = {
 		{
 			"<leader>db",

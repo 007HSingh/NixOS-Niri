@@ -74,7 +74,7 @@ in
       CODELLDB_PATH = "${pkgs.vscode-extensions.vadimcn.vscode-lldb}/share/vscode/extensions/vadimcn.vscode-lldb/adapter/codelldb";
       VSCODE_JS_DEBUG_PATH = "${pkgs.vscode-js-debug}/lib/node_modules/@vscode/js-debug/src/dapDebugServer.js";
       JAVA_DEBUG_JAR = "${pkgs.vscode-extensions.vscjava.vscode-java-debug}/share/vscode/extensions/vscjava.vscode-java-debug/server/com.microsoft.java.debug.plugin-0.53.2.jar";
-      DEBUGPY_PATH = "${pkgs.python314Packages.debugpy}/${pkgs.python314.sitePackages}/debugpy";
+      DEBUGPY_PATH = "${(pkgs.python314.withPackages (ps: [ ps.debugpy ]))}/bin/python3";
     };
   };
 }
