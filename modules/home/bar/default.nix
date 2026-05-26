@@ -33,16 +33,6 @@ in
         source = "${inputs.noctalia-plugins}/pomodoro";
       };
 
-      ".config/noctalia/plugins/spotify-control" = {
-        recursive = true;
-        source = ../../../config/noctalia/plugins/spotify-control;
-      };
-
-      ".config/noctalia/plugins/git-status" = {
-        recursive = true;
-        source = ../../../config/noctalia/plugins/git-status;
-      };
-
       ".config/noctalia/plugins.json" = {
         text = builtins.toJSON {
           sources = [
@@ -56,16 +46,10 @@ in
             catwalk = {
               enabled = true;
             };
-            "spotify-control" = {
-              enabled = true;
-            };
             "weather-indicator" = {
               enabled = true;
             };
             pomodoro = {
-              enabled = true;
-            };
-            git-status = {
               enabled = true;
             };
           };
@@ -107,9 +91,7 @@ in
                 warningThreshold = 30;
               }
               { id = "Volume"; }
-              { id = "plugin:spotify-control"; }
               { id = "plugin:pomodoro"; }
-              { id = "plugin:git-status"; }
               { id = "plugin:catwalk"; }
               { id = "plugin:weather-indicator"; }
               {
