@@ -9,12 +9,7 @@ return {
 	},
 	config = function()
 		-- Locate the java-debug jar from the nix store
-		local java_debug_jar = vim.fn.glob(
-			"/nix/store/*/share/vscode/extensions/vscjava.vscode-java-debug/server/com.microsoft.java.debug.plugin-*.jar",
-			false,
-			true
-		)[1]
-
+		local java_debug_jar = vim.env.JAVA_DEBUG_JAR
 		local bundles = {}
 		if java_debug_jar then
 			table.insert(bundles, java_debug_jar)
