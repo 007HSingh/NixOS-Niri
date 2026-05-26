@@ -96,7 +96,12 @@ return {
 		end
 
 		-- Python adapter
-		require("dap-python").setup(vim.fn.exepath("python3"))
+		local debugpy = vim.env.DEBUGPY_PATH
+		if debugpy and debugpy ~= "" then
+			require("dap-python").setup(debugpy)
+		else
+			vim.notify("DAP: DEBUGPY_PATH not set — Python debugging unavailable", vim.log.levels.WARN)
+		end
 
 		-- C/C++/Rust adapter (codelldb)
 		local codelldb = vim.env.CODELLDB_PATH
