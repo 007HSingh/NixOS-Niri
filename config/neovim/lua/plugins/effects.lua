@@ -1,5 +1,5 @@
 -- ============================================================================
--- EYE CANDY — Animations, cursor effects, indent, statusline extras, zen mode
+-- EFFECTS — Animations, cursor effects, indent scope, zen mode, twilight
 -- ============================================================================
 return {
 

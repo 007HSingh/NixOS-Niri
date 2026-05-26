@@ -306,15 +306,6 @@ return {
 						},
 					},
 				},
-				jdtls = {
-					settings = {
-						java = {
-							inlayHints = { parameterNames = { enabled = "all" } },
-							signatureHelp = { enabled = true },
-							contentProvider = { preferred = "fernflower" },
-						},
-					},
-				},
 				-- Servers that work well with just defaults:
 				bashls = {},
 				html = {},
@@ -373,5 +364,40 @@ return {
 				},
 			})
 		end,
+	},
+
+	-- ── Aerial (symbol outline) ───────────────────────────────────────────────
+	{
+		"stevearc/aerial.nvim",
+		event = "LspAttach",
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter",
+			"nvim-tree/nvim-web-devicons",
+		},
+		config = function()
+			require("aerial").setup({
+				attach_mode = "cursor",
+				backends = { "lsp", "treesitter", "markdown", "asciidoc", "man" },
+				show_guides = true,
+				filter_kind = false,
+				layout = {
+					max_width = { 40, 0.2 },
+					min_width = 20,
+					default_direction = "prefer_right",
+				},
+			})
+			require("telescope").load_extension("aerial")
+		end,
+	},
+
+	-- ── Lazydev (Lua LSP type annotations) ────────────────────────────────────
+	{
+		"folke/lazydev.nvim",
+		ft = "lua", -- only load on lua files
+		opts = {
+			library = {
+				{ path = "${3rd}/luv/library", words = { "vim%.uv" } },
+			},
+		},
 	},
 }
