@@ -4,6 +4,51 @@
 return {
 	"mfussenegger/nvim-dap",
 	event = "VeryLazy",
+	keys = {
+		{
+			"<leader>db",
+			function()
+				require("dap").toggle_breakpoint()
+			end,
+			desc = "Toggle breakpoint",
+		},
+		{
+			"<leader>dc",
+			function()
+				require("dap").continue()
+			end,
+			desc = "Continue / Start",
+		},
+		{
+			"<leader>dO",
+			function()
+				require("dap").step_over()
+			end,
+			desc = "Step over",
+		},
+		{
+			"<leader>di",
+			function()
+				require("dap").step_into()
+			end,
+			desc = "Step into",
+		},
+		{
+			"<leader>do",
+			function()
+				require("dap").step_out()
+			end,
+			desc = "Step out",
+		},
+		{
+			"<leader>dq",
+			function()
+				require("dap").terminate()
+				require("dapui").close()
+			end,
+			desc = "Terminate",
+		},
+	},
 	dependencies = {
 		"rcarriga/nvim-dap-ui",
 		"nvim-neotest/nvim-nio",
@@ -51,28 +96,18 @@ return {
 		end
 
 		-- Python adapter
-		local debugpy = vim.fn.exepath("python3")
-		local debugpy_path = vim.fn.glob(
-			vim.env.VIRTUAL_ENV and (vim.env.VIRTUAL_ENV .. "/lib/python*/site-packages/debugpy")
-				or "/nix/store/*/lib/python*/site-packages/debugpy",
-			false,
-			true
-		)[1]
-		if debugpy_path then
-			require("dap-python").setup(debugpy)
-		else
-			require("dap-python").setup("python3")
-		end
+		require("dap-python").setup(vim.fn.exepath("python3"))
 
 		-- C/C++/Rust adapter (codelldb)
-		local codelldb =
-			vim.fn.glob("/nix/store/*/share/vscode/extensions/vadimcn.vscode-lldb/adapter/codelldb", false, true)[1]
-
-		if codelldb then
+		local codelldb = vim.env.CODELLDB_PATH
+		if codelldb and codelldb ~= "" then
 			dap.adapters.codelldb = {
 				type = "server",
 				port = "${port}",
-				executable = { command = codelldb, args = { "--port", "${port}" } },
+				executable = {
+					command = codelldb,
+					args = { "--port", "${port}" },
+				},
 			}
 			for _, ft in ipairs({ "rust", "c", "cpp" }) do
 				dap.configurations[ft] = {
@@ -88,19 +123,19 @@ return {
 					},
 				}
 			end
+		else
+			vim.notify("DAP: CODELLDB_PATH not set — C/C++/Rust debugging unavailable", vim.log.levels.WARN)
 		end
 
 		-- JavaScript/TypeScript adapter (vscode-js-debug)
-		local js_debug =
-			vim.fn.glob("/nix/store/*/lib/node_modules/@vscode/js-debug/src/dapDebugServer.js", false, true)[1]
-
-		if js_debug then
+		local js_debug = vim.env.VSCODE_JS_DEBUG_PATH
+		if js_debug and js_debug ~= "" then
 			dap.adapters["pwa-node"] = {
 				type = "server",
 				host = "localhost",
 				port = "${port}",
 				executable = {
-					command = "node",
+					command = vim.fn.exepath("node"),
 					args = { js_debug, "${port}" },
 				},
 			}
@@ -123,10 +158,9 @@ return {
 					},
 				}
 			end
+		else
+			vim.notify("DAP: VSCODE_JS_DEBUG_PATH not set — JS/TS debugging unavailable", vim.log.levels.WARN)
 		end
-
-		-- Java adapter (jdtls)
-		-- jdtls handles its own DAP
 
 		-- Telescope DAP extension
 		require("telescope").load_extension("dap")
