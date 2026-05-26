@@ -22,7 +22,6 @@ in
       xdg-utils
       file-roller
 
-
       # Wayland
       inputs.niri-flake.packages.${pkgs.stdenv.hostPlatform.system}.xwayland-satellite-unstable
       wayclip
@@ -40,7 +39,6 @@ in
       spotify
       vlc
 
-
       # Development
       docker-compose
       cachix
@@ -56,10 +54,6 @@ in
       ffmpegthumbnailer
       mediainfo
       pkgs.claude-code
-
-      # Gaming
-      mangohud
-      protonup-ng
     ];
   };
 }

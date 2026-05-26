@@ -24,12 +24,6 @@ in
 
       nix-ld.enable = true;
 
-      steam = {
-        enable = true;
-        gamescopeSession.enable = true;
-      };
-      gamemode.enable = true;
-
       gpu-screen-recorder.enable = true;
 
       zsh = {
