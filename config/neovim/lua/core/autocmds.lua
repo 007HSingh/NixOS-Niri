@@ -204,3 +204,16 @@ autocmd("LspAttach", {
 		end
 	end,
 })
+
+-- Wire jdtls DAP when Java LSP attaches
+autocmd("LspAttach", {
+	group = augroup("JdtlsDap", { clear = true }),
+	callback = function(args)
+		local client = vim.lsp.get_client_by_id(args.data.client_id)
+		if client and client.name == "jdtls" then
+			pcall(function()
+				require("jdtls.dap").setup_dap_main_class_configs()
+			end)
+		end
+	end,
+})
