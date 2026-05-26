@@ -55,6 +55,7 @@ in
       ripgrep
       fd
       nodejs
+      tree-sitter
 
       # DAP
       python314Packages.debugpy
