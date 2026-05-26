@@ -203,6 +203,10 @@
     "branch": "master",
     "commit": "fbdb48c2ed45f4a8293d0d483f7730d24467ccb6"
   },
+  "nvim-jdtls": {
+    "branch": "master",
+    "commit": "6e9d953f0b82bccdb834cfde0e893f3119c22592"
+  },
   "nvim-lint": {
     "branch": "master",
     "commit": "d48f3a76189d03b2239f6df1b2f7e3fa8353743b"
