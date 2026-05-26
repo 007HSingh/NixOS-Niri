@@ -53,7 +53,7 @@ in
       playerctl
 
       # Languages
-      javaPackages.compiler.temurin-bin.jdk-25
+      javaPackages.compiler.temurin-bin.jdk-21
       racket
       python314
       python314Packages.pip
@@ -69,6 +69,7 @@ in
       TERMINAL = "kitty";
       NH_FLAKE = "/home/harsh/nixos-config";
       _JAVA_AWT_WM_NONREPARENTING = "1";
+      JAVA_HOME = "${pkgs.javaPackages.compiler.temurin-bin.jdk-21}";
     };
   };
 }
