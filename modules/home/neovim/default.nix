@@ -55,6 +55,12 @@ in
       ripgrep
       fd
       nodejs
+
+      # DAP
+      python314Packages.debugpy
+      vscode-extensions.vadimcn.vscode-lldb
+      vscode-js-debug
+      vscode-extensions.vscjava.vscode-java-debug
     ];
 
     # out-of-store symlink so Lua config stays mutable
