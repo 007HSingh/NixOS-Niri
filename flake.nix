@@ -69,12 +69,6 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
-    # Zen Browser
-    zen-browser = {
-      url = "github:0xc000022070/zen-browser-flake";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
-
     # Secrets management
     sops-nix = {
       url = "github:Mic92/sops-nix";

@@ -10,7 +10,6 @@ let
     spicetify
     nix-index-database
     sops-nix
-    zen-browser
     ;
 in
 {
@@ -78,7 +77,6 @@ in
                     catppuccin.homeModules.catppuccin
                     nix-index-database.homeModules.nix-index
                     inputs.sops-nix.homeManagerModules.sops
-                    zen-browser.homeModules.beta
                   ];
                 };
               }) users

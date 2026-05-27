@@ -83,7 +83,7 @@ in
     home.sessionVariables = {
       EDITOR = "nvim";
       VISUAL = "nvim";
-      BROWSER = "zen-beta";
+      BROWSER = "firefox";
       TERMINAL = "kitty";
       NH_FLAKE = "/home/harsh/nixos-config";
       _JAVA_AWT_WM_NONREPARENTING = "1";
