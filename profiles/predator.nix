@@ -18,5 +18,6 @@ _:
     services.enable = true;
     stylix.enable = true;
     users.enable = true;
+    kanata.enable = true;
   };
 }

@@ -255,4 +255,45 @@ return {
 			require("trouble").setup({ use_diagnostic_signs = true })
 		end,
 	},
+	-- ── helpview.nvim — rendered :help pages (same author as render-markdown) ───
+	{
+		"OXY2DEV/helpview.nvim",
+		lazy = false, -- must be eager so :help works from startup
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter",
+		},
+		config = function()
+			local ok, cp = pcall(require, "catppuccin.palettes")
+			local p = ok and cp.get_palette("mocha") or {}
+
+			require("helpview").setup({
+				-- Merge Catppuccin colours into helpview's highlight groups
+				-- helpview uses its own hl groups on top of Treesitter
+				highlight_groups = {
+					-- Section headings
+					HelpviewHeading1 = { fg = p.mauve, bold = true },
+					HelpviewHeading2 = { fg = p.blue, bold = true },
+					HelpviewHeading3 = { fg = p.lavender, bold = true },
+
+					-- Code blocks and inline code
+					HelpviewCode = { bg = p.surface0 },
+					HelpviewInlineCode = { fg = p.peach, bg = p.surface0 },
+
+					-- Hyperlinks
+					HelpviewHyperlink = { fg = p.blue, underline = true },
+					HelpviewTaglink = { fg = p.teal, underline = true },
+
+					-- Key notation  e.g. <C-x>
+					HelpviewOptionLink = { fg = p.yellow },
+					HelpviewNoteTag = { fg = p.green, bold = true },
+
+					-- Separators / rules
+					HelpviewSeparator = { fg = p.surface2 },
+
+					-- Arguments  {expr}
+					HelpviewArgument = { fg = p.peach, italic = true },
+				},
+			})
+		end,
+	},
 }

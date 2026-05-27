@@ -60,6 +60,31 @@ in
 
       # Git tools
       git-absorb
+
+      (writeShellScriptBin "niri-scratch" ''
+        #!/usr/bin/env bash
+
+        SCRATCH_APP_ID="kitty-scratch"
+        SCRATCH_WS="scratch"
+
+        WINDOWS=$(niri msg --json windows 2>/dev/null)
+        SCRATCH_EXISTS=$(echo "$WINDOWS" | ${pkgs.jq}/bin/jq -e \
+          "[.[] | select(.app_id == \"$SCRATCH_APP_ID\")] | length > 0" 2>/dev/null)
+
+        CURRENT_WS=$(niri msg --json workspaces 2>/dev/null | \
+          ${pkgs.jq}/bin/jq -r '.[] | select(.is_focused == true) | .name // ""')
+
+        if [ "$SCRATCH_EXISTS" = "false" ]; then
+          niri msg action focus-workspace "$SCRATCH_WS" 2>/dev/null || true
+          kitty --app-id "$SCRATCH_APP_ID" &
+        elif [ "$CURRENT_WS" = "$SCRATCH_WS" ]; then
+          niri msg action focus-workspace-previous
+        else
+          niri msg action focus-workspace "$SCRATCH_WS"
+        fi
+      '')
+
+      kando
     ];
 
     home.sessionVariables = {

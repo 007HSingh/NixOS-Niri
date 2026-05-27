@@ -1,0 +1,108 @@
+/* ══════════════════════════════════════════════════════════════════
+   Kando — Catppuccin Mocha Theme
+   ══════════════════════════════════════════════════════════════════ */
+
+:root {
+  --ctp-base:      #1e1e2e;
+  --ctp-mantle:    #181825;
+  --ctp-crust:     #11111b;
+  --ctp-surface0:  #313244;
+  --ctp-surface1:  #45475a;
+  --ctp-surface2:  #585b70;
+  --ctp-overlay0:  #6c7086;
+  --ctp-text:      #cdd6f4;
+  --ctp-subtext0:  #a6adc8;
+  --ctp-mauve:     #cba6f7;
+  --ctp-blue:      #89b4fa;
+  --ctp-lavender:  #b4befe;
+  --ctp-green:     #a6e3a1;
+  --ctp-red:       #f38ba8;
+  --ctp-peach:     #fab387;
+  --ctp-yellow:    #f9e2af;
+  --ctp-pink:      #f5c2e7;
+}
+
+/* ── Menu backdrop ────────────────────────────────────────────────── */
+#kando-menu-background {
+  background: radial-gradient(
+    ellipse at center,
+    rgba(30, 30, 46, 0.85) 0%,
+    rgba(17, 17, 27, 0.75) 100%
+  );
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* ── Center node ──────────────────────────────────────────────────── */
+.kando-menu-node.active-node .kando-menu-node-icon-container {
+  background: var(--ctp-surface0);
+  border: 2px solid var(--ctp-mauve);
+  border-radius: 50%;
+  box-shadow:
+    0 0 20px rgba(203, 166, 247, 0.3),
+    0 8px 32px rgba(17, 17, 27, 0.6);
+}
+
+/* ── Child nodes ──────────────────────────────────────────────────── */
+.kando-menu-node .kando-menu-node-icon-container {
+  background: var(--ctp-surface0);
+  border: 1px solid rgba(203, 166, 247, 0.4);
+  border-radius: 50%;
+  transition:
+    background 150ms ease,
+    border-color 150ms ease,
+    transform 150ms ease,
+    box-shadow 150ms ease;
+}
+
+.kando-menu-node:hover .kando-menu-node-icon-container {
+  background: var(--ctp-surface1);
+  border-color: var(--ctp-mauve);
+  transform: scale(1.12);
+  box-shadow: 0 0 16px rgba(203, 166, 247, 0.4);
+}
+
+/* ── Icons ────────────────────────────────────────────────────────── */
+.kando-menu-node-icon {
+  color: var(--ctp-text);
+  transition: color 150ms ease;
+}
+
+.kando-menu-node:hover .kando-menu-node-icon {
+  color: var(--ctp-mauve);
+}
+
+/* ── Labels ───────────────────────────────────────────────────────── */
+.kando-menu-node-label {
+  color: var(--ctp-text);
+  font-family: "Nunito", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  text-shadow: 0 1px 4px rgba(17, 17, 27, 0.8);
+  background: rgba(24, 24, 37, 0.75);
+  border-radius: 6px;
+  padding: 2px 8px;
+  backdrop-filter: blur(8px);
+}
+
+/* ── Connector lines ──────────────────────────────────────────────── */
+.kando-menu-connector {
+  stroke: rgba(203, 166, 247, 0.25);
+  stroke-width: 1.5px;
+}
+
+/* ── Wedge hover highlight ────────────────────────────────────────── */
+.kando-menu-wedge:hover {
+  fill: rgba(203, 166, 247, 0.08);
+}
+
+/* ── Breadcrumb trail ─────────────────────────────────────────────── */
+.kando-menu-breadcrumbs {
+  color: var(--ctp-subtext0);
+  font-family: "Maple Mono NF", monospace;
+  font-size: 12px;
+}
+
+.kando-menu-breadcrumbs .current {
+  color: var(--ctp-mauve);
+}

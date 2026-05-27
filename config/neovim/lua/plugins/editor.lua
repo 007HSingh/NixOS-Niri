@@ -162,4 +162,70 @@ return {
 			})
 		end,
 	},
+
+	-- ── precognition.nvim — motion hint ghost text ────────────────────────────
+	{
+		"tris203/precognition.nvim",
+		event = "BufReadPost",
+		keys = {
+			{
+				"<leader>tp",
+				function()
+					require("precognition").toggle()
+				end,
+				desc = "Toggle precognition hints",
+			},
+		},
+		config = function()
+			require("precognition").setup({
+				startVisible = false, -- off by default, toggle with <leader>tp
+				showBlankVirtLine = false,
+				highlightColor = { link = "Comment" },
+				hints = {
+					Caret = { text = "^", prio = 2 },
+					Dollar = { text = "$", prio = 1 },
+					MatchingPair = { text = "%", prio = 5 },
+					Zero = { text = "0", prio = 1 },
+					w = { text = "w", prio = 10 },
+					b = { text = "b", prio = 9 },
+					e = { text = "e", prio = 8 },
+					W = { text = "W", prio = 7 },
+					B = { text = "B", prio = 6 },
+					E = { text = "E", prio = 5 },
+				},
+				gutterHints = {
+					G = { text = "G", prio = 10 },
+					gg = { text = "gg", prio = 9 },
+					PrevParagraph = { text = "{", prio = 8 },
+					NextParagraph = { text = "}", prio = 8 },
+				},
+				disabled_fts = {
+					"alpha",
+					"NvimTree",
+					"Trouble",
+					"trouble",
+					"lazy",
+					"mason",
+					"TelescopePrompt",
+					"toggleterm",
+				},
+			})
+
+			-- Catppuccin Mocha highlight overrides for hint ghost text
+			local ok, cp = pcall(require, "catppuccin.palettes")
+			if ok then
+				local p = cp.get_palette("mocha")
+				-- Inline hints: dim overlay colour so they don't compete with code
+				vim.api.nvim_set_hl(0, "PrecognitionHighlight", {
+					fg = p.overlay0,
+					italic = true,
+				})
+				-- Gutter hints (G, gg, {, }): slightly more visible
+				vim.api.nvim_set_hl(0, "PrecognitionGutterHint", {
+					fg = p.surface2,
+					italic = true,
+				})
+			end
+		end,
+	},
 }
