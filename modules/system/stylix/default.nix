@@ -14,6 +14,24 @@ in
     lib.mkEnableOption "Stylix system-wide theming (Catppuccin Mocha)";
 
   config = lib.mkIf cfg.enable {
+    catppuccin.cache.enable = true;
+
+    stylix.targets = {
+      grub.enable = false;
+      plymouth.enable = false;
+    };
+
+    catppuccin = {
+      grub = {
+        enable = true;
+        flavor = "mocha";
+      };
+      plymouth = {
+        enable = true;
+        flavor = "mocha";
+      };
+    };
+
     stylix = {
       enable = true;
       autoEnable = true;

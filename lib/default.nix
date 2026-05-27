@@ -47,6 +47,8 @@ in
         # Stylix NixOS integration
         inputs.stylix.nixosModules.stylix
 
+        inputs.catppuccin.nixosModules.catppuccin
+
         # Secrets management (sops-nix)
         sops-nix.nixosModules.sops
 
