@@ -91,6 +91,10 @@
     "branch": "harpoon2",
     "commit": "87b1a3506211538f460786c23f98ec63ad9af4e5"
   },
+  "helpview.nvim": {
+    "branch": "main",
+    "commit": "0057599e169ea6ffd53fef77f279cb13b61e174a"
+  },
   "inc-rename.nvim": {
     "branch": "main",
     "commit": "0074b551a17338ccdcd299bd86687cc651bcb33d"
@@ -270,6 +274,10 @@
   "plenary.nvim": {
     "branch": "master",
     "commit": "74b06c6c75e4eeb3108ec01852001636d85a932b"
+  },
+  "precognition.nvim": {
+    "branch": "main",
+    "commit": "683c1787d13be37fc4517f4b7488212205c95545"
   },
   "promise-async": {
     "branch": "main",

@@ -179,11 +179,53 @@ autocmd("BufWritePre", {
 		if #formatters == 0 then
 			return
 		end
+		local formatter_names = table.concat(
+			vim.tbl_map(function(f)
+				return f.name
+			end, formatters),
+			", "
+		)
+
 		conform.format({
 			bufnr = args.buf,
 			timeout_ms = 500,
 			lsp_fallback = true,
+			callback = function(err, did_format)
+				if err then
+					vim.notify("Format failed (" .. formatter_names .. ")\n" .. tostring(err), vim.log.levels.WARN, {
+						title = "conform.nvim",
+						icon = " ",
+					})
+				elseif did_format then
+					vim.notify(
+						"Formatted with " .. formatter_names,
+						vim.log.levels.INFO,
+						{ title = "conform.nvim", icon = "󰸞 ", timeout = 1500 }
+					)
+				end
+			end,
 		})
+	end,
+})
+
+-- ============================================================================
+-- nvim-lint feedback — notify when linting fails to run
+-- ============================================================================
+augroup("LintFeedback", { clear = true })
+autocmd("User", {
+	group = "LintFeedback",
+	pattern = "NvimLintRequestComplete",
+	callback = function(args)
+		local linters = args.data and args.data.linters or {}
+		for _, linter in ipairs(linters) do
+			if linter.exit_code and linter.exit_code > 1 then
+				vim.notify(
+					linter.name .. " exited with code " .. linter.exit_code,
+					vim.log.levels.WARN,
+					{ title = "nvim-lint", icon = " " }
+				)
+			end
+		end
 	end,
 })
 

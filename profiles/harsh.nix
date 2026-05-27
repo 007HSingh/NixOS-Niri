@@ -21,5 +21,6 @@ _:
     wofi.enable = true;
     xdg.enable = true;
     zathura.enable = true;
+    wl-kbptr.enable = true;
   };
 }

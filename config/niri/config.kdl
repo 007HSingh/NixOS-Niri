@@ -195,6 +195,18 @@ window-rule {
         fixed 480
     }
 }
+window-rule {
+    match app-id="^kitty-scratch$"
+    open-floating true
+    default-column-width {
+        fixed 1000
+    }
+}
+window-rule {
+    match app-id="^(dev.kando.menu|kando)$"
+    open-floating true
+    opacity 1.0
+}
 overview {
     zoom 0.45
     backdrop-color "#11111b"
@@ -209,8 +221,17 @@ binds {
     Mod+D {
         spawn "wofi"
     }
+    Mod+grave {
+        spawn "niri-scratch"
+    }
     Mod+Shift+W {
         spawn "qs" "-c" "wallpaper-picker"
+    }
+    Ctrl+Mod+Space {
+        spawn "kando"
+    }
+    Mod+Shift+M {
+        spawn "wl-kbptr"
     }
     Ctrl+Mod+L {
         spawn "noctalia-shell" "ipc" "call" "lockScreen" "lock"
