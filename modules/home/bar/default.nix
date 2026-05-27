@@ -62,7 +62,7 @@ in
       settings = {
         bar = {
           density = "default";
-          position = "left";
+          position = "top";
           showCapsule = false;
           framed = false;
           floating = true;
