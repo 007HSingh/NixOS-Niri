@@ -3,7 +3,6 @@
   lib,
   config,
   pkgs,
-  inputs,
   ...
 }:
 
@@ -43,10 +42,6 @@ in
       pcre
       cargo
       quickshell
-
-      # Applications
-      (discord.override { withOpenASAR = true; })
-      inputs.antigravity-nix.packages.${pkgs.stdenv.hostPlatform.system}.default
 
       # Wayland utilities
       wl-clipboard

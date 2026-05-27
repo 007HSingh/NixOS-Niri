@@ -34,7 +34,7 @@ A modular, state-of-the-art NixOS configuration built with **flake-parts**, feat
 - **IDE:** [Visual Studio Code](https://code.visualstudio.com/) — Fully configured via Home Manager with Catppuccin Mocha and language-specific extensions.
 - **CLI Editor:** [Neovim](https://neovim.io/) — A powerful terminal-based editor for quick edits and heavy CLI work.
 - **Browser:** [Zen Browser](https://github.com/0xc000022070/zen-browser-flake) — A Firefox-based browser focused on privacy and vertical tabs.
-- **AI Integration:** [Claude Code](https://github.com/sadjow/claude-code-nix) & [Antigravity](https://github.com/jacopone/antigravity-nix) for intelligent coding assistance.
+- **AI Integration:** [Claude Code](https://github.com/sadjow/claude-code-nix)
 - **Secrets:** [sops-nix](https://github.com/Mic92/sops-nix) — Secure secret management using SOPS.
 
 ---

@@ -81,18 +81,6 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
-    # ClaudeCode
-    claude-code-nix = {
-      url = "github:sadjow/claude-code-nix";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
-
-    # Antigravity
-    antigravity-nix = {
-      url = "github:jacopone/antigravity-nix";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
-
     # Niri
     niri-flake = {
       url = "github:sodiboo/niri-flake";

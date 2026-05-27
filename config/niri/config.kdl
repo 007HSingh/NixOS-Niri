@@ -140,7 +140,7 @@ window-rule {
     }
 }
 window-rule {
-    match app-id="^discord$"
+    match app-id="^vesktop$"
     border {
         off
     }
