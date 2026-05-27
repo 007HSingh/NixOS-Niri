@@ -202,11 +202,6 @@ window-rule {
         fixed 1000
     }
 }
-window-rule {
-    match app-id="^(dev.kando.menu|kando)$"
-    open-floating true
-    opacity 1.0
-}
 overview {
     zoom 0.45
     backdrop-color "#11111b"
@@ -226,9 +221,6 @@ binds {
     }
     Mod+Shift+W {
         spawn "qs" "-c" "wallpaper-picker"
-    }
-    Ctrl+Mod+Space {
-        spawn "kando"
     }
     Mod+Shift+M {
         spawn "wl-kbptr"

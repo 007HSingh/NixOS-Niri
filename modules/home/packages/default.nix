@@ -78,8 +78,6 @@ in
           niri msg action focus-workspace "$SCRATCH_WS"
         fi
       '')
-
-      kando
     ];
 
     home.sessionVariables = {
