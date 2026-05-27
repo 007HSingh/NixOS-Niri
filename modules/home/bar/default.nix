@@ -67,7 +67,7 @@ in
           framed = false;
           floating = true;
           useSeparateOpacity = true;
-          backgroundOpacity = lib.mkForce 0.15;
+          backgroundOpacity = lib.mkForce 0.50;
           widgets = {
             left = [
               { id = "ControlCenter"; }
