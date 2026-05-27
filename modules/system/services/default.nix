@@ -3,7 +3,6 @@
 {
   lib,
   config,
-  pkgs,
   ...
 }:
 
@@ -28,10 +27,6 @@ in
       gvfs.enable = true;
       tumbler.enable = true;
       udisks2.enable = true;
-      ollama = {
-        enable = true;
-        package = pkgs.ollama-cuda;
-      };
       gnome.gnome-keyring.enable = true;
     };
 

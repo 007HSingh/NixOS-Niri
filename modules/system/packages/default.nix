@@ -53,7 +53,6 @@ in
       chafa
       ffmpegthumbnailer
       mediainfo
-      pkgs.claude-code
     ];
   };
 }
