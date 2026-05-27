@@ -12,7 +12,6 @@ let
     niri = "niri";
     wallpapers = "wallpapers";
     quickshell = "quickshell";
-    kando = "kando";
   };
 in
 {
