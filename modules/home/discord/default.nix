@@ -21,6 +21,7 @@ in
         hardwareAcceleration = true;
         discordBranch = "stable";
         minimizeToTray = false;
+        audioSubsystem = "pipewire";
       };
       vencord = {
         useSystem = false;
@@ -28,6 +29,23 @@ in
           notifyAboutUpdates = false;
           autoUpdate = false;
           useQuickCss = false;
+          enabledThemes = [ ];
+          plugins = {
+            ForceOwO = {
+              enabled = false;
+            };
+            BetterScreenshare = {
+              enabled = true;
+              videoBitrate = 500;
+              videoBitrateEnabled = true;
+              videoFrameRate = 5;
+              videoFrameRateEnabled = true;
+              videoHeight = 0;
+              videoHeightEnabled = true;
+              videoWidth = 0;
+              videoWidthEnabled = true;
+            };
+          };
         };
       };
     };
