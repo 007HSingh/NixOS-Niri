@@ -23,6 +23,11 @@ in
       poppler
       resvg
 
+      # Applications
+      (discord.override {
+        withVencord = true;
+      })
+
       # CLI tools
       unzip
       zip
