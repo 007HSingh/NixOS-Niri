@@ -2,12 +2,6 @@
 -- OPTIONS — Translated from options.nix
 -- ============================================================================
 
-if vim.treesitter.language.ft_to_lang == nil then
-	vim.treesitter.language.ft_to_lang = function(ft)
-		return vim.treesitter.language.get_lang(ft) or ft
-	end
-end
-
 local opt = vim.opt
 
 -- Line numbers
