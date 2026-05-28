@@ -24,7 +24,7 @@ in
         logRefusedUnicastsOnly = true;
         rejectPackets = true;
         allowPing = true;
-        pingLimit = "--limit 1/second --limit-burst 5";
+        pingLimit = "2/second";
       };
     };
   };
