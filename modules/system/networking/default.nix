@@ -13,14 +13,19 @@ in
     lib.mkEnableOption "networking (NetworkManager, firewall)";
 
   config = lib.mkIf cfg.enable {
-    networking.networkmanager = {
-      enable = true;
-    };
-
-    networking.firewall = {
-      enable = true;
-      allowedTCPPorts = [ ];
-      allowedUDPPorts = [ ];
+    networking = {
+      networkmanager.enable = true;
+      nftables.enable = true;
+      firewall = {
+        enable = true;
+        allowedTCPPorts = [ ];
+        allowedUDPPorts = [ ];
+        logRefusedConnections = true;
+        logRefusedUnicastsOnly = true;
+        rejectPackets = true;
+        allowPing = true;
+        pingLimit = "--limit 1/second --limit-burst 5";
+      };
     };
   };
 }

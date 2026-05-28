@@ -14,11 +14,13 @@ in
     lib.mkEnableOption "shell environment (zsh, starship, atuin, zoxide, etc.)";
 
   config = lib.mkIf cfg.enable {
-    stylix.targets.kitty.enable = false;
-    stylix.targets.bat.enable = false;
-    stylix.targets.lazygit.enable = false;
-    stylix.targets.yazi.enable = false;
-    stylix.targets.starship.enable = false;
+    stylix.targets = {
+      kitty.enable = false;
+      bat.enable = false;
+      lazygit.enable = false;
+      yazi.enable = false;
+      starship.enable = false;
+    };
 
     programs = {
       zsh = {
