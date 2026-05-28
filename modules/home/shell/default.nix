@@ -120,8 +120,8 @@ in
         settings = {
           format = "$directory$git_branch$git_status$nix_shell$python$rust$docker_context$battery$cmd_duration$line_break$character";
           right_format = "$time";
-          scan_timeout = 10; # ms — give up on slow filesystem scans
-          command_timeout = 500; # ms — cap any single module evaluation
+          scan_timeout = 100;
+          command_timeout = 500;
           add_newline = false;
 
           character = {
@@ -133,6 +133,7 @@ in
           directory = {
             style = "bold lavender";
             truncation_length = 3;
+            truncation_symbol = ".../";
             fish_style_pwd_dir_length = 1;
             truncate_to_repo = true;
             read_only = " 󰌾";
