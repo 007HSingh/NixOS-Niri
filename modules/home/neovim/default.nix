@@ -34,6 +34,7 @@ in
       clang-tools
       marksman
       qt6.qtdeclarative
+      kotlin-language-server
 
       # Formatters
       nixfmt
@@ -44,6 +45,7 @@ in
       shfmt
       kdlfmt
       google-java-format
+      ktlint
 
       # Linters
       luajitPackages.luacheck

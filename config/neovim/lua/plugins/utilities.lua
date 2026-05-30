@@ -66,7 +66,16 @@ return {
 		"airblade/vim-rooter",
 		event = "VeryLazy",
 		init = function()
-			vim.g.rooter_patterns = { ".git", "package.json", "Makefile", "Cargo.toml", "pyproject.toml" }
+			vim.g.rooter_patterns = {
+				".git",
+				"package.json",
+				"Makefile",
+				"Cargo.toml",
+				"pyproject.toml",
+				"build.gradle.kts",
+				"settings.gradle.kts",
+				"gradlew",
+			}
 			vim.g.rooter_silent_chdir = 1
 			vim.g.rooter_resolve_links = 1
 		end,

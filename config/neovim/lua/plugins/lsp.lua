@@ -221,6 +221,28 @@ return {
 				qmlls = {
 					cmd = { "qmlls" },
 				},
+				kotlin_language_server = {
+					settings = {
+						kotlin = {
+							compiler = {
+								jvm = {
+									target = "21",
+								},
+							},
+							completion = {
+								snippets = { enabled = true },
+							},
+							inlayHints = {
+								typeHints = { enabled = true },
+								parameterHints = { enabled = true },
+								chainingHints = { enabled = true },
+							},
+							debugAdapter = {
+								enabled = true,
+							},
+						},
+					},
+				},
 				pyright = {
 					settings = {
 						python = {
@@ -345,6 +367,11 @@ return {
 						args = { "-" },
 						stdin = true,
 					},
+					ktlint = {
+						command = "ktlint",
+						args = { "--format", "--stdin", "--log-level=error" },
+						stdin = true,
+					},
 				},
 				formatters_by_ft = {
 					qml = { "qmlformat" },
@@ -361,6 +388,7 @@ return {
 					bash = { "shfmt" },
 					kdl = { "kdlfmt" },
 					java = { "google_java_format" },
+					kotlin = { "ktlint" },
 				},
 			})
 		end,
