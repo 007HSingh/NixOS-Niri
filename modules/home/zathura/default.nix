@@ -12,6 +12,13 @@ in
   options.modules.home.zathura.enable = lib.mkEnableOption "zathura PDF viewer";
 
   config = lib.mkIf cfg.enable {
+    stylix.targets.zathura.enable = false;
+
+    catppuccin.zathura = {
+      enable = true;
+      flavor = "mocha";
+    };
+
     programs.zathura = {
       enable = true;
 
