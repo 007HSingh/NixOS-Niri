@@ -25,7 +25,7 @@
   },
   "catppuccin": {
     "branch": "main",
-    "commit": "8edd468af4d63212b84d69b2ddb5ffc9023ef5eb"
+    "commit": "0303a7208dba448c459767486a38a6ec05c4216b"
   },
   "cellular-automaton.nvim": {
     "branch": "main",
@@ -145,7 +145,7 @@
   },
   "mason.nvim": {
     "branch": "main",
-    "commit": "bb639d4bf385a4d89f478b83af4d770be05ab7eb"
+    "commit": "16ba83bfc8a25f52bb545134f5bee082b195c460"
   },
   "mini.ai": {
     "branch": "main",
@@ -189,7 +189,7 @@
   },
   "nvim-colorizer.lua": {
     "branch": "master",
-    "commit": "5cfe7fffbd01e17b3c1e14af85d5febdef88bd8c"
+    "commit": "664c0b7cea1de71f8b65dfe951b7996fc3e6ccde"
   },
   "nvim-dap": {
     "branch": "master",
@@ -217,7 +217,7 @@
   },
   "nvim-lspconfig": {
     "branch": "master",
-    "commit": "a4ed4e761c400849e8c9f8bda33e5083f890268c"
+    "commit": "9573948c38bfabeec353ae7dd7d3ffec4c506a6b"
   },
   "nvim-navic": {
     "branch": "master",
