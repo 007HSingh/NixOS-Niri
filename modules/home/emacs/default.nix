@@ -67,8 +67,6 @@ in
 
     home.sessionVariables = {
       DOOMDIR = "${config.xdg.configHome}/doom";
-      EMACSDIR = "${config.xdg.configHome}/emacs";
-      EMACS_INIT_DIRECTORY = "${config.xdg.configHome}/emacs";
       GTK_IM_MODULE = "ibus";
     };
   };
