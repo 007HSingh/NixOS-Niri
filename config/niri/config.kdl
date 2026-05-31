@@ -524,7 +524,7 @@ binds {
         maximize-column
     }
     Mod+Shift+F {
-        fullscreen-window
+        spawn "thunar"
     }
     Mod+Ctrl+F {
         expand-column-to-available-width
@@ -572,7 +572,7 @@ binds {
         spawn-sh "cliphist list | wofi --dmenu --prompt 'Clipboard' | cliphist decode | wl-copy"
     }
     Mod+E {
-        spawn "thunar"
+        spawn "emacs"
     }
     Mod+Escape allow-inhibiting=false {
         toggle-keyboard-shortcuts-inhibit
