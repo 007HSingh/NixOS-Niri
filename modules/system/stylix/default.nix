@@ -24,7 +24,6 @@ in
     catppuccin = {
       enable = true;
       autoEnable = false;
-      gtk.icon.enable = false;
       grub = {
         enable = true;
         flavor = "mocha";
