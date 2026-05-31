@@ -20,6 +20,7 @@ in
       lazygit.enable = false;
       yazi.enable = false;
       starship.enable = false;
+      fzf.enable = false;
     };
 
     programs = {
@@ -443,6 +444,7 @@ in
       bat.enable = true;
       lazygit.enable = true;
       yazi.enable = true;
+      fzf.enable = true;
     };
   };
 }
