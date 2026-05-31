@@ -32,6 +32,7 @@ in
         shellAliases = {
           generations = "sudo nix-env --list-generations --profile /nix/var/nix/profiles/system";
           clean = "sudo nix-collect-garbage -d";
+          emacs = "emacs --init-directory ~/.config/emacs";
         };
       };
 
