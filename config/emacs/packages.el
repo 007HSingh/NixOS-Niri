@@ -1,37 +1,81 @@
-;;; packages.el
-;; Packages here supplement Doom's own modules
-;;  After adding one, run `doom sync`.
+;; -*- no-byte-compile: t; -*-
+;;; $DOOMDIR/packages.el
 
-;; ── Theming ────────────────────────────────────────────────────────────────
-(package! catppuccin-theme)           ; system-matching Catppuccin Mocha
+;; To install a package:
+;;
+;;   1. Declare them here in a `package!' statement,
+;;   2. Run 'doom sync' in the shell,
+;;   3. Restart Emacs.
+;;
+;; Use 'C-h f package\!' to look up documentation for the `package!' macro.
 
-;; ── Org extras ─────────────────────────────────────────────────────────────
-(package! org-super-agenda)           ; group agenda items (like todo-comments)
-(package! org-modern)                 ; modern org aesthetics (replaces org-bullets)
-(package! org-appear)                 ; show/hide emphasis markers on cursor
-(package! org-download)               ; drag & drop / paste images into org
-(package! org-noter)                  ; PDF annotation tied to org headlines
-(package! ox-hugo)                    ; Hugo export backend
 
-;; ── Evil extras ────────────────────────────────────────────────────────────
-(package! evil-exchange)              ; cx / cX to exchange text objects
-(package! evil-lion)                  ; gl / gL to align (like :EasyAlign)
-(package! evil-textobj-tree-sitter)   ; tree-sitter text objects in evil
+;; To install SOME-PACKAGE from MELPA, ELPA or emacsmirror:
+;; (package! some-package)
 
-;; ── Navigation / search ────────────────────────────────────────────────────
-(package! avy)                        ; like flash.nvim — jump to any char
-(package! consult-org-roam)           ; consult source for org-roam nodes
+;; To install a package directly from a remote git repo, you must specify a
+;; `:recipe'. You'll find documentation on what `:recipe' accepts here:
+;; https://github.com/radian-software/straight.el#the-recipe-format
+;; (package! another-package
+;;   :recipe (:host github :repo "username/repo"))
 
-;; ── Editing ────────────────────────────────────────────────────────────────
-(package! jinx)                       ; fast spell checker (Enchant backend)
-(package! apheleia)                   ; async formatter (replaces conform.nvim)
+;; If the package you are trying to install does not contain a PACKAGENAME.el
+;; file, or is located in a subdirectory of the repo, you'll need to specify
+;; `:files' in the `:recipe':
+;; (package! this-package
+;;   :recipe (:host github :repo "username/repo"
+;;            :files ("some-file.el" "src/lisp/*.el")))
 
-;; ── UI ─────────────────────────────────────────────────────────────────────
-(package! nerd-icons)                 ; icon set matching your Maple Mono NF
-(package! nerd-icons-dired)           ; icons in dired
-(package! nerd-icons-ibuffer)         ; icons in ibuffer
-(package! rainbow-delimiters)         ; like rainbow-delimiters.nvim
-(package! indent-bars)                ; like indent-blankline.nvim
+;; If you'd like to disable a package included with Doom, you can do so here
+;; with the `:disable' property:
+;; (package! builtin-package :disable t)
 
-;; ── Tools ──────────────────────────────────────────────────────────────────
-(package! envrc)                      ; better direnv integration (per-buffer)
+;; You can override the recipe of a built in package without having to specify
+;; all the properties for `:recipe'. These will inherit the rest of its recipe
+;; from Doom or MELPA/ELPA/Emacsmirror:
+;; (package! builtin-package :recipe (:nonrecursive t))
+;; (package! builtin-package-2 :recipe (:repo "myfork/package"))
+
+;; Specify a `:branch' to install a package from a particular branch or tag.
+;; This is required for some packages whose default branch isn't 'master' (which
+;; our package manager can't deal with; see radian-software/straight.el#279)
+;; (package! builtin-package :recipe (:branch "develop"))
+
+;; Use `:pin' to specify a particular commit to install.
+;; (package! builtin-package :pin "1a2b3c4d5e")
+
+
+;; Doom's packages are pinned to a specific commit and updated from release to
+;; release. The `unpin!' macro allows you to unpin single packages...
+;; (unpin! pinned-package)
+;; ...or multiple packages
+;; (unpin! pinned-package another-pinned-package)
+;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
+;; (unpin! t)
+
+(package! catppuccin-theme)
+
+(package! org-super-agenda)
+(package! org-modern)
+(package! org-appear)
+(package! org-download)
+(package! org-noter)
+(package! ox-hugo)
+
+(package! evil-exchange)
+(package! evil-lion)
+(package! evil-textobj-tree-sitter)
+
+(package! avy)
+(package! consult-org-roam)
+
+(package! jinx)
+(package! apheleia)
+
+(package! nerd-icons)
+(package! nerd-icons-dired)
+(package! nerd-icons-ibuffer)
+(package! rainbow-delimiters)
+(package! indent-bars)
+
+(package! envrc)
