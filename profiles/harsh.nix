@@ -22,5 +22,6 @@ _:
     xdg.enable = true;
     zathura.enable = true;
     wl-kbptr.enable = true;
+    emacs.enable = true;
   };
 }
