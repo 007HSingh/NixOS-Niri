@@ -12,7 +12,6 @@ return {
 			bash = { "shellcheck" },
 			markdown = { "markdownlint-cli2" },
 			nix = { "statix" },
-			kotlin = { "ktlint" },
 		}
 
 		lint.linters.luacheck = vim.tbl_deep_extend("force", lint.linters.luacheck, {
