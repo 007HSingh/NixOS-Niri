@@ -32,6 +32,7 @@ in
             tree-sitter-yaml
             tree-sitter-json
             tree-sitter-java
+            tree-sitter-scheme
           ]
         ))
       ];
@@ -49,6 +50,10 @@ in
       (aspellWithDicts (ds: with ds; [ en ]))
 
       texlive.combined.scheme-medium
+
+      mitscheme
+
+      nerd-fonts.jetbrains-mono
 
       (writeShellScriptBin "doom-sync" ''
         export PATH="${pkgs.git}/bin:${pkgs.ripgrep}/bin:${pkgs.fd}/bin:$PATH"
