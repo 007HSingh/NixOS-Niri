@@ -52,30 +52,3 @@
 ;; (unpin! pinned-package another-pinned-package)
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;; (unpin! t)
-
-(package! catppuccin-theme)
-
-(package! org-super-agenda)
-(package! org-modern)
-(package! org-appear)
-(package! org-download)
-(package! org-noter)
-(package! ox-hugo)
-
-(package! evil-exchange)
-(package! evil-lion)
-(package! evil-textobj-tree-sitter)
-
-(package! avy)
-(package! consult-org-roam)
-
-(package! jinx)
-(package! apheleia)
-
-(package! nerd-icons)
-(package! nerd-icons-dired)
-(package! nerd-icons-ibuffer)
-(package! rainbow-delimiters)
-(package! indent-bars)
-
-(package! envrc)
