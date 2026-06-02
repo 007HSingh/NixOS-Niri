@@ -29,8 +29,9 @@
 ;; refresh your font settings. If Emacs still can't find your font, it likely
 ;; wasn't installed correctly. Font issues are rarely Doom issues!
 (setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 16 :weight 'regular)
-      doom-variable-pitch-font (font-spec :familt "Nunito" :size 17)
-      doom-big-font (font-spec :family "JetBrainsMono Nerd Font" :size 22))
+      doom-variable-pitch-font (font-spec :family "Nunito" :size 17)
+      doom-big-font (font-spec :family "JetBrainsMono Nerd Font" :size 22)
+      doom-symbol-font (font-spec :family "Noto Color Emoji" :size 16))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
@@ -81,12 +82,15 @@
 (after! geiser-mode
   (setq geiser-active-implementations '(mit))
   (setq geiser-repl-use-other-window t)
-  (setq geiser-mit-binary "mit-scheme")
-  (add-hook 'scheme-mode-hook
+  (setq geiser-mit-binary "mit-scheme"))
+
+(add-hook 'geiser-mode-hook
           (lambda ()
-            (unless (geiser-repl--connection*)
+            (unless (seq-find (lambda (b)
+                                (string-prefix-p "*Geiser MIT" (buffer-name b)))
+                              (buffer-list))
               (save-window-excursion
-                (geiser-run-geiser 'mit))))))
+                (geiser-mit)))))
 
 (after! org
   (org-babel-do-load-languages
@@ -100,7 +104,7 @@
   (add-hook 'geiser-repl-mode-hook #'paredit-mode))
 
 ;; Pretty-print results in the REPL
-(after! geiser-mit
+(after! geiser-repl
   (setq geiser-repl-history-filename
         (expand-file-name "geiser-history" doom-cache-dir)))
 
