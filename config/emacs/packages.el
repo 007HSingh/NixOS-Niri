@@ -54,3 +54,7 @@
 ;; (unpin! t)
 
 (package! catppuccin-theme)
+
+(package! sicp)
+
+(package! paredit)
