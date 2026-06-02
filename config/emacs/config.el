@@ -30,17 +30,17 @@
 ;; wasn't installed correctly. Font issues are rarely Doom issues!
 (setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 13 :weight 'regular)
       doom-variable-pitch-font (font-spec :familt "Nunito" :size 14)
-      doom-big-font (font-spec :family "JetBrainsMono Nerd Font" :size 18)
+      doom-big-font (font-spec :family "JetBrainsMono Nerd Font" :size 18))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
 (setq doom-theme 'catppuccin)
-(setq catppuccin-flavor 'mocha')
+(setq catppuccin-flavor 'mocha)
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type 'relative')
+(setq display-line-numbers-type 'relative)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -81,5 +81,36 @@
 (after! geiser-mode
   (setq geiser-active-implementations '(mit))
   (setq geiser-repl-use-other-window t))
+  (add-hook 'scheme-mode-hook
+          (lambda ()
+            (unless (geiser-repl--connection*)
+              (save-window-excursion
+                (geiser-run-geiser 'mit)))))
 
 (add-to-list 'auto-mode-alist '("\\.sld\\'" . scheme-mode))
+
+(after! org
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((scheme . t)
+     (emacs-lisp . t)))
+  (setq org-babel-scheme-cmd "mit-scheme"))
+
+(after! scheme-mode
+  (add-hook 'scheme-mode-hook #'paredit-mode)
+  (add-hook 'geiser-repl-mode-hook #'paredit-mode))
+
+;; Pretty-print results in the REPL
+(after! geiser-mit
+  (setq geiser-repl-history-filename
+        (expand-file-name "geiser-history" doom-cache-dir))
+  ;; MIT Scheme pretty printer
+  (setq geiser-mit-binary "mit-scheme"))
+
+;; Useful for SICP — highlight matching parens more visibly
+(after! scheme-mode
+  (setq show-paren-style 'mixed
+        show-paren-delay 0))
+
+;; .scm files for SICP exercises
+(setq org-directory "~/org/sicp/")
