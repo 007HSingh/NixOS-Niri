@@ -84,11 +84,12 @@
   (setq geiser-repl-use-other-window t)
   (setq geiser-mit-binary "mit-scheme"))
 
+(defvar my/geiser-started nil)
+
 (add-hook 'geiser-mode-hook
           (lambda ()
-            (unless (seq-find (lambda (b)
-                                (string-prefix-p "*Geiser MIT" (buffer-name b)))
-                              (buffer-list))
+            (unless my/geiser-started
+              (setq my/geiser-started t)
               (save-window-excursion
                 (geiser-mit)))))
 
