@@ -28,9 +28,9 @@
 ;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
 ;; refresh your font settings. If Emacs still can't find your font, it likely
 ;; wasn't installed correctly. Font issues are rarely Doom issues!
-(setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 13 :weight 'regular)
-      doom-variable-pitch-font (font-spec :familt "Nunito" :size 14)
-      doom-big-font (font-spec :family "JetBrainsMono Nerd Font" :size 18))
+(setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 16 :weight 'regular)
+      doom-variable-pitch-font (font-spec :familt "Nunito" :size 17)
+      doom-big-font (font-spec :family "JetBrainsMono Nerd Font" :size 22))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
@@ -44,7 +44,7 @@
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
-(setq org-directory "~/org/")
+(setq org-directory "~/org/sicp/")
 
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
@@ -80,14 +80,13 @@
 
 (after! geiser-mode
   (setq geiser-active-implementations '(mit))
-  (setq geiser-repl-use-other-window t))
+  (setq geiser-repl-use-other-window t)
+  (setq geiser-mit-binary "mit-scheme")
   (add-hook 'scheme-mode-hook
           (lambda ()
             (unless (geiser-repl--connection*)
               (save-window-excursion
-                (geiser-run-geiser 'mit)))))
-
-(add-to-list 'auto-mode-alist '("\\.sld\\'" . scheme-mode))
+                (geiser-run-geiser 'mit))))))
 
 (after! org
   (org-babel-do-load-languages
@@ -103,9 +102,7 @@
 ;; Pretty-print results in the REPL
 (after! geiser-mit
   (setq geiser-repl-history-filename
-        (expand-file-name "geiser-history" doom-cache-dir))
-  ;; MIT Scheme pretty printer
-  (setq geiser-mit-binary "mit-scheme"))
+        (expand-file-name "geiser-history" doom-cache-dir)))
 
 ;; Useful for SICP — highlight matching parens more visibly
 (after! scheme-mode
@@ -114,3 +111,5 @@
 
 ;; .scm files for SICP exercises
 (setq org-directory "~/org/sicp/")
+
+(add-to-list 'auto-mode-alist '("\\.sld\\'" . scheme-mode))
