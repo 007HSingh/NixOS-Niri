@@ -19,6 +19,7 @@ in
     stylix.targets = {
       grub.enable = false;
       plymouth.enable = false;
+      kmscon.enable = false;
     };
 
     catppuccin = {
