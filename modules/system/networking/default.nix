@@ -27,5 +27,7 @@ in
         pingLimit = "2/second";
       };
     };
+
+    systemd.services.NetworkManager-wait-online.enable = false;
   };
 }
