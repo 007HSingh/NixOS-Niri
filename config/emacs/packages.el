@@ -56,5 +56,7 @@
 (package! catppuccin-theme)
 
 (package! sicp)
-
 (package! paredit)
+
+(package! org-modern)
+(package! valign)

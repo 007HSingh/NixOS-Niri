@@ -20,6 +20,7 @@ in
 
       extraPackages = epkgs: [
         epkgs.vterm
+        epkgs.pdf-tools
 
         (epkgs.treesit-grammars.with-grammars (
           grammars: with grammars; [
@@ -46,6 +47,8 @@ in
     home.packages = with pkgs; [
       sqlite
       pandoc
+      poppler
+      ghostscript
 
       (aspellWithDicts (ds: with ds; [ en ]))
 
@@ -70,9 +73,36 @@ in
       recursive = true;
     };
 
-    home.sessionVariables = {
-      DOOMDIR = "${config.xdg.configHome}/doom";
-      GTK_IM_MODULE = "ibus";
+    home = {
+      activation.createNotesDir = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+              for dir in \
+                "$HOME/Notes" \
+                "$HOME/Notes/roam" \
+                "$HOME/Notes/roam/courses" \
+                "$HOME/Notes/roam/books" \
+                "$HOME/Notes/agenda" \
+                "$HOME/Notes/courses" \
+                "$HOME/Notes/books" \
+                "$HOME/Notes/assets"; do
+                $DRY_RUN_CMD mkdir -p "$dir"
+              done
+
+              if [ ! -f "$HOME/Notes/inbox.org" ]; then
+                $DRY_RUN_CMD tee "$HOME/Notes/inbox.org" > /dev/null <<'EOF'
+        #+TITLE: Inbox
+        #+FILETAGS: :inbox:
+
+        * Tasks
+
+        * Notes
+        EOF
+              fi
+      '';
+
+      sessionVariables = {
+        DOOMDIR = "${config.xdg.configHome}/doom";
+        GTK_IM_MODULE = "ibus";
+      };
     };
   };
 }
