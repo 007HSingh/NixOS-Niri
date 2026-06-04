@@ -12,7 +12,6 @@ _:
     zed.enable = true;
     git.enable = true;
     media.enable = true;
-    notes.enable = true;
     packages.enable = true;
     shell.enable = true;
     termipedia.enable = true;

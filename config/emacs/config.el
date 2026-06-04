@@ -45,7 +45,7 @@
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
-(setq org-directory "~/org/sicp/")
+(setq org-directory "~/Notes/")
 
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
@@ -79,6 +79,143 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
+(after! org
+  ;; babel
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((scheme . t)
+     (emacs-lisp . t)
+     (python . t)))
+  (setq org-babel-scheme-cmd "mit-scheme")
+
+  ;; files
+  (setq org-default-notes-file (concat org-directory "inbox.org")
+        org-agenda-files (list (concat org-directory "agenda/")))
+
+  ;; visual
+  (setq org-startup-indented t
+        org-startup-folded 'content
+        org-hide-emphasis-markers t
+        org-pretty-entities t
+        org-ellipsis " ▾"
+        org-src-fontify-natively t
+        org-src-tab-acts-natively t
+        org-fontify-quote-and-verse-blocks t
+        org-image-actual-width '(500))
+
+  ;; behaviour
+  (setq org-return-follows-link t
+        org-log-done 'time
+        org-log-into-drawer t
+        org-use-fast-todo-selection t)
+
+  ;; TODO states — matches Catppuccin Mocha colours
+  (setq org-todo-keywords
+        '((sequence "TODO(t)" "NEXT(n)" "IN-PROGRESS(p!)" "WAITING(w@/!)" "|"
+                    "DONE(d!)" "CANCELLED(k@)")))
+
+  (setq org-todo-keyword-faces
+        '(("TODO"        :foreground "#f38ba8" :weight bold)
+          ("NEXT"        :foreground "#89b4fa" :weight bold)
+          ("IN-PROGRESS" :foreground "#a6e3a1" :weight bold)
+          ("WAITING"     :foreground "#f9e2af" :weight bold)
+          ("DONE"        :foreground "#6c7086" :weight bold)
+          ("CANCELLED"   :foreground "#585b70" :weight bold)))
+
+  ;; tags
+  (setq org-tag-alist
+        '((:startgroup)
+          ("@study" . ?s) ("@reference" . ?r) ("@review" . ?v)
+          (:endgroup)
+          ("course" . ?c) ("book" . ?b) ("math" . ?m)
+          ("cs" . ?p) ("important" . ?i)))
+
+  ;; capture templates
+  (setq org-capture-templates
+        '(("i" "Inbox" entry
+           (file org-default-notes-file)
+           "* %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n"
+           :prepend t :empty-lines 1)
+
+          ("c" "Course note" entry
+           (file+olp+datetree
+            (lambda () (read-file-name "Course: " (concat org-directory "courses/"))))
+           "* %^{Topic}\n:PROPERTIES:\n:CREATED: %U\n:SOURCE: %^{Source/Lecture}\n:END:\n\n%?"
+           :empty-lines 1)
+
+          ("b" "Book note" entry
+           (file+olp+datetree
+            (lambda () (read-file-name "Book: " (concat org-directory "books/"))))
+           "* %^{Chapter/Section}\n:PROPERTIES:\n:CREATED: %U\n:PAGE: %^{Page}\n:END:\n\n%?"
+           :empty-lines 1)
+
+          ("t" "Task" entry
+           (file+headline org-default-notes-file "Tasks")
+           "* TODO %?\nDEADLINE: %^{Deadline}t\n"
+           :prepend t)
+
+          ("j" "Journal" entry
+           (file+olp+datetree (concat org-directory "journal.org"))
+           "* %U\n%?" :prepend t)))
+
+  ;; agenda
+  (setq org-agenda-span 'week
+        org-agenda-start-on-weekday 1  ; Monday
+        org-agenda-block-separator ?─
+        org-agenda-time-grid
+        '((daily today require-timed)
+          (800 1000 1200 1400 1600 1800 2000)
+          " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄")))
+
+  ;; .scm files as scheme
+  (add-to-list 'auto-mode-alist '("\\.sld\\'" . scheme-mode)))
+
+(after! org-modern
+  (setq org-modern-star '("◉" "○" "◈" "◇" "▸")
+        org-modern-table t
+        org-modern-block-fringe nil
+        org-modern-keyword t
+        org-modern-checkbox '((88 . "󰄵") (45 . "󰡖") (32 . "󰄱")))
+(global-org-modern-mode))
+
+(after! valign
+  (add-hook 'org-mode-hook #'valign-mode))
+
+(after! org-roam
+  (setq org-roam-directory (concat org-directory "roam/")
+        org-roam-db-location (concat org-directory ".org-roam.db")
+        org-roam-completion-everywhere t
+        org-roam-node-display-template
+        (concat "${title:*} " (propertize "${tags:20}" 'face 'org-tag)))
+
+  (setq org-roam-capture-templates
+        '(("d" "default" plain "%?"
+           :target (file+head "${slug}.org"
+                              "#+TITLE: ${title}\n#+CREATED: %U\n#+FILETAGS: \n\n")
+           :unnarrowed t)
+
+          ("c" "course" plain
+           "#+FILETAGS: :course:\n\n* Overview\n%?\n\n* Key Concepts\n\n* Questions\n"
+           :target (file+head "courses/${slug}.org"
+                              "#+TITLE: ${title}\n#+CREATED: %U\n#+COURSE: %^{Course name}\n\n")
+           :unnarrowed t)
+
+          ("b" "book" plain
+           "#+FILETAGS: :book:\n\n* Summary\n%?\n\n* Key Ideas\n\n* Quotes\n\n* Actions\n"
+           :target (file+head "books/${slug}.org"
+                              "#+TITLE: ${title}\n#+AUTHOR: %^{Author}\n#+CREATED: %U\n\n")
+           :unnarrowed t)))
+
+  (org-roam-db-autosync-mode))
+
+(after! org-noter
+  (setq org-noter-notes-window-location 'vertical-split
+        org-noter-always-create-frame nil
+        org-noter-hide-other-windows t
+        org-noter-auto-save-last-location t
+        org-noter-default-notes-file-names '("notes.org")
+        org-noter-notes-search-path (list (concat org-directory "roam/books/"))))
+
 (after! geiser-mode
   (setq geiser-active-implementations '(mit))
   (setq geiser-repl-use-other-window t)
@@ -93,28 +230,12 @@
               (save-window-excursion
                 (geiser-mit)))))
 
-(after! org
-  (org-babel-do-load-languages
-   'org-babel-load-languages
-   '((scheme . t)
-     (emacs-lisp . t)))
-  (setq org-babel-scheme-cmd "mit-scheme"))
-
 (after! scheme-mode
   (add-hook 'scheme-mode-hook #'paredit-mode)
-  (add-hook 'geiser-repl-mode-hook #'paredit-mode))
-
-;; Pretty-print results in the REPL
-(after! geiser-repl
-  (setq geiser-repl-history-filename
-        (expand-file-name "geiser-history" doom-cache-dir)))
-
-;; Useful for SICP — highlight matching parens more visibly
-(after! scheme-mode
+  (add-hook 'geiser-repl-mode-hook #'paredit-mode)
   (setq show-paren-style 'mixed
         show-paren-delay 0))
 
-;; .scm files for SICP exercises
-(setq org-directory "~/org/sicp/")
-
-(add-to-list 'auto-mode-alist '("\\.sld\\'" . scheme-mode))
+(after! geiser-repl
+  (setq geiser-repl-history-filename
+        (expand-file-name "geiser-history" doom-cache-dir)))

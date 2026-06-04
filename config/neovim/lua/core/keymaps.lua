@@ -210,25 +210,6 @@ map("n", "<leader>dp", function()
 end, { desc = "Preview scopes" })
 
 -- ============================================================================
--- OBSIDIAN
--- ============================================================================
-map("n", "<leader>on", ":Obsidian new<CR>", { desc = "New note" })
-map("n", "<leader>oo", ":Obsidian open<CR>", { desc = "Open in Obsidian app" })
-map("n", "<leader>of", ":Obsidian quick_switch<CR>", { desc = "Find note" })
-map("n", "<leader>os", ":Obsidian search<CR>", { desc = "Search notes" })
-map("n", "<leader>ob", ":Obsidian backlinks<CR>", { desc = "Show backlinks" })
-map("n", "<leader>ol", ":Obsidian links<CR>", { desc = "Show links" })
-map("n", "<leader>od", ":Obsidian today<CR>", { desc = "Daily note (today)" })
-map("n", "<leader>oy", ":Obsidian yesterday<CR>", { desc = "Daily note (yesterday)" })
-map("n", "<leader>ot", ":Obsidian template<CR>", { desc = "Insert template" })
-map("n", "<leader>op", ":Obsidian paste_img<CR>", { desc = "Paste image" })
-map("n", "<leader>or", ":Obsidian rename<CR>", { desc = "Rename note" })
-map("n", "<leader>oc", ":Obsidian toggle_checkbox<CR>", { desc = "Toggle checkbox" })
-map("v", "<leader>ol", ":Obsidian link<CR>", { desc = "Link selection" })
-map("v", "<leader>on", ":Obsidian link_new<CR>", { desc = "Link to new note" })
-map("n", "gf", ":Obsidian follow_link<CR>", { desc = "Follow Obsidian link" })
-
--- ============================================================================
 -- YANKY (yank ring)
 -- ============================================================================
 map({ "n", "x" }, "p", "<Plug>(YankyPutAfter)", { desc = "Put after" })
