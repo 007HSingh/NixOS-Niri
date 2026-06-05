@@ -168,7 +168,7 @@
           " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄")))
 
   ;; .scm files as scheme
-  (add-to-list 'auto-mode-alist '("\\.sld\\'" . scheme-mode)))
+  (add-to-list 'auto-mode-alist '("\\.sld\\'" . scheme-mode))
 
 (after! org-modern
   (setq org-modern-star '("◉" "○" "◈" "◇" "▸")
@@ -176,7 +176,7 @@
         org-modern-block-fringe nil
         org-modern-keyword t
         org-modern-checkbox '((88 . "󰄵") (45 . "󰡖") (32 . "󰄱")))
-(global-org-modern-mode))
+  (global-org-modern-mode))
 
 (after! valign
   (add-hook 'org-mode-hook #'valign-mode))
