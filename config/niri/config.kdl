@@ -204,7 +204,7 @@ window-rule {
 }
 window-rule {
     match app-id="^emacs$"
-    opacity 1.0
+    opacity 0.85
     background-effect {
         blur true
         xray true
