@@ -48,8 +48,6 @@ in
 
       # Applications
       jetbrains.idea
-      android-studio
-      android-tools
       chafa
       ffmpegthumbnailer
       mediainfo

@@ -181,7 +181,6 @@ window-rule {
 }
 window-rule {
     match app-id="^jetbrains-"
-    match app-id="^android-studio$"
     open-maximized true
 }
 window-rule {
