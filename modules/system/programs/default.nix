@@ -19,7 +19,7 @@ in
     programs = {
       niri = {
         enable = true;
-        package = inputs.niri-flake.packages.${pkgs.stdenv.hostPlatform.system}.niri-stable;
+        package = inputs.niri-flake.packages.${pkgs.stdenv.hostPlatform.system}.niri-unstable;
       };
 
       nix-ld.enable = true;
