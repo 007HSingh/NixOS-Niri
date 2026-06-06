@@ -165,7 +165,7 @@
         org-agenda-time-grid
         '((daily today require-timed)
           (800 1000 1200 1400 1600 1800 2000)
-          " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄")))
+          " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄"))
 
   ;; .scm files as scheme
   (add-to-list 'auto-mode-alist '("\\.sld\\'" . scheme-mode))
@@ -243,3 +243,9 @@
 (add-to-list 'default-frame-alist '(alpha-background . 85))
 
 (set-frame-parameter nil 'alpha-background 85)
+
+(after! org-pomodoro
+  (setq org-pomodoro-length 50
+        org-pomodoro-short-break-length 10
+        org-pomodoro-long-break-length 30
+        org-pomodoro-long-break-frequency 4)

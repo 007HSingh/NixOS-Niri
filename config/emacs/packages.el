@@ -60,3 +60,5 @@
 
 (package! org-modern)
 (package! valign)
+
+(package! org-pomodoro)

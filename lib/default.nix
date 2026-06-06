@@ -22,7 +22,7 @@ in
       users ? [ ],
     }:
     let
-      pkgs-unstable = import nixpkgs {
+      pkgs = import nixpkgs {
         inherit system;
         config.allowUnfree = true;
       };
@@ -30,8 +30,7 @@ in
       # Common specialArgs for both NixOS and Home Manager
       specialArgs = {
         inherit inputs users;
-        inherit pkgs-unstable;
-        unstable = pkgs-unstable;
+        unstable = pkgs;
       };
     in
     nixpkgs.lib.nixosSystem {
