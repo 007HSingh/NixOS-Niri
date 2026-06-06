@@ -168,7 +168,7 @@
           " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄"))
 
   ;; .scm files as scheme
-  (add-to-list 'auto-mode-alist '("\\.sld\\'" . scheme-mode))
+  (add-to-list 'auto-mode-alist '("\\.sld\\'" . scheme-mode)))
 
 (after! org-modern
   (setq org-modern-star '("◉" "○" "◈" "◇" "▸")
@@ -248,4 +248,4 @@
   (setq org-pomodoro-length 50
         org-pomodoro-short-break-length 10
         org-pomodoro-long-break-length 30
-        org-pomodoro-long-break-frequency 4)
+        org-pomodoro-long-break-frequency 4))
