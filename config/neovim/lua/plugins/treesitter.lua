@@ -31,7 +31,6 @@ return {
 					"java",
 					"nix",
 					"qmljs",
-					"kotlin",
 				})
 			end,
 		})

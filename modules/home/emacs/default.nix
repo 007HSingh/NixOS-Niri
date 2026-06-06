@@ -49,6 +49,9 @@ in
       pandoc
       poppler
       ghostscript
+      kotlin-language-server
+      kotlin
+      gradle
 
       (aspellWithDicts (ds: with ds; [ en ]))
 

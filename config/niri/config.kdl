@@ -217,14 +217,11 @@ binds {
     Mod+D {
         spawn "wofi"
     }
-    Mod+grave {
+    Mod+S {
         spawn "niri-scratch"
     }
     Mod+Shift+W {
         spawn "qs" "-c" "wallpaper-picker"
-    }
-    Mod+Shift+M {
-        spawn "wl-kbptr"
     }
     Ctrl+Mod+L {
         spawn "noctalia-shell" "ipc" "call" "lockScreen" "lock"
