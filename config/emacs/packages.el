@@ -60,6 +60,3 @@
 
 (package! org-modern)
 (package! valign)
-
-(package! gradle-mode)
-(package! kotlin-mode)

@@ -240,26 +240,6 @@
   (setq geiser-repl-history-filename
         (expand-file-name "geiser-history" doom-cache-dir)))
 
-(after! lsp-kotlin
-  (setq lsp-kotlin-language-server-path "kotlin-language-server"))
-
-(after! kotlin-mode
-  ;; Ktor routes tend to be long — wider fill
-  (add-hook 'kotlin-mode-hook
-            (lambda ()
-              (setq fill-column 120
-                    tab-width 4
-                    indent-tabs-mode nil)))
-
-  ;; Run Ktor via Gradle in a compile buffer
-  (map! :localleader :map kotlin-mode-map
-        "r r" (lambda () (interactive)
-                (compile "gradle run"))
-        "r t" (lambda () (interactive)
-                (compile "gradle test"))
-        "r b" (lambda () (interactive)
-                (compile "gradle build"))))
-
 (add-to-list 'default-frame-alist '(alpha-background . 85))
 
 (set-frame-parameter nil 'alpha-background 85)
