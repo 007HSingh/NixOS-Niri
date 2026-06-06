@@ -4,7 +4,7 @@
 
 let
   inherit (inputs)
-    nixpkgs-unstable
+    nixpkgs
     home-manager
     catppuccin
     spicetify
@@ -22,7 +22,7 @@ in
       users ? [ ],
     }:
     let
-      pkgs-unstable = import nixpkgs-unstable {
+      pkgs-unstable = import nixpkgs {
         inherit system;
         config.allowUnfree = true;
       };
@@ -34,7 +34,7 @@ in
         unstable = pkgs-unstable;
       };
     in
-    nixpkgs-unstable.lib.nixosSystem {
+    nixpkgs.lib.nixosSystem {
       inherit system specialArgs;
       modules = [
         # Host-specific configuration
