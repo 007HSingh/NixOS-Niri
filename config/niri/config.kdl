@@ -203,6 +203,14 @@ window-rule {
         fixed 1000
     }
 }
+window-rule {
+    match app-id="^emacs$"
+    opacity 1.0
+    background-effect {
+        blur true
+        xray true
+    }
+}
 overview {
     zoom 0.45
     backdrop-color "#11111b"
