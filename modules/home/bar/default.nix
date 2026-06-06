@@ -28,11 +28,6 @@ in
         source = "${inputs.noctalia-plugins}/catwalk";
       };
 
-      ".config/noctalia/plugins/pomodoro" = {
-        recursive = true;
-        source = "${inputs.noctalia-plugins}/pomodoro";
-      };
-
       ".config/noctalia/plugins.json" = {
         text = builtins.toJSON {
           sources = [
@@ -47,9 +42,6 @@ in
               enabled = true;
             };
             "weather-indicator" = {
-              enabled = true;
-            };
-            pomodoro = {
               enabled = true;
             };
           };
@@ -91,7 +83,6 @@ in
                 warningThreshold = 30;
               }
               { id = "Volume"; }
-              { id = "plugin:pomodoro"; }
               { id = "plugin:catwalk"; }
               { id = "plugin:weather-indicator"; }
               {

@@ -35,6 +35,7 @@ in
         };
         sync.enable = lib.mkForce false;
       };
+      powerManagement.finegrained = lib.mkForce true;
     };
   };
 }
