@@ -9,7 +9,6 @@ _:
     browser.enable = true;
     clipboard.enable = true;
     neovim.enable = true;
-    zed.enable = true;
     git.enable = true;
     media.enable = true;
     packages.enable = true;
@@ -20,7 +19,6 @@ _:
     wofi.enable = true;
     xdg.enable = true;
     zathura.enable = true;
-    wl-kbptr.enable = true;
     emacs.enable = true;
   };
 }
