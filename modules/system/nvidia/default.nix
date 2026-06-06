@@ -28,14 +28,16 @@ in
 
     specialisation.on-the-go.configuration = {
       system.nixos.tags = [ "on-the-go" ];
-      hardware.nvidia.prime = {
-        offload = {
-          enable = lib.mkForce true;
-          enableOffloadCmd = lib.mkForce true;
+      hardware.nvidia = {
+        prime = {
+          offload = {
+            enable = lib.mkForce true;
+            enableOffloadCmd = lib.mkForce true;
+          };
+          sync.enable = lib.mkForce false;
         };
-        sync.enable = lib.mkForce false;
+        powerManagement.finegrained = lib.mkForce true;
       };
-      powerManagement.finegrained = lib.mkForce true;
     };
   };
 }
