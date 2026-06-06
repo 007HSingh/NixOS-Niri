@@ -49,7 +49,7 @@ in
       pandoc
       poppler
       ghostscript
-      gradle_9
+      gradle
 
       (aspellWithDicts (ds: with ds; [ en ]))
 
