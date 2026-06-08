@@ -78,7 +78,7 @@ Item {
         window.targetWallName = safeFileName;
 
         const originalFile = window.srcDir + "/" + safeFileName;
-        const noctaliaBin = "/etc/profiles/per-user/harsh/bin/noctalia-shell";
+        const noctaliaBin = "/etc/profiles/per-user/harsh/bin/noctalia";
 
         const fullScript = `
             (

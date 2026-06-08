@@ -62,7 +62,7 @@ layout {
         place-within-column true
     }
 }
-spawn-at-startup "noctalia-shell"
+spawn-at-startup "noctalia"
 blur {
     passes 4
     offset 2.0
@@ -231,7 +231,7 @@ binds {
         spawn "qs" "-c" "wallpaper-picker"
     }
     Ctrl+Mod+L {
-        spawn "noctalia-shell" "ipc" "call" "lockScreen" "lock"
+        spawn "noctalia" "ipc" "call" "lockScreen" "lock"
     }
     Ctrl+Mod+S allow-when-locked=true {
         spawn-sh "pkill orca || exec orca"

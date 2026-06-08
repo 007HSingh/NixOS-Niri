@@ -5,7 +5,7 @@ _:
 
 {
   modules.home = {
-    bar.enable = true;
+    noctalia.enable = true;
     browser.enable = true;
     clipboard.enable = true;
     neovim.enable = true;
