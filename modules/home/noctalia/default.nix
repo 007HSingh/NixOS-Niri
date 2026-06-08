@@ -14,7 +14,7 @@ in
     inputs.noctalia.homeModules.default
   ];
 
-  options.modules.home.bar.enable = lib.mkEnableOption "noctalia status bar";
+  options.modules.home.noctalia.enable = lib.mkEnableOption "noctalia status bar";
 
   config = lib.mkIf cfg.enable {
     programs.noctalia = {
