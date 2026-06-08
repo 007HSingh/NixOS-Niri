@@ -7,7 +7,7 @@
 }:
 
 let
-  cfg = config.modules.home.bar;
+  cfg = config.modules.home.noctalia;
 in
 {
   imports = [
