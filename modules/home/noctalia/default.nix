@@ -33,6 +33,9 @@ in
         transition = ["fade", "wipe", "disc", "stripes", "zoom", "honeycomb"]
         transition_duration = 1500
 
+        [wallpaper.default]
+        path = "~/.config/wallpapers/wallpaper-38.png"
+
         [wallpaper.automation]
         enabled = false
 
