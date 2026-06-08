@@ -7,11 +7,13 @@ let
   dotfiles = "${config.home.homeDirectory}/nixos-config/config";
   create_symlink = path: config.lib.file.mkOutOfStoreSymlink path;
 
-  # Config directories to symlink (nvim handled by modules/home/editor)
+  # Config directories to symlink
   configs = {
     niri = "niri";
     wallpapers = "wallpapers";
     quickshell = "quickshell";
+    doom = "emacs";
+    nvim = "neovim";
   };
 in
 {

@@ -7,8 +7,6 @@
 }:
 let
   cfg = config.modules.home.emacs;
-  dotfiles = "${config.home.homeDirectory}/nixos-config/config";
-  create_symlink = path: config.lib.file.mkOutOfStoreSymlink path;
 in
 {
   options.modules.home.emacs.enable = lib.mkEnableOption "Emacs with Doom";
@@ -68,11 +66,6 @@ in
         exec emacsclient --no-wait "$@"
       '')
     ];
-
-    xdg.configFile."doom" = {
-      source = create_symlink "${dotfiles}/emacs";
-      recursive = true;
-    };
 
     home = {
       activation.createNotesDir = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
