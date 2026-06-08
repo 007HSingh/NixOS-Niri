@@ -30,13 +30,6 @@
     # Noctalia shell (status bar)
     noctalia = {
       url = "github:noctalia-dev/noctalia-shell";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    # Noctalia plugins
-    noctalia-plugins = {
-      url = "github:noctalia-dev/noctalia-plugins";
-      flake = false;
     };
 
     # Spicetify for Spotify theming
