@@ -90,7 +90,8 @@
 
   ;; files
   (setq org-default-notes-file (concat org-directory "inbox.org")
-        org-agenda-files (list (concat org-directory "agenda/")))
+        org-agenda-files (list (concat org-directory "agenda/")
+                               (concat org-directory "inbox.org")))
 
   ;; visual
   (setq org-startup-indented t
@@ -249,3 +250,7 @@
         org-pomodoro-short-break-length 10
         org-pomodoro-long-break-length 30
         org-pomodoro-long-break-frequency 4))
+
+(map! :leader
+      :prefix "o"
+      "t" #'org-pomodoro)
