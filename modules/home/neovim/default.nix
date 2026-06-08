@@ -8,8 +8,6 @@
 
 let
   cfg = config.modules.home.neovim;
-  dotfiles = "${config.home.homeDirectory}/nixos-config/config";
-  create_symlink = path: config.lib.file.mkOutOfStoreSymlink path;
 in
 {
   options.modules.home.neovim.enable =
@@ -63,11 +61,6 @@ in
       vscode-js-debug
       vscode-extensions.vscjava.vscode-java-debug
     ];
-
-    xdg.configFile.nvim = {
-      source = create_symlink "${dotfiles}/neovim";
-      recursive = true;
-    };
 
     home.sessionVariables = {
       CODELLDB_PATH = "${pkgs.vscode-extensions.vadimcn.vscode-lldb}/share/vscode/extensions/vadimcn.vscode-lldb/adapter/codelldb";
