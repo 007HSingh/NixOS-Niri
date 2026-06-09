@@ -46,7 +46,6 @@ in
       pkg-config
       pcre
       cargo
-      quickshell
 
       # Wayland utilities
       wl-clipboard

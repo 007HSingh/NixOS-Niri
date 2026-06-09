@@ -227,9 +227,6 @@ binds {
     Mod+S {
         spawn "niri-scratch"
     }
-    Mod+Shift+W {
-        spawn "qs" "-c" "wallpaper-picker"
-    }
     Ctrl+Mod+L {
         spawn "noctalia" "ipc" "call" "lockScreen" "lock"
     }
