@@ -48,6 +48,7 @@ in
       poppler
       ghostscript
       gradle
+      maven
 
       (aspellWithDicts (ds: with ds; [ en ]))
 
