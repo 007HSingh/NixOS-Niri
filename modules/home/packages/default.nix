@@ -40,6 +40,7 @@ in
       nix-output-monitor
       nix-tree
       typioca
+      evtest
 
       # Build tools
       gcc
