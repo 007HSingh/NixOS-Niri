@@ -23,6 +23,7 @@ in
         "docker"
         "kvm"
         "libvirtd"
+        "input"
       ];
       packages = with pkgs; [
         tree
