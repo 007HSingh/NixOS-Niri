@@ -17,6 +17,7 @@ in
 
   config = lib.mkIf cfg.enable {
     boot.kernel.sysctl = {
+      "fs.inotify.max_user_watches" = 524288;
       "net.ipv4.conf.all.accept_redirects" = false;
       "net.ipv4.conf.default.accept_redirects" = false;
       "net.ipv6.conf.all.accept_redirects" = false;
