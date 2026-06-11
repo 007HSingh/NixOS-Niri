@@ -26,6 +26,10 @@ in
       # Applications
       (discord.override {
         withVencord = true;
+        commandLineArgs = [
+          "--enable-features=WebRTCPipeWireCapturer"
+          "--use-gl=desktop"
+        ];
       })
 
       # CLI tools
