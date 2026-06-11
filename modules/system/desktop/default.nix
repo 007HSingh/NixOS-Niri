@@ -43,6 +43,14 @@ in
         alsa.support32Bit = true;
         jack.enable = true;
         wireplumber.enable = true;
+        extraConfig.pipewire."10-camera" = {
+          "context.modules" = [
+            {
+              name = "libpipewire-module-v4l2";
+              args = { };
+            }
+          ];
+        };
       };
     };
 
@@ -68,6 +76,7 @@ in
           "org.freedesktop.impl.portal.FileChooser" = "gtk";
           "org.freedesktop.impl.portal.ScreenCast" = "gnome";
           "org.freedesktop.portal.ScreenCast" = "gnome";
+          "org.freedesktop.impl.portal.Camera" = "gnome";
         };
       };
     };
@@ -76,6 +85,7 @@ in
     environment.sessionVariables = {
       NIXOS_OZONE_WL = "1";
       XDG_CURRENT_DESKTOP = "niri";
+      XDG_SESSION_DESKTOP = "niri";
       XDG_SESSION_TYPE = "wayland";
       _JAVA_AWT_WM_NONREPARENTING = "1";
     };
