@@ -20,11 +20,6 @@ in
         enable = true;
         allowedTCPPorts = [ ];
         allowedUDPPorts = [ ];
-        logRefusedConnections = true;
-        logRefusedUnicastsOnly = true;
-        rejectPackets = true;
-        allowPing = true;
-        pingLimit = "2/second";
       };
     };
   };
