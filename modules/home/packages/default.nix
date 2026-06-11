@@ -27,8 +27,8 @@ in
       (discord.override {
         withVencord = true;
         commandLineArgs = [
-          "--enable-features=WebRTCPipeWireCapturer"
-          "--use-gl=desktop"
+          "--enable-features=WebRTCPipeWireCapturer,WaylandWindowDecorations,UseOzonePlatform"
+          "--ozone-platform=wayland"
         ];
       })
 
