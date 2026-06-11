@@ -24,6 +24,8 @@ in
         "kvm"
         "libvirtd"
         "input"
+        "video"
+        "audio"
       ];
       packages = with pkgs; [
         tree

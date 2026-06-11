@@ -3,7 +3,6 @@
   lib,
   config,
   pkgs,
-  inputs,
   ...
 }:
 
@@ -23,7 +22,7 @@ in
       file-roller
 
       # Wayland
-      inputs.niri-flake.packages.${pkgs.stdenv.hostPlatform.system}.xwayland-satellite-unstable
+      xwayland-satellite
       wayclip
       brightnessctl
       cliphist
