@@ -43,14 +43,6 @@ in
         alsa.support32Bit = true;
         jack.enable = true;
         wireplumber.enable = true;
-        extraConfig.pipewire."10-camera" = {
-          "context.modules" = [
-            {
-              name = "libpipewire-module-v4l2";
-              args = { };
-            }
-          ];
-        };
       };
     };
 

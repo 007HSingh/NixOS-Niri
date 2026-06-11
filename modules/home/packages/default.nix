@@ -94,7 +94,6 @@ in
         BROWSER = "firefox";
         TERMINAL = "kitty";
         NH_FLAKE = "/home/harsh/nixos-config";
-        _JAVA_AWT_WM_NONREPARENTING = "1";
         JAVA_HOME = "${pkgs.javaPackages.compiler.temurin-bin.jdk-21}";
         ELECTRON_OZONE_PLATFORM_HINT = "auto";
       };
