@@ -24,7 +24,7 @@ in
       resvg
 
       # Applications
-      (discord-canary.override {
+      (discord.override {
         withVencord = true;
       })
 
