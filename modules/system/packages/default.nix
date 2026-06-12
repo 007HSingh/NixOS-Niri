@@ -47,6 +47,7 @@ in
 
       # Applications
       jetbrains.idea
+      antigravity
       chafa
       ffmpegthumbnailer
       mediainfo
