@@ -180,10 +180,6 @@ window-rule {
     opacity 0.96
 }
 window-rule {
-    match app-id="^jetbrains-"
-    open-maximized true
-}
-window-rule {
     match app-id="^wofi$"
     open-floating true
     opacity 1.0
