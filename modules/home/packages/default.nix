@@ -24,7 +24,7 @@ in
       resvg
 
       # Applications
-      (discord.override {
+      (discord-canary.override {
         withVencord = true;
         commandLineArgs = [
           "--enable-features=WebRTCPipeWireCapturer,WaylandWindowDecorations,UseOzonePlatform"
