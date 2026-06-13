@@ -21,6 +21,8 @@ in
       file
       xdg-utils
       file-roller
+      ddcutil
+      ddcutil-service
 
       # Wayland
       inputs.niri-flake.packages.${pkgs.stdenv.hostPlatform.system}.xwayland-satellite-unstable
@@ -28,7 +30,6 @@ in
       brightnessctl
       cliphist
       wlsunset
-
       # Screenshots
       grim
       slurp
