@@ -3,6 +3,7 @@
   lib,
   config,
   pkgs,
+  inputs,
   ...
 }:
 
@@ -22,7 +23,7 @@ in
       file-roller
 
       # Wayland
-      xwayland-satellite
+      inputs.niri-flake.packages.${pkgs.stdenv.hostPlatform.system}.xwayland-satellite-unstable
       wayclip
       brightnessctl
       cliphist
@@ -46,7 +47,9 @@ in
       nixd
 
       # Applications
-      jetbrains.idea
+      (jetbrains.idea.override {
+        vmopts = "-Dawt.toolkit.name=WLToolkit";
+      })
       chafa
       ffmpegthumbnailer
       mediainfo
