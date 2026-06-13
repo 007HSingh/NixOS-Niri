@@ -342,7 +342,7 @@ return {
 				formatters = {
 					google_java_format = {
 						command = "google-java-format",
-						args = { "-" },
+						args = { "--aosp", "-" },
 						stdin = true,
 					},
 					ktlint = {
