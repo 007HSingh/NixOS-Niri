@@ -47,9 +47,7 @@ in
       nixd
 
       # Applications
-      (jetbrains.idea.override {
-        vmopts = "-Dawt.toolkit.name=WLToolkit";
-      })
+      jetbrains.idea
       chafa
       ffmpegthumbnailer
       mediainfo
