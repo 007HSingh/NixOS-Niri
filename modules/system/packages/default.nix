@@ -49,6 +49,7 @@ in
 
       # Applications
       jetbrains.idea
+      postman
       chafa
       ffmpegthumbnailer
       mediainfo
