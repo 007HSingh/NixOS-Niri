@@ -26,7 +26,7 @@ output "eDP-1" {
     mode "1920x1200@165.002"
     scale 1
     transform "normal"
-    position x=1280 y=0
+    position x=0 y=0
 }
 layout {
     gaps 8
