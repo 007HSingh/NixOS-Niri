@@ -26,10 +26,6 @@ in
       # Applications
       (discord-canary.override {
         withVencord = true;
-        commandLineArgs = [
-          "--enable-features=WebRTCPipeWireCapturer,WaylandWindowDecorations,UseOzonePlatform"
-          "--ozone-platform=wayland"
-        ];
       })
 
       # CLI tools
