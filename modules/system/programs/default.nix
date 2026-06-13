@@ -4,6 +4,7 @@
   lib,
   config,
   pkgs,
+  inputs,
   ...
 }:
 
@@ -16,7 +17,10 @@ in
 
   config = lib.mkIf cfg.enable {
     programs = {
-      niri.enable = true;
+      niri = {
+        enable = true;
+        package = inputs.niri-flake.packages.${pkgs.stdenv.hostPlatform.system}.niri-unstable;
+      };
 
       nix-ld.enable = true;
 
