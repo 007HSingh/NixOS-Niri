@@ -23,6 +23,7 @@ in
       file-roller
       ddcutil
       ddcutil-service
+      lm_sensors
 
       # Wayland
       inputs.niri-flake.packages.${pkgs.stdenv.hostPlatform.system}.xwayland-satellite-unstable
