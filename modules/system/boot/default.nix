@@ -38,7 +38,6 @@ in
         };
       };
 
-      # Use latest kernel
       kernelPackages = pkgs.linuxPackages_latest;
 
       # Kernel tuning for responsiveness

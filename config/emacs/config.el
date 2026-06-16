@@ -160,7 +160,7 @@
 
   ;; agenda
   (setq org-agenda-span 'week
-        org-agenda-start-on-weekday 1  ; Monday
+        org-agenda-start-on-weekday 1
         org-agenda-block-separator ?─
         org-agenda-time-grid
         '((daily today require-timed)
