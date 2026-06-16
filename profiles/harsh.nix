@@ -19,6 +19,5 @@ _:
     wofi.enable = true;
     xdg.enable = true;
     zathura.enable = true;
-    emacs.enable = true;
   };
 }
