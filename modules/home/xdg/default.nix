@@ -11,7 +11,6 @@ let
   configs = {
     niri = "niri";
     wallpapers = "wallpapers";
-    doom = "emacs";
     nvim = "neovim";
   };
 in
