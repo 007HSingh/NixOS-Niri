@@ -27,6 +27,7 @@ in
       (discord-canary.override {
         withVencord = true;
       })
+      obsidian
 
       # CLI tools
       unzip
