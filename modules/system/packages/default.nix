@@ -23,6 +23,7 @@ in
       file-roller
       ddcutil
       ddcutil-service
+      android-tools
 
       # Wayland
       inputs.niri-flake.packages.${pkgs.stdenv.hostPlatform.system}.xwayland-satellite-unstable
