@@ -165,11 +165,26 @@ window-rule {
 window-rule {
     match app-id="spotify"
     match app-id="discord"
-    match app-id="code"
     opacity 0.8
     background-effect {
         blur true
         xray false
+    }
+}
+window-rule {
+    match app-id="^jetbrains-idea$"
+    opacity 0.9
+    background-effect {
+        blur true
+        xray true
+    }
+}
+window-rule {
+    match app-id="^jetbrains-studio$"
+    opacity 0.8
+    background-effect {
+        blur true
+        xray true
     }
 }
 window-rule {
