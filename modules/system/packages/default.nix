@@ -14,6 +14,8 @@ in
   options.modules.system.packages.enable = lib.mkEnableOption "system-wide packages";
 
   config = lib.mkIf cfg.enable {
+    nixpkgs.config.android_sdk.accept_license = true;
+
     environment.systemPackages = with pkgs; [
       # Core utilities
       wget2
@@ -23,7 +25,6 @@ in
       file-roller
       ddcutil
       ddcutil-service
-      android-tools
 
       # Wayland
       inputs.niri-flake.packages.${pkgs.stdenv.hostPlatform.system}.xwayland-satellite-unstable
@@ -50,7 +51,7 @@ in
 
       # Applications
       jetbrains.idea
-      android-studio
+      android-studio-full
       postman
       chafa
       ffmpegthumbnailer
