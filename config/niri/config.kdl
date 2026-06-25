@@ -173,6 +173,7 @@ window-rule {
 }
 window-rule {
     match app-id="^jetbrains-idea$"
+    open-maximized true
     opacity 0.9
     background-effect {
         blur true
@@ -181,6 +182,7 @@ window-rule {
 }
 window-rule {
     match app-id="^jetbrains-studio$"
+    open-maximized true
     opacity 0.8
     background-effect {
         blur true
