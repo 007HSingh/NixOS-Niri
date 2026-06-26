@@ -411,7 +411,6 @@ in
           shell = "/run/current-system/sw/bin/zsh";
           working_directory = "home";
           vsync = "yes";
-          background_opacity = "0.85";
         };
         keybindings = {
           "ctrl+shift+t" = "new_tab";
