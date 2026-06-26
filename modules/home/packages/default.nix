@@ -28,7 +28,6 @@ in
         withVencord = true;
       })
       obsidian
-      antigravity-fhs
 
       # CLI tools
       unzip
