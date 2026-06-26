@@ -1,6 +1,4 @@
--- ============================================================================
--- EDITOR PLUGINS — autopairs, comment, surround, todo-comments, which-key, flash, toggleterm
--- ============================================================================
+-- EDITOR PLUGINS
 return {
 	-- autopairs
 	{
@@ -41,19 +39,21 @@ return {
 		"folke/which-key.nvim",
 		event = "VeryLazy",
 		config = function()
-			require("which-key").setup({})
+			require("which-key").setup({
+				icons = { rules = false },  -- use our own icons, not auto-rules
+			})
 			require("which-key").add({
-				{ "<leader>f", group = "Find (Telescope)" },
-				{ "<leader>g", group = "Git" },
-				{ "<leader>c", group = "Code / LSP" },
-				{ "<leader>d", group = "Debug (DAP)" },
-				{ "<leader>h", group = "Harpoon" },
-				{ "<leader>o", group = "Obsidian" },
-				{ "<leader>q", group = "Session" },
-				{ "<leader>s", group = "Search & Replace" },
-				{ "<leader>t", group = "Toggle" },
-				{ "<leader>w", group = "Workspace" },
-				{ "<leader>x", group = "Diagnostics (Trouble)" },
+				{ "<leader>f", group = "Find",           icon = { icon = "󰭎", color = "blue"   } },
+				{ "<leader>g", group = "Git",            icon = { icon = "󰊢", color = "orange" } },
+				{ "<leader>c", group = "Code / LSP",     icon = { icon = "󰒋", color = "cyan"   } },
+				{ "<leader>d", group = "Debug",          icon = { icon = "󰃤", color = "red"    } },
+				{ "<leader>h", group = "Harpoon",        icon = { icon = "󱡅", color = "purple" } },
+				{ "<leader>q", group = "Session",        icon = { icon = "󰑓", color = "green"  } },
+				{ "<leader>s", group = "Search/Replace", icon = { icon = "󰛔", color = "yellow" } },
+				{ "<leader>t", group = "Toggle",         icon = { icon = "󰔡", color = "purple" } },
+				{ "<leader>w", group = "Window",         icon = { icon = "󱟱", color = "azure"  } },
+				{ "<leader>x", group = "Diagnostics",    icon = { icon = "󰀪", color = "red"    } },
+				{ "<leader>o", group = "Outline",        icon = { icon = "󰙅", color = "cyan"   } },
 			})
 		end,
 	},
@@ -138,14 +138,14 @@ return {
 				function()
 					require("grug-far").open()
 				end,
-				desc = "Search and replace (grug-far)",
+				desc = "Search & replace",
 			},
 			{
 				"<leader>sw",
 				function()
 					require("grug-far").open({ prefills = { search = vim.fn.expand("<cword>") } })
 				end,
-				desc = "Search current word",
+				desc = "Search word",
 			},
 			{
 				"<leader>sw",
@@ -156,11 +156,7 @@ return {
 				desc = "Search selection",
 			},
 		},
-		config = function()
-			require("grug-far").setup({
-				headerMaxWidth = 80,
-			})
-		end,
+		opts = { headerMaxWidth = 80 },
 	},
 
 	-- ── precognition.nvim — motion hint ghost text ────────────────────────────
@@ -211,20 +207,10 @@ return {
 				},
 			})
 
-			-- Catppuccin Mocha highlight overrides for hint ghost text
-			local ok, cp = pcall(require, "catppuccin.palettes")
+			local ok, p = pcall(require("catppuccin.palettes").get_palette, "mocha")
 			if ok then
-				local p = cp.get_palette("mocha")
-				-- Inline hints: dim overlay colour so they don't compete with code
-				vim.api.nvim_set_hl(0, "PrecognitionHighlight", {
-					fg = p.overlay0,
-					italic = true,
-				})
-				-- Gutter hints (G, gg, {, }): slightly more visible
-				vim.api.nvim_set_hl(0, "PrecognitionGutterHint", {
-					fg = p.surface2,
-					italic = true,
-				})
+				vim.api.nvim_set_hl(0, "PrecognitionHighlight", { fg = p.overlay1, italic = true })
+				vim.api.nvim_set_hl(0, "PrecognitionGutterHint", { fg = p.surface1, italic = true })
 			end
 		end,
 	},

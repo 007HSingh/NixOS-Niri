@@ -1,6 +1,4 @@
--- ============================================================================
--- EFFECTS — Animations, cursor effects, indent scope, zen mode, twilight
--- ============================================================================
+-- EFFECTS — animations, cursor, indent scope, zen mode, twilight
 return {
 
 	-- ── mini.animate — smooth cursor, scroll, window resize & fold animations ──
@@ -59,23 +57,23 @@ return {
 				show_last_positions = nil,
 			})
 			-- Colour-code the cursor by mode (matches your lualine palette)
-			local ok, cp = pcall(require, "catppuccin.palettes")
+			local ok, p = pcall(require("catppuccin.palettes").get_palette, "mocha")
 			if ok then
-				local p = cp.get_palette("mocha")
+				local c = p
 				local au = vim.api.nvim_create_augroup("SmoothCursorMode", { clear = true })
 				vim.api.nvim_create_autocmd("ModeChanged", {
 					group = au,
 					callback = function()
 						local mode = vim.fn.mode()
-						local color = p.blue -- normal
+						local color = c.blue or "#89b4fa"
 						if mode == "i" then
-							color = p.green
+							color = c.green or "#a6e3a1"
 						elseif mode:find("v") or mode:find("V") then
-							color = p.mauve
+							color = c.mauve or "#cba6f7"
 						elseif mode == "R" then
-							color = p.red
+							color = c.red or "#f38ba8"
 						elseif mode == "c" then
-							color = p.peach
+							color = c.peach or "#fab387"
 						end
 						vim.api.nvim_set_hl(0, "SmoothCursor", { fg = color })
 						vim.api.nvim_set_hl(0, "SmoothCursorRed", { fg = color })
@@ -131,20 +129,6 @@ return {
 				},
 			})
 		end,
-	},
-
-	-- ── lualine extras: clock component ───────────────────────────────────────
-	-- Rather than a whole new plugin, we wire a clock into your existing lualine
-	-- via an autocmd that triggers a refresh every minute. Drop this component
-	-- into your lualine_z (after "progress") by adding:
-	--
-	--   { function() return os.date("󰥔 %H:%M") end, padding = { left = 1, right = 1 } }
-	--
-	-- This block handles the timer that keeps it ticking.
-	{
-		"nvim-lua/plenary.nvim", -- already a dep; we just borrow it for the timer
-		lazy = true,
-		config = function() end, -- no-op, config lives in lualine.lua
 	},
 
 	-- ── zen mode — distraction-free writing ───────────────────────────────────

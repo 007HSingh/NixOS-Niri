@@ -1,7 +1,4 @@
--- ============================================================================
--- UI PLUGINS — bufferline, nvim-tree, noice, notify, dressing, navic,
---              indent-blankline, colorizer, scrollbar, web-devicons, dashboard
--- ============================================================================
+-- UI PLUGINS
 return {
 	-- ── Icons ─────────────────────────────────────────────────────────────────
 	{ "nvim-tree/nvim-web-devicons", lazy = true },
@@ -16,13 +13,12 @@ return {
 			require("bufferline").setup({
 				options = {
 					mode = "buffers",
-					theme = "catppuccin",
 					separator_style = "slant",
 					diagnostics = "nvim_lsp",
 					show_buffer_close_icons = true,
 					show_close_icon = false,
 					offsets = {
-						{ filetype = "NvimTree", text = "File Explorer", padding = 1 },
+						{ filetype = "neo-tree", text = "File Explorer", padding = 1 },
 					},
 				},
 			})
@@ -30,21 +26,107 @@ return {
 	},
 
 	-- ── NvimTree ──────────────────────────────────────────────────────────────
+	-- ── File Explorer (neo-tree) ─────────────────────────────────────────────
 	{
-		"nvim-tree/nvim-tree.lua",
-		dependencies = { "nvim-tree/nvim-web-devicons" },
-		cmd = { "NvimTreeToggle", "NvimTreeFocus" },
-		config = function()
-			require("nvim-tree").setup({
-				view = { width = 30, side = "left" },
-				renderer = {
-					icons = { show = { file = true, folder = true, folder_arrow = true, git = true } },
+		"nvim-neo-tree/neo-tree.nvim",
+		branch = "v3.x",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"nvim-tree/nvim-web-devicons",
+			"MunifTanjim/nui.nvim",
+		},
+		cmd = "Neotree",
+		keys = {
+			{ "<leader>e", "<cmd>Neotree toggle<cr>", desc = "File explorer" },
+			{ "<leader>E", "<cmd>Neotree reveal<cr>", desc = "Reveal in explorer" },
+		},
+		opts = {
+			close_if_last_window = false,
+			popup_border_style = "rounded",
+			enable_git_status = true,
+			enable_diagnostics = true,
+			window = {
+				position = "left",
+				width = 38,
+				mappings = {
+					["<space>"] = "none",
+					["Y"] = function(state)
+						local node = state.tree:get_node()
+						vim.fn.setreg("+", node.path)
+					end,
 				},
-				filters = { dotfiles = false },
-				git = { enable = true },
-				diagnostics = { enable = true },
-			})
-		end,
+			},
+			default_component_configs = {
+				indent = {
+					indent_size = 2,
+					padding = 1,
+					with_markers = true,
+					indent_marker = "│",
+					last_indent_marker = "└",
+					with_expanders = true,
+				},
+				icon = { folder_closed = "", folder_open = "", folder_empty = "󰜌" },
+				modified = { symbol = "●" },
+				git_status = {
+					symbols = {
+						added     = "✚",
+						modified  = "",
+						deleted   = "✖",
+						renamed   = "󰁕",
+						untracked = "",
+						ignored   = "",
+						unstaged  = "󰄱",
+						staged    = "",
+						conflict  = "",
+					},
+				},
+				file_size = { enabled = true, required_width = 50 },
+				last_modified = { enabled = true, required_width = 70 },
+				type = { enabled = false },
+				created = { enabled = false },
+			},
+			filesystem = {
+				filtered_items = {
+					hide_dotfiles = false,
+					hide_gitignored = false,
+					hide_hidden = false,
+				},
+				follow_current_file = { enabled = true },
+				group_empty_dirs = true,
+				use_libuv_file_watcher = true,
+			},
+			renderers = {
+				file = {
+					{ "indent" },
+					{ "icon" },
+					{ "container",
+						content = {
+							{ "name",          zindex = 10 },
+							{ "symlink_target", zindex = 10, highlight = "NeoTreeSymbolicLinkTarget" },
+							{ "clipboard",      zindex = 10 },
+							{ "diagnostics",    zindex = 20, align = "right" },
+							{ "git_status",     zindex = 20, align = "right" },
+							{ "modified",       zindex = 20, align = "right" },
+							{ "file_size",      zindex = 10, align = "right" },
+							{ "last_modified",  zindex = 10, align = "right" },
+						},
+					},
+				},
+				directory = {
+					{ "indent" },
+					{ "icon" },
+					{ "container",
+						content = {
+							{ "name",       zindex = 10 },
+							{ "clipboard",  zindex = 10 },
+							{ "diagnostics",zindex = 20, align = "right" },
+							{ "git_status", zindex = 20, align = "right" },
+							{ "modified",   zindex = 20, align = "right" },
+						},
+					},
+				},
+			},
+		},
 	},
 
 	-- ── Notify ────────────────────────────────────────────────────────────────
@@ -148,64 +230,61 @@ return {
 		"petertriho/nvim-scrollbar",
 		event = "BufReadPost",
 		config = function()
-			local ok, cp = pcall(require, "catppuccin.palettes")
-			local p = ok and cp.get_palette("mocha") or {}
+			local ok, p = pcall(require("catppuccin.palettes").get_palette, "mocha")
+			if not ok then p = {} end
 			require("scrollbar").setup({
-				handle = { color = p.surface2 or "#585b70" },
+				handle = { color = p.surface1 or "#45475a" },
 				marks = {
-					Error = { color = p.red or "#f38ba8" },
-					Warn = { color = p.yellow or "#f9e2af" },
-					Info = { color = p.blue or "#89b4fa" },
-					Hint = { color = p.teal or "#94e2d5" },
-					Search = { color = p.peach or "#fab387" },
-					GitAdd = { color = p.green or "#a6e3a1" },
+					Error  = { color = p.red     or "#f38ba8" },
+					Warn   = { color = p.yellow  or "#f9e2af" },
+					Info   = { color = p.blue    or "#89b4fa" },
+					Hint   = { color = p.teal    or "#94e2d5" },
+					Search = { color = p.peach   or "#fab387" },
+					GitAdd    = { color = p.green  or "#a6e3a1" },
 					GitChange = { color = p.yellow or "#f9e2af" },
-					GitDelete = { color = p.red or "#f38ba8" },
+					GitDelete = { color = p.red    or "#f38ba8" },
 				},
 			})
 		end,
 	},
 
-	-- ── Dashboard / Alpha ─────────────────────────────────────────────────────
+	-- Dashboard (snacks.nvim)
 	{
-		"goolord/alpha-nvim",
-		event = "VimEnter",
-		dependencies = { "nvim-tree/nvim-web-devicons" },
-		config = function()
-			local alpha = require("alpha")
-			local dashboard = require("alpha.themes.dashboard")
-			dashboard.section.header.val = {
-				[[                                                                       ]],
-				[[                                                                     ]],
-				[[       ████ ██████           █████      ██                     ]],
-				[[      ███████████             █████                             ]],
-				[[      █████████ ███████████████████ ███   ███████████   ]],
-				[[     █████████  ███    █████████████ █████ ██████████████   ]],
-				[[    █████████ ██████████ █████████ █████ █████ ████ █████   ]],
-				[[  ███████████ ███    ███ █████████ █████ █████ ████ █████  ]],
-				[[ ██████  █████████████████████ ████ █████ █████ ████ ██████ ]],
-				[[                                                                       ]],
-			}
-			dashboard.section.header.opts.hl = "@markup.heading"
-			dashboard.section.buttons.val = {
-				dashboard.button("f", "  Find file", ":Telescope find_files<CR>"),
-				dashboard.button("r", "  Recent", ":Telescope oldfiles<CR>"),
-				dashboard.button("g", "  Grep", ":Telescope live_grep<CR>"),
-				dashboard.button("s", "  Restore session", ":lua require('persistence').load()<CR>"),
-				dashboard.button("q", "  Quit", ":qa<CR>"),
-			}
-			local function footer()
-				local ok, lazy = pcall(require, "lazy")
-				if not ok then
-					return ""
-				end
-				local stats = lazy.stats()
-				return string.format("⚡ %d plugins  •  %dms", stats.count, math.floor(stats.startuptime))
-			end
-			dashboard.section.footer.val = footer()
-			dashboard.section.footer.opts.hl = "Comment"
-			alpha.setup(dashboard.config)
-		end,
+		"folke/snacks.nvim",
+		priority = 1000,
+		lazy = false,
+		opts = {
+			bigfile      = { enabled = false },
+			notifier     = { enabled = false },
+			quickfile    = { enabled = false },
+			scroll       = { enabled = false },
+			statuscol    = { enabled = false },
+			words        = { enabled = false },
+			dashboard = {
+				preset = {
+					header = [[
+ ███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗
+ ████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║
+ ██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║
+ ██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║
+ ██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║
+ ╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝]],
+					keys = {
+						{ icon = "󰈞 ", key = "f", desc = "Find File",       action = ":Telescope find_files" },
+						{ icon = "󰋚 ", key = "r", desc = "Recent Files",    action = ":Telescope oldfiles" },
+						{ icon = "󰭎 ", key = "g", desc = "Live Grep",       action = ":Telescope live_grep" },
+						{ icon = "󰦛 ", key = "s", desc = "Restore Session", action = function() require("persistence").load() end },
+						{ icon = "󰒲 ", key = "l", desc = "Lazy",            action = ":Lazy" },
+						{ icon = "󰅙 ", key = "q", desc = "Quit",            action = ":qa" },
+					},
+				},
+				sections = {
+					{ section = "header" },
+					{ section = "keys", gap = 1, padding = 1 },
+					{ section = "startup" },
+				},
+			},
+		},
 	},
 
 	-- ── Rainbow delimiters ────────────────────────────────────────────────────
@@ -258,41 +337,101 @@ return {
 	-- ── helpview.nvim — rendered :help pages (same author as render-markdown) ───
 	{
 		"OXY2DEV/helpview.nvim",
-		lazy = false, -- must be eager so :help works from startup
-		dependencies = {
-			"nvim-treesitter/nvim-treesitter",
-		},
+		lazy = false,
+		dependencies = { "nvim-treesitter/nvim-treesitter" },
 		config = function()
-			local ok, cp = pcall(require, "catppuccin.palettes")
-			local p = ok and cp.get_palette("mocha") or {}
-
+			local ok, p = pcall(require("catppuccin.palettes").get_palette, "mocha")
+			if not ok then p = {} end
 			require("helpview").setup({
-				-- Merge Catppuccin colours into helpview's highlight groups
-				-- helpview uses its own hl groups on top of Treesitter
 				highlight_groups = {
-					-- Section headings
-					HelpviewHeading1 = { fg = p.mauve, bold = true },
-					HelpviewHeading2 = { fg = p.blue, bold = true },
-					HelpviewHeading3 = { fg = p.lavender, bold = true },
-
-					-- Code blocks and inline code
-					HelpviewCode = { bg = p.surface0 },
-					HelpviewInlineCode = { fg = p.peach, bg = p.surface0 },
-
-					-- Hyperlinks
-					HelpviewHyperlink = { fg = p.blue, underline = true },
-					HelpviewTaglink = { fg = p.teal, underline = true },
-
-					-- Key notation  e.g. <C-x>
-					HelpviewOptionLink = { fg = p.yellow },
-					HelpviewNoteTag = { fg = p.green, bold = true },
-
-					-- Separators / rules
-					HelpviewSeparator = { fg = p.surface2 },
-
-					-- Arguments  {expr}
-					HelpviewArgument = { fg = p.peach, italic = true },
+					HelpviewHeading1   = { fg = p.mauve   or "#cba6f7", bold = true },
+					HelpviewHeading2   = { fg = p.blue    or "#89b4fa", bold = true },
+					HelpviewHeading3   = { fg = p.sky     or "#89dceb", bold = true },
+					HelpviewCode       = { bg = p.surface0 or "#313244" },
+					HelpviewInlineCode = { fg = p.peach   or "#fab387", bg = p.surface0 or "#313244" },
+					HelpviewHyperlink  = { fg = p.blue    or "#89b4fa", underline = true },
+					HelpviewTaglink    = { fg = p.teal    or "#94e2d5", underline = true },
+					HelpviewOptionLink = { fg = p.yellow  or "#f9e2af" },
+					HelpviewNoteTag    = { fg = p.green   or "#a6e3a1", bold = true },
+					HelpviewSeparator  = { fg = p.surface1 or "#45475a" },
+					HelpviewArgument   = { fg = p.peach   or "#fab387", italic = true },
 				},
+			})
+		end,
+	},
+
+	-- ── Fidget (LSP progress) ────────────────────────────────────────────────
+	{
+		"j-hui/fidget.nvim",
+		event = "LspAttach",
+		opts = {
+			progress = {
+				display = {
+					render_limit = 4,
+					done_ttl = 2,
+					done_icon = "✓",
+					progress_icon = { pattern = "dots", period = 1 },
+				},
+			},
+			notification = {
+				window = { winblend = 0, border = "none" },
+			},
+		},
+	},
+
+	-- ── HLChunk (highlight current indent chunk) ───────────────────────────────
+	{
+		"shellRaining/hlchunk.nvim",
+		event = "BufReadPost",
+		config = function()
+			local ok, p = pcall(require("catppuccin.palettes").get_palette, "mocha")
+			if not ok then p = {} end
+			require("hlchunk").setup({
+				chunk = {
+					enable = true,
+					style = {
+						{ fg = p.mauve or "#cba6f7" },   -- active chunk
+						{ fg = p.red   or "#f38ba8" },   -- error
+					},
+					use_treesitter = true,
+				},
+				indent = { enable = false }, -- ibl already handles this
+				line_num = {
+					enable = true,
+					style = p.mauve or "#cba6f7",
+				},
+			})
+		end,
+	},
+
+	-- ── Incline (floating filename per split) ─────────────────────────────────
+	{
+		"b0o/incline.nvim",
+		event = "BufReadPost",
+		config = function()
+			local ok, p = pcall(require("catppuccin.palettes").get_palette, "mocha")
+			if not ok then p = {} end
+			require("incline").setup({
+				window = { margin = { vertical = 0, horizontal = 1 } },
+				hide = { cursorline = false, focused_win = false, only_win = true },
+				render = function(props)
+					local fname = vim.api.nvim_buf_get_name(props.buf)
+					if fname == "" then return "[No Name]" end
+					local name = vim.fn.fnamemodify(fname, ":t")
+					local ext  = vim.fn.fnamemodify(fname, ":e")
+					local icon, hl = "", "Normal"
+					local dv_ok, devicons = pcall(require, "nvim-web-devicons")
+					if dv_ok then
+						local i, h = devicons.get_icon(name, ext, { default = true })
+						icon, hl = (i or "") .. " ", h or "Normal"
+					end
+					local modified = vim.bo[props.buf].modified
+					return {
+						{ icon, group = hl },
+						{ name, gui = "bold" },
+						modified and { " ●", guifg = p.peach } or "",
+					}
+				end,
 			})
 		end,
 	},

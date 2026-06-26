@@ -110,12 +110,6 @@ animations {
     }
 }
 window-rule {
-    match app-id="^org\\.wezfurlong\\.wezterm$"
-    default-column-width {
-
-    }
-}
-window-rule {
     match title="Firefox"
     open-maximized true
 }
@@ -132,18 +126,16 @@ window-rule {
     }
 }
 window-rule {
-    match app-id="kitty"
-    background-effect {
-        blur true
-        xray true
-    }
-}
-window-rule {
     match app-id="^discord$"
     border {
         off
     }
     open-maximized true
+    opacity 0.8
+    background-effect {
+        blur true
+        xray false
+    }
 }
 window-rule {
     match is-active=false
@@ -162,8 +154,7 @@ window-rule {
     opacity 1.0
 }
 window-rule {
-    match app-id="spotify"
-    match app-id="discord"
+    match app-id="^spotify$"
     opacity 0.8
     background-effect {
         blur true
@@ -187,13 +178,6 @@ window-rule {
         blur true
         xray true
     }
-}
-window-rule {
-    match is-floating=true
-    default-column-width {
-        fixed 800
-    }
-    opacity 0.96
 }
 window-rule {
     match app-id="^wofi$"
