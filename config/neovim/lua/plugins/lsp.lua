@@ -190,11 +190,6 @@ return {
 			end
 			vim.lsp.enable(vim.tbl_keys(servers))
 
-			vim.keymap.set("n", "<leader>tl", function()
-				local cur = vim.diagnostic.config().virtual_lines
-				vim.diagnostic.config({ virtual_lines = not cur })
-			end, { desc = "Toggle diagnostic virtual lines" })
-
 			-- conform (formatters)
 			require("conform").setup({
 				formatters = {

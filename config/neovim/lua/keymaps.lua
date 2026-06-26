@@ -46,8 +46,8 @@ map("n", "N", "Nzzzv", { desc = "Prev match (centered)" })
 
 -- file
 map("n", "<leader>W", "<cmd>w<cr>", { desc = "Save file" })
-map("n", "<leader>q", "<cmd>q<cr>", { desc = "Quit" })
-map("n", "<leader>Q", "<cmd>qa!<cr>", { desc = "Quit all" })
+map("n", "<leader>qq", "<cmd>q<cr>",  { desc = "Quit window" })
+map("n", "<leader>Q",  "<cmd>qa!<cr>", { desc = "Quit all" })
 
 -- paste without yanking
 map("v", "p", '"_dP', { desc = "Paste no-yank" })
@@ -115,20 +115,12 @@ map("n", "<leader>cf", function()
 	require("conform").format({ async = true })
 end, { desc = "Format buffer" })
 
--- toggles
+-- toggles (all global toggles live here)
 map("n", "<leader>tf", function()
 	vim.g.disable_format_on_save = not vim.g.disable_format_on_save
 	vim.notify("Format on save: " .. (vim.g.disable_format_on_save and "off" or "on"))
 end, { desc = "Toggle format on save" })
-map("n", "<leader>z", "<cmd>ZenMode<cr>", { desc = "Zen mode" })
-map("n", "<leader>tw", "<cmd>Twilight<cr>", { desc = "Twilight" })
-
--- misc
-map("n", "<leader>u", "<cmd>UndotreeToggle<cr>", { desc = "Undotree" })
-map("n", "<leader>O", "<cmd>Oil<cr>", { desc = "Oil" })
-map("n", "<leader>fml", function()
-	if vim.bo.filetype == "" then
-		return
-	end
-	vim.cmd("CellularAutomaton make_it_rain")
-end, { desc = "Make it rain" })
+map("n", "<leader>tl", function()
+	local cur = vim.diagnostic.config().virtual_lines
+	vim.diagnostic.config({ virtual_lines = not cur })
+end, { desc = "Toggle diagnostic virtual lines" })

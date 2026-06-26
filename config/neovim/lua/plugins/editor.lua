@@ -40,9 +40,10 @@ return {
 		event = "VeryLazy",
 		config = function()
 			require("which-key").setup({
-				icons = { rules = false },  -- use our own icons, not auto-rules
+				icons = { rules = false },
 			})
 			require("which-key").add({
+				-- ── groups ──────────────────────────────────────────────────────────
 				{ "<leader>f", group = "Find",           icon = { icon = "󰭎", color = "blue"   } },
 				{ "<leader>g", group = "Git",            icon = { icon = "󰊢", color = "orange" } },
 				{ "<leader>c", group = "Code / LSP",     icon = { icon = "󰒋", color = "cyan"   } },
@@ -54,6 +55,25 @@ return {
 				{ "<leader>w", group = "Window",         icon = { icon = "󱟱", color = "azure"  } },
 				{ "<leader>x", group = "Diagnostics",    icon = { icon = "󰀪", color = "red"    } },
 				{ "<leader>o", group = "Outline",        icon = { icon = "󰙅", color = "cyan"   } },
+				{ "<leader>b", group = "Buffer",         icon = { icon = "󰓩", color = "blue"   } },
+				-- ── harpoon marks ───────────────────────────────────────────────────
+				{ "<leader>1", icon = { icon = "󱡅", color = "purple" } },
+				{ "<leader>2", icon = { icon = "󱡅", color = "purple" } },
+				{ "<leader>3", icon = { icon = "󱡅", color = "purple" } },
+				{ "<leader>4", icon = { icon = "󱡅", color = "purple" } },
+				-- ── individual keymaps ──────────────────────────────────────────────
+				{ "<leader>a",  icon = { icon = "󰙅", color = "cyan"   } }, -- aerial
+				{ "<leader>u",  icon = { icon = "󰕌", color = "yellow" } }, -- undotree
+				{ "<leader>z",  icon = { icon = "󰒲", color = "purple" } }, -- zen mode
+				{ "<leader>e",  icon = { icon = "󱏒", color = "green"  } }, -- neo-tree
+				{ "<leader>E",  icon = { icon = "󱏒", color = "green"  } }, -- neo-tree reveal
+				{ "<leader>W",  icon = { icon = "󰆓", color = "blue"   } }, -- save
+				{ "<leader>Q",  icon = { icon = "󰈆", color = "red"    } }, -- quit all
+				{ "<leader>qq", icon = { icon = "󰗼", color = "red"    } }, -- quit window
+				{ "<leader>tf", icon = { icon = "󰛖", color = "yellow" } }, -- toggle format
+				{ "<leader>O",  icon = { icon = "󰙅", color = "yellow" } }, -- oil
+				{ "<leader>/",  icon = { icon = "󰍉", color = "blue"   } }, -- search buffer
+				{ "<leader>bd", icon = { icon = "󰅙", color = "red"    } }, -- delete buffer
 			})
 		end,
 	},
