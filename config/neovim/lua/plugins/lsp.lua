@@ -41,7 +41,9 @@ return {
 			local function peek_definition()
 				local params = vim.lsp.util.make_position_params(0, "utf-16")
 				vim.lsp.buf_request(0, "textDocument/definition", params, function(_, result)
-					if not result or vim.tbl_isempty(result) then return end
+					if not result or vim.tbl_isempty(result) then
+						return
+					end
 					local target = vim.islist(result) and result[1] or result
 					vim.lsp.util.preview_location(target)
 				end)
@@ -57,7 +59,7 @@ return {
 				map("n", "gi", vim.lsp.buf.implementation, "Go to implementation")
 				map("n", "gr", vim.lsp.buf.references, "References")
 				map("n", "gt", vim.lsp.buf.type_definition, "Type definition")
-				map("n", "K",  vim.lsp.buf.hover, "Hover")
+				map("n", "K", vim.lsp.buf.hover, "Hover")
 				map("n", "gp", peek_definition, "Peek definition")
 				map("n", "<leader>ca", vim.lsp.buf.code_action, "Code action")
 				map("v", "<leader>ca", vim.lsp.buf.code_action, "Code action (range)")
@@ -81,17 +83,23 @@ return {
 					-- native signature help on cursor hold while in insert mode
 					vim.api.nvim_create_autocmd("CursorHoldI", {
 						buffer = bufnr,
-						callback = function() vim.lsp.buf.signature_help() end,
+						callback = function()
+							vim.lsp.buf.signature_help()
+						end,
 					})
 				end
 
 				if client:supports_method("textDocument/documentHighlight") then
 					local group = vim.api.nvim_create_augroup("LspDocHL_" .. bufnr, { clear = true })
 					vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-						buffer = bufnr, group = group, callback = vim.lsp.buf.document_highlight,
+						buffer = bufnr,
+						group = group,
+						callback = vim.lsp.buf.document_highlight,
 					})
 					vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
-						buffer = bufnr, group = group, callback = vim.lsp.buf.clear_references,
+						buffer = bufnr,
+						group = group,
+						callback = vim.lsp.buf.clear_references,
 					})
 				end
 
@@ -101,92 +109,116 @@ return {
 
 				if client:supports_method("textDocument/documentSymbol") then
 					local ok, navic = pcall(require, "nvim-navic")
-					if ok then navic.attach(client, bufnr) end
+					if ok then
+						navic.attach(client, bufnr)
+					end
 				end
 			end
 
 			-- per-server settings (merged on top of shared on_attach + capabilities)
 			local servers = {
 				lua_ls = {
-					settings = { Lua = {
-						hint = { enable = true, setType = true, paramName = "All", paramType = true },
-						workspace = { checkThirdParty = false },
-						telemetry = { enable = false },
-						completion = { callSnippet = "Replace" },
-					}},
+					settings = {
+						Lua = {
+							hint = { enable = true, setType = true, paramName = "All", paramType = true },
+							workspace = { checkThirdParty = false },
+							telemetry = { enable = false },
+							completion = { callSnippet = "Replace" },
+						},
+					},
 				},
 				pyright = {
-					settings = { python = { analysis = {
-						typeCheckingMode = "standard",
-						autoSearchPaths = true,
-						useLibraryCodeForTypes = true,
-						diagnosticMode = "workspace",
-						inlayHints = {
-							variableTypes = true, functionReturnTypes = true,
-							callArgumentNames = true, pytestParameters = true,
+					settings = {
+						python = {
+							analysis = {
+								typeCheckingMode = "standard",
+								autoSearchPaths = true,
+								useLibraryCodeForTypes = true,
+								diagnosticMode = "workspace",
+								inlayHints = {
+									variableTypes = true,
+									functionReturnTypes = true,
+									callArgumentNames = true,
+									pytestParameters = true,
+								},
+							},
 						},
-					}}},
+					},
 				},
 				ts_ls = {
 					settings = {
-						typescript = { inlayHints = {
-							includeInlayParameterNameHints = "all",
-							includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-							includeInlayFunctionParameterTypeHints = true,
-							includeInlayVariableTypeHints = true,
-							includeInlayPropertyDeclarationTypeHints = true,
-							includeInlayFunctionLikeReturnTypeHints = true,
-							includeInlayEnumMemberValueHints = true,
-						}},
-						javascript = { inlayHints = {
-							includeInlayParameterNameHints = "literals",
-							includeInlayFunctionParameterTypeHints = true,
-							includeInlayPropertyDeclarationTypeHints = true,
-							includeInlayFunctionLikeReturnTypeHints = true,
-							includeInlayEnumMemberValueHints = true,
-						}},
+						typescript = {
+							inlayHints = {
+								includeInlayParameterNameHints = "all",
+								includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+								includeInlayFunctionParameterTypeHints = true,
+								includeInlayVariableTypeHints = true,
+								includeInlayPropertyDeclarationTypeHints = true,
+								includeInlayFunctionLikeReturnTypeHints = true,
+								includeInlayEnumMemberValueHints = true,
+							},
+						},
+						javascript = {
+							inlayHints = {
+								includeInlayParameterNameHints = "literals",
+								includeInlayFunctionParameterTypeHints = true,
+								includeInlayPropertyDeclarationTypeHints = true,
+								includeInlayFunctionLikeReturnTypeHints = true,
+								includeInlayEnumMemberValueHints = true,
+							},
+						},
 					},
 				},
 				rust_analyzer = {
-					settings = { ["rust-analyzer"] = {
-						inlayHints = {
-							chainingHints = { enable = true },
-							closingBraceHints = { enable = true, minLines = 25 },
-							closureReturnTypeHints = { enable = "with_block" },
-							lifetimeElisionHints = { enable = "skip_trivial" },
-							parameterHints = { enable = true },
-							typeHints = { enable = true },
+					settings = {
+						["rust-analyzer"] = {
+							inlayHints = {
+								chainingHints = { enable = true },
+								closingBraceHints = { enable = true, minLines = 25 },
+								closureReturnTypeHints = { enable = "with_block" },
+								lifetimeElisionHints = { enable = "skip_trivial" },
+								parameterHints = { enable = true },
+								typeHints = { enable = true },
+							},
+							checkOnSave = { command = "clippy" },
+							cargo = { allFeatures = true },
+							procMacro = { enable = true },
 						},
-						checkOnSave = { command = "clippy" },
-						cargo = { allFeatures = true },
-						procMacro = { enable = true },
-					}},
+					},
 				},
 				nixd = {
 					settings = { nixd = { formatting = { command = { "nixfmt" } } } },
 				},
 				qmlls = { cmd = { "qmlls" } },
 				-- servers that work well with defaults
-				bashls = {}, html = {}, cssls = {}, yamlls = {},
-				dockerls = {}, docker_compose_language_service = {},
-				marksman = {}, clangd = {},
+				bashls = {},
+				html = {},
+				cssls = {},
+				yamlls = {},
+				dockerls = {},
+				docker_compose_language_service = {},
+				marksman = {},
+				clangd = {},
 				jsonls = {
 					cmd = { "vscode-json-language-server", "--stdio" },
 					filetypes = { "json", "jsonc" },
 					settings = {
 						json = {
 							validate = { enable = true },
-							format  = { enable = true },
+							format = { enable = true },
 						},
 					},
 				},
 			}
 
 			for name, extra in pairs(servers) do
-				vim.lsp.config(name, vim.tbl_deep_extend("force", {
-					on_attach = on_attach,
-					capabilities = capabilities,
-				}, extra))
+				vim.lsp.config(
+					name,
+					vim.tbl_deep_extend("force", {
+						on_attach = on_attach,
+						capabilities = capabilities,
+					}, extra)
+				)
 			end
 			vim.lsp.enable(vim.tbl_keys(servers))
 
@@ -199,12 +231,15 @@ return {
 				formatters_by_ft = {
 					lua = { "stylua" },
 					python = { "black" },
-					javascript = { "prettier" }, typescript = { "prettier" },
-					json = { "prettier" }, yaml = { "prettier" },
+					javascript = { "prettier" },
+					typescript = { "prettier" },
+					json = { "prettier" },
+					yaml = { "prettier" },
 					markdown = { "prettier" },
 					nix = { "nixfmt" },
 					rust = { "rustfmt" },
-					sh = { "shfmt" }, bash = { "shfmt" },
+					sh = { "shfmt" },
+					bash = { "shfmt" },
 					kdl = { "kdlfmt" },
 					java = { "google_java_format" },
 					qml = { "qmlformat" },
@@ -218,7 +253,7 @@ return {
 		event = "LspAttach",
 		dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" },
 		keys = {
-			{ "<leader>a",  "<cmd>AerialToggle<cr>", desc = "Aerial outline" },
+			{ "<leader>a", "<cmd>AerialToggle<cr>", desc = "Aerial outline" },
 			{ "<leader>fa", "<cmd>Telescope aerial<cr>", desc = "Find symbol (aerial)" },
 			{ "{", "<cmd>AerialPrev<cr>", desc = "Prev symbol" },
 			{ "}", "<cmd>AerialNext<cr>", desc = "Next symbol" },

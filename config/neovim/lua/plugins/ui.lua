@@ -69,15 +69,15 @@ return {
 				modified = { symbol = "●" },
 				git_status = {
 					symbols = {
-						added     = "✚",
-						modified  = "",
-						deleted   = "✖",
-						renamed   = "󰁕",
+						added = "✚",
+						modified = "",
+						deleted = "✖",
+						renamed = "󰁕",
 						untracked = "",
-						ignored   = "",
-						unstaged  = "󰄱",
-						staged    = "",
-						conflict  = "",
+						ignored = "",
+						unstaged = "󰄱",
+						staged = "",
+						conflict = "",
 					},
 				},
 				file_size = { enabled = true, required_width = 50 },
@@ -99,29 +99,31 @@ return {
 				file = {
 					{ "indent" },
 					{ "icon" },
-					{ "container",
+					{
+						"container",
 						content = {
-							{ "name",          zindex = 10 },
+							{ "name", zindex = 10 },
 							{ "symlink_target", zindex = 10, highlight = "NeoTreeSymbolicLinkTarget" },
-							{ "clipboard",      zindex = 10 },
-							{ "diagnostics",    zindex = 20, align = "right" },
-							{ "git_status",     zindex = 20, align = "right" },
-							{ "modified",       zindex = 20, align = "right" },
-							{ "file_size",      zindex = 10, align = "right" },
-							{ "last_modified",  zindex = 10, align = "right" },
+							{ "clipboard", zindex = 10 },
+							{ "diagnostics", zindex = 20, align = "right" },
+							{ "git_status", zindex = 20, align = "right" },
+							{ "modified", zindex = 20, align = "right" },
+							{ "file_size", zindex = 10, align = "right" },
+							{ "last_modified", zindex = 10, align = "right" },
 						},
 					},
 				},
 				directory = {
 					{ "indent" },
 					{ "icon" },
-					{ "container",
+					{
+						"container",
 						content = {
-							{ "name",       zindex = 10 },
-							{ "clipboard",  zindex = 10 },
-							{ "diagnostics",zindex = 20, align = "right" },
+							{ "name", zindex = 10 },
+							{ "clipboard", zindex = 10 },
+							{ "diagnostics", zindex = 20, align = "right" },
 							{ "git_status", zindex = 20, align = "right" },
-							{ "modified",   zindex = 20, align = "right" },
+							{ "modified", zindex = 20, align = "right" },
 						},
 					},
 				},
@@ -231,18 +233,20 @@ return {
 		event = "BufReadPost",
 		config = function()
 			local ok, p = pcall(require("catppuccin.palettes").get_palette, "mocha")
-			if not ok then p = {} end
+			if not ok then
+				p = {}
+			end
 			require("scrollbar").setup({
 				handle = { color = p.surface1 or "#45475a" },
 				marks = {
-					Error  = { color = p.red     or "#f38ba8" },
-					Warn   = { color = p.yellow  or "#f9e2af" },
-					Info   = { color = p.blue    or "#89b4fa" },
-					Hint   = { color = p.teal    or "#94e2d5" },
-					Search = { color = p.peach   or "#fab387" },
-					GitAdd    = { color = p.green  or "#a6e3a1" },
+					Error = { color = p.red or "#f38ba8" },
+					Warn = { color = p.yellow or "#f9e2af" },
+					Info = { color = p.blue or "#89b4fa" },
+					Hint = { color = p.teal or "#94e2d5" },
+					Search = { color = p.peach or "#fab387" },
+					GitAdd = { color = p.green or "#a6e3a1" },
 					GitChange = { color = p.yellow or "#f9e2af" },
-					GitDelete = { color = p.red    or "#f38ba8" },
+					GitDelete = { color = p.red or "#f38ba8" },
 				},
 			})
 		end,
@@ -254,12 +258,12 @@ return {
 		priority = 1000,
 		lazy = false,
 		opts = {
-			bigfile      = { enabled = false },
-			notifier     = { enabled = false },
-			quickfile    = { enabled = false },
-			scroll       = { enabled = false },
-			statuscol    = { enabled = false },
-			words        = { enabled = false },
+			bigfile = { enabled = false },
+			notifier = { enabled = false },
+			quickfile = { enabled = false },
+			scroll = { enabled = false },
+			statuscol = { enabled = false },
+			words = { enabled = false },
 			dashboard = {
 				preset = {
 					header = [[
@@ -270,12 +274,19 @@ return {
  ██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║
  ╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝]],
 					keys = {
-						{ icon = "󰈞 ", key = "f", desc = "Find File",       action = ":Telescope find_files" },
-						{ icon = "󰋚 ", key = "r", desc = "Recent Files",    action = ":Telescope oldfiles" },
-						{ icon = "󰭎 ", key = "g", desc = "Live Grep",       action = ":Telescope live_grep" },
-						{ icon = "󰦛 ", key = "s", desc = "Restore Session", action = function() require("persistence").load() end },
-						{ icon = "󰒲 ", key = "l", desc = "Lazy",            action = ":Lazy" },
-						{ icon = "󰅙 ", key = "q", desc = "Quit",            action = ":qa" },
+						{ icon = "󰈞 ", key = "f", desc = "Find File", action = ":Telescope find_files" },
+						{ icon = "󰋚 ", key = "r", desc = "Recent Files", action = ":Telescope oldfiles" },
+						{ icon = "󰭎 ", key = "g", desc = "Live Grep", action = ":Telescope live_grep" },
+						{
+							icon = "󰦛 ",
+							key = "s",
+							desc = "Restore Session",
+							action = function()
+								require("persistence").load()
+							end,
+						},
+						{ icon = "󰒲 ", key = "l", desc = "Lazy", action = ":Lazy" },
+						{ icon = "󰅙 ", key = "q", desc = "Quit", action = ":qa" },
 					},
 				},
 				sections = {
@@ -341,20 +352,22 @@ return {
 		dependencies = { "nvim-treesitter/nvim-treesitter" },
 		config = function()
 			local ok, p = pcall(require("catppuccin.palettes").get_palette, "mocha")
-			if not ok then p = {} end
+			if not ok then
+				p = {}
+			end
 			require("helpview").setup({
 				highlight_groups = {
-					HelpviewHeading1   = { fg = p.mauve   or "#cba6f7", bold = true },
-					HelpviewHeading2   = { fg = p.blue    or "#89b4fa", bold = true },
-					HelpviewHeading3   = { fg = p.sky     or "#89dceb", bold = true },
-					HelpviewCode       = { bg = p.surface0 or "#313244" },
-					HelpviewInlineCode = { fg = p.peach   or "#fab387", bg = p.surface0 or "#313244" },
-					HelpviewHyperlink  = { fg = p.blue    or "#89b4fa", underline = true },
-					HelpviewTaglink    = { fg = p.teal    or "#94e2d5", underline = true },
-					HelpviewOptionLink = { fg = p.yellow  or "#f9e2af" },
-					HelpviewNoteTag    = { fg = p.green   or "#a6e3a1", bold = true },
-					HelpviewSeparator  = { fg = p.surface1 or "#45475a" },
-					HelpviewArgument   = { fg = p.peach   or "#fab387", italic = true },
+					HelpviewHeading1 = { fg = p.mauve or "#cba6f7", bold = true },
+					HelpviewHeading2 = { fg = p.blue or "#89b4fa", bold = true },
+					HelpviewHeading3 = { fg = p.sky or "#89dceb", bold = true },
+					HelpviewCode = { bg = p.surface0 or "#313244" },
+					HelpviewInlineCode = { fg = p.peach or "#fab387", bg = p.surface0 or "#313244" },
+					HelpviewHyperlink = { fg = p.blue or "#89b4fa", underline = true },
+					HelpviewTaglink = { fg = p.teal or "#94e2d5", underline = true },
+					HelpviewOptionLink = { fg = p.yellow or "#f9e2af" },
+					HelpviewNoteTag = { fg = p.green or "#a6e3a1", bold = true },
+					HelpviewSeparator = { fg = p.surface1 or "#45475a" },
+					HelpviewArgument = { fg = p.peach or "#fab387", italic = true },
 				},
 			})
 		end,
@@ -385,13 +398,15 @@ return {
 		event = "BufReadPost",
 		config = function()
 			local ok, p = pcall(require("catppuccin.palettes").get_palette, "mocha")
-			if not ok then p = {} end
+			if not ok then
+				p = {}
+			end
 			require("hlchunk").setup({
 				chunk = {
 					enable = true,
 					style = {
-						{ fg = p.mauve or "#cba6f7" },   -- active chunk
-						{ fg = p.red   or "#f38ba8" },   -- error
+						{ fg = p.mauve or "#cba6f7" }, -- active chunk
+						{ fg = p.red or "#f38ba8" }, -- error
 					},
 					use_treesitter = true,
 				},
@@ -410,15 +425,19 @@ return {
 		event = "BufReadPost",
 		config = function()
 			local ok, p = pcall(require("catppuccin.palettes").get_palette, "mocha")
-			if not ok then p = {} end
+			if not ok then
+				p = {}
+			end
 			require("incline").setup({
 				window = { margin = { vertical = 0, horizontal = 1 } },
 				hide = { cursorline = false, focused_win = false, only_win = true },
 				render = function(props)
 					local fname = vim.api.nvim_buf_get_name(props.buf)
-					if fname == "" then return "[No Name]" end
+					if fname == "" then
+						return "[No Name]"
+					end
 					local name = vim.fn.fnamemodify(fname, ":t")
-					local ext  = vim.fn.fnamemodify(fname, ":e")
+					local ext = vim.fn.fnamemodify(fname, ":e")
 					local icon, hl = "", "Normal"
 					local dv_ok, devicons = pcall(require, "nvim-web-devicons")
 					if dv_ok then
