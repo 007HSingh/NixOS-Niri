@@ -46,8 +46,8 @@ map("n", "N", "Nzzzv", { desc = "Prev match (centered)" })
 
 -- file
 map("n", "<leader>W", "<cmd>w<cr>", { desc = "Save file" })
-map("n", "<leader>qq", "<cmd>q<cr>",  { desc = "Quit window" })
-map("n", "<leader>Q",  "<cmd>qa!<cr>", { desc = "Quit all" })
+map("n", "<leader>qq", "<cmd>q<cr>", { desc = "Quit window" })
+map("n", "<leader>Q", "<cmd>qa!<cr>", { desc = "Quit all" })
 
 -- paste without yanking
 map("v", "p", '"_dP', { desc = "Paste no-yank" })

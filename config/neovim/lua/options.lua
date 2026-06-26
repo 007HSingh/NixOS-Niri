@@ -56,7 +56,7 @@ opt.iskeyword:append("-")
 opt.cmdheight = 1
 opt.ruler = false
 opt.pumheight = 10
-opt.fillchars = { eob = " " }  -- hide end-of-buffer ~
+opt.fillchars = { eob = " " } -- hide end-of-buffer ~
 
 -- global float border (Neovim 0.11+)
 vim.o.winborder = "rounded"

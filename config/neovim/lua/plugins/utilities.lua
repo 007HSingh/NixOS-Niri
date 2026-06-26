@@ -11,7 +11,9 @@ return {
 		"mbbill/undotree",
 		cmd = "UndotreeToggle",
 		keys = { { "<leader>u", "<cmd>UndotreeToggle<cr>", desc = "Undotree" } },
-		init = function() vim.g.undotree_SetFocusWhenToggle = 1 end,
+		init = function()
+			vim.g.undotree_SetFocusWhenToggle = 1
+		end,
 	},
 
 	{
@@ -29,7 +31,9 @@ return {
 		event = "BufReadPost",
 		dependencies = { "kevinhwang91/promise-async", "nvim-treesitter/nvim-treesitter" },
 		opts = {
-			provider_selector = function() return { "treesitter", "indent" } end,
+			provider_selector = function()
+				return { "treesitter", "indent" }
+			end,
 		},
 	},
 
@@ -43,8 +47,16 @@ return {
 		"airblade/vim-rooter",
 		event = "VeryLazy",
 		init = function()
-			vim.g.rooter_patterns = { ".git", "package.json", "Makefile", "Cargo.toml",
-				"pyproject.toml", "build.gradle.kts", "settings.gradle.kts", "gradlew" }
+			vim.g.rooter_patterns = {
+				".git",
+				"package.json",
+				"Makefile",
+				"Cargo.toml",
+				"pyproject.toml",
+				"build.gradle.kts",
+				"settings.gradle.kts",
+				"gradlew",
+			}
 			vim.g.rooter_silent_chdir = 1
 			vim.g.rooter_resolve_links = 1
 		end,
@@ -67,7 +79,7 @@ return {
 				relculright = true,
 				segments = {
 					{ text = { b.foldfunc }, click = "v:lua.ScFa" },
-					{ text = { "%s" },       click = "v:lua.ScSa" },
+					{ text = { "%s" }, click = "v:lua.ScSa" },
 					{ text = { b.lnumfunc, " " }, click = "v:lua.ScLa" },
 				},
 			})
@@ -78,10 +90,16 @@ return {
 		"eandrju/cellular-automaton.nvim",
 		cmd = "CellularAutomaton",
 		keys = {
-			{ "<leader>fml", function()
-				if vim.bo.filetype == "" then return end
-				vim.cmd("CellularAutomaton make_it_rain")
-			end, desc = "Make it rain" },
+			{
+				"<leader>fml",
+				function()
+					if vim.bo.filetype == "" then
+						return
+					end
+					vim.cmd("CellularAutomaton make_it_rain")
+				end,
+				desc = "Make it rain",
+			},
 		},
 	},
 }
