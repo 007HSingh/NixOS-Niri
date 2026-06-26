@@ -1,14 +1,14 @@
--- ============================================================================
--- OPTIONS — Translated from options.nix
--- ============================================================================
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
+
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
 
 local opt = vim.opt
 
--- Line numbers
 opt.number = true
 opt.relativenumber = true
 
--- Tabs and indentation
 opt.tabstop = 4
 opt.shiftwidth = 4
 opt.softtabstop = 4
@@ -17,13 +17,11 @@ opt.autoindent = true
 opt.smartindent = true
 opt.breakindent = true
 
--- Search
 opt.ignorecase = true
 opt.smartcase = true
 opt.hlsearch = true
 opt.incsearch = true
 
--- UI/UX
 opt.termguicolors = true
 opt.cursorline = true
 opt.scrolloff = 8
@@ -35,37 +33,33 @@ opt.splitright = true
 opt.showmode = false
 opt.smoothscroll = true
 
--- Performance
 opt.updatetime = 250
 opt.timeoutlen = 300
-opt.lazyredraw = false
 
--- Backup and undo
 opt.backup = false
 opt.writebackup = false
 opt.swapfile = false
 opt.undofile = true
 opt.undolevels = 10000
 
--- Completion
-opt.completeopt = { "menu", "menuone", "noselect" }
-opt.pumheight = 10
-
--- Mouse support
 opt.mouse = "a"
-
--- Clipboard
 opt.clipboard = "unnamedplus"
 
--- Folding — managed by UFO
+-- folding managed by nvim-ufo
 opt.foldenable = false
 opt.foldlevel = 99
 opt.foldlevelstart = 99
 
--- Misc
 opt.conceallevel = 0
 opt.fileencoding = "utf-8"
 opt.iskeyword:append("-")
-opt.showtabline = 2
 opt.cmdheight = 1
 opt.ruler = false
+opt.pumheight = 10
+opt.fillchars = { eob = " " }  -- hide end-of-buffer ~
+
+-- global float border (Neovim 0.11+)
+vim.o.winborder = "rounded"
+
+-- gui
+vim.o.guifont = "JetBrainsMono NF:h13"

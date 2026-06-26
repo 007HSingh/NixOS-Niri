@@ -49,6 +49,57 @@ return {
 			end,
 			desc = "Terminate",
 		},
+		{
+			"<leader>du",
+			function()
+				require("dapui").toggle()
+			end,
+			desc = "Toggle UI",
+		},
+		{
+			"<leader>dB",
+			function()
+				require("dap").set_breakpoint(vim.fn.input("Condition: "))
+			end,
+			desc = "Conditional breakpoint",
+		},
+		{
+			"<leader>dL",
+			function()
+				require("dap").set_breakpoint(nil, nil, vim.fn.input("Log: "))
+			end,
+			desc = "Log point",
+		},
+		{
+			"<leader>dr",
+			function()
+				require("dap").repl.open()
+			end,
+			desc = "REPL",
+		},
+		{
+			"<leader>dl",
+			function()
+				require("dap").run_last()
+			end,
+			desc = "Run last",
+		},
+		{
+			"<leader>dh",
+			function()
+				require("dap.ui.widgets").hover()
+			end,
+			mode = { "n", "v" },
+			desc = "Inspect (hover)",
+		},
+		{
+			"<leader>dp",
+			function()
+				local w = require("dap.ui.widgets")
+				w.centered_float(w.scopes)
+			end,
+			desc = "Preview scopes",
+		},
 	},
 	dependencies = {
 		"rcarriga/nvim-dap-ui",
