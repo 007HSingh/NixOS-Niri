@@ -8,6 +8,21 @@ return {
 		{ "<leader>oa", "<cmd>OverseerTaskAction<cr>", desc = "Overseer: task action" },
 		{ "<leader>oi", "<cmd>OverseerInfo<cr>", desc = "Overseer: info" },
 		{ "<leader>ol", "<cmd>OverseerLoadBundle<cr>", desc = "Overseer: load bundle" },
+		{
+			"<leader>os",
+			function()
+				local tasks = require("overseer").list_tasks({ status = "RUNNING" })
+				if #tasks == 0 then
+					vim.notify("Overseer: no running tasks", vim.log.levels.INFO)
+					return
+				end
+				for _, task in ipairs(tasks) do
+					task:stop()
+					vim.notify("Overseer: stopped '" .. task.name .. "'", vim.log.levels.INFO)
+				end
+			end,
+			desc = "Overseer: stop all running",
+		},
 	},
 	config = function()
 		local overseer = require("overseer")
@@ -34,8 +49,6 @@ return {
 
 			component_aliases = {
 				default = {
-					{ "display_duration", detail_level = 2 },
-					"on_output_summarize",
 					"on_exit_set_status",
 					{ "on_complete_notify", statuses = { "FAILURE" } },
 					"on_complete_dispose",
@@ -99,6 +112,44 @@ return {
 			{ name = "Gradle: dependencies", args = { "dependencies" } },
 		}
 
+		-- Whether this template is a long-running server (bootRun) or a one-shot build task.
+		-- bootRun forks a child JVM that survives if we only kill the Gradle wrapper, so
+		-- those templates use a shell trap to forward SIGTERM to the whole process group.
+		local function is_server_task(name)
+			return name:find("bootRun") ~= nil or name:find("spring-boot:run") ~= nil
+		end
+
+		local function gradle_builder(name, args)
+			if is_server_task(name) then
+				-- Run inside a shell that traps SIGTERM and kills the whole process
+				-- group (kill 0), so the forked Spring Boot JVM also gets the signal.
+				local shell_args = table.concat(
+					vim.tbl_map(function(a)
+						return vim.fn.shellescape(a)
+					end, vim.list_extend({ gradle_cmd() }, args)),
+					" "
+				)
+				return {
+					name = name,
+					cmd = "bash",
+					args = { "-c", "trap 'kill 0' SIGTERM SIGINT; " .. shell_args .. " & wait" },
+					components = {
+						{ "on_output_quickfix", open_on_exit = "failure" },
+						"default",
+					},
+				}
+			end
+			return {
+				name = name,
+				cmd = gradle_cmd(),
+				args = args,
+				components = {
+					{ "on_output_quickfix", open_on_exit = "failure" },
+					"default",
+				},
+			}
+		end
+
 		for _, tpl in ipairs(gradle_templates) do
 			local args = tpl.args
 			local name = tpl.name
@@ -106,15 +157,7 @@ return {
 				name = name,
 				condition = { callback = gradle_condition },
 				builder = function()
-					return {
-						name = name,
-						cmd = gradle_cmd(),
-						args = args,
-						components = {
-							{ "on_output_quickfix", open_on_exit = "failure" },
-							"default",
-						},
-					}
+					return gradle_builder(name, args)
 				end,
 			})
 		end
@@ -141,6 +184,23 @@ return {
 				name = name,
 				condition = { callback = maven_condition },
 				builder = function()
+					if is_server_task(name) then
+						local shell_args = table.concat(
+							vim.tbl_map(function(a)
+								return vim.fn.shellescape(a)
+							end, vim.list_extend({ mvn_cmd() }, args)),
+							" "
+						)
+						return {
+							name = name,
+							cmd = "bash",
+							args = { "-c", "trap 'kill 0' SIGTERM SIGINT; " .. shell_args .. " & wait" },
+							components = {
+								{ "on_output_quickfix", open_on_exit = "failure" },
+								"default",
+							},
+						}
+					end
 					return {
 						name = name,
 						cmd = mvn_cmd(),
@@ -163,14 +223,28 @@ return {
 			},
 			builder = function()
 				local tool = detect_build_tool()
+				local cmd, run_args
 				if tool == "gradle" then
-					return { name = "bootRun", cmd = gradle_cmd(), args = { "bootRun" } }
+					cmd = gradle_cmd()
+					run_args = { "bootRun" }
 				elseif tool == "maven" then
-					return { name = "spring-boot:run", cmd = mvn_cmd(), args = { "spring-boot:run" } }
+					cmd = mvn_cmd()
+					run_args = { "spring-boot:run" }
 				else
 					vim.notify("Overseer: could not detect Maven or Gradle project", vim.log.levels.ERROR)
 					return { name = "noop", cmd = "true" }
 				end
+				local shell_args = table.concat(
+					vim.tbl_map(function(a)
+						return vim.fn.shellescape(a)
+					end, vim.list_extend({ cmd }, run_args)),
+					" "
+				)
+				return {
+					name = "Spring Boot: run",
+					cmd = "bash",
+					args = { "-c", "trap 'kill 0' SIGTERM SIGINT; " .. shell_args .. " & wait" },
+				}
 			end,
 		})
 
@@ -198,6 +272,7 @@ return {
 		if ok then
 			wk.add({
 				{ "<leader>o", group = "Overseer / Build", icon = { icon = "󱁤", color = "orange" } },
+				{ "<leader>os", icon = { icon = "󰓛", color = "red" } },
 			})
 		end
 	end,
