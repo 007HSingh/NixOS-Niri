@@ -122,15 +122,6 @@ return {
 
 			if client:supports_method("textDocument/codeLens") then
 				vim.lsp.codelens.enable(true, { bufnr = bufnr })
-
-				local cg = vim.api.nvim_create_augroup("JdtlsCodeLens_" .. bufnr, { clear = true })
-				vim.api.nvim_create_autocmd({ "BufEnter", "InsertLeave", "BufWritePost" }, {
-					buffer = bufnr,
-					group = cg,
-					callback = function()
-						vim.lsp.codelens.refresh({ bufnr = bufnr })
-					end,
-				})
 			end
 
 			local ok, navic = pcall(require, "nvim-navic")

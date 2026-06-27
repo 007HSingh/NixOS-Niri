@@ -15,11 +15,6 @@ return {
 					"go",
 					"lua",
 					"python",
-					"javascript",
-					"typescript",
-					"html",
-					"css",
-					"json",
 					"yaml",
 					"markdown",
 					"markdown_inline",
@@ -36,10 +31,6 @@ return {
 					"comment",
 					"scss",
 				},
-				-- NixOS: the Nix store is read-only, so auto-install would try to write
-				-- compiled parser .so files where it can't. Parsers must be provided via
-				-- the nvim-treesitter Nix overlay (withAllGrammars / withPlugins) instead —
-				-- see the audit's Nix notes at the end of this pass for the package list.
 				auto_install = false,
 			})
 		end,

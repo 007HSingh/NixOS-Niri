@@ -8,6 +8,7 @@
 
 let
   cfg = config.modules.home.neovim;
+
   javaDebugServerDir = "${pkgs.vscode-extensions.vscjava.vscode-java-debug}/share/vscode/extensions/vscjava.vscode-java-debug/server";
   javaDebugJar = builtins.head (
     builtins.filter (x: lib.hasSuffix ".jar" (baseNameOf x)) (
@@ -28,8 +29,6 @@ in
       # LSP servers
       nixd
       lua-language-server
-      typescript-language-server
-      vscode-langservers-extracted # html, css, json, eslint
       yaml-language-server
       dockerfile-language-server
       docker-compose-language-service
@@ -45,7 +44,6 @@ in
       nixfmt
       stylua
       prettier
-      black
       rustfmt
       shfmt
       kdlfmt
@@ -67,7 +65,6 @@ in
       # DAP
       python314Packages.debugpy
       vscode-extensions.vadimcn.vscode-lldb
-      vscode-js-debug
       vscode-extensions.vscjava.vscode-java-debug
 
       # Testing
