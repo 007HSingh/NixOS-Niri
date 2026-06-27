@@ -352,11 +352,11 @@ return {
 				on_attach = on_attach,
 
 				on_init = function(client)
-					client.notify("workspace/didChangeConfiguration", {
+					client:notify("workspace/didChangeConfiguration", {
 						settings = client.config.settings,
 					})
 
-					client.notify("java/buildWorkspace", {
+					client:notify("java/buildWorkspace", {
 						fullBuild = false,
 					})
 				end,
