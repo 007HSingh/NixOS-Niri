@@ -4,12 +4,6 @@ return {
 		event = "BufReadPre",
 		dependencies = {
 			"b0o/SchemaStore.nvim",
-			-- NOTE: conform.nvim, trouble.nvim, and inc-rename.nvim used to be listed
-			-- here. Being a "dependency" of lspconfig forces eager loading on every
-			-- BufReadPre, overriding their own lazy cmd/keys specs (trouble.nvim alone
-			-- adds ~3-6ms to every file open this way). conform now has its own spec
-			-- below with an explicit load event; trouble/inc-rename already lazy-load
-			-- fine via the cmd strings and keymaps that reference them elsewhere.
 		},
 		config = function()
 			local capabilities = require("blink.cmp").get_lsp_capabilities()
@@ -97,14 +91,6 @@ return {
 
 				if client:supports_method("textDocument/codeLens") then
 					vim.lsp.codelens.enable(true, { bufnr = bufnr })
-					local cg = vim.api.nvim_create_augroup("LspCodeLens_" .. bufnr, { clear = true })
-					vim.api.nvim_create_autocmd({ "BufEnter", "InsertLeave", "BufWritePost" }, {
-						buffer = bufnr,
-						group = cg,
-						callback = function()
-							vim.lsp.codelens.refresh({ bufnr = bufnr })
-						end,
-					})
 				end
 
 				if client:supports_method("textDocument/documentSymbol") then
@@ -147,30 +133,6 @@ return {
 						},
 					},
 				},
-				ts_ls = {
-					settings = {
-						typescript = {
-							inlayHints = {
-								includeInlayParameterNameHints = "all",
-								includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-								includeInlayFunctionParameterTypeHints = true,
-								includeInlayVariableTypeHints = true,
-								includeInlayPropertyDeclarationTypeHints = true,
-								includeInlayFunctionLikeReturnTypeHints = true,
-								includeInlayEnumMemberValueHints = true,
-							},
-						},
-						javascript = {
-							inlayHints = {
-								includeInlayParameterNameHints = "literals",
-								includeInlayFunctionParameterTypeHints = true,
-								includeInlayPropertyDeclarationTypeHints = true,
-								includeInlayFunctionLikeReturnTypeHints = true,
-								includeInlayEnumMemberValueHints = true,
-							},
-						},
-					},
-				},
 				rust_analyzer = {
 					settings = {
 						["rust-analyzer"] = {
@@ -195,8 +157,6 @@ return {
 				taplo = {},
 				-- servers that work well with defaults
 				bashls = {},
-				html = {},
-				cssls = {},
 				yamlls = {
 					settings = {
 						yaml = {
@@ -246,21 +206,6 @@ return {
 						completeUnimported = true,
 					},
 				},
-				jsonls = {
-					cmd = { "vscode-json-language-server", "--stdio" },
-					filetypes = { "json", "jsonc" },
-					settings = {
-						json = {
-							schemas = schemastore.json.schemas(),
-							validate = { enable = true },
-							format = { enable = true },
-						},
-					},
-					-- NOTE: on_new_config used to be set here. It's an nvim-lspconfig
-					-- lifecycle hook that vim.lsp.config() (the native 0.11 API) silently
-					-- ignores — it never ran. It's also redundant: schemas are already
-					-- set directly above via schemastore.json.schemas().
-				},
 			}
 
 			for name, extra in pairs(servers) do
@@ -288,7 +233,7 @@ return {
 				},
 				formatters_by_ft = {
 					lua = { "stylua" },
-					python = { "ruff_format" }, -- was "black" — switched to match nvim-lint's move to ruff
+					python = { "ruff_format" },
 					javascript = { "prettier" },
 					typescript = { "prettier" },
 					json = { "prettier" },

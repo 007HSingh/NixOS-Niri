@@ -214,41 +214,6 @@ return {
 			vim.notify("DAP: CODELLDB_PATH not set — C/C++/Rust debugging unavailable", vim.log.levels.WARN)
 		end
 
-		-- JavaScript/TypeScript adapter (vscode-js-debug)
-		local js_debug = vim.env.VSCODE_JS_DEBUG_PATH
-		if js_debug and js_debug ~= "" then
-			dap.adapters["pwa-node"] = {
-				type = "server",
-				host = "localhost",
-				port = "${port}",
-				executable = {
-					command = vim.fn.exepath("node"),
-					args = { js_debug, "${port}" },
-				},
-			}
-			for _, ft in ipairs({ "javascript", "typescript", "javascriptreact", "typescriptreact" }) do
-				dap.configurations[ft] = {
-					{
-						type = "pwa-node",
-						request = "launch",
-						name = "Launch file",
-						program = "${file}",
-						cwd = "${workspaceFolder}",
-						sourceMaps = true,
-					},
-					{
-						type = "pwa-node",
-						request = "attach",
-						name = "Attach to process",
-						processId = require("dap.utils").pick_process,
-						cwd = "${workspaceFolder}",
-					},
-				}
-			end
-		else
-			vim.notify("DAP: VSCODE_JS_DEBUG_PATH not set — JS/TS debugging unavailable", vim.log.levels.WARN)
-		end
-
 		dap.configurations.java = dap.configurations.java or {}
 
 		table.insert(dap.configurations.java, {
