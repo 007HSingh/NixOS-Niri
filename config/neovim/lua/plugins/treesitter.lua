@@ -28,9 +28,19 @@ return {
 					"rust",
 					"java",
 					"nix",
-					"qmljs",
+					"kotlin",
+					"toml",
+					"dockerfile",
+					"sql",
+					"regex",
+					"comment",
+					"scss",
 				},
-				auto_install = true,
+				-- NixOS: the Nix store is read-only, so auto-install would try to write
+				-- compiled parser .so files where it can't. Parsers must be provided via
+				-- the nvim-treesitter Nix overlay (withAllGrammars / withPlugins) instead —
+				-- see the audit's Nix notes at the end of this pass for the package list.
+				auto_install = false,
 			})
 		end,
 	},
@@ -74,10 +84,10 @@ return {
 				swap = {
 					enable = true,
 					swap_next = {
-						["<leader>a"] = "@parameter.inner",
+						["<leader>csa"] = "@parameter.inner",
 					},
 					swap_previous = {
-						["<leader>A"] = "@parameter.inner",
+						["<leader>csA"] = "@parameter.inner",
 					},
 				},
 			})
@@ -91,12 +101,12 @@ return {
 		config = function()
 			require("treesitter-context").setup({
 				enable = true,
-				max_lines = 0,
+				max_lines = 4, -- was 0 (unlimited) — that gets cluttered in deeply nested code
 				min_window_height = 0,
 				line_numbers = true,
 				multiline_threshold = 20,
 				trim_scope = "outer",
-				mode = "cursor",
+				mode = "topline", -- was "cursor" — topline only recomputes when topline changes, not on every cursor move
 				separator = nil,
 				zindex = 20,
 			})

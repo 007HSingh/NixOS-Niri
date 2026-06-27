@@ -54,7 +54,7 @@ return {
 				{ "<leader>t", group = "Toggle", icon = { icon = "󰔡", color = "purple" } },
 				{ "<leader>w", group = "Window", icon = { icon = "󱟱", color = "azure" } },
 				{ "<leader>x", group = "Diagnostics", icon = { icon = "󰀪", color = "red" } },
-				{ "<leader>o", group = "Outline", icon = { icon = "󰙅", color = "cyan" } },
+				{ "<leader>o", group = "Overseer / Build", icon = { icon = "󰙅", color = "cyan" } },
 				{ "<leader>b", group = "Buffer", icon = { icon = "󰓩", color = "blue" } },
 				-- ── harpoon marks ───────────────────────────────────────────────────
 				{ "<leader>1", icon = { icon = "󱡅", color = "purple" } },
@@ -74,6 +74,12 @@ return {
 				{ "<leader>O", icon = { icon = "󰙅", color = "yellow" } }, -- oil
 				{ "<leader>/", icon = { icon = "󰍉", color = "blue" } }, -- search buffer
 				{ "<leader>bd", icon = { icon = "󰅙", color = "red" } }, -- delete buffer
+				{ "<leader>j", group = "Java", icon = { icon = "", color = "orange" } },
+				{ "<leader>jt", group = "Test", icon = { icon = "󰙨", color = "green" } },
+				{ "<leader>jx", group = "Extract", icon = { icon = "󰆏", color = "yellow" } },
+				{ "<leader>jS", group = "Spring", icon = { icon = "󱞉", color = "green" } },
+				{ "<leader>jH", group = "HTTP Client", icon = { icon = "󰖟", color = "blue" } },
+				{ "<leader>jD", group = "Database", icon = { icon = "󰆼", color = "blue" } },
 			})
 		end,
 	},
@@ -129,6 +135,19 @@ return {
 		"gbprod/yanky.nvim",
 		event = "VeryLazy",
 		dependencies = { "nvim-lua/plenary.nvim" },
+		-- NOTE: visual-mode "p" is intentionally left alone — keymaps.lua maps it to
+		-- paste-no-yank ('"_dP'). Yanky's put/get remaps below are normal-mode only
+		-- to avoid clobbering that. Yank ("y") is safe to remap in both modes.
+		keys = {
+			{ "y", "<Plug>(YankyYank)", mode = { "n", "x" }, desc = "Yank" },
+			{ "Y", "<Plug>(YankyYank)$", mode = "n", desc = "Yank to EOL" },
+			{ "p", "<Plug>(YankyPutAfter)", mode = "n", desc = "Put after" },
+			{ "P", "<Plug>(YankyPutBefore)", mode = "n", desc = "Put before" },
+			{ "gp", "<Plug>(YankyGPutAfter)", mode = { "n", "x" }, desc = "gPut after" },
+			{ "gP", "<Plug>(YankyGPutBefore)", mode = { "n", "x" }, desc = "gPut before" },
+			{ "<C-p>", "<Plug>(YankyPreviousEntry)", desc = "Yank ring: previous" },
+			{ "<C-n>", "<Plug>(YankyNextEntry)", desc = "Yank ring: next" },
+		},
 		config = function()
 			require("yanky").setup({
 				ring = { history_length = 100 },
@@ -227,7 +246,9 @@ return {
 				},
 			})
 
-			local ok, p = pcall(require("catppuccin.palettes").get_palette, "mocha")
+			local ok, p = pcall(function()
+				return require("catppuccin.palettes").get_palette("mocha")
+			end)
 			if ok then
 				vim.api.nvim_set_hl(0, "PrecognitionHighlight", { fg = p.overlay1, italic = true })
 				vim.api.nvim_set_hl(0, "PrecognitionGutterHint", { fg = p.surface1, italic = true })

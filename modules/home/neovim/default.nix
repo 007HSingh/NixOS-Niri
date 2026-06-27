@@ -8,6 +8,12 @@
 
 let
   cfg = config.modules.home.neovim;
+  javaDebugServerDir = "${pkgs.vscode-extensions.vscjava.vscode-java-debug}/share/vscode/extensions/vscjava.vscode-java-debug/server";
+  javaDebugJar = builtins.head (
+    builtins.filter (x: lib.hasSuffix ".jar" (baseNameOf x)) (
+      lib.filesystem.listFilesRecursive javaDebugServerDir
+    )
+  );
 in
 {
   options.modules.home.neovim.enable =
@@ -16,6 +22,8 @@ in
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
       neovim
+      rustc
+      cargo
 
       # LSP servers
       nixd
@@ -31,7 +39,7 @@ in
       jdt-language-server
       clang-tools
       marksman
-      qt6.qtdeclarative
+      taplo
 
       # Formatters
       nixfmt
@@ -46,10 +54,11 @@ in
       # Linters
       luajitPackages.luacheck
       shellcheck
-      python314Packages.flake8
+      ruff
       eslint_d
       markdownlint-cli2
       statix
+      deadnix
       ripgrep
       fd
       nodejs
@@ -60,13 +69,20 @@ in
       vscode-extensions.vadimcn.vscode-lldb
       vscode-js-debug
       vscode-extensions.vscjava.vscode-java-debug
+
+      # Testing
+      vscode-extensions.vscjava.vscode-java-test
+
+      lombok
     ];
 
     home.sessionVariables = {
       CODELLDB_PATH = "${pkgs.vscode-extensions.vadimcn.vscode-lldb}/share/vscode/extensions/vadimcn.vscode-lldb/adapter/codelldb";
       VSCODE_JS_DEBUG_PATH = "${pkgs.vscode-js-debug}/lib/node_modules/@vscode/js-debug/src/dapDebugServer.js";
-      JAVA_DEBUG_JAR = "${pkgs.vscode-extensions.vscjava.vscode-java-debug}/share/vscode/extensions/vscjava.vscode-java-debug/server/com.microsoft.java.debug.plugin-0.53.2.jar";
+      JAVA_DEBUG_JAR = "${javaDebugJar}";
       DEBUGPY_PATH = "${(pkgs.python314.withPackages (ps: [ ps.debugpy ]))}/bin/python3";
+      JAVA_TEST_JAR = "${pkgs.vscode-extensions.vscjava.vscode-java-test}/share/vscode/extensions/vscjava.vscode-java-test/server";
+      LOMBOK_JAR = "${pkgs.lombok}/share/java/lombok.jar";
     };
   };
 }

@@ -75,7 +75,10 @@ autocmd("FileType", {
 autocmd("FileType", {
 	pattern = { "gitcommit", "gitrebase" },
 	callback = function()
-		require("persistence").stop()
+		local ok, persistence = pcall(require, "persistence")
+		if ok then
+			persistence.stop()
+		end
 	end,
 })
 
@@ -89,10 +92,13 @@ autocmd("BufWritePre", {
 		if not vim.bo[args.buf].modifiable or vim.bo[args.buf].readonly then
 			return
 		end
-		local conform = require("conform")
+		local ok, conform = pcall(require, "conform")
+		if not ok then
+			return
+		end
 		if #conform.list_formatters(args.buf) == 0 then
 			return
 		end
-		conform.format({ bufnr = args.buf, timeout_ms = 500, lsp_fallback = true })
+		conform.format({ bufnr = args.buf, timeout_ms = 500, lsp_format = "fallback" })
 	end,
 })
