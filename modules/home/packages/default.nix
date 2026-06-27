@@ -87,8 +87,6 @@ in
     ];
 
     home = {
-      sessionPath = [ "$HOME/lift/lift/bin" ];
-
       sessionVariables = {
         EDITOR = "nvim";
         VISUAL = "nvim";
