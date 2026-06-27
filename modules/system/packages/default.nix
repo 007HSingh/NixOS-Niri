@@ -51,7 +51,6 @@ in
 
       # Applications
       jetbrains.idea
-      android-studio-full
       postman
       chafa
       ffmpegthumbnailer
