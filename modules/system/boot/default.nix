@@ -38,7 +38,7 @@ in
         };
       };
 
-      kernelPackages = pkgs.linuxPackages_zen;
+      kernelPackages = pkgs.linuxPackages_latest;
 
       # Kernel tuning for responsiveness
       kernel.sysctl = {
