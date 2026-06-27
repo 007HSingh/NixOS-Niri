@@ -54,7 +54,7 @@ in
       playerctl
 
       # Languages
-      javaPackages.compiler.temurin-bin.jdk-21
+      temurin-bin-21
       racket
       python314
       python314Packages.pip
@@ -95,7 +95,7 @@ in
         BROWSER = "firefox";
         TERMINAL = "kitty";
         NH_FLAKE = "/home/harsh/nixos-config";
-        JAVA_HOME = "${pkgs.javaPackages.compiler.temurin-bin.jdk-21}";
+        JAVA_HOME = "${pkgs.temurin-bin-21}";
         ELECTRON_OZONE_PLATFORM_HINT = "auto";
       };
     };

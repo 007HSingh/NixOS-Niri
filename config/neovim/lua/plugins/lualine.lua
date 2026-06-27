@@ -10,6 +10,11 @@ return {
 		local p = require("catppuccin.palettes").get_palette("mocha")
 
 		-- navic: configure to match catppuccin palette
+		-- NOTE: lsp.auto_attach is intentionally NOT set here. Both lsp.lua and
+		-- jdtls.lua already call navic.attach(client, bufnr) manually inside their
+		-- on_attach callbacks, which is the correct single attachment point. Setting
+		-- auto_attach = true here would cause navic to attach a second time per
+		-- client, producing duplicate breadcrumb entries.
 		require("nvim-navic").setup({
 			highlight = true,
 			separator = "  ",
@@ -181,16 +186,9 @@ return {
 			},
 			extensions = { "neo-tree", "trouble", "quickfix", "lazy" },
 		})
-
-		local timer = vim.uv.new_timer()
-		timer:start(
-			0,
-			60000,
-			vim.schedule_wrap(function()
-				if package.loaded["lualine"] then
-					require("lualine").refresh()
-				end
-			end)
-		)
+		-- NOTE: a redundant 60s vim.uv timer that called lualine.refresh() used to
+		-- live here. It's removed: the `refresh = { statusline = 100, winbar = 100 }`
+		-- option above already refreshes lualine every 100ms, and the old timer
+		-- handle was never closed (a small leak on every reload).
 	end,
 }

@@ -9,10 +9,10 @@ return {
 		config = function()
 			local animate = require("mini.animate")
 			animate.setup({
-				-- Smooth cursor movement between distant jumps
+				-- Cursor animation disabled — SmoothCursor.nvim owns this role.
+				-- Running both fights over extmarks/sign column on every cursor move.
 				cursor = {
-					enable = true,
-					timing = animate.gen_timing.linear({ duration = 80, unit = "total" }),
+					enable = false,
 				},
 				-- Smooth scrolling (replaces any neoscroll you might add later)
 				scroll = {
@@ -53,28 +53,27 @@ return {
 				disable_float_win = true,
 				enabled_filetypes = nil, -- all filetypes
 				disabled_filetypes = { "help", "alpha", "dashboard", "NvimTree" },
-				-- Show fancy mode indicator in the sign column
-				show_last_positions = nil,
 			})
 			-- Colour-code the cursor by mode (matches your lualine palette)
-			local ok, p = pcall(require("catppuccin.palettes").get_palette, "mocha")
+			local ok, p = pcall(function()
+				return require("catppuccin.palettes").get_palette("mocha")
+			end)
 			if ok then
 				local c = p
+				local mode_colors = {
+					i = c.green or "#a6e3a1",
+					v = c.mauve or "#cba6f7",
+					V = c.mauve or "#cba6f7",
+					["\22"] = c.mauve or "#cba6f7", -- visual block (Ctrl-V)
+					R = c.red or "#f38ba8",
+					c = c.peach or "#fab387",
+				}
+				local default_color = c.blue or "#89b4fa"
 				local au = vim.api.nvim_create_augroup("SmoothCursorMode", { clear = true })
 				vim.api.nvim_create_autocmd("ModeChanged", {
 					group = au,
 					callback = function()
-						local mode = vim.fn.mode()
-						local color = c.blue or "#89b4fa"
-						if mode == "i" then
-							color = c.green or "#a6e3a1"
-						elseif mode:find("v") or mode:find("V") then
-							color = c.mauve or "#cba6f7"
-						elseif mode == "R" then
-							color = c.red or "#f38ba8"
-						elseif mode == "c" then
-							color = c.peach or "#fab387"
-						end
+						local color = mode_colors[vim.fn.mode()] or default_color
 						vim.api.nvim_set_hl(0, "SmoothCursor", { fg = color })
 						vim.api.nvim_set_hl(0, "SmoothCursorRed", { fg = color })
 					end,

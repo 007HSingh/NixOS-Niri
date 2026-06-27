@@ -112,7 +112,7 @@ map("n", "<leader>xQ", "<cmd>Trouble qflist toggle<cr>", { desc = "Quickfix" })
 
 -- format
 map("n", "<leader>cf", function()
-	require("conform").format({ async = true })
+	require("conform").format({ async = true, lsp_format = "fallback" })
 end, { desc = "Format buffer" })
 
 -- toggles (all global toggles live here)

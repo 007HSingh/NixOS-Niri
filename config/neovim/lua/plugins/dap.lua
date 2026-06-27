@@ -3,8 +3,6 @@
 -- ============================================================================
 return {
 	"mfussenegger/nvim-dap",
-	event = "VeryLazy",
-	ft = { "java" },
 	keys = {
 		{
 			"<leader>db",
@@ -99,6 +97,38 @@ return {
 				w.centered_float(w.scopes)
 			end,
 			desc = "Preview scopes",
+		},
+		{
+			"<leader>dC",
+			function()
+				require("dap").run_to_cursor()
+			end,
+			desc = "Run to cursor",
+		},
+		{
+			"<leader>dR",
+			function()
+				require("dap").restart()
+			end,
+			desc = "Restart session",
+		},
+		{
+			"<leader>dP",
+			function()
+				local w = require("dap.ui.widgets")
+				w.centered_float(w.frames)
+			end,
+			desc = "Preview frames",
+		},
+		{
+			"<leader>df",
+			"<cmd>Telescope dap frames<cr>",
+			desc = "DAP: frames",
+		},
+		{
+			"<leader>dD",
+			"<cmd>Telescope dap list_breakpoints<cr>",
+			desc = "DAP: list breakpoints",
 		},
 	},
 	dependencies = {
@@ -219,13 +249,30 @@ return {
 			vim.notify("DAP: VSCODE_JS_DEBUG_PATH not set — JS/TS debugging unavailable", vim.log.levels.WARN)
 		end
 
+		dap.configurations.java = dap.configurations.java or {}
+
+		table.insert(dap.configurations.java, {
+			type = "java",
+			request = "attach",
+			name = "Attach to Remote JVM",
+			hostName = function()
+				return vim.fn.input("Host: ", "127.0.0.1")
+			end,
+			port = function()
+				return tonumber(vim.fn.input("Port: ", "5005"))
+			end,
+		})
+
 		-- Telescope DAP extension
-		require("telescope").load_extension("dap")
+		pcall(function()
+			require("telescope").load_extension("dap")
+		end)
 
 		-- Sign styling
 		vim.fn.sign_define("DapBreakpoint", { text = "󰝥", texthl = "DiagnosticError" })
 		vim.fn.sign_define("DapBreakpointCondition", { text = "󰯈", texthl = "DiagnosticWarn" })
 		vim.fn.sign_define("DapLogPoint", { text = "◆", texthl = "DiagnosticInfo" })
 		vim.fn.sign_define("DapStopped", { text = "→", texthl = "DiagnosticOk", linehl = "DapStoppedLine" })
+		vim.fn.sign_define("DapBreakpointRejected", { text = "󰅙", texthl = "DiagnosticError" })
 	end,
 }

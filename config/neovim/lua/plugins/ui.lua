@@ -15,6 +15,11 @@ return {
 					mode = "buffers",
 					separator_style = "slant",
 					diagnostics = "nvim_lsp",
+					diagnostics_update_in_insert = false, -- avoid flicker while typing
+					diagnostics_indicator = function(count, level)
+						local icons = { error = " ", warning = " ", info = " " }
+						return (icons[level] or " ") .. count
+					end,
 					show_buffer_close_icons = true,
 					show_close_icon = false,
 					offsets = {
@@ -186,19 +191,12 @@ return {
 		end,
 	},
 
-	-- ── Navic (breadcrumbs) ───────────────────────────────────────────────────
-	{
-		"SmiteshP/nvim-navic",
-		event = "LspAttach",
-		config = function()
-			require("nvim-navic").setup({
-				lsp = { auto_attach = true },
-				highlight = true,
-				separator = "  ",
-				depth_limit = 5,
-			})
-		end,
-	},
+	-- NOTE: nvim-navic is intentionally NOT declared here. It's already a
+	-- dependency of lualine.nvim, which owns the single setup() call (see
+	-- plugins/lualine.lua). Having a second spec here with its own config()
+	-- caused navic.setup() to be called multiple times, each resetting its
+	-- internal state, plus lsp.auto_attach=true double-attaching navic on top
+	-- of the manual navic.attach() calls in lsp.lua/jdtls.lua's on_attach.
 
 	-- ── Indent blankline ──────────────────────────────────────────────────────
 	{
@@ -231,8 +229,11 @@ return {
 	{
 		"petertriho/nvim-scrollbar",
 		event = "BufReadPost",
+		dependencies = { "lewis6991/gitsigns.nvim" },
 		config = function()
-			local ok, p = pcall(require("catppuccin.palettes").get_palette, "mocha")
+			local ok, p = pcall(function()
+				return require("catppuccin.palettes").get_palette("mocha")
+			end)
 			if not ok then
 				p = {}
 			end
@@ -249,6 +250,9 @@ return {
 					GitDelete = { color = p.red or "#f38ba8" },
 				},
 			})
+			-- Without this, the gitsigns marks defined above never actually appear —
+			-- scrollbar needs an explicit handler hooked up to gitsigns' signs.
+			require("scrollbar.handlers.gitsigns").setup()
 		end,
 	},
 
@@ -348,10 +352,12 @@ return {
 	-- ── helpview.nvim — rendered :help pages (same author as render-markdown) ───
 	{
 		"OXY2DEV/helpview.nvim",
-		lazy = false,
+		ft = "help", -- only needed when viewing :help buffers; no reason to load at startup
 		dependencies = { "nvim-treesitter/nvim-treesitter" },
 		config = function()
-			local ok, p = pcall(require("catppuccin.palettes").get_palette, "mocha")
+			local ok, p = pcall(function()
+				return require("catppuccin.palettes").get_palette("mocha")
+			end)
 			if not ok then
 				p = {}
 			end
@@ -397,7 +403,9 @@ return {
 		"shellRaining/hlchunk.nvim",
 		event = "BufReadPost",
 		config = function()
-			local ok, p = pcall(require("catppuccin.palettes").get_palette, "mocha")
+			local ok, p = pcall(function()
+				return require("catppuccin.palettes").get_palette("mocha")
+			end)
 			if not ok then
 				p = {}
 			end
@@ -424,13 +432,17 @@ return {
 		"b0o/incline.nvim",
 		event = "BufReadPost",
 		config = function()
-			local ok, p = pcall(require("catppuccin.palettes").get_palette, "mocha")
+			local ok, p = pcall(function()
+				return require("catppuccin.palettes").get_palette("mocha")
+			end)
 			if not ok then
 				p = {}
 			end
 			require("incline").setup({
 				window = { margin = { vertical = 0, horizontal = 1 } },
-				hide = { cursorline = false, focused_win = false, only_win = true },
+				-- Hide on the focused/single window — bufferline already shows the
+				-- current filename there, so incline only adds value on inactive splits.
+				hide = { cursorline = false, focused_win = true, only_win = true },
 				render = function(props)
 					local fname = vim.api.nvim_buf_get_name(props.buf)
 					if fname == "" then
