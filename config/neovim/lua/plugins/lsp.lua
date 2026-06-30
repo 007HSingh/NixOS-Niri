@@ -224,12 +224,9 @@ return {
 			-- side effect of nvim-lspconfig's config() running.
 			require("conform").setup({
 				formatters = {
-					-- was `args = { "--aosp", "-" }` (4-space AOSP style), which conflicted
-					-- with jdtls.lua's GoogleStyle (2-space) eclipse formatter XML. Aligning
-					-- both to GoogleStyle by dropping --aosp here.
-					google_java_format = { command = "google-java-format", args = { "-" }, stdin = true },
+					google_java_format = { command = "google-java-format", args = { "--aosp", "-" }, stdin = true },
 					kdlfmt = { command = "kdlfmt", args = { "format", "-" }, stdin = true },
-					shfmt = { prepend_args = { "-i", "2" } }, -- match the 2-space TwoSpaceIndent autocmd
+					shfmt = { prepend_args = { "-i", "2" } },
 				},
 				formatters_by_ft = {
 					lua = { "stylua" },
