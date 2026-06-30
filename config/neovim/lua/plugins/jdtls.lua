@@ -240,6 +240,16 @@ return {
 							enabled = true,
 						},
 
+						configuration = {
+							runtimes = {
+								{
+									name = "JavaSE-21",
+									path = vim.env.JAVA_HOME,
+									default = true,
+								},
+							},
+						},
+
 						format = {
 							enabled = true,
 							settings = {
