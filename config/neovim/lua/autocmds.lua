@@ -99,6 +99,6 @@ autocmd("BufWritePre", {
 		if #conform.list_formatters(args.buf) == 0 then
 			return
 		end
-		conform.format({ bufnr = args.buf, timeout_ms = 500, lsp_format = "fallback" })
+		conform.format({ bufnr = args.buf, timeout_ms = 2000, lsp_format = "fallback" })
 	end,
 })

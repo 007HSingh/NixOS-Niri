@@ -208,8 +208,11 @@ return {
 			if java_debug_jar and java_debug_jar ~= "" then
 				jdtls.setup_dap({
 					hotcodereplace = "auto",
+					config_overrides = {},
 				})
-				require("jdtls.dap").setup_dap_main_class_configs()
+				vim.defer_fn(function()
+					require("jdtls.dap").setup_dap_main_class_configs()
+				end, 1500)
 			end
 		end
 		local function make_config()
