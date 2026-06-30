@@ -80,6 +80,7 @@ in
       DEBUGPY_PATH = "${(pkgs.python314.withPackages (ps: [ ps.debugpy ]))}/bin/python3";
       JAVA_TEST_JAR = "${pkgs.vscode-extensions.vscjava.vscode-java-test}/share/vscode/extensions/vscjava.vscode-java-test/server";
       LOMBOK_JAR = "${pkgs.lombok}/share/java/lombok.jar";
+      GOOGLE_JAVA_STYLE = "${pkgs.google-java-format}";
     };
   };
 }
