@@ -231,6 +231,7 @@ in
       fzf = {
         enable = true;
         enableZshIntegration = true;
+        historyWidget.command = ""; 
       };
 
       # direnv: enableZshIntegration handles the hook — no manual eval needed
