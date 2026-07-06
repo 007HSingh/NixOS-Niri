@@ -19,7 +19,7 @@ in
   config = lib.mkIf cfg.enable {
     programs.noctalia = {
       enable = true;
-      settings = {
+      settings = lib.mkDefault {
         shell = {
           font_family = "Inter";
           panel = {
