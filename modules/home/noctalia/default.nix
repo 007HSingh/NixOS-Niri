@@ -9,6 +9,7 @@
 let
   cfg = config.modules.home.noctalia;
   dotfiles = "${config.home.homeDirectory}/nixos-config/config";
+  create_symlink = path: config.lib.file.mkOutOfStoreSymlink path;
 in
 {
   imports = [
@@ -20,9 +21,8 @@ in
   config = lib.mkIf cfg.enable {
     stylix.targets.noctalia.enable = false;
 
-    programs.noctalia = {
-      enable = true;
-      settings = "${dotfiles}/noctalia/config.toml";
-    };
+    programs.noctalia.enable = true;
+
+    xdg.configFile."noctalia/config.toml".source = create_symlink "${dotfiles}/noctalia/config.toml";
   };
 }
