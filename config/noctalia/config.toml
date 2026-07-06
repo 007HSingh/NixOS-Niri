@@ -1,0 +1,88 @@
+[shell]
+font_family = "Inter SemiBold"
+
+[theme]
+mode = "dark"
+source = "builtin"
+builtin = "Catppuccin"
+
+[bar]
+order = ["main"]
+
+[bar.main]
+position = "top"
+thickness = 25
+background_opacity = 0.60
+margin_edge = 5
+margin_ends = 20
+padding = 12
+widget_spacing = 10
+scale = 0.80
+shadow = true
+reserve_space = true
+start = ["control-center", "wallpaper", "network", "bluetooth", "clipboard", "caffeine"]
+center = ["audio_visualizer", "workspaces", "clock", "media"]
+end = ["temp", "cpu", "ram", "volume", "brightness", "battery", "date", "weather", "session"]
+
+[wallpaper]
+enabled = true
+fill_mode = "crop"
+directory = "~/.config/wallpapers"
+transition = ["fade", "wipe", "disc", "stripes", "zoom", "honeycomb"]
+transition_duration = 1500
+transition_on_startup = true
+
+[wallpaper.default]
+path = "~/.config/wallpapers/wallpaper-11.png"
+
+[wallpaper.automation]
+enabled = false
+
+[backdrop]
+enabled = true
+
+[nightlight]
+enabled = true
+temperature_day = 6500
+temperature_night = 3000
+
+[location]
+address = "Kolkata, India"
+
+[dock]
+enabled = false
+
+[notification]
+layer = "overlay"
+background_opacity = 0.85
+offset_x = 15
+offset_y = 8
+
+[weather]
+enabled = true
+unit = "celsius"
+
+[brightness]
+enable_ddcutil = true
+
+[widget.battery]
+show_label = false
+
+[widget.brightness]
+show_label = false
+
+[widget.volume]
+show_label = false
+
+[widget.network]
+show_label = false
+
+[widget.media]
+max_length = 200
+scale = 0.90
+
+[widget.workspaces]
+display = "none"
+
+[widget.weather]
+show_condition = false
