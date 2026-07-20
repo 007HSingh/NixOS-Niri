@@ -7,7 +7,7 @@
       all = inputs.import-tree ../modules/system;
 
       # ── Host profiles ───────────────────────────────────────────────────────
-      profile-predator = import ../profiles/predator.nix;
+      profile-predator = import ./profiles/predator.nix;
     };
 
     homeManagerModules = {
@@ -15,7 +15,7 @@
       all = inputs.import-tree ../modules/home;
 
       # ── User profiles ───────────────────────────────────────────────────────
-      profile-harsh = import ../profiles/harsh.nix;
+      profile-harsh = import ./profiles/harsh.nix;
     };
   };
 }

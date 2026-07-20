@@ -69,7 +69,7 @@ in
                     inputs.self.homeManagerModules.all
 
                     # ── User-specific config (identity, sops, profile) ──────────
-                    ../users/${username}
+                    ../users/${username}.nix
 
                     # ── External Home Manager modules ───────────────────────────
                     spicetify.homeManagerModules.default
