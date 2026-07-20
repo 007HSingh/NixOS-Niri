@@ -3,7 +3,7 @@
 { inputs, ... }:
 
 let
-  lib = import ../lib { inherit inputs; };
+  lib = import ./lib.nix { inherit inputs; };
 in
 {
   flake.nixosConfigurations = {
