@@ -4,7 +4,7 @@
 
 let
   cfg = config.modules.home.xdg;
-  dotfiles = "${config.home.homeDirectory}/nixos-config/config";
+  dotfiles = "${config.home.homeDirectory}/nixos-config/dotfiles";
   create_symlink = path: config.lib.file.mkOutOfStoreSymlink path;
 
   # Config directories to symlink
