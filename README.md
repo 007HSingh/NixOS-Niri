@@ -46,65 +46,56 @@ This repository follows a modular structure using `flake-parts` for a clean sepa
 ```bash
 nixos-config/
 ├── ❄️ flake.nix             # Entrypoint & inputs management
-├── 🧱 parts/                # Flake outputs (host definitions, dev shells)
-│   ├── nixos.nix            # Host registration logic (lib.mkHost)
+├── 🧱 nix/                  # Flake build logic & profiles
+│   ├── lib.nix              # mkHost builder
+│   ├── nixos.nix            # Host registration (lib.mkHost)
 │   ├── modules.nix          # Module discovery via import-tree
-│   ├── dev.nix              # Development shell (statix, deadnix, nh, sops…)
-│   └── treefmt.nix          # Unified code formatting (nixfmt, stylua, prettier)
+│   ├── dev.nix              # Dev shell (statix, deadnix, nh, sops…)
+│   ├── treefmt.nix          # Unified formatting (nixfmt, stylua, prettier)
+│   └── profiles/
+│       ├── predator.nix     # Enables system modules for the predator host
+│       └── harsh.nix        # Enables home modules for the harsh user
 ├── 🖥️ hosts/                # Per-machine configurations
-│   └── predator/            # Acer Predator laptop (Intel i7 + NVIDIA RTX 4050)
+│   └── predator/            # Acer Predator (Intel i7 + NVIDIA RTX 4050)
 │       ├── default.nix      # Machine identity & host-specific packages
 │       └── hardware.nix     # Generated hardware configuration
 ├── ⚙️ modules/              # All reusable NixOS & Home Manager modules
 │   ├── system/              # System-level NixOS modules (auto-discovered)
-│   │   ├── boot/            # GRUB, Plymouth, zram swap
-│   │   ├── desktop/         # Niri compositor, ly DM, PipeWire, XDG portals
-│   │   ├── fonts/           # System font packages
-│   │   ├── hardware/        # Hardware enablement
-│   │   ├── networking/      # Network configuration
-│   │   ├── nix/             # Nix daemon & store settings
-│   │   ├── nvidia/          # NVIDIA drivers + Prime sync
-│   │   ├── packages/        # System-wide packages
-│   │   ├── programs/        # System programs
-│   │   ├── security/        # Security & PAM configuration
-│   │   ├── services/        # System services
-│   │   ├── stylix/          # Catppuccin Mocha theme (colors, fonts, wallpaper)
-│   │   ├── users/           # User account definitions
-│   │   └── vm/              # Virtualisation support
+│   │   ├── boot.nix         # GRUB, Plymouth, zram swap
+│   │   ├── desktop.nix      # Niri compositor, ly DM, PipeWire, XDG portals
+│   │   ├── fonts.nix        # System font packages
+│   │   ├── hardware.nix     # Hardware enablement
+│   │   ├── networking.nix   # Network configuration
+│   │   ├── nix.nix          # Nix daemon & store settings
+│   │   ├── nvidia.nix       # NVIDIA drivers + Prime sync
+│   │   ├── packages.nix     # System-wide packages
+│   │   ├── programs.nix     # System programs
+│   │   ├── security.nix     # Security & PAM configuration
+│   │   ├── services.nix     # System services
+│   │   ├── stylix.nix       # Catppuccin Mocha theme (colors, fonts, wallpaper)
+│   │   └── users.nix        # User account definitions
 │   └── home/                # Home Manager modules (auto-discovered)
-│       ├── audio/           # Audio tools (EasyEffects, etc.)
-│       ├── bar/             # Noctalia status bar & plugins
-│       ├── browser/         # Zen Browser configuration
-│       ├── clipboard/       # Clipboard manager
-│       ├── editor/          # Neovim + Treesitter grammars
-│       ├── git/             # Git identity & settings
-│       ├── idle/            # Idle inhibitor (hypridle)
-│       ├── media/           # Media players
-│       ├── notes/           # Obsidian
-│       ├── packages/        # CLI tools, LSP servers, formatters, linters
-│       ├── quickshell/      # Quickshell (wallpaper picker & shell widgets)
-│       ├── shell/           # Zsh, Starship, Atuin, Zoxide, Yazi, etc.
-│       ├── termipedia/      # Terminal encyclopaedia tool
-│       ├── theming/         # GTK/QT theming compatibility shim
-│       ├── vscode/          # VS Code extensions & settings
-│       ├── wofi/            # Application launcher
-│       └── xdg/             # XDG dirs & dotfile symlinks
-├── 🗂️ profiles/             # Module enablement profiles (what each host/user uses)
-│   ├── predator.nix         # Enables all system modules for the predator host
-│   └── harsh.nix            # Enables all home modules for the harsh user
-├── 👤 users/                # User entry points (identity, SOPS, stateVersion)
-│   └── harsh/
-├── 📂 config/               # Dotfiles — symlinked into ~/.config/, edit here directly
+│       ├── browser.nix      # Zen Browser configuration
+│       ├── clipboard.nix    # Clipboard manager
+│       ├── git.nix          # Git identity & settings
+│       ├── media.nix        # Media players
+│       ├── neovim.nix       # Neovim configuration
+│       ├── noctalia.nix     # Noctalia status bar
+│       ├── packages.nix     # CLI tools, LSP servers, formatters, linters
+│       ├── shell.nix        # Zsh, Starship, Atuin, Zoxide, Yazi, etc.
+│       ├── termipedia/      # Terminal encyclopaedia tool (multi-file)
+│       ├── theming.nix      # GTK/QT theming compatibility shim
+│       ├── utilities.nix    # Utility tools
+│       ├── wofi.nix         # Application launcher
+│       ├── xdg.nix          # XDG dirs & dotfile symlinks
+│       └── zathura.nix      # PDF viewer
+├── 👤 users/
+│   └── harsh.nix            # User identity, SOPS config & stateVersion
+├── 📂 dotfiles/             # Raw config files symlinked into ~/.config/
 │   ├── niri/                # Niri compositor config (KDL format)
-│   ├── kitty/               # Kitty terminal
 │   ├── neovim/              # Neovim (vanilla lazy.nvim, NOT nixvim)
-│   ├── btop/                # btop system monitor
-│   ├── fastfetch/           # fastfetch
-│   ├── eza/                 # eza file listing
-│   ├── noctalia/            # Noctalia custom plugins
-│   └── quickshell/          # Quickshell components (wallpaper picker)
-├── 📚 lib/                  # Custom helper functions
-│   └── default.nix          # mkHost builder
+│   ├── noctalia/            # Noctalia config
+│   └── wallpapers/          # Wallpaper collection
 └── 🔐 secrets/              # Encrypted secrets via SOPS + age
 ```
 
@@ -142,27 +133,27 @@ The config includes several handy aliases for system maintenance:
 ### Adding a New Machine
 
 1. Create `hosts/<name>/default.nix` with machine identity and `hosts/<name>/hardware.nix`.
-2. Create `profiles/<name>.nix` enabling the desired system modules via `modules.system.<module>.enable = true`.
-3. Register the host in `parts/nixos.nix` using `lib.mkHost`.
+2. Create `nix/profiles/<name>.nix` enabling the desired system modules via `modules.system.<module>.enable = true`.
+3. Register the host in `nix/nixos.nix` using `lib.mkHost`.
 
 ### Adding a System Module
 
-1. Create a directory under `modules/system/<name>/default.nix` following the existing pattern:
+1. Create `modules/system/<name>.nix` following the existing pattern:
    - Declare `options.modules.system.<name>.enable = lib.mkEnableOption "…";`
    - Guard everything with `config = lib.mkIf cfg.enable { … };`
 2. **No import needed** — `import-tree` discovers it automatically.
-3. Enable it in `profiles/predator.nix` (or the relevant host profile).
+3. Enable it in `nix/profiles/predator.nix`.
 
 ### Adding a Home Module
 
-1. Create a directory under `modules/home/<name>/default.nix` following the same pattern:
+1. Create `modules/home/<name>.nix` following the same pattern:
    - Declare `options.modules.home.<name>.enable = lib.mkEnableOption "…";`
 2. **No import needed** — `import-tree` discovers it automatically.
 3. Enable it in `profiles/harsh.nix` (or the relevant user profile).
 
 ### Editing Dotfiles
 
-Edit files under `config/` directly — they are symlinked from `~/.config/` via `modules/home/xdg/`. Changes take effect immediately without a rebuild.
+Edit files under `dotfiles/` directly — they are symlinked from `~/.config/` via `modules/home/xdg.nix`. Changes take effect immediately without a rebuild.
 
 ---
 
