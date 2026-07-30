@@ -14,7 +14,6 @@ _:
     packages.enable = true;
     shell.enable = true;
     termipedia.enable = true;
-    theming.enable = true;
     utilities.enable = true;
     wofi.enable = true;
     xdg.enable = true;
