@@ -52,22 +52,8 @@ in
     # Note: flake.nix also sets allowUnfree in perSystem for the dev shell pkgs — both are intentional
     nixpkgs.config.allowUnfree = true;
 
-    # System-wide overlays — applied before pkgs is evaluated, so all consumers
-    # (including home-manager with useGlobalPkgs = true) see pkgs.nur
     nixpkgs.overlays = [
       inputs.nur.overlays.default
-      # Fix DMABUF screen sharing and hardware-accelerated video encoding.
-      # Discord now requires a valid Vulkan device for DMABUF access; without this,
-      # it falls back to SHM which breaks screensharing on Niri entirely.
-      # Upstream PR: https://github.com/NixOS/nixpkgs/pull/530836
-      (final: prev: {
-        discord-canary = prev.discord-canary.overrideAttrs (old: {
-          postFixup = (old.postFixup or "") + ''
-            wrapProgram $out/bin/DiscordCanary \
-              --suffix VK_ADD_DRIVER_FILES : "${prev.addDriverRunpath.driverLink}/share/vulkan/icd.d"
-          '';
-        });
-      })
     ];
   };
 }
