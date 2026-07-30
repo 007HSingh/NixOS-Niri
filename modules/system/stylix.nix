@@ -20,6 +20,7 @@ in
       grub.enable = false;
       plymouth.enable = false;
       kmscon.enable = false;
+      regreet.enable = false;
     };
 
     catppuccin = {

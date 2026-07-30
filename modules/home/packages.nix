@@ -87,6 +87,8 @@ in
     ];
 
     home = {
+      pointerCursor.enable = true;
+
       sessionVariables = {
         EDITOR = "nvim";
         VISUAL = "nvim";
