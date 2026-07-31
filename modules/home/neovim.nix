@@ -43,7 +43,6 @@ in
       # Formatters
       nixfmt
       stylua
-      prettier
       rustfmt
       shfmt
       kdlfmt
@@ -52,12 +51,9 @@ in
       # Linters
       luajitPackages.luacheck
       shellcheck
-      ruff
-      eslint_d
       markdownlint-cli2
       statix
       deadnix
-      nodejs
       tree-sitter
 
       # DAP
