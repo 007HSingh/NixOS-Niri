@@ -47,17 +47,10 @@ in
       gcc
       pkg-config
       pcre
-      cargo
 
       # Wayland utilities
       wl-clipboard
       playerctl
-
-      # Languages
-      temurin-bin-21
-      racket
-      python314
-      python314Packages.pip
 
       # Git tools
       git-absorb
@@ -95,7 +88,6 @@ in
         BROWSER = "firefox";
         TERMINAL = "kitty";
         NH_FLAKE = "/home/harsh/nixos-config";
-        JAVA_HOME = "${pkgs.temurin-bin-21}";
         ELECTRON_OZONE_PLATFORM_HINT = "auto";
       };
     };
