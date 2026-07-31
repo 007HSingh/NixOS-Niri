@@ -43,7 +43,6 @@ in
       vlc
 
       # Development
-      docker-compose
       cachix
       devenv
       nh
