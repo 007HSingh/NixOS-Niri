@@ -57,8 +57,6 @@ in
       markdownlint-cli2
       statix
       deadnix
-      ripgrep
-      fd
       nodejs
       tree-sitter
 
