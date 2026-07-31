@@ -47,7 +47,6 @@ in
       cachix
       devenv
       nh
-      nixd
 
       # Applications
       jetbrains.idea
