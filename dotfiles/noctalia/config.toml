@@ -23,7 +23,7 @@ widget_spacing = 10
 scale = 0.80
 shadow = true
 reserve_space = true
-start = ["control-center", "wallpaper", "wallpaper_depth", "clipboard", "caffeine", "bongocat"]
+start = ["control-center", "wallpaper", "clipboard", "caffeine", "bongocat"]
 center = ["audio_visualizer", "workspaces", "clock", "media"]
 end = ["network", "bluetooth", "temp", "cpu", "ram", "volume", "brightness", "battery", "pomodoro", "date", "weather", "session"]
 
@@ -99,6 +99,3 @@ input_devices = [
 
 [widget.pomodoro]
 type = "thepunkoff/pomodoro:widget"
-
-[widget.wallpaper_depth]
-type = "noctalia/wallpaper_depth:bar"
