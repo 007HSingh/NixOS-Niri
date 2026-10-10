@@ -42,6 +42,7 @@ in
       nix-tree
       typioca
       evtest
+      ffmpeg # ffplay - required by thepunkoff/pomodoro for alarm sounds
 
       # Build tools
       gcc
