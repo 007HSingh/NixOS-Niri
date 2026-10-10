@@ -82,7 +82,7 @@ max_length = 200
 scale = 0.90
 
 [widget.workspaces]
-display = "none"
+show_labels = false
 
 [widget.weather]
 show_condition = false
