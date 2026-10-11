@@ -36,6 +36,7 @@ in
       stylua
       shfmt
       kdlfmt
+      ruff
 
       # Linters
       luajitPackages.luacheck
@@ -43,6 +44,7 @@ in
       markdownlint-cli2
       statix
       deadnix
+
       tree-sitter
     ];
   };
