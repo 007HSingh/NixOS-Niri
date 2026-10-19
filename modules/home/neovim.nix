@@ -44,6 +44,7 @@ in
       markdownlint-cli2
       statix
       deadnix
+      eslint_d
 
       tree-sitter
     ];
