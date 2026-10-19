@@ -30,6 +30,7 @@ in
       clang-tools
       marksman
       taplo
+      typescript-language-server
 
       # Formatters
       nixfmt
@@ -37,6 +38,7 @@ in
       shfmt
       kdlfmt
       ruff
+      nodePackages.prettier
 
       # Linters
       luajitPackages.luacheck
