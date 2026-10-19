@@ -38,7 +38,7 @@ in
       shfmt
       kdlfmt
       ruff
-      nodePackages.prettier
+      prettier
 
       # Linters
       luajitPackages.luacheck
