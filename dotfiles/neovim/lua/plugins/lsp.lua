@@ -198,6 +198,7 @@ return {
 				dockerls = {},
 				docker_compose_language_service = {},
 				marksman = {},
+				ts_ls = {},
 				clangd = {
 					cmd = { "clangd", "--background-index", "--clang-tidy", "--header-insertion=iwyu" },
 					init_options = {

@@ -30,6 +30,9 @@ return {
 					"regex",
 					"comment",
 					"scss",
+					"javascript",
+					"typescript",
+					"tsx",
 				},
 				auto_install = false,
 			})
