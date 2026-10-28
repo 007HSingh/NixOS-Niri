@@ -225,37 +225,6 @@ return {
 		end,
 	},
 
-	-- ── Scrollbar ─────────────────────────────────────────────────────────────
-	{
-		"petertriho/nvim-scrollbar",
-		event = "BufReadPost",
-		dependencies = { "lewis6991/gitsigns.nvim" },
-		config = function()
-			local ok, p = pcall(function()
-				return require("catppuccin.palettes").get_palette("mocha")
-			end)
-			if not ok then
-				p = {}
-			end
-			require("scrollbar").setup({
-				handle = { color = p.surface1 or "#45475a" },
-				marks = {
-					Error = { color = p.red or "#f38ba8" },
-					Warn = { color = p.yellow or "#f9e2af" },
-					Info = { color = p.blue or "#89b4fa" },
-					Hint = { color = p.teal or "#94e2d5" },
-					Search = { color = p.peach or "#fab387" },
-					GitAdd = { color = p.green or "#a6e3a1" },
-					GitChange = { color = p.yellow or "#f9e2af" },
-					GitDelete = { color = p.red or "#f38ba8" },
-				},
-			})
-			-- Without this, the gitsigns marks defined above never actually appear —
-			-- scrollbar needs an explicit handler hooked up to gitsigns' signs.
-			require("scrollbar.handlers.gitsigns").setup()
-		end,
-	},
-
 	-- Dashboard (snacks.nvim)
 	{
 		"folke/snacks.nvim",
