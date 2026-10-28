@@ -12,12 +12,12 @@
 
 stdenv.mkDerivation {
   pname = "termipedia";
-  version = "unstable";
+  version = "unstable-2026-05-06";
 
   src = fetchFromGitHub {
     owner = "kantiankant";
     repo = "Termipedia";
-    rev = "main";
+    rev = "7e6056d1de631ca4f6a7660e74fc5fb56cbbedc4";
     hash = "sha256-EJjkN9kJp6Af6CSyonkcBdsNWbzRfax88WdHdrWYChk=";
   };
 

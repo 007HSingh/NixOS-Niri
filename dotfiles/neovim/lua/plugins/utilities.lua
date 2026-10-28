@@ -1,16 +1,7 @@
 return {
 	{
-		"stevearc/oil.nvim",
-		cmd = "Oil",
-		keys = { { "<leader>O", "<cmd>Oil<cr>", desc = "Oil" } },
-		dependencies = { "nvim-tree/nvim-web-devicons" },
-		opts = { default_file_explorer = false, view_options = { show_hidden = true } },
-	},
-
-	{
 		"mbbill/undotree",
 		cmd = "UndotreeToggle",
-		keys = { { "<leader>u", "<cmd>UndotreeToggle<cr>", desc = "Undotree" } },
 		init = function()
 			vim.g.undotree_SetFocusWhenToggle = 1
 		end,
@@ -30,46 +21,6 @@ return {
 		"kevinhwang91/nvim-ufo",
 		event = "BufReadPost",
 		dependencies = { "kevinhwang91/promise-async", "nvim-treesitter/nvim-treesitter" },
-		keys = {
-			{
-				"zR",
-				function()
-					require("ufo").openAllFolds()
-				end,
-				desc = "Open all folds",
-			},
-			{
-				"zM",
-				function()
-					require("ufo").closeAllFolds()
-				end,
-				desc = "Close all folds",
-			},
-			{
-				"zr",
-				function()
-					require("ufo").openFoldsExceptKinds()
-				end,
-				desc = "Fold: open except kinds",
-			},
-			{
-				"zm",
-				function()
-					require("ufo").closeFoldsWith()
-				end,
-				desc = "Fold: close with",
-			},
-			{
-				"K",
-				function()
-					local winid = require("ufo").peekFoldedLinesUnderCursor()
-					if not winid then
-						vim.lsp.buf.hover()
-					end
-				end,
-				desc = "Peek fold / Hover",
-			},
-		},
 		opts = {
 			provider_selector = function()
 				return { "treesitter", "indent" }
@@ -77,38 +28,10 @@ return {
 		},
 	},
 
-	{
-		"smjonas/inc-rename.nvim",
-		cmd = "IncRename",
-		opts = {},
-	},
+	{ "smjonas/inc-rename.nvim", cmd = "IncRename", opts = {} },
 
-	{
-		"airblade/vim-rooter",
-		event = "VeryLazy",
-		init = function()
-			vim.g.rooter_patterns = {
-				".git",
-				"package.json",
-				"Makefile",
-				"Cargo.toml",
-				"pyproject.toml",
-				"build.gradle.kts",
-				"settings.gradle.kts",
-				"gradlew",
-			}
-			vim.g.rooter_silent_chdir = 1
-			vim.g.rooter_resolve_links = 1
-		end,
-	},
-
-	-- Discord rich presence — build disabled; package via Nix derivation if you want it
-	{
-		"vyfor/cord.nvim",
-		build = false,
-		event = "VeryLazy",
-		opts = {},
-	},
+	--- Discord rich presence.
+	{ "vyfor/cord.nvim", build = false, event = "VeryLazy", opts = {} },
 
 	{
 		"luukvbaal/statuscol.nvim",
@@ -124,22 +47,5 @@ return {
 				},
 			})
 		end,
-	},
-
-	{
-		"eandrju/cellular-automaton.nvim",
-		cmd = "CellularAutomaton",
-		keys = {
-			{
-				"<leader>fml",
-				function()
-					if vim.bo.filetype == "" then
-						return
-					end
-					vim.cmd("CellularAutomaton make_it_rain")
-				end,
-				desc = "Make it rain",
-			},
-		},
 	},
 }

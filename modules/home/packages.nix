@@ -47,7 +47,7 @@ in
       # Build tools
       gcc
       pkg-config
-      pcre
+      pcre2
 
       # Wayland utilities
       wl-clipboard

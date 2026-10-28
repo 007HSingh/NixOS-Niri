@@ -56,7 +56,6 @@ in
         extraRules = map (u: {
           users = [ u ];
           keepEnv = true;
-          persist = true;
         }) users;
       };
     };

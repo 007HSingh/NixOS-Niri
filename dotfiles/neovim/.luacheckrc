@@ -1,1 +1,2 @@
-std = "luajit+nvim"
+std = "luajit"
+globals = { "vim" }

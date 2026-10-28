@@ -16,6 +16,7 @@ in
 
   config = lib.mkIf cfg.enable {
     nix = {
+      optimise.automatic = true;
       settings = {
         experimental-features = [
           "nix-command"
@@ -38,11 +39,6 @@ in
           "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
           "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
         ];
-      };
-      gc = {
-        automatic = true;
-        dates = "weekly";
-        options = "--delete-older-than 7d";
       };
     };
 

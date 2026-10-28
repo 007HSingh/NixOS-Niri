@@ -1,6 +1,4 @@
--- ============================================================================
 -- GIT PLUGINS — gitsigns, neogit, diffview, gitlinker
--- ============================================================================
 return {
 	-- gitsigns
 	{
@@ -72,23 +70,6 @@ return {
 	-- gitlinker
 	{
 		"ruifm/gitlinker.nvim",
-		keys = {
-			{
-				"<leader>gy",
-				function()
-					require("gitlinker").get_buf_line_url({ action_callback = require("gitlinker.actions").copy_to_clipboard })
-				end,
-				mode = { "n", "v" },
-				desc = "Git: copy line URL",
-			},
-			{
-				"<leader>gY",
-				function()
-					require("gitlinker").get_repo_url({ action_callback = require("gitlinker.actions").open_in_browser })
-				end,
-				desc = "Git: open repo in browser",
-			},
-		},
 		config = function()
 			require("gitlinker").setup({})
 		end,

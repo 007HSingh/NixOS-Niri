@@ -7,7 +7,6 @@ vim.g.loaded_netrwPlugin = 1
 local opt = vim.opt
 
 opt.number = true
-opt.relativenumber = true
 
 opt.tabstop = 4
 opt.shiftwidth = 4
@@ -59,7 +58,13 @@ opt.pumheight = 10
 opt.fillchars = { eob = " " } -- hide end-of-buffer ~
 
 -- global float border (Neovim 0.11+)
-vim.o.winborder = "rounded"
+vim.o.winborder = "single"
+
+opt.laststatus = 3
+opt.splitkeep = "screen"
+opt.cursorlineopt = "number"
+opt.numberwidth = 2
+opt.shortmess:append("sI")
 
 -- gui
 vim.o.guifont = "JetBrainsMono NF:h13"

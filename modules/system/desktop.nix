@@ -26,9 +26,6 @@ in
         };
       };
 
-      # Disable SDDM
-      displayManager.sddm.enable = false;
-
       # Keyboard layout
       xserver.xkb.layout = "us";
 

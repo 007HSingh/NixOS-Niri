@@ -17,6 +17,35 @@ in
     home.packages = with pkgs; [
       neovim
 
+      (vimPlugins.nvim-treesitter.withPlugins (
+        p: with p; [
+          bash
+          c
+          cpp
+          go
+          lua
+          python
+          yaml
+          markdown
+          markdown_inline
+          vim
+          vimdoc
+          rust
+          java
+          nix
+          kotlin
+          toml
+          dockerfile
+          sql
+          regex
+          comment
+          scss
+          javascript
+          typescript
+          tsx
+        ]
+      ))
+
       # LSP servers
       nixd
       lua-language-server
