@@ -1,6 +1,5 @@
 # Host: predator (primary laptop — Acer Predator with Intel + NVIDIA)
 {
-  pkgs,
   inputs,
   ...
 }:
@@ -16,9 +15,4 @@
 
   # NixOS version - DO NOT CHANGE without migration
   system.stateVersion = "25.11";
-
-  # Noctalia shell package (system-level)
-  environment.systemPackages = [
-    inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default
-  ];
 }

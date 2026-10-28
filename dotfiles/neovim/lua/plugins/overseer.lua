@@ -1,29 +1,6 @@
 return {
 	"stevearc/overseer.nvim",
 	cmd = { "OverseerRun", "OverseerToggle", "OverseerBuild", "OverseerInfo", "OverseerTaskAction" },
-	keys = {
-		{ "<leader>ot", "<cmd>OverseerToggle<cr>", desc = "Overseer: toggle panel" },
-		{ "<leader>or", "<cmd>OverseerRun<cr>", desc = "Overseer: run task" },
-		{ "<leader>ob", "<cmd>OverseerBuild<cr>", desc = "Overseer: build" },
-		{ "<leader>oa", "<cmd>OverseerTaskAction<cr>", desc = "Overseer: task action" },
-		{ "<leader>oi", "<cmd>OverseerInfo<cr>", desc = "Overseer: info" },
-		{ "<leader>ol", "<cmd>OverseerLoadBundle<cr>", desc = "Overseer: load bundle" },
-		{
-			"<leader>os",
-			function()
-				local tasks = require("overseer").list_tasks({ status = "RUNNING" })
-				if #tasks == 0 then
-					vim.notify("Overseer: no running tasks", vim.log.levels.INFO)
-					return
-				end
-				for _, task in ipairs(tasks) do
-					task:stop()
-					vim.notify("Overseer: stopped '" .. task.name .. "'", vim.log.levels.INFO)
-				end
-			end,
-			desc = "Overseer: stop all running",
-		},
-	},
 	config = function()
 		local overseer = require("overseer")
 
@@ -268,12 +245,5 @@ return {
 			end,
 		})
 
-		local ok, wk = pcall(require, "which-key")
-		if ok then
-			wk.add({
-				{ "<leader>o", group = "Overseer / Build", icon = { icon = "󱁤", color = "orange" } },
-				{ "<leader>os", icon = { icon = "󰓛", color = "red" } },
-			})
-		end
 	end,
 }

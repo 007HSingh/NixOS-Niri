@@ -2,7 +2,6 @@ return {
 	{
 		"saghen/blink.cmp",
 		version = "1.*",
-		build = "cargo build --release",
 		dependencies = {
 			"rafamadriz/friendly-snippets",
 			{
@@ -32,6 +31,8 @@ return {
 			snippets = {
 				preset = "default",
 			},
+
+			appearance = { nerd_font_variant = "normal" },
 
 			sources = {
 				default = {
@@ -109,52 +110,7 @@ return {
 					auto_show = true,
 					auto_show_delay_ms = 200,
 					window = {
-						border = "rounded",
-					},
-				},
-
-				menu = {
-					border = "rounded",
-					draw = {
-						columns = {
-							{ "label", "label_description", gap = 1 },
-							{ "kind_icon", "kind", gap = 1 },
-						},
-						components = {
-							kind_icon = {
-								ellipsis = false,
-								text = function(ctx)
-									local icons = {
-										Text = "󰉿",
-										Method = "󰆧",
-										Function = "󰊕",
-										Constructor = "",
-										Field = "󰜢",
-										Variable = "󰀫",
-										Class = "󰠱",
-										Interface = "",
-										Module = "",
-										Property = "󰜢",
-										Unit = "",
-										Value = "󰎠",
-										Enum = "",
-										Keyword = "󰌋",
-										Snippet = "",
-										Color = "󰏘",
-										File = "󰈙",
-										Reference = "",
-										Folder = "󰉋",
-										EnumMember = "",
-										Constant = "󰏿",
-										Struct = "",
-										Event = "",
-										Operator = "󰆕",
-										TypeParameter = "",
-									}
-									return icons[ctx.kind] or ""
-								end,
-							},
-						},
+						border = "single",
 					},
 				},
 
@@ -166,7 +122,7 @@ return {
 			signature = {
 				enabled = true,
 				window = {
-					border = "rounded",
+					border = "single",
 				},
 			},
 
@@ -178,8 +134,12 @@ return {
 				prebuilt_binaries = {
 					download = false,
 				},
-				implementation = "prefer_rust",
+				implementation = "lua",
 			},
 		},
+		config = function(_, opts)
+			opts.completion.menu = require("nvchad.blink").menu
+			require("blink.cmp").setup(opts)
+		end,
 	},
 }

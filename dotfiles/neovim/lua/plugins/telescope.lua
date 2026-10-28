@@ -1,6 +1,4 @@
--- ============================================================================
 -- TELESCOPE — Fuzzy finder with extensions
--- ============================================================================
 return {
 	"nvim-telescope/telescope.nvim",
 	version = "*",
@@ -11,36 +9,24 @@ return {
 		"nvim-telescope/telescope-file-browser.nvim",
 	},
 	cmd = "Telescope",
-	keys = {
-		{ "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "Find files" },
-		{ "<leader>fg", "<cmd>Telescope live_grep<cr>", desc = "Live grep" },
-		{ "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "Buffers" },
-		{ "<leader>fh", "<cmd>Telescope help_tags<cr>", desc = "Help tags" },
-		{ "<leader>fr", "<cmd>Telescope oldfiles<cr>", desc = "Recent files" },
-		{ "<leader>fe", "<cmd>Telescope file_browser<cr>", desc = "File browser" },
-		{ "<leader>fs", "<cmd>Telescope lsp_document_symbols<cr>", desc = "Document symbols" },
-		{ "<leader>fw", "<cmd>Telescope lsp_workspace_symbols<cr>", desc = "Workspace symbols" },
-		{ "<leader>fd", "<cmd>Telescope diagnostics<cr>", desc = "Diagnostics" },
-		{ "<leader>fc", "<cmd>Telescope commands<cr>", desc = "Commands" },
-		{ "<leader>fk", "<cmd>Telescope keymaps<cr>", desc = "Keymaps" },
-		{ "<leader>fm", "<cmd>Telescope marks<cr>", desc = "Marks" },
-		{ "<leader>fo", "<cmd>Telescope vim_options<cr>", desc = "Vim options" },
-		{ "<leader>ft", "<cmd>Telescope colorscheme<cr>", desc = "Colorscheme" },
-		{ "<leader>fy", "<cmd>YankyRingHistory<cr>", desc = "Yank history" },
-		{ "<leader><space>", "<cmd>Telescope find_files<cr>", desc = "Find files" },
-		{ "<leader>/", "<cmd>Telescope current_buffer_fuzzy_find<cr>", desc = "Search buffer" },
-	},
 	config = function()
 		local telescope = require("telescope")
 		telescope.setup({
 			defaults = {
+				prompt_prefix = "   ",
+				selection_caret = " ",
+				entry_prefix = " ",
 				layout_strategy = "horizontal",
 				layout_config = {
-					horizontal = { prompt_position = "top" },
+					horizontal = { prompt_position = "top", preview_width = 0.55 },
 					vertical = { prompt_position = "top" },
+					width = 0.87,
+					height = 0.80,
+				},
+				mappings = {
+					n = { ["q"] = require("telescope.actions").close },
 				},
 				sorting_strategy = "ascending",
-				winblend = 0,
 				border = true,
 				preview = { timeout = 200 },
 			},

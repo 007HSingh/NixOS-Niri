@@ -263,12 +263,6 @@ return {
 		"stevearc/aerial.nvim",
 		event = "LspAttach",
 		dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" },
-		keys = {
-			{ "<leader>a", "<cmd>AerialToggle<cr>", desc = "Aerial outline" },
-			{ "<leader>fa", "<cmd>Telescope aerial<cr>", desc = "Find symbol (aerial)" },
-			{ "{", "<cmd>AerialPrev<cr>", desc = "Prev symbol" },
-			{ "}", "<cmd>AerialNext<cr>", desc = "Next symbol" },
-		},
 		config = function()
 			require("aerial").setup({
 				attach_mode = "cursor",

@@ -3,7 +3,6 @@
   lib,
   config,
   pkgs,
-  inputs,
   ...
 }:
 
@@ -45,7 +44,6 @@ in
       # Development
       cachix
       devenv
-      nh
 
       # Applications
       jetbrains.idea

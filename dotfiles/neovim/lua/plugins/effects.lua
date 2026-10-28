@@ -1,7 +1,5 @@
--- EFFECTS — animations, cursor, indent scope, zen mode, twilight
 return {
-
-	-- ── mini.animate — smooth cursor, scroll, window resize & fold animations ──
+	--- Smooth scroll, window resize, fold, and cursor animations.
 	{
 		"echasnovski/mini.animate",
 		version = "*",
@@ -9,22 +7,18 @@ return {
 		config = function()
 			local animate = require("mini.animate")
 			animate.setup({
-				-- Cursor animation disabled — SmoothCursor.nvim owns this role.
-				-- Running both fights over extmarks/sign column on every cursor move.
 				cursor = {
-					enable = false,
+					enable = true,
+					timing = animate.gen_timing.linear({ duration = 80, unit = "total" }),
 				},
-				-- Smooth scrolling (replaces any neoscroll you might add later)
 				scroll = {
 					enable = true,
 					timing = animate.gen_timing.linear({ duration = 120, unit = "total" }),
 				},
-				-- Animate window open/close/resize
 				resize = {
 					enable = true,
 					timing = animate.gen_timing.linear({ duration = 60, unit = "total" }),
 				},
-				-- Animate fold open/close
 				open = {
 					enable = true,
 					timing = animate.gen_timing.linear({ duration = 60, unit = "total" }),
@@ -37,76 +31,17 @@ return {
 		end,
 	},
 
-	-- ── smoothcursor.nvim — animated cursor beacon in the sign column ──────────
-	-- Shows a small "comet" that trails to where the cursor jumped.
-	{
-		"gen740/SmoothCursor.nvim",
-		event = "BufReadPost",
-		config = function()
-			require("smoothcursor").setup({
-				type = "matrix", -- "default" | "exp" | "matrix" — matrix gives a comet trail
-				cursor = "", -- leading cursor character (Nerd Font)
-				speed = 25, -- lower = faster
-				intervals = 35,
-				priority = 10,
-				timeout = 3000,
-				disable_float_win = true,
-				enabled_filetypes = nil, -- all filetypes
-				disabled_filetypes = { "help", "alpha", "dashboard", "NvimTree" },
-			})
-			-- Colour-code the cursor by mode (matches your lualine palette)
-			local ok, p = pcall(function()
-				return require("catppuccin.palettes").get_palette("mocha")
-			end)
-			if ok then
-				local c = p
-				local mode_colors = {
-					i = c.green or "#a6e3a1",
-					v = c.mauve or "#cba6f7",
-					V = c.mauve or "#cba6f7",
-					["\22"] = c.mauve or "#cba6f7", -- visual block (Ctrl-V)
-					R = c.red or "#f38ba8",
-					c = c.peach or "#fab387",
-				}
-				local default_color = c.blue or "#89b4fa"
-				local au = vim.api.nvim_create_augroup("SmoothCursorMode", { clear = true })
-				vim.api.nvim_create_autocmd("ModeChanged", {
-					group = au,
-					callback = function()
-						local color = mode_colors[vim.fn.mode()] or default_color
-						vim.api.nvim_set_hl(0, "SmoothCursor", { fg = color })
-						vim.api.nvim_set_hl(0, "SmoothCursorRed", { fg = color })
-					end,
-				})
-			end
-		end,
-	},
-
-	-- ── indent-blankline upgrade: animate scope on cursor move ────────────────
-	-- You already have ibl loaded; this adds the `mini.indentscope` animated
-	-- scope underline on top, which draws a moving line under the current scope.
-	-- The two plugins coexist fine — ibl draws static guides, mini.indentscope
-	-- draws the animated active-scope highlight.
+	--- Animated active-scope underline on top of ibl's static guides.
 	{
 		"echasnovski/mini.indentscope",
 		version = "*",
 		event = "BufReadPost",
 		init = function()
-			-- Disable for certain buffer types where it looks wrong
 			vim.api.nvim_create_autocmd("FileType", {
 				pattern = {
-					"help",
-					"alpha",
-					"dashboard",
-					"NvimTree",
-					"Trouble",
-					"trouble",
-					"lazy",
-					"mason",
-					"notify",
-					"toggleterm",
-					"lazyterm",
-					"TelescopePrompt",
+					"help", "alpha", "dashboard", "NvimTree", "Trouble",
+					"trouble", "lazy", "mason", "notify", "toggleterm",
+					"lazyterm", "TelescopePrompt",
 				},
 				callback = function()
 					vim.b.miniindentscope_disable = true
@@ -116,10 +51,9 @@ return {
 		config = function()
 			local indentscope = require("mini.indentscope")
 			indentscope.setup({
-				symbol = "│", -- matches your ibl char for visual consistency
+				symbol = "│",
 				options = { try_as_border = true },
 				draw = {
-					-- Animate the scope indicator sliding into place
 					animation = indentscope.gen_animation.quadratic({
 						easing = "out",
 						duration = 80,
@@ -130,25 +64,17 @@ return {
 		end,
 	},
 
-	-- ── zen mode — distraction-free writing ───────────────────────────────────
-	-- Centers a single window, dims the rest, optionally hides UI chrome.
-	-- Plays nicely with your transparency / glass aesthetic.
+	--- Distraction-free centred writing window.
 	{
 		"folke/zen-mode.nvim",
 		cmd = "ZenMode",
-		keys = {
-			{ "<leader>z", "<cmd>ZenMode<cr>", desc = "Toggle zen mode" },
-		},
-		dependencies = {
-			-- twilight dims all text outside the current function block
-			"folke/twilight.nvim",
-		},
+		dependencies = { "folke/twilight.nvim" },
 		config = function()
 			require("zen-mode").setup({
 				window = {
-					backdrop = 0.92, -- darken surroundings slightly
-					width = 90, -- columns for the zen window
-					height = 1, -- 1 = 100% of window height
+					backdrop = 0.92,
+					width = 90,
+					height = 1,
 					options = {
 						signcolumn = "no",
 						number = false,
@@ -159,41 +85,26 @@ return {
 				},
 				plugins = {
 					options = { enabled = true, ruler = false, showcmd = false },
-					twilight = { enabled = true }, -- dim inactive code
+					twilight = { enabled = true },
 					gitsigns = { enabled = false },
 					tmux = { enabled = false },
 				},
-				-- Re-apply glass highlights after ZenMode opens its window
-				on_open = function()
-					vim.cmd("silent! IBLDisable")
-				end,
-				on_close = function()
-					vim.cmd("silent! IBLEnable")
-				end,
+				on_open = function() vim.cmd("silent! IBLDisable") end,
+				on_close = function() vim.cmd("silent! IBLEnable") end,
 			})
 		end,
 	},
 
-	-- ── twilight — dim inactive code blocks (also usable standalone) ──────────
+	--- Dims inactive code blocks outside the current function.
 	{
 		"folke/twilight.nvim",
 		cmd = { "Twilight", "TwilightEnable", "TwilightDisable" },
-		keys = {
-			{ "<leader>tw", "<cmd>Twilight<cr>", desc = "Toggle twilight dimming" },
-		},
 		config = function()
 			require("twilight").setup({
 				dimming = { alpha = 0.35, color = { "Normal", "#ffffff" } },
-				context = 12, -- lines of context around the active block
+				context = 12,
 				treesitter = true,
-				expand = {
-					"function",
-					"method",
-					"table",
-					"if_statement",
-					"for_statement",
-					"while_statement",
-				},
+				expand = { "function", "method", "table", "if_statement", "for_statement", "while_statement" },
 			})
 		end,
 	},
