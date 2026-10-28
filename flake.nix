@@ -67,14 +67,6 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    # Niri
-    # TODO: revert to "github:sodiboo/niri-flake" after PR is merged:
-    # https://github.com/sodiboo/niri-flake/pull/1850
-    niri-flake = {
-      url = "github:sodiboo/niri-flake?rev=6bb99ff875919f03ea6054026619d999061e1170";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs =

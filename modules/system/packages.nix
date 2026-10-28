@@ -27,7 +27,7 @@ in
       ddcutil-service
 
       # Wayland
-      inputs.niri-flake.packages.${pkgs.stdenv.hostPlatform.system}.xwayland-satellite-unstable
+      xwayland-satellite
       wayclip
       brightnessctl
       cliphist
