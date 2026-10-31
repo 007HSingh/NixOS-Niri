@@ -27,7 +27,6 @@ in
       (discord.override {
         withVencord = true;
       })
-      obsidian
 
       # CLI tools
       unzip
