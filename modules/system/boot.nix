@@ -47,6 +47,8 @@ in
         "vm.dirty_ratio" = 10;
         "vm.dirty_background_ratio" = 5;
       };
+
+      blacklistedKernelModules = [ "uvcvideo" ];
     };
 
     # ZRAM swap for better memory management
