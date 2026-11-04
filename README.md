@@ -79,7 +79,6 @@ nixos-config/
 │       ├── noctalia.nix     # Noctalia status bar
 │       ├── packages.nix     # CLI tools, LSP servers, formatters, linters
 │       ├── shell.nix        # Zsh, Starship, Atuin, Zoxide, etc.
-│       ├── termipedia/      # Terminal encyclopaedia tool (multi-file)
 │       ├── utilities.nix    # Utility tools
 │       ├── wofi.nix         # Application launcher
 │       ├── xdg.nix          # XDG dirs & dotfile symlinks

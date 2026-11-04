@@ -10,7 +10,6 @@ _:
     media.enable = true;
     packages.enable = true;
     shell.enable = true;
-    termipedia.enable = true;
     utilities.enable = true;
     wofi.enable = true;
     xdg.enable = true;
