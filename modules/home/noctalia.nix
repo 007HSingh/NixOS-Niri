@@ -9,6 +9,7 @@
 let
   cfg = config.modules.home.noctalia;
   dotfiles = "${flakePath}/dotfiles";
+  # Keep the checked-in config editable without rebuilding Home Manager.
   create_symlink = path: config.lib.file.mkOutOfStoreSymlink path;
 in
 {

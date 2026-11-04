@@ -29,6 +29,7 @@ in
 
       style = ''
         window {
+          /* GTK3 may ignore blur properties; the alpha background still provides translucency. */
           background-color: rgba(17, 17, 27, 0.72);
           backdrop-filter: blur(20px);
           -gtk-backdrop-filter: blur(20px);

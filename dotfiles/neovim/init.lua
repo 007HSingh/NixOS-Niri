@@ -5,10 +5,12 @@ require("autocmds")
 vim.g.base46_cache = vim.fn.stdpath("data") .. "/base46/"
 vim.fn.mkdir(vim.fn.stdpath("data") .. "/nvnotify1", "p")
 
+-- Load local modules before lazy.nvim has added the config directory to runtimepath.
 package.path = vim.fn.stdpath("config") .. "/lua/?.lua;" .. package.path
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.uv.fs_stat(lazypath) then
+	-- Bootstrap lazy.nvim on first launch; subsequent launches use the local checkout.
 	vim.fn.system({
 		"git",
 		"clone",

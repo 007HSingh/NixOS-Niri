@@ -74,6 +74,7 @@ autocmd("FileType", {
 autocmd("FileType", {
 	pattern = { "gitcommit", "gitrebase" },
 	callback = function()
+		-- Git's temporary buffers should not be restored as editing sessions.
 		local ok, persistence = pcall(require, "persistence")
 		if ok then
 			persistence.stop()

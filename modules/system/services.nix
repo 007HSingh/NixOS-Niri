@@ -29,6 +29,7 @@ in
 
     virtualisation.podman = {
       enable = true;
+      # Provide Docker-compatible CLI commands backed by Podman.
       dockerCompat = true;
       defaultNetwork.settings = {
         dns_enabled = true;

@@ -14,6 +14,7 @@
   home = {
     username = "harsh";
     homeDirectory = "/home/harsh";
+    # Keep this at the Home Manager state version chosen during initial setup.
     stateVersion = "25.11";
   };
 }

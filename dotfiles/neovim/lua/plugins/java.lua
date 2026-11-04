@@ -30,6 +30,7 @@ return {
 			end
 
 			local function get_workspace(root)
+				-- Keep JDTLS project state separate for each detected project root.
 				local name = root:gsub("[/\\%s:]", "_"):gsub("^_+", "")
 				return vim.fn.stdpath("data") .. "/jdtls-workspace/" .. name
 			end

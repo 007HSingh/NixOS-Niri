@@ -104,6 +104,7 @@ return {
 				return {
 					name = name,
 					cmd = "bash",
+					-- Stop the server process group when Overseer stops this task.
 					args = { "-c", "trap 'kill 0' SIGTERM SIGINT; " .. shell_args .. " & wait" },
 					components = {
 						{ "on_output_quickfix", open_on_exit = "failure" },
@@ -166,6 +167,7 @@ return {
 						return {
 							name = name,
 							cmd = "bash",
+							-- Stop the server process group when Overseer stops this task.
 							args = { "-c", "trap 'kill 0' SIGTERM SIGINT; " .. shell_args .. " & wait" },
 							components = {
 								{ "on_output_quickfix", open_on_exit = "failure" },
@@ -215,6 +217,7 @@ return {
 				return {
 					name = "Spring Boot: run",
 					cmd = "bash",
+					-- Stop the server process group when Overseer stops this task.
 					args = { "-c", "trap 'kill 0' SIGTERM SIGINT; " .. shell_args .. " & wait" },
 				}
 			end,

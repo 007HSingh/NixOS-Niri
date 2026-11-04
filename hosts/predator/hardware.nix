@@ -47,6 +47,7 @@
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
+  # PCI addresses identify the integrated Intel and discrete NVIDIA GPUs for PRIME.
   hardware.nvidia.prime = {
     sync.enable = true;
 

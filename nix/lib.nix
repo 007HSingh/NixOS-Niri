@@ -16,6 +16,7 @@ in
       hostname,
       system ? "x86_64-linux",
       users ? [ ],
+      # Override when the repo is elsewhere or no user is supplied.
       flakePath ? "/home/${builtins.head users}/nixos-config",
     }:
     let

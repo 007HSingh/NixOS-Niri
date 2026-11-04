@@ -73,6 +73,7 @@ hotkey-overlay {
     skip-at-startup
 }
 screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
+// Custom open/close shaders combine vertical motion with a fade and clip out-of-bounds samples.
 animations {
     window-open {
         duration-ms 350
@@ -116,6 +117,7 @@ window-rule {
 window-rule {
     match app-id="^org\\.keepassxc\\.KeePassXC$"
     match app-id="^org\\.gnome\\.World\\.Secrets$"
+    // Keep password-manager windows out of screen captures.
     block-out-from "screen-capture"
 }
 window-rule {

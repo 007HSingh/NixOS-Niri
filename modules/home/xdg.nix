@@ -8,6 +8,7 @@
 let
   cfg = config.modules.home.xdg;
   dotfiles = "${flakePath}/dotfiles";
+  # Out-of-store links let edits to the source files take effect without rebuilding.
   create_symlink = path: config.lib.file.mkOutOfStoreSymlink path;
 
   configs = {

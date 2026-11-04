@@ -40,6 +40,7 @@ in
           zstyle ':completion:*' menu select
           zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 
+          # Route Docker-compatible clients to Podman's per-user API socket.
           export DOCKER_HOST="unix://$XDG_RUNTIME_DIR/podman/podman.sock"
         '';
 

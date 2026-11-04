@@ -23,6 +23,7 @@ in
       nvidiaSettings = true;
     };
 
+    # Switch to offload mode for lower power use when the discrete GPU is unnecessary.
     specialisation.on-the-go.configuration = {
       system.nixos.tags = [ "on-the-go" ];
       hardware.nvidia = {

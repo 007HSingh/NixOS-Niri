@@ -41,6 +41,7 @@ function M.load()
 	local cache = vim.g.base46_cache
 	local this = vim.fn.stdpath("config") .. "/lua/chadrc.lua"
 
+	-- Regenerate highlights when this config is newer than the generated cache.
 	if mtime(this) > mtime(cache .. "defaults") then
 		if pcall(require, "base46") then
 			require("base46").load_all_highlights()

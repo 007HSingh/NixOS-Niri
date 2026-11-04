@@ -43,6 +43,7 @@ in
         };
 
         settings = {
+          # Keep Home Manager-managed extensions enabled despite Firefox install-scope checks.
           "extensions.autoDisableScopes" = 0;
           "extensions.enabledScopes" = 5;
 
@@ -57,6 +58,7 @@ in
           "media.peerconnection.ice.default_address_only" = true;
           "privacy.clearOnShutdown_v2.formdata" = true;
 
+          # Enable playback of DRM-protected media.
           "media.eme.enabled" = true;
 
           "toolkit.telemetry.reportingpolicy.firstRun" = false;
@@ -72,6 +74,7 @@ in
         };
 
         userChrome = ''
+          /* Vertical tabs replace Firefox's horizontal tab strip. */
           #TabsToolbar {
             display: none !important;
           }
