@@ -4,7 +4,7 @@ A modular, state-of-the-art NixOS configuration built with **flake-parts**, feat
 
 <div align="center">
 
-[![NixOS Version](https://img.shields.io/badge/NixOS-25.11-blue?logo=nixos&logoColor=white&style=for-the-badge)](https://nixos.org)
+[![NixOS Version](https://img.shields.io/badge/NixOS-unstable-blue?logo=nixos&logoColor=white&style=for-the-badge)](https://nixos.org)
 [![Compositor](https://img.shields.io/badge/WM-Niri-cba6f7?style=for-the-badge)](https://github.com/YaLTeR/niri)
 [![Theme](https://img.shields.io/badge/Theme-Catppuccin_Mocha-f5c2e7?style=for-the-badge)](https://github.com/catppuccin/catppuccin)
 [![License](https://img.shields.io/badge/License-GPL--3.0-green?style=for-the-badge)](LICENSE)
@@ -25,7 +25,7 @@ A modular, state-of-the-art NixOS configuration built with **flake-parts**, feat
 
 - **Foundation:** [Stylix](https://github.com/danth/stylix) — The single source of truth for system-wide colors, fonts, and wallpapers.
 - **Palette:** [Catppuccin Mocha](https://github.com/catppuccin/catppuccin) — A soothing, high-contrast dark theme applied to everything.
-- **Fonts:** [Maple Mono NF](https://github.com/subframe7k/maple-font) for terminal, [Nunito](https://github.com/googlefonts/nunito) for UI.
+- **Fonts:** [Maple Mono NF](https://github.com/subframe7k/maple-font) for terminal and [Inter](https://github.com/rsms/inter) for UI.
 - **Music:** [Spicetify](https://github.com/Gerg-L/spicetify-nix) — Declarative Spotify theming.
 
 ### 🛠️ Development & Tools
@@ -70,7 +70,7 @@ nixos-config/
 │   │   ├── services.nix     # System services
 │   │   ├── stylix.nix       # Catppuccin Mocha theme (colors, fonts, wallpaper)
 │   │   └── users.nix        # User account definitions
-│   └── home/                # Home Manager modules (auto-discovered)
+│   └── home/                # Home Manager modules
 │       ├── browser.nix      # Firefox configuration
 │       ├── clipboard.nix    # Clipboard manager
 │       ├── git.nix          # Git identity & settings
@@ -88,7 +88,7 @@ nixos-config/
 │   └── harsh.nix            # User identity, SOPS config & stateVersion
 ├── 📂 dotfiles/             # Raw config files symlinked into ~/.config/
 │   ├── niri/                # Niri compositor config (KDL format)
-│   ├── neovim/              # Neovim (vanilla lazy.nvim, NOT nixvim)
+│   ├── neovim/              # Neovim
 │   ├── noctalia/            # Noctalia config
 │   └── wallpapers/          # Wallpaper collection
 └── 🔐 secrets/              # Encrypted secrets via SOPS + age
@@ -154,4 +154,3 @@ Edit files under `dotfiles/` directly — they are symlinked from `~/.config/` v
 ## 📝 License
 
 This project is licensed under the **GNU General Public License v3.0**.
-Built with ❤️ and **NixOS 25.11**.
