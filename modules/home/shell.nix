@@ -1,4 +1,3 @@
-# Shell Configuration
 {
   lib,
   config,
@@ -18,7 +17,6 @@ in
       kitty.enable = false;
       bat.enable = false;
       lazygit.enable = false;
-      yazi.enable = false;
       starship.enable = false;
       fzf.enable = false;
     };
@@ -42,29 +40,7 @@ in
           zstyle ':completion:*' menu select
           zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 
-          # ── compinit caching ──────────────────────────────────────────────
-          # Re-run full compinit (with compaudit) at most once every 20 hours;
-          # all other starts use -C (skip audit) for a ~75ms startup saving.
-          autoload -Uz compinit
-          local _zcompdump="''${ZDOTDIR}/.zcompdump"
-          if [[ -n "''${_zcompdump}"(#qN.mh+20) ]]; then
-            compinit -d "''${_zcompdump}"
-          else
-            compinit -C -d "''${_zcompdump}"
-          fi
-          unset _zcompdump
-
-          # ── Lazy docker completion ────────────────────────────────────────
-          # Only eval docker completion on first <Tab> after 'docker',
-          # not on every shell start.
-          if (( $+commands[docker] )); then
-            function _lazy_docker() {
-              unfunction _lazy_docker
-              eval "$(docker completion zsh)"
-              _docker "$@"
-            }
-            compdef _lazy_docker docker
-          fi
+          export DOCKER_HOST="unix://$XDG_RUNTIME_DIR/podman/podman.sock"
         '';
 
         shellAliases = {
@@ -104,7 +80,6 @@ in
           enable = true;
         };
 
-        # zsh-you-should-use: reminds you when you forget your own aliases
         plugins = [
           {
             name = "zsh-you-should-use";
@@ -121,7 +96,7 @@ in
         enable = true;
         enableZshIntegration = true;
         settings = {
-          format = "$directory$git_branch$git_status$nix_shell$python$rust$docker_context$battery$cmd_duration$line_break$character";
+          format = "$directory$git_branch$git_status$nix_shell$python$rust$battery$cmd_duration$line_break$character";
           right_format = "$time";
           scan_timeout = 100;
           command_timeout = 500;
@@ -152,7 +127,7 @@ in
           git_status = {
             style = "bold red";
             format = "([$all_status$ahead_behind]($style) )";
-            ignore_submodules = true; # skip submodule scan — big repos stay fast
+            ignore_submodules = true;
             conflicted = "󰞇 ";
             ahead = "󰶣";
             behind = "󰶡";
@@ -193,13 +168,6 @@ in
             symbol = " ";
             style = "bold peach";
             format = "[$symbol$version]($style) ";
-          };
-
-          docker_context = {
-            symbol = " ";
-            style = "bold blue";
-            format = "[$symbol$context]($style) ";
-            only_with_files = true;
           };
 
           battery = {
@@ -289,7 +257,6 @@ in
         enable = true;
         enableZshIntegration = true;
         settings = {
-          # local-only, no sync
           auto_sync = false;
           update_check = false;
           search_mode = "fuzzy";
@@ -309,42 +276,6 @@ in
         };
       };
 
-      yazi = {
-        enable = true;
-        enableZshIntegration = true;
-        shellWrapperName = "y"; # cds into last visited dir on exit
-        initLua = ''
-          require("full-border"):setup()
-          require("git"):setup()
-        '';
-        settings = {
-          manager = {
-            show_hidden = true;
-            sort_by = "natural";
-            sort_dir_first = true;
-          };
-        };
-        plugins = {
-          full-border =
-            pkgs.fetchFromGitHub {
-              owner = "yazi-rs";
-              repo = "plugins";
-              rev = "ac82af3";
-              hash = "sha256-svc7I2E+tVMEUWUvIS6i3oTGfLq13eaI61T0c1MQ8qQ=";
-            }
-            + "/full-border.yazi";
-          git =
-            pkgs.fetchFromGitHub {
-              owner = "yazi-rs";
-              repo = "plugins";
-              rev = "ac82af3";
-              hash = "sha256-svc7I2E+tVMEUWUvIS6i3oTGfLq13eaI61T0c1MQ8qQ=";
-            }
-            + "/git.yazi";
-        };
-      };
-
-      # keeps zsh when entering nix shell / nix develop
       nix-your-shell = {
         enable = true;
         enableZshIntegration = true;
@@ -364,7 +295,7 @@ in
         settings = {
           updates = {
             auto_update = true;
-            auto_update_interval_hours = 720; # ~monthly
+            auto_update_interval_hours = 720;
           };
           display = {
             compact = false;
@@ -402,7 +333,6 @@ in
           enable_audio_bell = "no";
           repaint_delay = 10;
           input_delay = 3;
-          allow_remote_control = "yes";
           confirm_os_window_close = 0;
           allow_hyperlinks = "yes";
           detect_urls = "yes";
@@ -443,7 +373,6 @@ in
       kitty.enable = true;
       bat.enable = true;
       lazygit.enable = true;
-      yazi.enable = true;
       fzf.enable = true;
     };
   };

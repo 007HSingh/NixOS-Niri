@@ -1,6 +1,3 @@
-# Profile: predator
-# Enables all system modules for the predator host.
-# Imported by hosts/predator/default.nix via inputs.self.nixosModules.profile-predator.
 _:
 
 {

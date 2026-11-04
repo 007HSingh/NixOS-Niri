@@ -1,6 +1,4 @@
--- GIT PLUGINS — gitsigns, neogit, diffview, gitlinker
 return {
-	-- gitsigns
 	{
 		"lewis6991/gitsigns.nvim",
 		event = "BufReadPre",
@@ -26,7 +24,6 @@ return {
 					map("n", "<leader>gb", gs.toggle_current_line_blame, { desc = "Git: toggle line blame" })
 					map("n", "<leader>gR", gs.reset_hunk, { desc = "Git: reset hunk" })
 					map("n", "<leader>gB", gs.blame_line, { desc = "Git: blame line (full)" })
-					-- renamed from <leader>gd to avoid colliding with global DiffviewOpen
 					map("n", "<leader>gdf", gs.diffthis, { desc = "Git: diff this file" })
 					map("n", "<leader>gdF", function()
 						gs.diffthis("~")
@@ -49,7 +46,6 @@ return {
 			})
 		end,
 	},
-	-- neogit
 	{
 		"NeogitOrg/neogit",
 		cmd = "Neogit",
@@ -58,7 +54,6 @@ return {
 			require("neogit").setup({ integrations = { diffview = true } })
 		end,
 	},
-	-- diffview
 	{
 		"sindrets/diffview.nvim",
 		cmd = { "DiffviewOpen", "DiffviewClose" },
@@ -67,7 +62,6 @@ return {
 			require("diffview").setup({})
 		end,
 	},
-	-- gitlinker
 	{
 		"ruifm/gitlinker.nvim",
 		config = function()

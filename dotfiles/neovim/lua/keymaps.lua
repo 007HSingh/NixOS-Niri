@@ -2,27 +2,22 @@ local map = function(mode, lhs, rhs, opts)
 	vim.keymap.set(mode, lhs, rhs, vim.tbl_extend("force", { silent = true }, opts or {}))
 end
 
--- suppress; do not remove
 map({ "n", "v" }, "<Space>", "<Nop>")
 
--- window navigation
 map("n", "<C-h>", "<C-w>h", { desc = "Window left" })
 map("n", "<C-j>", "<C-w>j", { desc = "Window down" })
 map("n", "<C-k>", "<C-w>k", { desc = "Window up" })
 map("n", "<C-l>", "<C-w>l", { desc = "Window right" })
 
--- window splits
 map("n", "<leader>wv", "<cmd>vsplit<cr>", { desc = "Split vertical" })
 map("n", "<leader>wh", "<cmd>split<cr>", { desc = "Split horizontal" })
 map("n", "<leader>wc", "<cmd>close<cr>", { desc = "Close split" })
 
--- window resize
 map("n", "<C-Up>", "<cmd>resize -2<cr>", { desc = "Shrink height" })
 map("n", "<C-Down>", "<cmd>resize +2<cr>", { desc = "Grow height" })
 map("n", "<C-Left>", "<cmd>vertical resize -2<cr>", { desc = "Shrink width" })
 map("n", "<C-Right>", "<cmd>vertical resize +2<cr>", { desc = "Grow width" })
 
--- buffer navigation (nvchad tabufline)
 map("n", "<S-l>", function()
 	require("nvchad.tabufline").next()
 end, { desc = "Next buffer" })
@@ -33,49 +28,39 @@ map("n", "<leader>bd", function()
 	require("nvchad.tabufline").close_buffer()
 end, { desc = "Delete buffer" })
 
--- indenting (stay in visual)
 map("v", "<", "<gv", { desc = "Indent left" })
 map("v", ">", ">gv", { desc = "Indent right" })
 map("v", "<Tab>", ">gv", { desc = "Indent right" })
 map("v", "<S-Tab>", "<gv", { desc = "Indent left" })
 
--- move lines
 map("n", "<A-j>", "<cmd>m .+1<cr>==", { desc = "Move line down" })
 map("n", "<A-k>", "<cmd>m .-2<cr>==", { desc = "Move line up" })
 map("v", "<A-j>", ":m '>+1<cr>gv=gv", { desc = "Move selection down" })
 map("v", "<A-k>", ":m '<-2<cr>gv=gv", { desc = "Move selection up" })
 
--- search
 map("n", "<Esc>", "<cmd>noh<cr>", { desc = "Clear search" })
 map("n", "n", "nzzzv", { desc = "Next match (centered)" })
 map("n", "N", "Nzzzv", { desc = "Prev match (centered)" })
 
--- file
 map("n", "<leader>W", "<cmd>w<cr>", { desc = "Save file" })
 map("n", "<leader>qq", "<cmd>q<cr>", { desc = "Quit window" })
 map("n", "<leader>Q", "<cmd>qa!<cr>", { desc = "Quit all" })
 map("n", "Q", "<nop>")
 
--- paste without yanking
 map("v", "p", '"_dP', { desc = "Paste no-yank" })
 map("x", "<leader>p", '"_dP', { desc = "Paste no-yank (x)" })
 
--- file explorer (nvim-tree)
 map("n", "<leader>e", "<cmd>NvimTreeToggle<cr>", { desc = "File explorer" })
 map("n", "<leader>E", "<cmd>NvimTreeFindFile<cr>", { desc = "Reveal in explorer" })
 
--- terminal (toggleterm; open_mapping handles insert/terminal modes)
 map("n", [[<C-\>]], "<cmd>ToggleTerm<cr>", { desc = "Toggle terminal" })
 
--- symbol outline (aerial)
 map("n", "<leader>a", "<cmd>AerialToggle<cr>", { desc = "Aerial outline" })
 map("n", "{", "<cmd>AerialPrev<cr>", { desc = "Prev symbol" })
 map("n", "}", "<cmd>AerialNext<cr>", { desc = "Next symbol" })
 
--- undotree
 map("n", "<leader>u", "<cmd>UndotreeToggle<cr>", { desc = "Undotree" })
 
--- folds (nvim-ufo)
 map("n", "zR", function()
 	require("ufo").openAllFolds()
 end, { desc = "Open all folds" })
@@ -95,11 +80,9 @@ map("n", "K", function()
 	end
 end, { desc = "Peek fold / Hover" })
 
--- zen mode / twilight
 map("n", "<leader>z", "<cmd>ZenMode<cr>", { desc = "Zen mode" })
 map("n", "<leader>tw", "<cmd>Twilight<cr>", { desc = "Toggle twilight dimming" })
 
--- search & replace (grug-far)
 map("n", "<leader>sr", function()
 	require("grug-far").open()
 end, { desc = "Search & replace" })
@@ -110,7 +93,6 @@ map("v", "<leader>sw", function()
 	require("grug-far").with_visual_selection()
 end, { desc = "Search selection" })
 
--- git (neogit, diffview)
 map("n", "<leader>gg", "<cmd>Neogit<cr>", { desc = "Neogit" })
 map("n", "<leader>gc", "<cmd>Neogit commit<cr>", { desc = "Git commit" })
 map("n", "<leader>gp", "<cmd>Neogit push<cr>", { desc = "Git push" })
@@ -119,7 +101,6 @@ map("n", "<leader>gd", "<cmd>DiffviewOpen<cr>", { desc = "Diff view" })
 map("n", "<leader>gx", "<cmd>DiffviewClose<cr>", { desc = "Close diff" })
 map("n", "<leader>gh", "<cmd>DiffviewFileHistory<cr>", { desc = "File history" })
 
--- git (gitlinker — buffer URL; gitsigns keymaps are buffer-local in git.lua on_attach)
 map({ "n", "v" }, "<leader>gy", function()
 	require("gitlinker").get_buf_line_url({ action_callback = require("gitlinker.actions").copy_to_clipboard })
 end, { desc = "Git: copy line URL" })
@@ -127,7 +108,6 @@ map("n", "<leader>gY", function()
 	require("gitlinker").get_repo_url({ action_callback = require("gitlinker.actions").open_in_browser })
 end, { desc = "Git: open repo in browser" })
 
--- session (persistence)
 map("n", "<leader>qs", function()
 	require("persistence").load()
 end, { desc = "Restore session" })
@@ -138,13 +118,11 @@ map("n", "<leader>qd", function()
 	require("persistence").stop()
 end, { desc = "Stop session" })
 
--- diagnostics
 map("n", "[d", vim.diagnostic.goto_prev, { desc = "Prev diagnostic" })
 map("n", "]d", vim.diagnostic.goto_next, { desc = "Next diagnostic" })
 map("n", "<leader>cl", vim.diagnostic.open_float, { desc = "Line diagnostics" })
 map("n", "<leader>xq", vim.diagnostic.setloclist, { desc = "Diagnostics loclist" })
 
--- trouble
 map("n", "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>", { desc = "Diagnostics (Trouble)" })
 map("n", "<leader>xw", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", { desc = "Buffer diagnostics" })
 map("n", "<leader>xs", "<cmd>Trouble symbols toggle focus=false<cr>", { desc = "Symbols" })
@@ -152,12 +130,10 @@ map("n", "<leader>xl", "<cmd>Trouble lsp toggle focus=false win.position=right<c
 map("n", "<leader>xL", "<cmd>Trouble loclist toggle<cr>", { desc = "Loclist" })
 map("n", "<leader>xQ", "<cmd>Trouble qflist toggle<cr>", { desc = "Quickfix" })
 
--- format
 map("n", "<leader>cf", function()
 	require("conform").format({ async = true, lsp_format = "fallback" })
 end, { desc = "Format buffer" })
 
--- toggles
 map("n", "<leader>tf", function()
 	vim.g.disable_format_on_save = not vim.g.disable_format_on_save
 	vim.notify("Format on save: " .. (vim.g.disable_format_on_save and "off" or "on"))
@@ -167,7 +143,6 @@ map("n", "<leader>tl", function()
 	vim.diagnostic.config({ virtual_lines = not cur })
 end, { desc = "Toggle diagnostic virtual lines" })
 
--- telescope
 map("n", "<leader>ff", "<cmd>Telescope find_files<cr>", { desc = "Find files" })
 map("n", "<leader>fg", "<cmd>Telescope live_grep<cr>", { desc = "Live grep" })
 map("n", "<leader>fb", "<cmd>Telescope buffers<cr>", { desc = "Buffers" })
@@ -187,7 +162,6 @@ map("n", "<leader>fy", "<cmd>YankyRingHistory<cr>", { desc = "Yank history" })
 map("n", "<leader><space>", "<cmd>Telescope find_files<cr>", { desc = "Find files" })
 map("n", "<leader>/", "<cmd>Telescope current_buffer_fuzzy_find<cr>", { desc = "Search buffer" })
 
--- debug (dap)
 map("n", "<leader>db", function()
 	require("dap").toggle_breakpoint()
 end, { desc = "Toggle breakpoint" })
@@ -242,7 +216,6 @@ end, { desc = "Preview frames" })
 map("n", "<leader>df", "<cmd>Telescope dap frames<cr>", { desc = "DAP: frames" })
 map("n", "<leader>dD", "<cmd>Telescope dap list_breakpoints<cr>", { desc = "DAP: list breakpoints" })
 
--- overseer / build
 map("n", "<leader>ot", "<cmd>OverseerToggle<cr>", { desc = "Overseer: toggle panel" })
 map("n", "<leader>or", "<cmd>OverseerRun<cr>", { desc = "Overseer: run task" })
 map("n", "<leader>ob", "<cmd>OverseerBuild<cr>", { desc = "Overseer: build" })
@@ -261,7 +234,6 @@ map("n", "<leader>os", function()
 	end
 end, { desc = "Overseer: stop all running" })
 
--- neotest (Java test runner — <leader>jt prefix)
 map("n", "<leader>jtr", function()
 	require("neotest").run.run()
 end, { desc = "Test: run nearest" })
@@ -296,12 +268,10 @@ map("n", "]t", function()
 	require("neotest").jump.next({ status = "failed" })
 end, { desc = "Test: next failed" })
 
--- kulala HTTP client — global scratch opener (buffer-local keymaps live in java.lua FileType autocmd)
 map("n", "<leader>jHn", function()
 	vim.cmd("edit " .. vim.fn.getcwd() .. "/scratch.http")
 end, { desc = "HTTP: open scratch file" })
 
--- dadbod database UI
 map("n", "<leader>jD", "<cmd>DBUIToggle<cr>", { desc = "Database: toggle UI" })
 map("n", "<leader>jDa", "<cmd>DBUIAddConnection<cr>", { desc = "Database: add connection" })
 map("n", "<leader>jDf", "<cmd>DBUIFindBuffer<cr>", { desc = "Database: find buffer" })

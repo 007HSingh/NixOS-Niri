@@ -36,9 +36,6 @@ return {
 					vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, silent = true, desc = desc })
 				end
 
-				-- moved inside on_attach (was a free function using a hard-coded
-				-- "utf-16" offset) so it can use the negotiated offset encoding for
-				-- this specific client — clangd in particular prefers "utf-8".
 				local function peek_definition()
 					local params = vim.lsp.util.make_position_params(0, client.offset_encoding)
 					vim.lsp.buf_request(0, "textDocument/definition", params, function(_, result)
@@ -103,7 +100,6 @@ return {
 
 			local schemastore = require("schemastore")
 
-			-- per-server settings (merged on top of shared on_attach + capabilities)
 			local servers = {
 				lua_ls = {
 					settings = {
@@ -153,9 +149,7 @@ return {
 				nixd = {
 					settings = { nixd = { formatting = { command = { "nixfmt" } } } },
 				},
-				-- TOML support for Cargo.toml etc. (Nix package: pkgs.taplo)
 				taplo = {},
-				-- servers that work well with defaults
 				bashls = {},
 				yamlls = {
 					settings = {
@@ -220,9 +214,6 @@ return {
 			end
 			vim.lsp.enable(vim.tbl_keys(servers))
 
-			-- conform (formatters) — also see the standalone spec below which gives
-			-- conform its own load event instead of riding along as an implicit
-			-- side effect of nvim-lspconfig's config() running.
 			require("conform").setup({
 				formatters = {
 					google_java_format = { command = "google-java-format", args = { "--aosp", "-" }, stdin = true },
@@ -249,11 +240,6 @@ return {
 		end,
 	},
 
-	-- conform.nvim now has its own explicit spec with a deterministic load event,
-	-- rather than only loading as a side effect inside nvim-lspconfig's config().
-	-- This also fixes the edge case where `:new` + immediate `:w` (no BufReadPre
-	-- ever fires) used to risk require("conform") erroring in autocmds.lua before
-	-- this plugin had loaded.
 	{
 		"stevearc/conform.nvim",
 		event = { "BufReadPre", "BufWritePre" },

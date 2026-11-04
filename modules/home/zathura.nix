@@ -1,4 +1,3 @@
-# Zathura — PDF/EPUB viewer with vim keybinds, UX polish, and MIME defaults
 {
   lib,
   config,
@@ -23,27 +22,22 @@ in
       enable = true;
 
       options = {
-        # Recolour (dark-mode PDF inversion) — toggle with <A-r>
         recolor = true;
         recolor-keephue = true;
 
-        # Loading indicator
         render-loading = true;
 
-        # ── Status bar layout ─────────────────────────────────────────────────
         statusbar-h-padding = 10;
         statusbar-v-padding = 5;
-        statusbar-basename = true; # filename only, not full path
+        statusbar-basename = true;
         statusbar-page-percent = true;
         window-title-basename = true;
         window-title-page = true;
 
-        # ── Page / layout ─────────────────────────────────────────────────────
         pages-per-row = 1;
         first-page-column = "1:1";
         adjust-open = "best-fit";
 
-        # ── Scroll & zoom ─────────────────────────────────────────────────────
         scroll-step = 60;
         scroll-page-aware = true;
         scroll-full-overlap = "0.1";
@@ -51,25 +45,21 @@ in
         zoom-min = 10;
         zoom-max = 1000;
 
-        # ── UX ────────────────────────────────────────────────────────────────
-        font = "Maple Mono NF 11"; # matches system monospace font
-        guioptions = ""; # hide all GUI chrome
-        incremental-search = true; # search while typing
-        selection-clipboard = "clipboard"; # yank to system clipboard
+        font = "Maple Mono NF 11";
+        guioptions = "";
+        incremental-search = true;
+        selection-clipboard = "clipboard";
 
-        # ── History / persistence ─────────────────────────────────────────────
-        database = "sqlite"; # persistent jump-list, bookmarks & page history
+        database = "sqlite";
 
       };
 
       mappings = {
-        # ── Navigation — Vim-style ────────────────────────────────────────────
         "j" = "scroll down";
         "k" = "scroll up";
         "h" = "scroll left";
         "l" = "scroll right";
 
-        # Page jumps
         "J" = "navigate next";
         "K" = "navigate previous";
         "<C-d>" = "scroll half-down";
@@ -79,34 +69,27 @@ in
         "gg" = "goto top";
         "G" = "goto bottom";
 
-        # ── Zoom ─────────────────────────────────────────────────────────────
         "+" = "zoom in";
         "-" = "zoom out";
         "a" = "adjust_window best-fit";
         "s" = "adjust_window width";
 
-        # ── Rotation ─────────────────────────────────────────────────────────
         "r" = "rotate rotate-cw";
         "R" = "rotate rotate-ccw";
 
-        # ── Recolour toggle ───────────────────────────────────────────────────
         "<A-r>" = "recolor";
 
-        # ── Search ───────────────────────────────────────────────────────────
         "n" = "search forward";
         "N" = "search backward";
 
-        # ── TOC / index ───────────────────────────────────────────────────────
         "<Tab>" = "toggle_index";
 
-        # ── Miscellaneous ─────────────────────────────────────────────────────
-        "f" = "follow"; # follow links
+        "f" = "follow";
         "<C-r>" = "reload";
         "q" = "quit";
       };
     };
 
-    # ── XDG MIME: make zathura the default for PDF/EPUB/DJVU/CBZ ─────────────
     xdg.mimeApps = {
       enable = true;
       defaultApplications = {

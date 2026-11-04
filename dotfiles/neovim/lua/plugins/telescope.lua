@@ -1,4 +1,3 @@
--- TELESCOPE — Fuzzy finder with extensions
 return {
 	"nvim-telescope/telescope.nvim",
 	version = "*",

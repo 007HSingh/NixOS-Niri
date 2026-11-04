@@ -1,4 +1,3 @@
-# Networking Configuration
 {
   lib,
   config,

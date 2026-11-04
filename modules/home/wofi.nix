@@ -1,4 +1,3 @@
-# Wofi — app launcher with glassmorphism styling
 { lib, config, ... }:
 
 let
@@ -28,16 +27,8 @@ in
         gtk_dark = true;
       };
 
-      # RGBA values derived from Catppuccin Mocha:
-      #   crust    #11111b  →  rgba(17,  17,  27,  α)
-      #   surface0 #313244  →  rgba(49,  50,  68,  α)
-      #   surface1 #45475a  →  rgba(69,  71,  90,  α)
-      #   lavender #b4befe  →  rgba(180, 190, 254, α)
-      #   text     #cdd6f4  →  rgba(205, 214, 244, α)
       style = ''
         window {
-          /* Frosted glass: crust colour at 72% so wallpaper bleeds through.
-             backdrop-filter: blur is honoured by GTK4 + wlroots compositors. */
           background-color: rgba(17, 17, 27, 0.72);
           backdrop-filter: blur(20px);
           -gtk-backdrop-filter: blur(20px);
@@ -49,7 +40,6 @@ in
         }
 
         #input {
-          /* Semi-transparent search bar — surface0 at 65% */
           margin: 8px 8px 4px 8px;
           padding: 6px 12px;
           border: 1px solid rgba(180, 190, 254, 0.25);

@@ -1,5 +1,4 @@
 return {
-	-- autopairs
 	{
 		"windwp/nvim-autopairs",
 		event = "InsertEnter",
@@ -7,7 +6,6 @@ return {
 			require("nvim-autopairs").setup({})
 		end,
 	},
-	-- comment
 	{
 		"numToStr/Comment.nvim",
 		event = "VeryLazy",
@@ -15,7 +13,6 @@ return {
 			require("Comment").setup()
 		end,
 	},
-	-- surround
 	{
 		"kylechui/nvim-surround",
 		version = "*",
@@ -24,7 +21,6 @@ return {
 			require("nvim-surround").setup({})
 		end,
 	},
-	-- todo-comments
 	{
 		"folke/todo-comments.nvim",
 		dependencies = { "nvim-lua/plenary.nvim" },
@@ -33,7 +29,6 @@ return {
 			require("todo-comments").setup({})
 		end,
 	},
-	-- which-key
 	{
 		"folke/which-key.nvim",
 		event = "VeryLazy",
@@ -42,7 +37,6 @@ return {
 				icons = { rules = false },
 			})
 			require("which-key").add({
-				-- groups
 				{ "<leader>f", group = "Find", icon = { icon = "󰭎", color = "blue" } },
 				{ "<leader>g", group = "Git", icon = { icon = "󰊢", color = "orange" } },
 				{ "<leader>c", group = "Code / LSP", icon = { icon = "󰒋", color = "cyan" } },
@@ -54,18 +48,17 @@ return {
 				{ "<leader>x", group = "Diagnostics", icon = { icon = "󰀪", color = "red" } },
 				{ "<leader>o", group = "Overseer / Build", icon = { icon = "󰙅", color = "cyan" } },
 				{ "<leader>b", group = "Buffer", icon = { icon = "󰓩", color = "blue" } },
-				-- individual keymaps
-				{ "<leader>a", icon = { icon = "󰙅", color = "cyan" } }, -- aerial
-				{ "<leader>u", icon = { icon = "󰕌", color = "yellow" } }, -- undotree
-				{ "<leader>z", icon = { icon = "󰒲", color = "purple" } }, -- zen mode
-				{ "<leader>e", icon = { icon = "󱏒", color = "green" } }, -- nvim-tree
-				{ "<leader>E", icon = { icon = "󱏒", color = "green" } }, -- nvim-tree reveal
-				{ "<leader>W", icon = { icon = "󰆓", color = "blue" } }, -- save
-				{ "<leader>Q", icon = { icon = "󰈆", color = "red" } }, -- quit all
-				{ "<leader>qq", icon = { icon = "󰗼", color = "red" } }, -- quit window
-				{ "<leader>tf", icon = { icon = "󰛖", color = "yellow" } }, -- toggle format
-				{ "<leader>/", icon = { icon = "󰍉", color = "blue" } }, -- search buffer
-				{ "<leader>bd", icon = { icon = "󰅙", color = "red" } }, -- delete buffer
+				{ "<leader>a", icon = { icon = "󰙅", color = "cyan" } },
+				{ "<leader>u", icon = { icon = "󰕌", color = "yellow" } },
+				{ "<leader>z", icon = { icon = "󰒲", color = "purple" } },
+				{ "<leader>e", icon = { icon = "󱏒", color = "green" } },
+				{ "<leader>E", icon = { icon = "󱏒", color = "green" } },
+				{ "<leader>W", icon = { icon = "󰆓", color = "blue" } },
+				{ "<leader>Q", icon = { icon = "󰈆", color = "red" } },
+				{ "<leader>qq", icon = { icon = "󰗼", color = "red" } },
+				{ "<leader>tf", icon = { icon = "󰛖", color = "yellow" } },
+				{ "<leader>/", icon = { icon = "󰍉", color = "blue" } },
+				{ "<leader>bd", icon = { icon = "󰅙", color = "red" } },
 				{ "<leader>j", group = "Java", icon = { icon = "", color = "orange" } },
 				{ "<leader>jt", group = "Test", icon = { icon = "󰙨", color = "green" } },
 				{ "<leader>jx", group = "Extract", icon = { icon = "󰆏", color = "yellow" } },
@@ -75,7 +68,6 @@ return {
 			})
 		end,
 	},
-	-- flash (jump to chars)
 	{
 		"folke/flash.nvim",
 		event = "VeryLazy",
@@ -83,7 +75,6 @@ return {
 			require("flash").setup({})
 		end,
 	},
-	-- toggleterm
 	{
 		"akinsho/toggleterm.nvim",
 		version = "*",
@@ -100,14 +91,10 @@ return {
 		end,
 	},
 
-	-- Yank ring — cycle history with <C-p>/<C-n>
 	{
 		"gbprod/yanky.nvim",
 		event = "VeryLazy",
 		dependencies = { "nvim-lua/plenary.nvim" },
-		-- NOTE: visual-mode "p" is intentionally left alone — keymaps.lua maps it to
-		-- paste-no-yank ('"_dP'). Yanky's put/get remaps below are normal-mode only
-		-- to avoid clobbering that. Yank ("y") is safe to remap in both modes.
 		keys = {
 			{ "y", "<Plug>(YankyYank)", mode = { "n", "x" }, desc = "Yank" },
 			{ "Y", "<Plug>(YankyYank)$", mode = "n", desc = "Yank to EOL" },
@@ -126,7 +113,6 @@ return {
 		end,
 	},
 
-	-- Project search and replace
 	{
 		"MagicDuck/grug-far.nvim",
 		cmd = "GrugFar",

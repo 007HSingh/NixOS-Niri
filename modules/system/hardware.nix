@@ -1,5 +1,3 @@
-# Hardware Configuration (base)
-# Graphics, Bluetooth — not NVIDIA-specific
 { lib, config, ... }:
 
 let

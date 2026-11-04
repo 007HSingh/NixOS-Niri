@@ -1,5 +1,3 @@
-# Boot Configuration
-# Bootloader, kernel, plymouth, zram
 {
   lib,
   config,
@@ -11,14 +9,12 @@ let
   cfg = config.modules.system.boot;
 in
 {
-  options.modules.system.boot.enable = lib.mkEnableOption "boot configuration (GRUB, plymouth, zram)";
+  options.modules.system.boot.enable = lib.mkEnableOption "boot configuration";
 
   config = lib.mkIf cfg.enable {
     boot = {
-      # Plymouth for graphical boot
       plymouth.enable = true;
 
-      # Quiet boot with minimal logging
       kernelParams = [
         "quiet"
         "loglevel=3"
@@ -27,7 +23,6 @@ in
         "acpi_backlight=native"
       ];
 
-      # GRUB bootloader with EFI support
       loader = {
         efi.canTouchEfiVariables = true;
         grub = {
@@ -35,12 +30,12 @@ in
           efiSupport = true;
           device = "nodev";
           useOSProber = true;
+          configurationLimit = 10;
         };
       };
 
       kernelPackages = pkgs.linuxPackages_latest;
 
-      # Kernel tuning for responsiveness
       kernel.sysctl = {
         "vm.swappiness" = 10;
         "vm.vfs_cache_pressure" = 50;
@@ -49,14 +44,6 @@ in
       };
 
       blacklistedKernelModules = [ "uvcvideo" ];
-    };
-
-    # ZRAM swap for better memory management
-    zramSwap = {
-      enable = true;
-      memoryPercent = 50;
-      algorithm = "lz4";
-      priority = 100;
     };
   };
 }

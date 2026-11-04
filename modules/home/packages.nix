@@ -1,8 +1,8 @@
-# User Packages
 {
   lib,
   config,
   pkgs,
+  flakePath,
   ...
 }:
 
@@ -19,16 +19,13 @@ in
     programs.nix-index-database.comma.enable = true;
 
     home.packages = with pkgs; [
-      # Audio visualization
       poppler
       resvg
 
-      # Applications
       (discord.override {
         withVencord = true;
       })
 
-      # CLI tools
       unzip
       zip
       p7zip
@@ -41,42 +38,16 @@ in
       nix-tree
       typioca
       evtest
-      ffmpeg # ffplay - required by thepunkoff/pomodoro for alarm sounds
+      ffmpeg
 
-      # Build tools
       gcc
       pkg-config
       pcre2
 
-      # Wayland utilities
       wl-clipboard
       playerctl
 
-      # Git tools
       git-absorb
-
-      (writeShellScriptBin "niri-scratch" ''
-        #!/usr/bin/env bash
-
-        SCRATCH_APP_ID="kitty-scratch"
-        SCRATCH_WS="scratch"
-
-        WINDOWS=$(niri msg --json windows 2>/dev/null)
-        SCRATCH_EXISTS=$(echo "$WINDOWS" | ${pkgs.jq}/bin/jq -e \
-          "[.[] | select(.app_id == \"$SCRATCH_APP_ID\")] | length > 0" 2>/dev/null)
-
-        CURRENT_WS=$(niri msg --json workspaces 2>/dev/null | \
-          ${pkgs.jq}/bin/jq -r '.[] | select(.is_focused == true) | .name // ""')
-
-        if [ "$SCRATCH_EXISTS" = "false" ]; then
-          niri msg action focus-workspace "$SCRATCH_WS" 2>/dev/null || true
-          kitty --app-id "$SCRATCH_APP_ID" &
-        elif [ "$CURRENT_WS" = "$SCRATCH_WS" ]; then
-          niri msg action focus-workspace-previous
-        else
-          niri msg action focus-workspace "$SCRATCH_WS"
-        fi
-      '')
     ];
 
     home = {
@@ -87,7 +58,7 @@ in
         VISUAL = "nvim";
         BROWSER = "firefox";
         TERMINAL = "kitty";
-        NH_FLAKE = "/home/harsh/nixos-config";
+        NH_FLAKE = flakePath;
         ELECTRON_OZONE_PLATFORM_HINT = "auto";
       };
     };

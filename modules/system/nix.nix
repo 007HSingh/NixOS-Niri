@@ -1,5 +1,3 @@
-# Nix Settings
-# Flakes, optimization, garbage collection, substituters
 {
   lib,
   config,
@@ -22,7 +20,6 @@ in
           "nix-command"
           "flakes"
         ];
-        auto-optimise-store = true;
         max-jobs = "auto";
         cores = 0;
         trusted-users = [
@@ -42,8 +39,6 @@ in
       };
     };
 
-    # Allow unfree packages (system-wide)
-    # Note: flake.nix also sets allowUnfree in perSystem for the dev shell pkgs — both are intentional
     nixpkgs.config.allowUnfree = true;
 
     nixpkgs.overlays = [

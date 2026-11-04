@@ -1,5 +1,3 @@
-# Flake-parts module: Development Shells
-# Provides dev shells for working on this configuration
 _:
 
 {
@@ -9,17 +7,12 @@ _:
       devShells.default = pkgs.mkShellNoCC {
         name = "nixos-config-shell";
 
-        # Tools for Nix development
         packages = with pkgs; [
-          # Formatting
           nixfmt
-          # Linters
           statix
           deadnix
-          # Shell management
           nh
           nix-tree
-          # Secrets tooling
           age
           sops
         ];
@@ -34,7 +27,6 @@ _:
           echo "  • nh: Nix Helper (nh os switch)"
           echo "  • nix-tree: Dependency visualization"
 
-          # Optional: set an env var to indicate we are in this shell
           export NIX_CONFIG_SHELL=1
         '';
       };

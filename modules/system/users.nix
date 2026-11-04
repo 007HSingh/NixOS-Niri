@@ -1,4 +1,3 @@
-# User Account Definitions
 {
   lib,
   config,
@@ -20,8 +19,6 @@ in
       extraGroups = [
         "networkmanager"
         "wheel"
-        "docker"
-        "kvm"
         "libvirtd"
         "input"
         "video"

@@ -1,4 +1,3 @@
--- NvChad UI config read by nvchad/ui, and base46 cache loader.
 local M = {}
 
 M.base46 = {
@@ -30,7 +29,7 @@ M.ui = {
 }
 
 M.nvdash = { load_on_startup = false }
-M.colorify = { enabled = false } -- handled by nvim-colorizer and blink.cmp
+M.colorify = { enabled = false }
 M.lsp = { signature = false }
 
 local function mtime(path)
@@ -38,7 +37,6 @@ local function mtime(path)
 	return stat and stat.mtime.sec or 0
 end
 
---- Sources the compiled base46 highlight cache; rebuilds if chadrc is newer.
 function M.load()
 	local cache = vim.g.base46_cache
 	local this = vim.fn.stdpath("config") .. "/lua/chadrc.lua"
@@ -65,7 +63,6 @@ end
 M.plugins = {
 	"nvim-lua/plenary.nvim",
 
-	--- Compiles theme highlights to a binary cache; regenerated after updates.
 	{
 		"nvchad/base46",
 		lazy = true,
@@ -74,7 +71,6 @@ M.plugins = {
 		end,
 	},
 
-	--- Tabufline, statusline, and blink.cmp menu skin.
 	{
 		"nvchad/ui",
 		lazy = false,
@@ -86,7 +82,6 @@ M.plugins = {
 
 	{ "nvzone/volt", lazy = true },
 
-	--- File-type icons, overridden with NvChad's icon set.
 	{
 		"nvim-tree/nvim-web-devicons",
 		lazy = true,
@@ -95,7 +90,6 @@ M.plugins = {
 		end,
 	},
 
-	--- Sidebar file explorer.
 	{
 		"nvim-tree/nvim-tree.lua",
 		cmd = { "NvimTreeToggle", "NvimTreeFocus", "NvimTreeFindFile" },

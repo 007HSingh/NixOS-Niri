@@ -1,14 +1,14 @@
-# Noctalia Shell
 {
   lib,
   config,
   inputs,
+  flakePath,
   ...
 }:
 
 let
   cfg = config.modules.home.noctalia;
-  dotfiles = "${config.home.homeDirectory}/nixos-config/dotfiles";
+  dotfiles = "${flakePath}/dotfiles";
   create_symlink = path: config.lib.file.mkOutOfStoreSymlink path;
 in
 {

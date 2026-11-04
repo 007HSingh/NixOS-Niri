@@ -1,8 +1,6 @@
 return {
-	-- Icons
 	{ "nvim-tree/nvim-web-devicons", lazy = true },
 
-	-- Notifications (replaces vim.notify)
 	{
 		"rcarriga/nvim-notify",
 		event = "VeryLazy",
@@ -17,7 +15,6 @@ return {
 		end,
 	},
 
-	-- Command-line and LSP popup UI
 	{
 		"folke/noice.nvim",
 		event = "VeryLazy",
@@ -42,7 +39,6 @@ return {
 		end,
 	},
 
-	-- Better vim.ui.select / vim.ui.input
 	{
 		"stevearc/dressing.nvim",
 		event = "VeryLazy",
@@ -55,7 +51,6 @@ return {
 	},
 
 
-	-- Static indent guides
 	{
 		"lukas-reineke/indent-blankline.nvim",
 		main = "ibl",
@@ -70,7 +65,6 @@ return {
 		end,
 	},
 
-	-- Inline hex/rgb colour preview
 	{
 		"NvChad/nvim-colorizer.lua",
 		event = "BufReadPost",
@@ -84,7 +78,6 @@ return {
 		end,
 	},
 
-	-- Dashboard (snacks.nvim)
 	{
 		"folke/snacks.nvim",
 		priority = 1000,
@@ -130,7 +123,6 @@ return {
 		},
 	},
 
-	-- Colour-coded matching brackets
 	{
 		"HiPhish/rainbow-delimiters.nvim",
 		event = "BufReadPost",
@@ -143,7 +135,6 @@ return {
 		end,
 	},
 
-	-- Highlight all occurrences of word under cursor
 	{
 		"RRethy/vim-illuminate",
 		event = "BufReadPost",
@@ -157,7 +148,6 @@ return {
 		end,
 	},
 
-	-- In-editor Markdown rendering
 	{
 		"MeanderingProgrammer/render-markdown.nvim",
 		event = "VeryLazy",
@@ -168,7 +158,6 @@ return {
 		},
 	},
 
-	-- Project-wide diagnostics list
 	{
 		"folke/trouble.nvim",
 		cmd = "Trouble",
@@ -177,10 +166,9 @@ return {
 			require("trouble").setup({ use_diagnostic_signs = true })
 		end,
 	},
-	-- Rendered :help pages
 	{
 		"OXY2DEV/helpview.nvim",
-		ft = "help", -- only needed when viewing :help buffers; no reason to load at startup
+		ft = "help",
 		dependencies = { "nvim-treesitter/nvim-treesitter" },
 		config = function()
 			local ok, p = pcall(function()
@@ -207,7 +195,6 @@ return {
 		end,
 	},
 
-	-- LSP progress spinner
 	{
 		"j-hui/fidget.nvim",
 		event = "LspAttach",

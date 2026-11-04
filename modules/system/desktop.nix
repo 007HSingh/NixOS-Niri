@@ -1,5 +1,3 @@
-# Desktop Environment
-# Display manager, compositor, portals, audio
 {
   lib,
   config,
@@ -15,9 +13,7 @@ in
     lib.mkEnableOption "desktop environment (ly, niri, pipewire, portals)";
 
   config = lib.mkIf cfg.enable {
-    # Display manager, keyboard, input, and audio services
     services = {
-      # ly display manager (TUI)
       displayManager.ly = {
         enable = true;
         settings = {
@@ -26,13 +22,10 @@ in
         };
       };
 
-      # Keyboard layout
       xserver.xkb.layout = "us";
 
-      # Libinput for touchpad/input
       libinput.enable = true;
 
-      # PipeWire audio stack
       pipewire = {
         enable = true;
         pulse.enable = true;
@@ -43,9 +36,6 @@ in
       };
     };
 
-    # XDG portals for Wayland integration
-    # Note: wlr portal NOT used — Niri is Smithay-based, not Wlroots.
-    # GTK portal handles file pickers; GNOME portal provides the screencast UI.
     xdg.portal = {
       enable = true;
       extraPortals = with pkgs; [
@@ -70,7 +60,6 @@ in
       };
     };
 
-    # Wayland session variables
     environment.sessionVariables = {
       NIXOS_OZONE_WL = "1";
       XDG_CURRENT_DESKTOP = "niri";

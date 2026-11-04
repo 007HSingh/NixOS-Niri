@@ -1,4 +1,3 @@
-# Font Configuration
 {
   lib,
   config,
@@ -10,12 +9,11 @@ let
   cfg = config.modules.system.fonts;
 in
 {
-  options.modules.system.fonts.enable = lib.mkEnableOption "system fonts (Maple Mono, Nunito, Noto)";
+  options.modules.system.fonts.enable = lib.mkEnableOption "system fonts";
 
   config = lib.mkIf cfg.enable {
     fonts.packages = with pkgs; [
       maple-mono.NF
-      nunito
       inter
       noto-fonts
       noto-fonts-cjk-sans
@@ -27,15 +25,6 @@ in
 
     fonts.fontconfig = {
       enable = true;
-      defaultFonts = {
-        monospace = [ "Maple Mono NF" ];
-        sansSerif = [
-          "Nunito"
-          "Inter"
-          "Noto Sans"
-        ];
-        serif = [ "Noto Serif" ];
-      };
       antialias = true;
       hinting.enable = true;
       subpixel.rgba = "rgb";

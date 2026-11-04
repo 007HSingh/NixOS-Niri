@@ -1,8 +1,5 @@
--- Java ecosystem: jdtls LSP, neotest, kulala HTTP, dadbod DB
 return {
 
-	--- JDTLS — Eclipse JDT Language Server (Java LSP via nvim-jdtls).
-	--- Keymaps are buffer-local in on_attach (need bufnr + client context).
 	{
 		"mfussenegger/nvim-jdtls",
 		ft = "java",
@@ -61,7 +58,6 @@ return {
 					vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, silent = true, desc = desc })
 				end
 
-				-- standard LSP navigation
 				map("n", "gd",  vim.lsp.buf.definition,    "Go to definition")
 				map("n", "gD",  vim.lsp.buf.declaration,   "Go to declaration")
 				map("n", "gi",  vim.lsp.buf.implementation, "Go to implementation")
@@ -105,13 +101,11 @@ return {
 				local ok, navic = pcall(require, "nvim-navic")
 				if ok then navic.attach(client, bufnr) end
 
-				-- Java-specific actions
 				map("n", "<leader>ji", jdtls.organize_imports, "Organize imports")
 				map("n", "<leader>jI", function()
 					vim.lsp.buf.code_action({ context = { only = { "source.addImport" } }, apply = true })
 				end, "Add import (cursor)")
 
-				-- generate
 				map("n", "<leader>jgs", function()
 					vim.lsp.buf.code_action({ context = { only = { "source.generate.accessors" } }, apply = true })
 				end, "Generate getters/setters")
@@ -125,7 +119,6 @@ return {
 					vim.lsp.buf.code_action({ context = { only = { "source.generate.constructor" } }, apply = true })
 				end, "Generate constructor")
 
-				-- extract
 				map("n", "<leader>jxv", jdtls.extract_variable, "Extract variable")
 				map("v", "<leader>jxv", function() jdtls.extract_variable(true) end, "Extract variable (selection)")
 				map("n", "<leader>jxc", jdtls.extract_constant, "Extract constant")
@@ -133,11 +126,9 @@ return {
 				map("n", "<leader>jxm", jdtls.extract_method, "Extract method")
 				map("v", "<leader>jxm", function() jdtls.extract_method(true) end, "Extract method (selection)")
 
-				-- test (jdtls built-in runner)
 				map("n", "<leader>jtt", jdtls.test_nearest_method, "Test method")
 				map("n", "<leader>jtc", jdtls.test_class, "Test class")
 
-				-- Spring
 				map("n", "<leader>jSa", function()
 					vim.lsp.buf.code_action({ context = { only = { "source" } } })
 				end, "Spring source actions")
@@ -147,7 +138,6 @@ return {
 					})
 				end, "Generate constructor")
 
-				-- build / workspace
 				map("n", "<leader>jm", "<cmd>OverseerRun<cr>",             "Run Maven / Gradle")
 				map("n", "<leader>jw", "<cmd>JdtUpdateConfig<cr>",         "Reload config")
 				map("n", "<leader>jW", "<cmd>JdtCompile incremental<cr>",  "Compile incremental")
@@ -259,7 +249,6 @@ return {
 		end,
 	},
 
-	--- Neotest — test runner UI; keymaps are in keymaps.lua under <leader>jt.
 	{
 		"nvim-neotest/neotest",
 		dependencies = {
@@ -307,8 +296,6 @@ return {
 		end,
 	},
 
-	--- Kulala — HTTP client for .http/.rest files.
-	--- Global scratch keymap is in keymaps.lua; buffer-local keymaps are registered below via FileType autocmd.
 	{
 		"mistweaverco/kulala.nvim",
 		ft = { "http", "rest" },
@@ -369,10 +356,8 @@ return {
 		end,
 	},
 
-	--- vim-dadbod — database query engine (backend only).
 	{ "tpope/vim-dadbod", cmd = { "DB" }, lazy = true },
 
-	--- vim-dadbod-ui — database browser UI; keymaps are in keymaps.lua under <leader>jD.
 	{
 		"kristijanhusak/vim-dadbod-ui",
 		dependencies = {

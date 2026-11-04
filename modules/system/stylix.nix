@@ -1,4 +1,3 @@
-# Stylix — system-wide base16 theming
 {
   lib,
   config,
@@ -86,7 +85,6 @@ in
         };
       };
 
-      # Opacity settings — synced with Niri per-window rules and kitty config
       opacity = {
         applications = 0.95;
         terminal = 0.85;

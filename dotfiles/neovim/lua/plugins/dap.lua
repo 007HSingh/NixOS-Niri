@@ -1,4 +1,3 @@
--- DAP — Debug Adapter Protocol
 return {
 	"mfussenegger/nvim-dap",
 	dependencies = {
@@ -12,7 +11,6 @@ return {
 		local dap = require("dap")
 		local dapui = require("dapui")
 
-		-- DAP UI
 		dapui.setup({
 			layouts = {
 				{
@@ -33,10 +31,8 @@ return {
 			},
 		})
 
-		-- Virtual text
 		require("nvim-dap-virtual-text").setup({})
 
-		-- Auto-open/close DAP UI with session
 		dap.listeners.after.event_initialized["dapui_config"] = function()
 			dapui.open()
 		end
@@ -47,7 +43,6 @@ return {
 			dapui.close()
 		end
 
-		-- Python adapter
 		local debugpy = vim.env.DEBUGPY_PATH
 		if debugpy and debugpy ~= "" then
 			require("dap-python").setup(debugpy)
@@ -55,7 +50,6 @@ return {
 			vim.notify("DAP: DEBUGPY_PATH not set — Python debugging unavailable", vim.log.levels.WARN)
 		end
 
-		-- C/C++/Rust adapter (codelldb)
 		local codelldb = vim.env.CODELLDB_PATH
 		if codelldb and codelldb ~= "" then
 			dap.adapters.codelldb = {
@@ -98,12 +92,10 @@ return {
 			end,
 		})
 
-		-- Telescope DAP extension
 		pcall(function()
 			require("telescope").load_extension("dap")
 		end)
 
-		-- Sign styling
 		vim.fn.sign_define("DapBreakpoint", { text = "󰝥", texthl = "DiagnosticError" })
 		vim.fn.sign_define("DapBreakpointCondition", { text = "󰯈", texthl = "DiagnosticWarn" })
 		vim.fn.sign_define("DapLogPoint", { text = "◆", texthl = "DiagnosticInfo" })

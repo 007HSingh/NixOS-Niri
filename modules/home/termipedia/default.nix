@@ -1,6 +1,3 @@
-# Termipedia - Wikipedia for the terminal
-# Packages the upstream shell script as a Nix derivation.
-# Source: https://github.com/kantiankant/Termipedia
 {
   lib,
   config,

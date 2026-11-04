@@ -1,5 +1,3 @@
-# Security Configuration
-# Polkit, sudo, doas, apparmor
 {
   lib,
   config,
@@ -13,7 +11,7 @@ let
 in
 {
   options.modules.system.security.enable =
-    lib.mkEnableOption "security (polkit, doas, apparmor, kernel hardening)";
+    lib.mkEnableOption "security (polkit, doas, apparmor)";
 
   config = lib.mkIf cfg.enable {
     security = {
@@ -60,7 +58,6 @@ in
       };
     };
 
-    # Polkit authentication agent
     systemd.user.services.polkit-gnome-authentication-agent-1 = {
       description = "polkit-gnome-authentication-agent-1";
       wantedBy = [ "graphical-session.target" ];

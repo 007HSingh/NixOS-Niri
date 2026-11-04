@@ -42,7 +42,7 @@ in
       options = {
         side-by-side = true;
         line-numbers = true;
-        navigate = true; # n/N to jump between diff sections
+        navigate = true;
         hyperlinks = true;
       };
     };

@@ -1,6 +1,3 @@
-# Profile: harsh
-# Enables all home modules for the harsh user.
-# Imported by users/harsh/default.nix via inputs.self.homeManagerModules.profile-harsh.
 _:
 
 {

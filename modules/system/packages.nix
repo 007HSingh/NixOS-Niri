@@ -1,4 +1,3 @@
-# System-wide Packages
 {
   lib,
   config,
@@ -16,7 +15,6 @@ in
     nixpkgs.config.android_sdk.accept_license = true;
 
     environment.systemPackages = with pkgs; [
-      # Core utilities
       wget2
       git
       file
@@ -25,27 +23,20 @@ in
       ddcutil
       ddcutil-service
 
-      # Wayland
       xwayland-satellite
       wayclip
       brightnessctl
       cliphist
       wlsunset
-      # Screenshots
       grim
       slurp
       swappy
       satty
 
-      # Media
-      spotify
-      vlc
-
-      # Development
       cachix
       devenv
+      podman-compose
 
-      # Applications
       jetbrains.idea
       android-studio
       postman

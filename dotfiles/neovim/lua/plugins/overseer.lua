@@ -89,17 +89,12 @@ return {
 			{ name = "Gradle: dependencies", args = { "dependencies" } },
 		}
 
-		-- Whether this template is a long-running server (bootRun) or a one-shot build task.
-		-- bootRun forks a child JVM that survives if we only kill the Gradle wrapper, so
-		-- those templates use a shell trap to forward SIGTERM to the whole process group.
 		local function is_server_task(name)
 			return name:find("bootRun") ~= nil or name:find("spring-boot:run") ~= nil
 		end
 
 		local function gradle_builder(name, args)
 			if is_server_task(name) then
-				-- Run inside a shell that traps SIGTERM and kills the whole process
-				-- group (kill 0), so the forked Spring Boot JVM also gets the signal.
 				local shell_args = table.concat(
 					vim.tbl_map(function(a)
 						return vim.fn.shellescape(a)

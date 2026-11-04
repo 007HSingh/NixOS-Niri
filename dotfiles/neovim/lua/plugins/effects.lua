@@ -1,5 +1,4 @@
 return {
-	--- Smooth scroll, window resize, fold, and cursor animations.
 	{
 		"echasnovski/mini.animate",
 		version = "*",
@@ -31,7 +30,6 @@ return {
 		end,
 	},
 
-	--- Animated active-scope underline on top of ibl's static guides.
 	{
 		"echasnovski/mini.indentscope",
 		version = "*",
@@ -64,7 +62,6 @@ return {
 		end,
 	},
 
-	--- Distraction-free centred writing window.
 	{
 		"folke/zen-mode.nvim",
 		cmd = "ZenMode",
@@ -95,7 +92,6 @@ return {
 		end,
 	},
 
-	--- Dims inactive code blocks outside the current function.
 	{
 		"folke/twilight.nvim",
 		cmd = { "Twilight", "TwilightEnable", "TwilightDisable" },

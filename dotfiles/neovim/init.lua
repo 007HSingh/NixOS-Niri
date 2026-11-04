@@ -3,9 +3,8 @@ require("keymaps")
 require("autocmds")
 
 vim.g.base46_cache = vim.fn.stdpath("data") .. "/base46/"
-vim.fn.mkdir(vim.fn.stdpath("data") .. "/nvnotify1", "p") -- suppress nvchad welcome popup
+vim.fn.mkdir(vim.fn.stdpath("data") .. "/nvnotify1", "p")
 
--- make lua/chadrc.lua resolvable before lazy sets up rtp
 package.path = vim.fn.stdpath("config") .. "/lua/?.lua;" .. package.path
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"

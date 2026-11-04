@@ -1,5 +1,5 @@
 [plugins]
-enabled = ["noctalia/bongocat", "thepunkoff/pomodoro", "noctalia/wallpaper_depth"]
+enabled = ["noctalia/bongocat", "thepunkoff/pomodoro"]
 
 [shell]
 font_family = "Inter SemiBold"
@@ -16,16 +16,16 @@ order = ["main"]
 position = "top"
 thickness = 25
 background_opacity = 0.60
-margin_edge = 5
-margin_ends = 20
+margin_edge = 0
+margin_ends = 120
 padding = 12
 widget_spacing = 10
 scale = 0.80
 shadow = true
 reserve_space = true
-start = ["control-center", "wallpaper", "clipboard", "caffeine", "bongocat"]
+start = ["control-center", "wallpaper", "clipboard", "network", "bluetooth", "bongocat"]
 center = ["audio_visualizer", "workspaces", "clock", "media"]
-end = ["network", "bluetooth", "temp", "cpu", "ram", "volume", "brightness", "battery", "pomodoro", "date", "weather", "session"]
+end = ["weather", "temp", "cpu", "ram", "date", "pomodoro", "battery"]
 
 [wallpaper]
 enabled = true

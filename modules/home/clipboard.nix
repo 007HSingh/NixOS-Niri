@@ -1,6 +1,3 @@
-# Clipboard Watcher Service
-# Pipes wl-paste output into cliphist to build the clipboard history database.
-# This runs at graphical-session startup so cliphist list always has entries.
 {
   lib,
   config,

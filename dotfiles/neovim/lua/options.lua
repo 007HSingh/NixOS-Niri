@@ -44,7 +44,6 @@ opt.undolevels = 10000
 opt.mouse = "a"
 opt.clipboard = "unnamedplus"
 
--- folding managed by nvim-ufo
 opt.foldenable = false
 opt.foldlevel = 99
 opt.foldlevelstart = 99
@@ -55,9 +54,8 @@ opt.iskeyword:append("-")
 opt.cmdheight = 1
 opt.ruler = false
 opt.pumheight = 10
-opt.fillchars = { eob = " " } -- hide end-of-buffer ~
+opt.fillchars = { eob = " " }
 
--- global float border (Neovim 0.11+)
 vim.o.winborder = "single"
 
 opt.laststatus = 3
@@ -66,5 +64,4 @@ opt.cursorlineopt = "number"
 opt.numberwidth = 2
 opt.shortmess:append("sI")
 
--- gui
 vim.o.guifont = "JetBrainsMono NF:h13"

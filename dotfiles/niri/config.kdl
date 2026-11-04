@@ -212,14 +212,8 @@ binds {
     Mod+D {
         spawn "wofi"
     }
-    Mod+S {
-        spawn "niri-scratch"
-    }
     Ctrl+Mod+L {
         spawn "noctalia" "ipc" "call" "lockScreen" "lock"
-    }
-    Ctrl+Mod+S allow-when-locked=true {
-        spawn-sh "pkill orca || exec orca"
     }
     XF86AudioRaiseVolume allow-when-locked=true {
         spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+ -l 1.0"
@@ -559,9 +553,6 @@ binds {
     }
     Mod+Ctrl+V {
         spawn-sh "cliphist list | wofi --dmenu --prompt 'Clipboard' | cliphist decode | wl-copy"
-    }
-    Mod+E {
-        spawn "emacs"
     }
     Mod+Escape allow-inhibiting=false {
         toggle-keyboard-shortcuts-inhibit

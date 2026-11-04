@@ -1,13 +1,15 @@
-# XDG Configuration
-# User directories and config file symlinks (all except nvim, which lives in editor/)
-{ lib, config, ... }:
+{
+  lib,
+  config,
+  flakePath,
+  ...
+}:
 
 let
   cfg = config.modules.home.xdg;
-  dotfiles = "${config.home.homeDirectory}/nixos-config/dotfiles";
+  dotfiles = "${flakePath}/dotfiles";
   create_symlink = path: config.lib.file.mkOutOfStoreSymlink path;
 
-  # Config directories to symlink
   configs = {
     niri = "niri";
     wallpapers = "wallpapers";
@@ -27,7 +29,6 @@ in
       };
     };
 
-    # Symlink config directories
     xdg.configFile = builtins.mapAttrs (_name: subpath: {
       source = create_symlink "${dotfiles}/${subpath}";
       recursive = true;

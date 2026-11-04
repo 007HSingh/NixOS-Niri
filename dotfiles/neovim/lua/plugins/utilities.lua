@@ -30,7 +30,6 @@ return {
 
 	{ "smjonas/inc-rename.nvim", cmd = "IncRename", opts = {} },
 
-	--- Discord rich presence.
 	{ "vyfor/cord.nvim", build = false, event = "VeryLazy", opts = {} },
 
 	{

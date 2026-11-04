@@ -1,4 +1,3 @@
-# Neovim
 {
   lib,
   config,
@@ -46,7 +45,6 @@ in
         ]
       ))
 
-      # LSP servers
       nixd
       lua-language-server
       yaml-language-server
@@ -61,7 +59,6 @@ in
       taplo
       typescript-language-server
 
-      # Formatters
       nixfmt
       stylua
       shfmt
@@ -69,7 +66,6 @@ in
       ruff
       prettier
 
-      # Linters
       luajitPackages.luacheck
       shellcheck
       markdownlint-cli2

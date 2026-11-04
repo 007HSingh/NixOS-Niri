@@ -69,12 +69,12 @@ return {
 		config = function()
 			require("treesitter-context").setup({
 				enable = true,
-				max_lines = 4, -- was 0 (unlimited) — that gets cluttered in deeply nested code
+				max_lines = 4,
 				min_window_height = 0,
 				line_numbers = true,
 				multiline_threshold = 20,
 				trim_scope = "outer",
-				mode = "topline", -- was "cursor" — topline only recomputes when topline changes, not on every cursor move
+				mode = "topline",
 				separator = nil,
 				zindex = 20,
 			})

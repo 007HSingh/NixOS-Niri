@@ -71,7 +71,6 @@ autocmd("FileType", {
 	end,
 })
 
--- stop session saving in git buffers
 autocmd("FileType", {
 	pattern = { "gitcommit", "gitrebase" },
 	callback = function()
@@ -82,7 +81,6 @@ autocmd("FileType", {
 	end,
 })
 
--- format on save via conform
 autocmd("BufWritePre", {
 	group = augroup("FormatOnSave", { clear = true }),
 	callback = function(args)

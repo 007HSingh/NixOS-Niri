@@ -7,7 +7,7 @@ A modular, state-of-the-art NixOS configuration built with **flake-parts**, feat
 [![NixOS Version](https://img.shields.io/badge/NixOS-25.11-blue?logo=nixos&logoColor=white&style=for-the-badge)](https://nixos.org)
 [![Compositor](https://img.shields.io/badge/WM-Niri-cba6f7?style=for-the-badge)](https://github.com/YaLTeR/niri)
 [![Theme](https://img.shields.io/badge/Theme-Catppuccin_Mocha-f5c2e7?style=for-the-badge)](https://github.com/catppuccin/catppuccin)
-[![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
+[![License](https://img.shields.io/badge/License-GPL--3.0-green?style=for-the-badge)](LICENSE)
 
 </div>
 
@@ -19,7 +19,6 @@ A modular, state-of-the-art NixOS configuration built with **flake-parts**, feat
 
 - **Window Manager:** [Niri](https://github.com/YaLTeR/niri) — A scrollable tiling Wayland compositor that treats windows as a long ribbon.
 - **Status Bar:** [Noctalia](https://github.com/noctalia-dev/noctalia-shell) — A modern Wayland shell/status bar with rich plugin support.
-- **Shell Components:** [Quickshell](https://github.com/outfoxxed/quickshell) — Custom-built Wayland UI components (Wallpaper picker, etc.).
 - **Display Manager:** [ly](https://github.com/fairyglade/ly) — A lightweight TUI display manager with a Matrix-style animation.
 
 ### 🎨 Theming & Aesthetics
@@ -31,10 +30,8 @@ A modular, state-of-the-art NixOS configuration built with **flake-parts**, feat
 
 ### 🛠️ Development & Tools
 
-- **IDE:** [Visual Studio Code](https://code.visualstudio.com/) — Fully configured via Home Manager with Catppuccin Mocha and language-specific extensions.
 - **CLI Editor:** [Neovim](https://neovim.io/) — A powerful terminal-based editor for quick edits and heavy CLI work.
-- **Browser:** [Zen Browser](https://github.com/0xc000022070/zen-browser-flake) — A Firefox-based browser focused on privacy and vertical tabs.
-- **AI Integration:** [Claude Code](https://github.com/sadjow/claude-code-nix)
+- **Browser:** Firefox.
 - **Secrets:** [sops-nix](https://github.com/Mic92/sops-nix) — Secure secret management using SOPS.
 
 ---
@@ -51,7 +48,6 @@ nixos-config/
 │   ├── nixos.nix            # Host registration (lib.mkHost)
 │   ├── modules.nix          # Module discovery via import-tree
 │   ├── dev.nix              # Dev shell (statix, deadnix, nh, sops…)
-│   ├── treefmt.nix          # Unified formatting (nixfmt, stylua, prettier)
 │   └── profiles/
 │       ├── predator.nix     # Enables system modules for the predator host
 │       └── harsh.nix        # Enables home modules for the harsh user
@@ -75,16 +71,15 @@ nixos-config/
 │   │   ├── stylix.nix       # Catppuccin Mocha theme (colors, fonts, wallpaper)
 │   │   └── users.nix        # User account definitions
 │   └── home/                # Home Manager modules (auto-discovered)
-│       ├── browser.nix      # Zen Browser configuration
+│       ├── browser.nix      # Firefox configuration
 │       ├── clipboard.nix    # Clipboard manager
 │       ├── git.nix          # Git identity & settings
 │       ├── media.nix        # Media players
 │       ├── neovim.nix       # Neovim configuration
 │       ├── noctalia.nix     # Noctalia status bar
 │       ├── packages.nix     # CLI tools, LSP servers, formatters, linters
-│       ├── shell.nix        # Zsh, Starship, Atuin, Zoxide, Yazi, etc.
+│       ├── shell.nix        # Zsh, Starship, Atuin, Zoxide, etc.
 │       ├── termipedia/      # Terminal encyclopaedia tool (multi-file)
-│       ├── theming.nix      # GTK/QT theming compatibility shim
 │       ├── utilities.nix    # Utility tools
 │       ├── wofi.nix         # Application launcher
 │       ├── xdg.nix          # XDG dirs & dotfile symlinks
@@ -124,7 +119,6 @@ The config includes several handy aliases for system maintenance:
 
 - `update`: Runs `nh os switch` to rebuild and switch the system.
 - `home-update`: Runs `nh home switch` to rebuild the Home Manager environment.
-- `y`: Opens Yazi (TUI file manager) and `cd`s into the last directory on exit.
 
 ---
 
@@ -149,7 +143,7 @@ The config includes several handy aliases for system maintenance:
 1. Create `modules/home/<name>.nix` following the same pattern:
    - Declare `options.modules.home.<name>.enable = lib.mkEnableOption "…";`
 2. **No import needed** — `import-tree` discovers it automatically.
-3. Enable it in `profiles/harsh.nix` (or the relevant user profile).
+3. Enable it in `nix/profiles/harsh.nix` (or the relevant user profile).
 
 ### Editing Dotfiles
 
@@ -159,5 +153,5 @@ Edit files under `dotfiles/` directly — they are symlinked from `~/.config/` v
 
 ## 📝 License
 
-This project is licensed under the **MIT License**.
+This project is licensed under the **GNU General Public License v3.0**.
 Built with ❤️ and **NixOS 25.11**.
