@@ -6,19 +6,29 @@ return {
 		dependencies = { "mfussenegger/nvim-dap" },
 		config = function()
 			local java_debug_jar = vim.env.JAVA_DEBUG_JAR
-			local java_test_jar = vim.env.JAVA_TEST_JAR
 			local lombok_jar = vim.env.LOMBOK_JAR
 
 			local bundles = {}
-			if java_debug_jar and java_debug_jar ~= "" then
-				table.insert(bundles, java_debug_jar)
+			if java_debug_dir and java_debug_dir ~= "" then
+				local pattern = java_debug_dir .. "/com.microsoft.java.debug.plugin-*.jar"
+				vim.list_extend(bundles, vim.split(vim.fn.glob(pattern), "\n", { trimempty = true }))
 			end
-			if java_test_jar and java_test_jar ~= "" then
-				if vim.fn.isdirectory(java_test_jar) == 1 then
-					vim.list_extend(bundles, vim.split(vim.fn.glob(java_test_jar .. "/*.jar"), "\n", { trimempty = true }))
-				else
-					table.insert(bundles, java_test_jar)
+			local function java_runtimes()
+				local home = vim.env.JAVA_HOME
+				if not home or home == "" then
+					return {}
 				end
+				local ok, lines = pcall(vim.fn.readfile, home .. "/release")
+				if not ok then
+					return {}
+				end
+				local version = table.concat(lines, "\n"):match('JAVA_VERSION="([%d%.]+)')
+				if not version then
+					return {}
+				end
+				local major = version:match("^1%.(%d+)") or version:match("^(%d+)")
+				local name = major == "8" and "JavaSE-1.8" or ("JavaSE-" .. major)
+				return { { name = name, path = home, default = true } }
 			end
 
 			local jdtls_cmd = { "jdtls" }
@@ -39,9 +49,9 @@ return {
 			local jdtls_setup = require("jdtls.setup")
 
 			local root_markers = {
-				"gradlew", "build.gradle", "build.gradle.kts",
-				"settings.gradle", "settings.gradle.kts",
-				"mvnw", "pom.xml", ".git",
+				"gradlew",
+				"mvnw",
+				".git",
 			}
 
 			local function get_root()
@@ -59,23 +69,23 @@ return {
 					vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, silent = true, desc = desc })
 				end
 
-				map("n", "gd",  vim.lsp.buf.definition,    "Go to definition")
-				map("n", "gD",  vim.lsp.buf.declaration,   "Go to declaration")
-				map("n", "gi",  vim.lsp.buf.implementation, "Go to implementation")
-				map("n", "gr",  vim.lsp.buf.references,    "References")
-				map("n", "gt",  vim.lsp.buf.type_definition, "Type definition")
-				map("n", "K",   vim.lsp.buf.hover,         "Hover / JavaDoc")
+				map("n", "gd", vim.lsp.buf.definition, "Go to definition")
+				map("n", "gD", vim.lsp.buf.declaration, "Go to declaration")
+				map("n", "gi", vim.lsp.buf.implementation, "Go to implementation")
+				map("n", "gr", vim.lsp.buf.references, "References")
+				map("n", "gt", vim.lsp.buf.type_definition, "Type definition")
+				map("n", "K", vim.lsp.buf.hover, "Hover / JavaDoc")
 
 				map("n", "<leader>ca", vim.lsp.buf.code_action, "Code action")
 				map("v", "<leader>ca", vim.lsp.buf.code_action, "Code action (range)")
 				map("n", "<leader>cr", function()
 					vim.cmd("IncRename " .. vim.fn.expand("<cword>"))
 				end, "Rename")
-				map("n", "<leader>cL", vim.lsp.codelens.run,                           "Run code lens")
-				map("n", "<leader>co", "<cmd>Trouble symbols toggle focus=true<cr>",   "Symbols outline")
-				map("n", "<leader>cl", vim.diagnostic.open_float,                      "Line diagnostics")
-				map("n", "[d",         vim.diagnostic.goto_prev,                       "Previous diagnostic")
-				map("n", "]d",         vim.diagnostic.goto_next,                       "Next diagnostic")
+				map("n", "<leader>cL", vim.lsp.codelens.run, "Run code lens")
+				map("n", "<leader>co", "<cmd>Trouble symbols toggle focus=true<cr>", "Symbols outline")
+				map("n", "<leader>cl", vim.diagnostic.open_float, "Line diagnostics")
+				map("n", "[d", vim.diagnostic.goto_prev, "Previous diagnostic")
+				map("n", "]d", vim.diagnostic.goto_next, "Next diagnostic")
 
 				if client:supports_method("textDocument/inlayHint") then
 					vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
@@ -88,10 +98,14 @@ return {
 				if client:supports_method("textDocument/documentHighlight") then
 					local group = vim.api.nvim_create_augroup("JdtlsDocumentHighlight" .. bufnr, { clear = true })
 					vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-						group = group, buffer = bufnr, callback = vim.lsp.buf.document_highlight,
+						group = group,
+						buffer = bufnr,
+						callback = vim.lsp.buf.document_highlight,
 					})
 					vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
-						group = group, buffer = bufnr, callback = vim.lsp.buf.clear_references,
+						group = group,
+						buffer = bufnr,
+						callback = vim.lsp.buf.clear_references,
 					})
 				end
 
@@ -100,7 +114,9 @@ return {
 				end
 
 				local ok, navic = pcall(require, "nvim-navic")
-				if ok then navic.attach(client, bufnr) end
+				if ok then
+					navic.attach(client, bufnr)
+				end
 
 				map("n", "<leader>ji", jdtls.organize_imports, "Organize imports")
 				map("n", "<leader>jI", function()
@@ -121,30 +137,34 @@ return {
 				end, "Generate constructor")
 
 				map("n", "<leader>jxv", jdtls.extract_variable, "Extract variable")
-				map("v", "<leader>jxv", function() jdtls.extract_variable(true) end, "Extract variable (selection)")
+				map("v", "<leader>jxv", function()
+					jdtls.extract_variable(true)
+				end, "Extract variable (selection)")
 				map("n", "<leader>jxc", jdtls.extract_constant, "Extract constant")
-				map("v", "<leader>jxc", function() jdtls.extract_constant(true) end, "Extract constant (selection)")
+				map("v", "<leader>jxc", function()
+					jdtls.extract_constant(true)
+				end, "Extract constant (selection)")
 				map("n", "<leader>jxm", jdtls.extract_method, "Extract method")
-				map("v", "<leader>jxm", function() jdtls.extract_method(true) end, "Extract method (selection)")
-
-				map("n", "<leader>jtt", jdtls.test_nearest_method, "Test method")
-				map("n", "<leader>jtc", jdtls.test_class, "Test class")
+				map("v", "<leader>jxm", function()
+					jdtls.extract_method(true)
+				end, "Extract method (selection)")
 
 				map("n", "<leader>jSa", function()
 					vim.lsp.buf.code_action({ context = { only = { "source" } } })
 				end, "Spring source actions")
 				map("n", "<leader>jSb", function()
 					vim.lsp.buf.code_action({
-						context = { only = { "source.generate.constructor" } }, apply = true,
+						context = { only = { "source.generate.constructor" } },
+						apply = true,
 					})
 				end, "Generate constructor")
 
-				map("n", "<leader>jm", "<cmd>OverseerRun<cr>",             "Run Maven / Gradle")
-				map("n", "<leader>jw", "<cmd>JdtUpdateConfig<cr>",         "Reload config")
-				map("n", "<leader>jW", "<cmd>JdtCompile incremental<cr>",  "Compile incremental")
-				map("n", "<leader>jF", "<cmd>JdtCompile full<cr>",         "Compile full")
+				map("n", "<leader>jm", "<cmd>OverseerRun<cr>", "Run Maven / Gradle")
+				map("n", "<leader>jw", "<cmd>JdtUpdateConfig<cr>", "Reload config")
+				map("n", "<leader>jW", "<cmd>JdtCompile incremental<cr>", "Compile incremental")
+				map("n", "<leader>jF", "<cmd>JdtCompile full<cr>", "Compile full")
 
-				if java_debug_jar and java_debug_jar ~= "" then
+				if #bundles > 0 then
 					jdtls.setup_dap({ hotcodereplace = "auto", config_overrides = {} })
 					vim.defer_fn(function()
 						require("jdtls.dap").setup_dap_main_class_configs()
@@ -163,20 +183,14 @@ return {
 						java = {
 							project = { referencedLibraries = {} },
 							eclipse = { downloadSources = true },
-							maven = { downloadSources = true, updateSnapshots = true },
+							maven = { downloadSources = true },
 							gradle = { enabled = true },
 							configuration = {
-								runtimes = {
-									{ name = "JavaSE-21", path = vim.env.JAVA_HOME, default = true },
-								},
+								updateBuildConfiguration = "automatic",
+								runtimes = java_runtimes(),
 							},
 							format = {
-								enabled = true,
-								settings = {
-									url = vim.env.GOOGLE_JAVA_STYLE
-										or "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml",
-									profile = "GoogleStyle",
-								},
+								enabled = false,
 							},
 							signatureHelp = { enabled = true, description = { enabled = true } },
 							contentProvider = { preferred = "fernflower" },
@@ -192,7 +206,11 @@ return {
 									"org.assertj.core.api.Assertions.*",
 								},
 								filteredTypes = {
-									"com.sun.*", "io.micrometer.shaded.*", "java.awt.*", "jdk.*", "sun.*",
+									"com.sun.*",
+									"io.micrometer.shaded.*",
+									"java.awt.*",
+									"jdk.*",
+									"sun.*",
 								},
 								guessMethodArguments = "auto",
 							},
@@ -238,11 +256,11 @@ return {
 			local ok, wk = pcall(require, "which-key")
 			if ok then
 				wk.add({
-					{ "<leader>j",  group = "Java",     icon = { icon = "󰬷", color = "orange" } },
-					{ "<leader>jx", group = "Extract",  icon = { icon = "󰆏", color = "yellow" } },
-					{ "<leader>jg", group = "Generate", icon = { icon = "󰛄", color = "cyan"   } },
-					{ "<leader>jt", group = "Test",     icon = { icon = "󰙨", color = "green"  } },
-					{ "<leader>jS", group = "Spring",   icon = { icon = "󱞉", color = "green"  } },
+					{ "<leader>j", group = "Java", icon = { icon = "󰬷", color = "orange" } },
+					{ "<leader>jx", group = "Extract", icon = { icon = "󰆏", color = "yellow" } },
+					{ "<leader>jg", group = "Generate", icon = { icon = "󰛄", color = "cyan" } },
+					{ "<leader>jt", group = "Test", icon = { icon = "󰙨", color = "green" } },
+					{ "<leader>jS", group = "Spring", icon = { icon = "󱞉", color = "green" } },
 				})
 			end
 
@@ -260,32 +278,52 @@ return {
 			"rcasia/neotest-java",
 		},
 		config = function()
-			local java_test_jar = vim.env.JAVA_TEST_JAR
 			require("neotest").setup({
 				adapters = {
-					require("neotest-java")({ junit_jar = java_test_jar or nil }),
+					require("neotest-java")({}),
 				},
 				status = { enabled = true, signs = true, virtual_text = true },
 				icons = {
-					child_indent = "│", child_prefix = "├", collapsed = "─",
-					expanded = "╮", failed = "✗", final_child_indent = " ",
-					final_child_prefix = "╰", non_collapsible = "─", passed = "✓",
+					child_indent = "│",
+					child_prefix = "├",
+					collapsed = "─",
+					expanded = "╮",
+					failed = "✗",
+					final_child_indent = " ",
+					final_child_prefix = "╰",
+					non_collapsible = "─",
+					passed = "✓",
 					running = "󰑮",
 					running_animated = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" },
-					skipped = "○", unknown = "?", watching = "󰈈",
+					skipped = "○",
+					unknown = "?",
+					watching = "󰈈",
 				},
 				output = { open_on_run = false },
 				diagnostic = { enabled = true, severity = vim.diagnostic.severity.ERROR },
 				quickfix = { enabled = true, open = false },
 				summary = {
-					animated = true, follow = true, expand_errors = true,
+					animated = true,
+					follow = true,
+					expand_errors = true,
 					mappings = {
-						attach = "a", clear_marked = "M", clear_target = "T",
-						debug = "d", debug_marked = "D",
-						expand = { "<CR>", "<2-LeftMouse>" }, expand_all = "e",
-						help = "?", jump = "o", mark = "m", output = "O",
-						run = "r", run_marked = "R", short = "L", stop = "u",
-						target = "t", watch = "w",
+						attach = "a",
+						clear_marked = "M",
+						clear_target = "T",
+						debug = "d",
+						debug_marked = "D",
+						expand = { "<CR>", "<2-LeftMouse>" },
+						expand_all = "e",
+						help = "?",
+						jump = "o",
+						mark = "m",
+						output = "O",
+						run = "r",
+						run_marked = "R",
+						short = "L",
+						stop = "u",
+						target = "t",
+						watch = "w",
 					},
 				},
 			})
@@ -310,7 +348,7 @@ return {
 			},
 			formatters = {
 				json = { "jq", "." },
-				xml  = { "xmllint", "--format", "-" },
+				xml = { "xmllint", "--format", "-" },
 				html = { "prettier", "--parser", "html" },
 			},
 			scratchpad_default_contents = {
@@ -339,15 +377,33 @@ return {
 						vim.keymap.set("n", lhs, rhs, { buffer = ev.buf, silent = true, desc = desc })
 					end
 					local k = require("kulala")
-					map("<leader>jHr", function() k.run() end,              "HTTP: run request")
-					map("<leader>jHR", function() k.run_all() end,          "HTTP: run all")
-					map("<leader>jHp", function() k.replay() end,           "HTTP: replay last")
-					map("<leader>jHi", function() k.inspect() end,          "HTTP: inspect (curl)")
-					map("<leader>jHc", function() k.copy() end,             "HTTP: copy as curl")
-					map("<leader>jHe", function() k.set_selected_env() end, "HTTP: select env")
-					map("<leader>jHo", function() k.show_stats() end,       "HTTP: response stats")
-					map("<leader>jH[", function() k.jump_prev() end,        "HTTP: prev request")
-					map("<leader>jH]", function() k.jump_next() end,        "HTTP: next request")
+					map("<leader>jHr", function()
+						k.run()
+					end, "HTTP: run request")
+					map("<leader>jHR", function()
+						k.run_all()
+					end, "HTTP: run all")
+					map("<leader>jHp", function()
+						k.replay()
+					end, "HTTP: replay last")
+					map("<leader>jHi", function()
+						k.inspect()
+					end, "HTTP: inspect (curl)")
+					map("<leader>jHc", function()
+						k.copy()
+					end, "HTTP: copy as curl")
+					map("<leader>jHe", function()
+						k.set_selected_env()
+					end, "HTTP: select env")
+					map("<leader>jHo", function()
+						k.show_stats()
+					end, "HTTP: response stats")
+					map("<leader>jH[", function()
+						k.jump_prev()
+					end, "HTTP: prev request")
+					map("<leader>jH]", function()
+						k.jump_next()
+					end, "HTTP: next request")
 					local ok, wk = pcall(require, "which-key")
 					if ok then
 						wk.add({ { "<leader>jH", group = "HTTP Client", buffer = ev.buf } })
@@ -375,7 +431,10 @@ return {
 				local dbs = vim.deepcopy(vim.g.dbs or {})
 				local has = false
 				for _, db in ipairs(dbs) do
-					if db.url == vim.env.DATABASE_URL then has = true; break end
+					if db.url == vim.env.DATABASE_URL then
+						has = true
+						break
+					end
 				end
 				if not has then
 					table.insert(dbs, { name = "default (DATABASE_URL)", url = vim.env.DATABASE_URL })
@@ -384,16 +443,30 @@ return {
 			end
 
 			vim.g.db_ui_icons = {
-				expanded  = {
-					db = "▾ ", buffers = "▾ ", saved_queries = "▾ ",
-					schemas = "▾ ", schema = "▾ ", tables = "▾ ", table = "▾ ",
+				expanded = {
+					db = "▾ ",
+					buffers = "▾ ",
+					saved_queries = "▾ ",
+					schemas = "▾ ",
+					schema = "▾ ",
+					tables = "▾ ",
+					table = "▾ ",
 				},
 				collapsed = {
-					db = "▸ ", buffers = "▸ ", saved_queries = "▸ ",
-					schemas = "▸ ", schema = "▸ ", tables = "▸ ", table = "▸ ",
+					db = "▸ ",
+					buffers = "▸ ",
+					saved_queries = "▸ ",
+					schemas = "▸ ",
+					schema = "▸ ",
+					tables = "▸ ",
+					table = "▸ ",
 				},
-				saved_query = " ", new_query = "󰓤 ", tables = "󰓫 ", buffers = "󰓘 ",
-				connection_ok = "✓", connection_error = "✕",
+				saved_query = " ",
+				new_query = "󰓤 ",
+				tables = "󰓫 ",
+				buffers = "󰓘 ",
+				connection_ok = "✓",
+				connection_error = "✕",
 			}
 		end,
 		config = function()

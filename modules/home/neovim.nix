@@ -58,6 +58,7 @@ in
       marksman
       taplo
       typescript-language-server
+      lemminx
 
       nixfmt
       stylua
@@ -65,6 +66,7 @@ in
       kdlfmt
       ruff
       prettier
+      google-java-format
 
       luajitPackages.luacheck
       shellcheck
@@ -75,5 +77,10 @@ in
 
       tree-sitter
     ];
+
+    home.sessionVariables = {
+      LOMBOK_JAR = "${pkgs.lombok}/share/java/lombok.jar";
+      JAVA_DEBUG_DIR = "${pkgs.vscode-extensions.vscjava.vscode-java-debug}/share/vscode/extensions/vscjava.vscode-java-debug/server";
+    };
   };
 }

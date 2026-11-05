@@ -84,6 +84,7 @@ return {
 			{ name = "Gradle: bootRun", args = { "bootRun" } },
 			{ name = "Gradle: bootRun (dev)", args = { "bootRun", "--args=--spring.profiles.active=dev" } },
 			{ name = "Gradle: bootRun (prod)", args = { "bootRun", "--args=--spring.profiles.active=prod" } },
+			{ name = "Gradle: bootRun (debug :5005)", args = { "bootRun", "--debug-jvm" } },
 			{ name = "Gradle: bootJar", args = { "bootJar" } },
 			{ name = "Gradle: assemble", args = { "assemble" } },
 			{ name = "Gradle: dependencies", args = { "dependencies" } },
@@ -146,6 +147,13 @@ return {
 			{ name = "Maven: spring-boot:run", args = { "spring-boot:run" } },
 			{ name = "Maven: spring-boot:run (dev)", args = { "spring-boot:run", "-Dspring-boot.run.profiles=dev" } },
 			{ name = "Maven: spring-boot:run (prod)", args = { "spring-boot:run", "-Dspring-boot.run.profiles=prod" } },
+			{
+				name = "Maven: spring-boot:run (debug :5005)",
+				args = {
+					"spring boot:run",
+					"-Dspring-boot.run.jvmArguments=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005",
+				},
+			},
 			{ name = "Maven: dependency:tree", args = { "dependency:tree" } },
 			{ name = "Maven: install (skip tests)", args = { "install", "-DskipTests" } },
 		}
@@ -242,6 +250,5 @@ return {
 				end
 			end,
 		})
-
 	end,
 }

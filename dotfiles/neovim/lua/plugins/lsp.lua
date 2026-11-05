@@ -150,6 +150,7 @@ return {
 					settings = { nixd = { formatting = { command = { "nixfmt" } } } },
 				},
 				taplo = {},
+				lemminx = {},
 				bashls = {},
 				yamlls = {
 					settings = {
