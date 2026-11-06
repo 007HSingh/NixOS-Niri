@@ -9,20 +9,11 @@ return {
 				direction = "bottom",
 				min_height = 12,
 				max_height = 20,
-				default_detail = 1,
-				bindings = {
-					["<CR>"] = "RunAction",
-					["<C-e>"] = "Edit",
-					["o"] = "Open",
-					["<C-v>"] = "OpenVsplit",
-					["q"] = "Close",
-					["?"] = "ShowHelp",
-					["<C-r>"] = "Restart",
-					["<C-c>"] = "Stop",
+				keymaps = {
+					["<C-r>"] = { "keymap.run_action", opts = { action = "restart" }, desc = "Restart task" },
+					["<C-c>"] = { "keymap.run_action", opts = { action = "stop" }, desc = "Stop task" },
 				},
 			},
-
-			templates = { "builtin", "java" },
 
 			component_aliases = {
 				default = {
