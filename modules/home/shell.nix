@@ -54,7 +54,6 @@ in
           nom-develop = "nom develop";
           nom-run = "nom run";
 
-          ls = "eza -la --icons";
           cat = "bat";
 
           gs = "git status";
