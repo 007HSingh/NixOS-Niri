@@ -10,13 +10,17 @@ let
   cfg = config.modules.home.packages;
 in
 {
-  options.modules.home.packages.enable =
-    lib.mkEnableOption "user packages (CLI tools, LSPs, formatters, linters)";
+  options.modules.home.packages.enable = lib.mkEnableOption "user packages";
 
   config = lib.mkIf cfg.enable {
     services.wluma.enable = true;
 
     programs.nix-index-database.comma.enable = true;
+
+    programs.java = {
+      enable = true;
+      package = pkgs.jdk21;
+    };
 
     home.packages = with pkgs; [
       poppler
