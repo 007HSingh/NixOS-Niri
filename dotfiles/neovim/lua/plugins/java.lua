@@ -33,10 +33,7 @@ return {
 
 			local jdtls_cmd = { "jdtls" }
 			if lombok_jar and lombok_jar ~= "" then
-				vim.list_extend(jdtls_cmd, {
-					"--jvm-arg=-javaagent:" .. lombok_jar,
-					"--jvm-arg=-Xbootclasspath/a:" .. lombok_jar,
-				})
+				table.insert(jdtls_cmd, "--jvm-arg=-javaagent:" .. lombok_jar)
 			end
 
 			local function get_workspace(root)
