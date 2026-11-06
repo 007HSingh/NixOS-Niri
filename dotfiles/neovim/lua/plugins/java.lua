@@ -62,8 +62,6 @@ return {
 			})
 
 			local function on_attach(client, bufnr)
-				vim.lsp.semantic_tokens.enable(false, { bufnr = bufnr, client_id = client.id })
-
 				local function map(mode, lhs, rhs, desc)
 					vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, silent = true, desc = desc })
 				end

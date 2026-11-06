@@ -22,7 +22,7 @@ M.base46 = {
 }
 
 M.ui = {
-	statusline = { theme = "default", separator_style = "default" },
+	statusline = { theme = "minimal", separator_style = "default" },
 	tabufline = { enabled = true, lazyload = true },
 	cmp = { style = "default" },
 	telescope = { style = "borderless" },
