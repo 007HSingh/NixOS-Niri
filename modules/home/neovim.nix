@@ -7,6 +7,7 @@
 
 let
   cfg = config.modules.home.neovim;
+  pythonWithDebugpy = pkgs.python3.withPackages (pythonPackages: [ pythonPackages.debugpy ]);
 in
 {
   options.modules.home.neovim.enable = lib.mkEnableOption "neovim editor";
@@ -56,6 +57,8 @@ in
     };
 
     home.sessionVariables = {
+      DEBUGPY_PATH = "${pythonWithDebugpy}/bin/python";
+      CODELLDB_PATH = "${pkgs.vscode-extensions.vadimcn.vscode-lldb}/share/vscode/extensions/vadimcn.vscode-lldb/adapter/codelldb";
       LOMBOK_JAR = "${pkgs.lombok}/share/java/lombok.jar";
       JAVA_DEBUG_DIR = "${pkgs.vscode-extensions.vscjava.vscode-java-debug}/share/vscode/extensions/vscjava.vscode-java-debug/server";
     };
