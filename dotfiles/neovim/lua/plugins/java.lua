@@ -173,7 +173,7 @@ return {
 				local root = get_root()
 				local workspace = get_workspace(root)
 				return {
-					cmd = vim.list_extend(vim.deepcopy(jdtls_cmd), { "--data", workspace }),
+					cmd = vim.list_extend(vim.deepcopy(jdtls_cmd), { "-data", workspace }),
 					root_dir = root,
 					capabilities = capabilities,
 					settings = {
@@ -236,7 +236,6 @@ return {
 					on_attach = on_attach,
 					on_init = function(client)
 						client:notify("workspace/didChangeConfiguration", { settings = client.config.settings })
-						client:notify("java/buildWorkspace", { fullBuild = false })
 					end,
 				}
 			end
