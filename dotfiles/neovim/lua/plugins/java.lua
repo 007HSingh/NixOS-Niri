@@ -5,7 +5,7 @@ return {
 		ft = "java",
 		dependencies = { "mfussenegger/nvim-dap" },
 		config = function()
-			local java_debug_jar = vim.env.JAVA_DEBUG_JAR
+			local java_debug_dir = vim.env.JAVA_DEBUG_DIR
 			local lombok_jar = vim.env.LOMBOK_JAR
 
 			local bundles = {}
